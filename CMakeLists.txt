@@ -71,4 +71,4 @@ set_property(TARGET gbenchmark PROPERTY IMPORTED_LOCATION ${_GBENCH_LIBRARY_PATH
 add_dependencies(gbenchmark googlebenchmark)
 
 #---Add the now all the sub-directories on this repository
-add_subdirectory(lib)
+add_subdirectory(root)
