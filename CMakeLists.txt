@@ -30,6 +30,9 @@ include(${ROOT_USE_FILE})
 include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
 
+#---Removing -Woverloaded-virtual from inherited ROOT compilation flags (gbenchmark is crashing)
+string(REPLACE "-Woverloaded-virtual" "" GBENCHMARK_CMAKE_CXX_FLAGS ${ROOT_CXX_FLAGS})
+
 #---Find and install google benchmark
 ExternalProject_Add(
   googlebenchmark
@@ -47,7 +50,7 @@ ExternalProject_Add(
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
   -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-  -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+  -DCMAKE_CXX_FLAGS=${GBENCHMARK_CMAKE_CXX_FLAGS}
   -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
   # Disable install step
   INSTALL_COMMAND ""
