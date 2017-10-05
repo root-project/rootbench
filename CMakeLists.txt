@@ -70,5 +70,8 @@ add_library(gbenchmark IMPORTED STATIC GLOBAL)
 set_property(TARGET gbenchmark PROPERTY IMPORTED_LOCATION ${_GBENCH_LIBRARY_PATH}/src/libbenchmark.a)
 add_dependencies(gbenchmark googlebenchmark)
 
+# Enable and setup CTest.
+include(RootbenchCTest)
+
 #---Add the now all the sub-directories on this repository
 add_subdirectory(root)

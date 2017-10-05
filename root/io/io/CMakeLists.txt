@@ -4,3 +4,5 @@ RB_ADD_GBENCHMARK(IOBenchmarks
   Core RIO Tree TreePlayer
   )
  
+ add_test(NAME IOBenchmarks
+		COMMAND IOBenchmarks --benchmark_out_format=json)

@@ -3,3 +3,6 @@ RB_ADD_GBENCHMARK(GenVectorBenchmarks
   LIBRARIES
   GenVector
   MathCore)
+
+ add_test(NAME GenVectorBenchmarks
+		COMMAND GenVectorBenchmarks --benchmark_out_format=json)
