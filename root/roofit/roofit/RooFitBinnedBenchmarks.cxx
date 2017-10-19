@@ -155,9 +155,11 @@ void buildBinnedTest_nchannels(int n_channels = 10, int nnps = 10, const char *n
 static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+
    int cpu = state.range(0);
    TFile *infile = new TFile("workspace.root");
    if (infile->IsZombie()) {
@@ -173,7 +175,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(1);
+//   m.setProfile(1);
    m.setLogFile("benchmigradlog");
    while (state.KeepRunning()) {
       m.migrad();
@@ -195,11 +197,13 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    gErrorIgnoreLevel = kInfo;
    int chan = state.range(0);
    int cpu = state.range(1);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::ObjectHandling);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Fitting);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::ObjectHandling);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Fitting);
+   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+
    std::string workspace_file = "worspace" + std::to_string(chan) + std::to_string(cpu) + ".root";
    TFile *infile = new TFile(workspace_file.c_str());
    if (infile->IsZombie()) {
@@ -215,7 +219,7 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(1);
+//   m.setProfile(1);
    m.setLogFile("benchmigradnchanellog");
    while (state.KeepRunning()) {
       m.migrad();
@@ -235,9 +239,11 @@ BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Ranges({{1, 8}, {1, 8}})->UseRea
 static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+
    int cpu = state.range(0);
    TFile *infile = new TFile("workspace.root");
    if (infile->IsZombie()) {
@@ -253,7 +259,7 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(1);
+//   m.setProfile(1);
    m.setLogFile("benchhesselog");
    m.migrad();
    while (state.KeepRunning()) {
@@ -272,9 +278,11 @@ BENCHMARK(BM_RooFit_BinnedTestHesse)->Range(4, 8)->UseRealTime();
 static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+//   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+
    int cpu = state.range(0);
    TFile *infile = new TFile("workspace.root");
    if (infile->IsZombie()) {
@@ -290,7 +298,7 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(1);
+//   m.setProfile(1);
    m.setLogFile("benchminoslog");
    m.migrad();
    while (state.KeepRunning()) {
