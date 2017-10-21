@@ -60,6 +60,18 @@ ExternalProject_Add(
   LOG_CONFIGURE ON
   LOG_BUILD ON)
 
+include(RootBenchOptions)
+
+#---Enable test coverage -----------------------------------------------------------------------
+if(coverage)
+  set(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
+  set(GCC_COVERAGE_LINK_FLAGS    "-fprofile-arcs")
+  set(CMAKE_CXX_FLAGS            "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+  set(CMAKE_EXE_LINKER_FLAGS     "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+  set(CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_SHAREDLINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+  set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+endif()
+
 # Specify include dirs for googlebenchmark
 ExternalProject_Get_Property(googlebenchmark source_dir)
 set(GBENCHMARK_INCLUDE_DIR ${source_dir}/include)

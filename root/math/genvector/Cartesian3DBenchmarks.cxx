@@ -6,6 +6,8 @@
 
 #include "benchmark/benchmark.h"
 
+template class ROOT::Math::Cartesian3D<double>;
+
 static void BM_Cartesian3D_CreateEmpty(benchmark::State &state)
 {
    while (state.KeepRunning()) ROOT::Math::Cartesian3D<double> c;
