@@ -1,0 +1,89 @@
+sudo: true
+
+language: cpp
+
+addons: &addons
+  apt:
+    packages: timeout
+    sources: &sources
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.9
+
+cache:
+  apt: true
+  ccache: true
+#  directories:
+#    - $BUILD_DEPS
+
+
+# Do not build our sync branch.
+branches:
+  only:
+    - master
+    - "*Travis*"
+
+# Without the top-level env, no job will be allowed to fail.
+env:
+
+matrix:
+  include:
+    # There seems to be a hard limit to how many machines a Travis build will
+    # across all platforms. By interleaving OS X, the hope is to get in the
+    # queue faster while not blocking Linux builds from occuring.
+    - compiler: clang
+      addons:
+        apt:
+          sources: *sources
+          packages: ['lcov', 'cmake', 'libtbb-dev']
+      env: COMPILER=g++ C_COMPILER=gcc BUILD_TYPE=Coverage
+
+before_install:
+  - |
+    sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
+    sudo apt-get install libgsl2
+install:
+  - |
+    if [ "${BUILD_TYPE}" == "Coverage" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+       PATH=~/.local/bin:${PATH};
+       pip install --user --upgrade pip;
+       pip install --user cpp-coveralls;
+    fi
+
+script:
+- echo "Downloading Latest ROOT binaries."
+- |
+  pwd
+  HOME_FOLDER=$(pwd)/../
+  # Go one level up from REPO_SLUG/rootbench
+  cd $HOME_FOLDER
+  mkdir root
+  d=$(date +%a)
+  for i in `seq 1 7`; do
+    ROOT_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/ROOT-HEAD_a512e-x86_64-ubuntu1404-gcc48-opt.tgz
+    if curl -s -f --head $ROOT_TAR ; then
+       break;
+    fi
+    d=$(date +%a -d "$d - 1 day")
+  done;
+- |
+  cd root
+  echo "Downloading and untaring $ROOT_TAR" && echo -en "travis_fold:start:untar.ROOT"
+  curl $ROOT_TAR | tar xvz > untar-details.log
+  ls -la
+  source ROOT/HEAD/x86_64-ubuntu1404-gcc48-opt/bin/thisroot.sh
+  cd $HOME_FOLDER
+  echo -en "travis_fold:end:untar.ROOT"
+- |
+  if [ "${BUILD_TYPE}" == "Coverage" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    mkdir $HOME_FOLDER/build
+    cd $HOME_FOLDER/build
+    cmake -Dcoverage=On ../rootbench
+    cmake --build . && ctest -V --output-on-failure
+  fi
+
+on_failure:
+  -|
+   echo "Showing current directory contents"
+   dpkg -L libgsl0-dev
+   ls -la
+   cat $HOME_FOLDER/root/untar-details.log
