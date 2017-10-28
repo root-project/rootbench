@@ -18,8 +18,8 @@ function(RB_ADD_GBENCHMARK benchmark)
   #  COMMAND ${benchmark}
   #  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}
   #  LABELS "benchmark")
-  add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=json --benchmark_out=rootbench-${benchmark}.json --benchmark_color=false)
-  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 180)
+  add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false)
+  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 300)
 endfunction(RB_ADD_GBENCHMARK)
 
 #----------------------------------------------------------------------------
