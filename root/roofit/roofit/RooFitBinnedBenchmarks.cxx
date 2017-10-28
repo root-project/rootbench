@@ -120,7 +120,7 @@ Channel makeChannel(int channel, int nnps, bool channel_crosstalk)
    return chan;
 }
 
-void buildBinnedTest_nchannels(int n_channels = 10, int nnps = 10, const char *name_rootfile = "")
+void buildBinnedTest_nchannels(int n_channels = 1, int nnps = 1, const char *name_rootfile = "")
 {
    bool channel_crosstalk = true;
    Measurement meas("meas", "meas");
@@ -152,11 +152,19 @@ void buildBinnedTest_nchannels(int n_channels = 10, int nnps = 10, const char *n
    ws->writeToFile(name_rootfile);
 }
 
+static void CustomArguments(benchmark::internal::Benchmark* b) {
+  for (int i = 1; i <= 3; ++i)
+    for (int j = 1; j <= 2; ++j)
+      b->Args({i, j});
+}
+
 static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
    RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
    int cpu = state.range(0);
    TFile *infile = new TFile("workspace.root");
    if (infile->IsZombie()) {
@@ -172,6 +180,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
+   m.setProfile(0);
    m.setLogFile("benchmigradlog");
    while (state.KeepRunning()) {
       m.migrad();
@@ -182,23 +191,21 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    delete pdf;
    delete nll;
 }
-
-// BENCHMARK(BM_RooFit_BinnedTestMigrad)->Unit(benchmark::kMicrosecond)->Arg(2)->UseRealTime();
-// KNL scaling
-// BENCHMARK(BM_RooFit_BinnedTestMigrad)->Range(8, 128)->UseRealTime();
-BENCHMARK(BM_RooFit_BinnedTestMigrad)->Range(4, 8)->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestMigrad)->DenseRange(1, 4)->UseRealTime();
 
 static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
+   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
    int chan = state.range(0);
    int cpu = state.range(1);
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-
    std::string workspace_file = "worspace" + std::to_string(chan) + std::to_string(cpu) + ".root";
    TFile *infile = new TFile(workspace_file.c_str());
    if (infile->IsZombie()) {
-      buildBinnedTest_nchannels(chan, cpu, workspace_file.c_str());
+      buildBinnedTest_nchannels(chan, 1, workspace_file.c_str());
       std::cout << "Workspace for tests was created!" << std::endl;
    }
    infile = TFile::Open(workspace_file.c_str());
@@ -210,6 +217,7 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
+   m.setProfile(0);
    m.setLogFile("benchmigradnchanellog");
    while (state.KeepRunning()) {
       m.migrad();
@@ -221,16 +229,15 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    delete nll;
 }
 
-// BENCHMARK(BM_RooFit_BinnedTestMigrad)->Unit(benchmark::kMicrosecond)->Arg(2)->UseRealTime();
-// KNL scaling
-// BENCHMARK(BM_RooFit_BinnedTestMigrad)->Range(8, 128)->UseRealTime();
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Ranges({{1, 8}, {1, 8}})->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(CustomArguments)->UseRealTime();
 
 static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
    RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
    int cpu = state.range(0);
    TFile *infile = new TFile("workspace.root");
    if (infile->IsZombie()) {
@@ -246,6 +253,7 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
+   m.setProfile(0);
    m.setLogFile("benchhesselog");
    m.migrad();
    while (state.KeepRunning()) {
@@ -257,15 +265,15 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    delete pdf;
    delete nll;
 }
-// KNL scaling
-// BENCHMARK(BM_RooFit_BinnedTestHesse)->Range(8, 128)->UseRealTime();
-BENCHMARK(BM_RooFit_BinnedTestHesse)->Range(4, 8)->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestHesse)->DenseRange(1, 4)->UseRealTime();
 
 static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
    RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
    int cpu = state.range(0);
    TFile *infile = new TFile("workspace.root");
    if (infile->IsZombie()) {
@@ -281,6 +289,7 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
+   m.setProfile(0);
    m.setLogFile("benchminoslog");
    m.migrad();
    while (state.KeepRunning()) {
@@ -292,8 +301,6 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    delete pdf;
    delete nll;
 }
-// KNL scaling
-// BENCHMARK(BM_RooFit_BinnedTestMinos)->Range(8, 128)->UseRealTime();
-BENCHMARK(BM_RooFit_BinnedTestMinos)->Range(4, 8)->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestMinos)->DenseRange(1, 4)->UseRealTime();
 
 BENCHMARK_MAIN();
