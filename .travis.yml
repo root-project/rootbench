@@ -111,7 +111,7 @@ before_install:
   - sudo mount -t cvmfs sft-nightlies.cern.ch /cvmfs/sft-nightlies.cern.ch
   - ls /cvmfs/sft-nightlies.cern.ch
   # Install coveralls
-  - sudo apt-get install ruby-coveralls  
+  - sudo gem install coveralls-lcov
   # Install GSL 2.0
   # FIXME: We should have it somewhere in cvmfs.
   - sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
