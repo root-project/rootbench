@@ -229,7 +229,8 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    delete nll;
 }
 
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(CustomArguments)->UseRealTime();
+//FIXME: suppress output from generating workspaces
+//BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(CustomArguments)->UseRealTime();
 
 static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
 {
