@@ -153,6 +153,8 @@ script:
   cd $HOME_FOLDER
 - mkdir $HOME_FOLDER/build
 - cd $HOME_FOLDER/build
+- export GCOV_PREFIX=`pwd`
+- export GCOV_PREFIX_STRIP=0
 - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
         ${EXTRA_OPTS} ../rootbench
