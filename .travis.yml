@@ -4,10 +4,13 @@ language: cpp
 
 addons: &addons
   apt:
-    packages: timeout
+    packages: &common_deps
+      - cmake
+      - libtbb-dev
     sources: &sources
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-precise-3.9
+      - llvm-toolchain-trusty-4.0
+      - llvm-toolchain-trusty-5.0
 
 cache:
   apt: true
@@ -27,12 +30,70 @@ matrix:
     # There seems to be a hard limit to how many machines a Travis build will
     # across all platforms. By interleaving OS X, the hope is to get in the
     # queue faster while not blocking Linux builds from occuring.
-    - compiler: gcc
+
+    # Coverage
+    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-DCoverage=On"
+      compiler: gcc
       addons:
         apt:
           sources: *sources
-          packages: ['lcov', 'cmake', 'libtbb-dev']
-      env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-DCoverage=On"
+          packages: [*common_deps, 'lcov']
+
+    # GCC 5
+    - env: CXX=g++-5 CC=gcc BUILD_TYPE=Debug
+      compiler: gcc
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'g++-5', 'g++-5-multilib', 'libc6-dbg']
+    - env: CXX=g++-5 CC=gcc BUILD_TYPE=Release
+      compiler: gcc
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'g++-5', 'g++-5-multilib', 'libc6-dbg']
+
+    # GCC 6
+    - env: CXX=g++-6 CC=gcc BUILD_TYPE=Debug
+      compiler: gcc
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'g++-6', 'g++-6-multilib', 'libc6-dbg']
+    - env: CXX=g++-6 CC=gcc BUILD_TYPE=Release
+      compiler: gcc
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'g++-6', 'g++-6-multilib', 'libc6-dbg']
+
+    # Clang 4
+    - env: CXX=clang++-4.0 CC=clang-4.0 BUILD_TYPE=Debug
+      compiler: clang
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'clang-4.0', 'g++-multilib', 'libc6-dbg']
+    - env: CXX=clang++-4.0 CC=clang-4.0 BUILD_TYPE=Release
+      compiler: gcc
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'clang-4.0', 'g++-multilib', 'libc6-dbg']
+
+    # Clang 5
+    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug
+      compiler: clang
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'clang-5.0', 'g++-multilib', 'libc6-dbg']
+    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Release
+      compiler: clang
+      addons:
+        apt:
+          sources: *sources
+          packages: [*common_deps, 'clang-5.0', 'g++-multilib', 'libc6-dbg']
 
 before_install:
   - wget https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
