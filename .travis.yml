@@ -32,7 +32,7 @@ matrix:
     # queue faster while not blocking Linux builds from occuring.
 
     # Coverage
-    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-DCoverage=On"
+    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-Dcoverage=On"
       compiler: gcc
       addons:
         apt:
@@ -110,6 +110,8 @@ before_install:
   - sudo mkdir -p /cvmfs/sft-nightlies.cern.ch
   - sudo mount -t cvmfs sft-nightlies.cern.ch /cvmfs/sft-nightlies.cern.ch
   - ls /cvmfs/sft-nightlies.cern.ch
+  # Install coveralls
+  - sudo gem install coveralls-lcov
   # Install GSL 2.0
   # FIXME: We should have it somewhere in cvmfs.
   - sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
@@ -119,7 +121,7 @@ install:
   - |
     pwd
     HOME_FOLDER=$(pwd)/../
-    if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
        export GCOV_PREFIX="$HOME_FOLDER/ROOT-gcov/"
        mkdir -p $GCOV_PREFIX
        #export GCOV_PREFIX_STRIP=16
@@ -151,20 +153,26 @@ script:
   cd $HOME_FOLDER
 - mkdir $HOME_FOLDER/build
 - cd $HOME_FOLDER/build
+- export GCOV_PREFIX=`pwd`
+- export GCOV_PREFIX_STRIP=0
 - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
         ${EXTRA_OPTS} ../rootbench
 - cmake --build .
 - ctest -V --output-on-failure
-- find $GCOV_PREFIX
+- #find $GCOV_PREFIX
 - #find $HOME_FOLDER
 
 after_success:
 
 - |
   # FIXME: Figure out the right coveralls arguments to send the reports.
-  if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+  #  coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
+      lcov -d . -c -o coverage.info
+      lcov -r coverage.info "/usr*" "`pwd`/googlebenchmark-prefix*" -o coverage.info 
+      lcov -l coverage.info
+      coveralls-lcov  coverage.info
   fi
 
 on_failure:
