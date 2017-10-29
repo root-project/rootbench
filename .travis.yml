@@ -117,9 +117,12 @@ before_install:
 
 install:
   - |
+    pwd
+    HOME_FOLDER=$(pwd)/../
     if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-       export GCOV_PREFIX="$(pwd)/../ROOT-gcov/"
-       export GCOV_PREFIX_STRIP=16
+       export GCOV_PREFIX="$HOME_FOLDER/ROOT-gcov/"
+       mkdir -p $GCOV_PREFIX
+       #export GCOV_PREFIX_STRIP=16
        PATH=~/.local/bin:${PATH};
        pip install --user --upgrade pip;
        pip install --user cpp-coveralls;
@@ -128,8 +131,6 @@ install:
 script:
 - echo "Downloading Latest ROOT binaries."
 - |
-  pwd
-  HOME_FOLDER=$(pwd)/../
   # Go one level up from REPO_SLUG/rootbench
   cd $HOME_FOLDER
   mkdir root
@@ -155,16 +156,16 @@ script:
         ${EXTRA_OPTS} ../rootbench
 - cmake --build .
 - ctest -V --output-on-failure
-- #find $GCOV_PREFIX
+- find $GCOV_PREFIX
 - #find $HOME_FOLDER
 
 after_success:
 
 - |
   # FIXME: Figure out the right coveralls arguments to send the reports.
-  #if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-  #  coveralls --exclude /usr/ --gcov-options '\-lp' --root $HOME_FOLDER/build --build-root $ROOT_LOCATION;
-  #fi
+  if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
+  fi
 
 on_failure:
   -|
