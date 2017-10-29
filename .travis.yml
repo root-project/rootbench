@@ -32,7 +32,7 @@ matrix:
     # queue faster while not blocking Linux builds from occuring.
 
     # Coverage
-    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-DCoverage=On"
+    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-Dcoverage=On"
       compiler: gcc
       addons:
         apt:
