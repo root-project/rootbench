@@ -123,9 +123,10 @@ install:
   - |
     pwd
     HOME_FOLDER=$(pwd)/../
-    export GCOV_PREFIX_STRIP=0
-    export GCOV_PREFIX=`pwd`
-    if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+       export GCOV_PREFIX="$HOME_FOLDER/ROOT-gcov/"
+       mkdir -p $GCOV_PREFIX
+       #export GCOV_PREFIX_STRIP=16
        PATH=~/.local/bin:${PATH};
        pip install --user --upgrade pip;
        pip install --user cpp-coveralls;
@@ -164,7 +165,7 @@ after_success:
 
 - |
   # FIXME: Figure out the right coveralls arguments to send the reports.
-  if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
   #  coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
       lcov -d . -c -o coverage.info
       lcov -r coverage.info "/usr*" "`pwd`/googlebenchmark-prefix*" -o coverage.info 
