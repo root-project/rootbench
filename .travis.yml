@@ -110,6 +110,8 @@ before_install:
   - sudo mkdir -p /cvmfs/sft-nightlies.cern.ch
   - sudo mount -t cvmfs sft-nightlies.cern.ch /cvmfs/sft-nightlies.cern.ch
   - ls /cvmfs/sft-nightlies.cern.ch
+  # Install coveralls
+  - sudo apt-get install ruby-coveralls  
   # Install GSL 2.0
   # FIXME: We should have it somewhere in cvmfs.
   - sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
@@ -164,7 +166,11 @@ after_success:
 - |
   # FIXME: Figure out the right coveralls arguments to send the reports.
   if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
+  #  coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
+      lcov -d . -c -o coverage.info
+      lcov -r coverage.info "/usr*" "`pwd`/googlebenchmark-prefix*" -o coverage.info 
+      lcov -l coverage.info
+      coveralls-lcov  coverage.info
   fi
 
 on_failure:
