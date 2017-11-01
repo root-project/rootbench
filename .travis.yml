@@ -161,7 +161,10 @@ script:
     d=$(date +%a -d "$d - 1 day")
   done;
 - |
-  cd root
+  cd rootgcno
+  echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:untar.ROOTGCNO"
+  curl $ROOT_TARGCNO | tar xvz > untar-details.log
+- |
   echo "Initializing ROOT $ROOT_THISROOT"
   source $ROOT_THISROOT
   which root
@@ -203,7 +206,7 @@ after_success:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.total
       $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total
-      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" -o $HOME_FOLDER/build/coverage.total 
+      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" "*.cpp" -o $HOME_FOLDER/build/coverage.total 
       $LCOV -l $HOME_FOLDER/build/coverage.total
       coveralls-lcov $HOME_FOLDER/build/coverage.total
   fi
