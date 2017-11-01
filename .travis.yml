@@ -135,7 +135,7 @@ install:
 script:
 - echo "Exporting latest ROOT binaries."
 - |
-  # Go one level up from REPO_SLUG/rootbench
+  # Go one level up from REPO_SLUG/root-project/rootbench
   cd $HOME_FOLDER
   d=$(date +%a)
   for i in `seq 1 7`; do
@@ -180,7 +180,7 @@ script:
 #- export GCOV_PREFIX_STRIP=0
 - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
-        ${EXTRA_OPTS} ../rootbench
+        ${EXTRA_OPTS} ../root-project/rootbench
 - cmake --build .
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
