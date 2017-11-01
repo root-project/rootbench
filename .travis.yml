@@ -146,6 +146,20 @@ script:
     fi
     d=$(date +%a -d "$d - 1 day")
   done;
+-  echo "Downloading Latest ROOT .gcno binaries."
+- |
+  pwd
+  HOME_FOLDER=$(pwd)/../
+  cd $HOME_FOLDER
+  mkdir rootgcno
+  d=$(date +%a)
+  for i in `seq 1 7`; do
+    ROOTGCNO_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/rootgcno.tgz
+    if curl -s -f --head $ROOTGCNO_TAR ; then
+       break;
+    fi
+    d=$(date +%a -d "$d - 1 day")
+  done;
 - |
   cd root
   echo "Initializing ROOT $ROOT_THISROOT"
@@ -170,22 +184,17 @@ script:
 - cmake --build .
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      find $HOME_FOLDER/build -name "*.da" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      find $HOME_FOLDER/build -name "*.no" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
+      cp $HOME_FOLDER/gcno/* $HOME_FOLDER/coveralls/
       $LCOV --zerocounters --directory $HOME_FOLDER/coveralls
-      $LCOV -c -i -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.init --rc="geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build=>$HOME_FOLDER/coveralls/"
+      $LCOV -c -i -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.init
   fi
 - ctest -L short || true
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      find $HOME_FOLDER/build -name "*.da" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      find $HOME_FOLDER/build -name "*.no" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       ls -la $HOME_FOLDER/coveralls
-      $LCOV -c -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info --rc="geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build=>$HOME_FOLDER/coveralls/"
+      $LCOV -c -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info
   fi
 
 after_success:
@@ -194,7 +203,7 @@ after_success:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.total
       $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total
-      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" "*.cpp" -o $HOME_FOLDER/build/coverage.total 
+      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" -o $HOME_FOLDER/build/coverage.total 
       $LCOV -l $HOME_FOLDER/build/coverage.total
       coveralls-lcov $HOME_FOLDER/build/coverage.total
   fi
