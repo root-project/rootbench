@@ -170,7 +170,7 @@ script:
     unzip v1.13.zip
     LCOV="`pwd`/lcov-1.13/bin/lcov --gcov-tool gcov"
     mkdir -p $HOME_FOLDER/coveralls
-    cp -R $HOME_FOLDER/rootgcno/ $HOME_FOLDER/coveralls/
+    cp -av $HOME_FOLDER/rootgcno/rootgcno/* $HOME_FOLDER/coveralls/
   fi
 - mkdir $HOME_FOLDER/build
 - cd $HOME_FOLDER/build
@@ -183,16 +183,14 @@ script:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      cp $HOME_FOLDER/gcno/* $HOME_FOLDER/coveralls/
-      $LCOV --zerocounters --directory $HOME_FOLDER/coveralls
-      $LCOV -c -i -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.init
+      #$LCOV --zerocounters --directory $HOME_FOLDER/coveralls
+      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.init &> lcov.log
   fi
 - ctest -L short || true
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      ls -la $HOME_FOLDER/coveralls
-      $LCOV -c -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info  > lcov.log
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info
   fi
 
 after_success:
@@ -200,11 +198,10 @@ after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.total
-      $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total
-      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" "*.cpp" -o $HOME_FOLDER/build/coverage.total 
+      $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total &> lcov.log
+      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" "*.cpp" -o $HOME_FOLDER/build/coverage.total &> lcov.log
       $LCOV -l $HOME_FOLDER/build/coverage.total
       coveralls-lcov $HOME_FOLDER/build/coverage.total
-  fi
 
 on_failure:
   -|
