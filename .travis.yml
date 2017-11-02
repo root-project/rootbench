@@ -124,9 +124,6 @@ install:
     pwd
     HOME_FOLDER=$(pwd)/../
     if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-       #export GCOV_PREFIX="$HOME_FOLDER/ROOT-gcov/"
-       #mkdir -p $GCOV_PREFIX
-       #export GCOV_PREFIX_STRIP=16
        PATH=~/.local/bin:${PATH};
        pip install --user --upgrade pip;
        pip install --user cpp-coveralls;
@@ -135,7 +132,7 @@ install:
 script:
 - echo "Exporting latest ROOT binaries."
 - |
-  # Go one level up from REPO_SLUG/root-project/rootbench
+  # Go one level up from REPO_SLUG/rootbench
   cd $HOME_FOLDER
   d=$(date +%a)
   for i in `seq 1 7`; do
@@ -146,31 +143,24 @@ script:
     fi
     d=$(date +%a -d "$d - 1 day")
   done;
--  echo "Downloading Latest ROOT .gcno binaries."
-- |
-  pwd
-  HOME_FOLDER=$(pwd)/../
-  cd $HOME_FOLDER
-  mkdir rootgcno
-  d=$(date +%a)
-  for i in `seq 1 7`; do
-    ROOTGCNO_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/rootgcno.tgz
-    if curl -s -f --head $ROOTGCNO_TAR ; then
-       break;
-    fi
-    d=$(date +%a -d "$d - 1 day")
-  done;
-- |
-  cd rootgcno
-  echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:untar.ROOTGCNO"
-  curl $ROOT_TARGCNO | tar xvz > untar-details.log
-- |
-  echo "Initializing ROOT $ROOT_THISROOT"
+- echo "Initializing ROOT $ROOT_THISROOT"
   source $ROOT_THISROOT
-  which root
-  cd $HOME_FOLDER
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    echo "Downloading Latest ROOT .gcno binaries."
+    cd $HOME_FOLDER
+    mkdir $HOME_FOLDER/rootgcno
+    d=$(date +%a)
+    for i in `seq 1 7`; do
+      ROOTGCNO_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/rootgcno.tgz
+      if curl -s -f --head $ROOTGCNO_TAR ; then
+        break;
+      fi
+      d=$(date +%a -d "$d - 1 day")
+    done;
+    echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:untar.ROOTGCNO"
+    wget -qO- $ROOT_TARGCNO &> /dev/null
+    tar zxvf rootgcno.tgz $HOME_FOLDER/rootgcno > untar-details.log
     mkdir $HOME_FOLDER/lcov && cd $HOME_FOLDER/lcov
     wget https://github.com/linux-test-project/lcov/archive/v1.13.zip
     unzip v1.13.zip
@@ -179,11 +169,11 @@ script:
   fi
 - mkdir $HOME_FOLDER/build
 - cd $HOME_FOLDER/build
-#- export GCOV_PREFIX=`pwd`
-#- export GCOV_PREFIX_STRIP=0
+- export GCOV_PREFIX=`pwd`
+- export GCOV_PREFIX_STRIP=0
 - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
-        ${EXTRA_OPTS} ../root-project/rootbench
+        ${EXTRA_OPTS} ../rootbench
 - cmake --build .
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
