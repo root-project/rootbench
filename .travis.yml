@@ -189,8 +189,9 @@ script:
 - ctest -L short || true
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph --output-file $HOME_FOLDER/build/coverage.info  &> lcov.log
   fi
 
 after_success:
@@ -198,8 +199,8 @@ after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.total
-      $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total &> lcov.log
-      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" "*.cpp" -o $HOME_FOLDER/build/coverage.total &> lcov.log
+      $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total "/usr*" "`pwd`/googlebenchmark-prefix*" "*.cpp" -o $HOME_FOLDER/build/coverage.total
       $LCOV -l $HOME_FOLDER/build/coverage.total
       coveralls-lcov $HOME_FOLDER/build/coverage.total
 
