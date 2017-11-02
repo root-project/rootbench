@@ -148,7 +148,7 @@ script:
     d=$(date +%a -d "$d - 1 day")
   done;
 - echo "Initializing ROOT $ROOT_THISROOT"
-  source $ROOT_THISROOT
+- source $ROOT_THISROOT
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
     echo "Downloading Latest ROOT .gcno binaries."
@@ -163,13 +163,14 @@ script:
       d=$(date +%a -d "$d - 1 day")
     done;
     echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:untar.ROOTGCNO"
-    wget -qO- $ROOT_TARGCNO &> /dev/null
-    tar zxvf rootgcno.tgz $HOME_FOLDER/rootgcno > untar-details.log
+    wget $ROOTGCNO_TAR
+    tar zxvf rootgcno.tgz -C $HOME_FOLDER/rootgcno > untar-details.log
     mkdir $HOME_FOLDER/lcov && cd $HOME_FOLDER/lcov
     wget https://github.com/linux-test-project/lcov/archive/v1.13.zip
     unzip v1.13.zip
     LCOV="`pwd`/lcov-1.13/bin/lcov --gcov-tool gcov"
     mkdir -p $HOME_FOLDER/coveralls
+    cp -R $HOME_FOLDER/rootgcno/ $HOME_FOLDER/coveralls/
   fi
 - mkdir $HOME_FOLDER/build
 - cd $HOME_FOLDER/build
@@ -191,7 +192,7 @@ script:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       ls -la $HOME_FOLDER/coveralls
-      $LCOV -c -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info
+      $LCOV -c -d $HOME_FOLDER/coveralls --base-directory `pwd` --output-file $HOME_FOLDER/build/coverage.info  > lcov.log
   fi
 
 after_success:
