@@ -191,7 +191,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    delete pdf;
    delete nll;
 }
-BENCHMARK(BM_RooFit_BinnedTestMigrad)->DenseRange(1, 4)->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestMigrad)->DenseRange(1, 4)->UseRealTime()->Unit(benchmark::kMicrosecond);
 
 static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
 {
@@ -230,7 +230,7 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
 }
 
 //FIXME: suppress output from generating workspaces
-//BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(CustomArguments)->UseRealTime();
+//BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(CustomArguments)->UseRealTime()->Unit(benchmark::kMicrosecond);
 
 static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
 {
@@ -266,7 +266,7 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    delete pdf;
    delete nll;
 }
-BENCHMARK(BM_RooFit_BinnedTestHesse)->DenseRange(1, 4)->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestHesse)->DenseRange(1, 4)->UseRealTime()->Unit(benchmark::kMicrosecond);
 
 static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
 {
@@ -302,6 +302,6 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    delete pdf;
    delete nll;
 }
-BENCHMARK(BM_RooFit_BinnedTestMinos)->DenseRange(1, 4)->UseRealTime();
+BENCHMARK(BM_RooFit_BinnedTestMinos)->DenseRange(1, 4)->UseRealTime()->Unit(benchmark::kMicrosecond);
 
 BENCHMARK_MAIN();
