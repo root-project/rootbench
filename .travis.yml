@@ -95,6 +95,43 @@ matrix:
           sources: *sources
           packages: [*common_deps, 'clang-5.0', 'g++-multilib', 'libc6-dbg']
 
+    # Xcode 7.3 Clang
+    - env: CXX=clang++ CC=clang
+      compiler: clang
+      osx_image: xcode7.3
+      os: osx
+
+    # Xcode 8 Clang
+    - env: CXX=clang++ CC=clang
+      compiler: clang
+      osx_image: xcode8
+      os: osx
+
+    # Xcode 8.1 Clang
+    - env: CXX=clang++ CC=clang
+      compiler: clang
+      osx_image: xcode8.1
+      os: osx
+
+    # Xcode 8.3 Clang
+    - env: CXX=clang++ CC=clang
+      compiler: clang
+      osx_image: xcode8.3
+      os: osx
+
+
+    # OSX GCC 5
+    - env: CXX=g++-5 CC=gcc
+      compiler: gcc
+      osx_image: xcode7.3
+      os: osx
+
+    # OSX GCC 6
+    - env: CXX=g++-6 CC=gcc
+      compiler: gcc
+      osx_image: xcode8.3
+      os: osx
+
 before_install:
   - wget https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
   - sudo dpkg -i cvmfs-release-latest_all.deb
@@ -126,6 +163,26 @@ install:
        PATH=~/.local/bin:${PATH};
        pip install --user --upgrade pip;
        pip install --user cpp-coveralls;
+    fi
+  # OSX and GCC
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      brew update
+      # brew install ccache
+      # brew install valgrind
+      # cmake
+      if brew list -1 | grep -q "^cmake\$"; then
+        brew outdated cmake || brew upgrade cmake
+      else
+        brew install cmake
+      fi
+
+      # GCC
+      if [[ "$CC" == "gcc" ]]; then
+        GCC_VERSION=${CXX##g++-} # Convert g++-4.9 to 4.9
+        GCC_VERSION_DEC=${GCC_VERSION//./} # convert 4.9 to 49
+        brew install gcc$GCC_VERSION_DEC
+      fi
     fi
 
 script:
