@@ -64,8 +64,8 @@ static void BM_Cartesian3D_Theta(benchmark::State &state)
    }
    ComputeProcessedEntities(state, sizeof(T), VecTraits<T>::Sum(checksum));
 }
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Theta, double)->Range(8 << 10, 8 << 20);
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Theta, ROOT::Double_v)->Range(8 << 10, 8 << 20);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Theta, double)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Theta, ROOT::Double_v)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
 // BENCHMARK_TEMPLATE(BM_Cartesian3D_Theta, float)->Range(8 << 10, 8 << 20);
 // BENCHMARK_TEMPLATE(BM_Cartesian3D_Theta, ROOT::Float_v)->Range(8 << 10, 8 << 20);
 
@@ -89,8 +89,8 @@ static void BM_Cartesian3D_Phi(benchmark::State &state)
    }
    ComputeProcessedEntities(state, sizeof(T), VecTraits<T>::Sum(checksum));
 }
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Phi, double)->Range(8 << 10, 8 << 20);
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Phi, ROOT::Double_v)->Range(8 << 10, 8 << 20);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Phi, double)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Phi, ROOT::Double_v)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
 // BENCHMARK_TEMPLATE(BM_Cartesian3D_Phi, float)->Range(8 << 10, 8 << 20);
 // BENCHMARK_TEMPLATE(BM_Cartesian3D_Phi, ROOT::Float_v)->Range(8 << 10, 8 << 20);
 
@@ -115,8 +115,8 @@ static void BM_Cartesian3D_Mag2(benchmark::State &state)
 
    ComputeProcessedEntities(state, sizeof(T), VecTraits<T>::Sum(checksum));
 }
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Mag2, double)->Range(8 << 10, 8 << 20);
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Mag2, ROOT::Double_v)->Range(8 << 10, 8 << 20);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Mag2, double)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Mag2, ROOT::Double_v)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
 // BENCHMARK_TEMPLATE(BM_Cartesian3D_Mag2, float)->Range(8 << 10, 8 << 20);
 // BENCHMARK_TEMPLATE(BM_Cartesian3D_Mag2, ROOT::Float_v)->Range(8 << 10, 8 << 20);
 
