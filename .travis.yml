@@ -166,9 +166,9 @@ script:
     wget $ROOTGCNO_TAR
     tar zxvf rootgcno.tgz -C $HOME_FOLDER/rootgcno > untar-details.log
     mkdir $HOME_FOLDER/lcov && cd $HOME_FOLDER/lcov
-    wget https://github.com/linux-test-project/lcov/archive/v1.13.zip
-    unzip v1.13.zip
-    LCOV="`pwd`/lcov-1.13/bin/lcov --gcov-tool gcov"
+    wget https://github.com/linux-test-project/lcov/archive/v1.12.zip
+    unzip v1.12.zip
+    LCOV="`pwd`/lcov-1.12/bin/lcov --gcov-tool gcov"
     mkdir -p $HOME_FOLDER/coveralls
     cp -av $HOME_FOLDER/rootgcno/rootgcno/* $HOME_FOLDER/coveralls/ &> copy_output.log
     echo "Cloning ROOT sources"
