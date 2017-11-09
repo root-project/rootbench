@@ -119,10 +119,9 @@ install:
   - |
     pwd
     HOME_FOLDER=$(pwd)/../
+    export GCOV_PREFIX_STRIP=0
+    export GCOV_PREFIX=`pwd`
     if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-       export GCOV_PREFIX="$HOME_FOLDER/ROOT-gcov/"
-       mkdir -p $GCOV_PREFIX
-       #export GCOV_PREFIX_STRIP=16
        PATH=~/.local/bin:${PATH};
        pip install --user --upgrade pip;
        pip install --user cpp-coveralls;
@@ -156,7 +155,6 @@ script:
         ${EXTRA_OPTS} ../rootbench
 - cmake --build .
 - ctest -V --output-on-failure
-- find $GCOV_PREFIX
 - #find $HOME_FOLDER
 
 after_success:
