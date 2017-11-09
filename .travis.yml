@@ -186,18 +186,30 @@ script:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       $LCOV -c -i -d $HOME_FOLDER/coveralls/ --base-directory `pwd` \
-      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.init &> lcov.log
+      --output-file $HOME_FOLDER/build/coverage.init_part1 &> lcov.log
+  fi
+- |  
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --base-directory `pwd` \
+      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
+      --output-file $HOME_FOLDER/build/coverage.init_part2 &> lcov.log
   fi
 - ctest -L short || true
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
+      touch $HOME_FOLDER/build/coverage.init_part1
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
+      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`" \
+      --output-file $HOME_FOLDER/build/coverage.info_part1  &> lcov.log
+  fi
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      touch $HOME_FOLDER/build/coverage.init_part2
       $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
-      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.info  &> lcov.log
+      --output-file $HOME_FOLDER/build/coverage.info_part2 &> lcov.log
   fi
 
 after_success:
@@ -205,9 +217,11 @@ after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.total
-      $LCOV -a $HOME_FOLDER/build/coverage.init -a $HOME_FOLDER/build/coverage.info -o $HOME_FOLDER/build/coverage.total
+      $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
       $LCOV -l $HOME_FOLDER/build/coverage.total
+      cd ../rootbench
       coveralls-lcov $HOME_FOLDER/build/coverage.total
   fi
 on_failure:
