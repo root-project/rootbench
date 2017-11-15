@@ -116,7 +116,7 @@ before_install:
   - sudo mount -t cvmfs sft.cern.ch /cvmfs/sft.cern.ch
   - ls /cvmfs/sft.cern.ch
   # Install coveralls
-  - sudo gem install coveralls-lcov
+  - sudo gem install coveralls-lcov -v 1.5.0
   # Install GSL 2.0
   # FIXME: We should have it somewhere in cvmfs.
   #- sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
@@ -184,32 +184,36 @@ script:
 - cmake --build .
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      echo "LCOV part 1"
       find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --base-directory `pwd` \
+      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.init_part1 &> lcov.log
+      --output-file $HOME_FOLDER/build/coverage.init_part1
   fi
 - |  
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --base-directory `pwd` \
+      echo "LCOV part 2"
+      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --quiet --base-directory `pwd` \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
-      --output-file $HOME_FOLDER/build/coverage.init_part2 &> lcov.log
+      --output-file $HOME_FOLDER/build/coverage.init_part2
   fi
 - ctest -L short || true
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      touch $HOME_FOLDER/build/coverage.init_part1
-      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
+      touch $HOME_FOLDER/build/coverage.info_part1
+      echo "LCOV part 1"
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --quiet --base-directory `pwd` --ignore-errors graph \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part1  &> lcov.log
+      --output-file $HOME_FOLDER/build/coverage.info_part1
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      touch $HOME_FOLDER/build/coverage.init_part2
-      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
+      echo "LCOV part 2"
+      touch $HOME_FOLDER/build/coverage.info_part2
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --quiet --base-directory `pwd` --ignore-errors graph \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part2 &> lcov.log
+      --output-file $HOME_FOLDER/build/coverage.info_part2
   fi
 
 after_success:
@@ -217,12 +221,14 @@ after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.total
+      echo "LCOV combining all parts"
       $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
       $LCOV -l $HOME_FOLDER/build/coverage.total
       cd ../rootbench
-      coveralls-lcov $HOME_FOLDER/build/coverage.total
+      file -i $HOME_FOLDER/build/coverage.total
+      coveralls-lcov -v $HOME_FOLDER/build/coverage.total
   fi
 on_failure:
   -|
