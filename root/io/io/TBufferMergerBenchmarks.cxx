@@ -26,7 +26,7 @@ static void BM_TBufferFile_CreateEmpty(benchmark::State &state)
       TBufferMerger m(std::unique_ptr<TMemFile>(new TMemFile(filename, "RECREATE")));
    }
 }
-BENCHMARK(BM_TBufferFile_CreateEmpty);
+BENCHMARK(BM_TBufferFile_CreateEmpty)->Unit(benchmark::kMicrosecond);
 
 TBufferMerger *Merger = nullptr;
 static void BM_TBufferFile_GetFile(benchmark::State &state)
