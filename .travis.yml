@@ -141,7 +141,7 @@ script:
   d=$(date +%a)
   for i in `seq 1 7`; do
     ROOT_LOCATION=/cvmfs/sft-nightlies.cern.ch/lcg/nightlies/rootcov/$d/ROOT/
-    ROOT_THISROOT=$ROOT_LOCATION/HEAD-*/x86_64-ubuntu1404-gcc48-opt/bin/thisroot.sh
+    ROOT_THISROOT=$ROOT_LOCATION/HEAD-*/x86_64-ubuntu1404-gcc48-dbg/bin/thisroot.sh
     if ls $ROOT_THISROOT ; then
        break;
     fi
@@ -193,7 +193,7 @@ script:
 - |  
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       echo "LCOV part 2"
-      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --quiet --base-directory `pwd` \
+      $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
       --output-file $HOME_FOLDER/build/coverage.init_part2
   fi
@@ -203,17 +203,17 @@ script:
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       touch $HOME_FOLDER/build/coverage.info_part1
       echo "LCOV part 1"
-      $LCOV -c -d $HOME_FOLDER/coveralls/ --quiet --base-directory `pwd` --ignore-errors graph \
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part1
+      --output-file $HOME_FOLDER/build/coverage.info_part1 &> log
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       echo "LCOV part 2"
       touch $HOME_FOLDER/build/coverage.info_part2
-      $LCOV -c -d $HOME_FOLDER/coveralls/ --quiet --base-directory `pwd` --ignore-errors graph \
+      $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
       --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Debug/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/root/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part2
+      --output-file $HOME_FOLDER/build/coverage.info_part2 &> log
   fi
 
 after_success:
@@ -223,7 +223,7 @@ after_success:
       touch $HOME_FOLDER/build/coverage.total
       echo "LCOV combining all parts"
       $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2* -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
       $LCOV -l $HOME_FOLDER/build/coverage.total
       cd ../rootbench
