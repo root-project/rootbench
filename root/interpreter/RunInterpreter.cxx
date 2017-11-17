@@ -23,5 +23,10 @@ static void TestTutorial(benchmark::State &state, const char *dir, const char *t
 }
 
 BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "hsimple.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "tmva/TMVAGAexample.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "tree/hvector.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "matrix/invertMatrix.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "math/normalDist.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "fit/fitLinear.C")->Unit(benchmark::kMicrosecond);
 
 BENCHMARK_MAIN();
