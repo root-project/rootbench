@@ -128,15 +128,14 @@ install:
     fi
 
 script:
-- echo "Downloading Latest ROOT binaries."
+- echo "Exporting latest ROOT binaries."
 - |
   # Go one level up from REPO_SLUG/rootbench
   cd $HOME_FOLDER
-  mkdir root
   d=$(date +%a)
   for i in `seq 1 7`; do
     ROOT_LOCATION=/cvmfs/sft-nightlies.cern.ch/lcg/nightlies/rootcov/$d/ROOT/
-    ROOT_THISROOT=$ROOT_LOCATION/HEAD-a512e/x86_64-ubuntu1404-gcc48-opt/bin/thisroot.sh
+    ROOT_THISROOT=$ROOT_LOCATION/HEAD-*/x86_64-ubuntu1404-gcc48-opt/bin/thisroot.sh
     if ls $ROOT_THISROOT ; then
        break;
     fi
