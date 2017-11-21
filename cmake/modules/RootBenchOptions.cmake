@@ -1,1 +1,1 @@
-set(coverage ON "Test coverage")
+set(coverage OFF "Test coverage")
