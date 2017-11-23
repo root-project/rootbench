@@ -35,4 +35,16 @@ BENCHMARK_CAPTURE(TestTutorial, Test_roofit109, "tutorials/", "roofit/rf109_chi2
 BENCHMARK_CAPTURE(TestTutorial, Test_roofit110, "tutorials/", "roofit/rf110_normintegration.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_roofit204, "tutorials/", "roofit/rf204_extrangefit.C")->Unit(benchmark::kMicrosecond);
 
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_minuit2, "tutorials/", "fit/minuit2FitBench.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_minuit2Gaus, "tutorials/", "fit/minuit2GausFit.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_quadp, "tutorials/", "quadp/portfolio.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_foam, "tutorials/", "foam/foam_demo.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_fftw, "tutorials/", "fft/FFT.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_higgs, "tutorials/", "mlp/mlpHiggs.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_regression, "tutorials/", "mlp/mlpRegression.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_higgs, "tutorials/", "mlp/mlpHiggs.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_regression, "tutorials/", "mlp/mlpRegression.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_assembly, "tutorials/", "geom/assembly.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_na49, "tutorials/", "geom/na49.C")->Unit(benchmark::kMicrosecond);
+
 BENCHMARK_MAIN();
