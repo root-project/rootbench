@@ -153,7 +153,7 @@ script:
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
         ${EXTRA_OPTS} ../rootbench
 - cmake --build .
-- ctest -V || true
+- ctest || true
 - #find $HOME_FOLDER
 
 after_success:
