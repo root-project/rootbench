@@ -1,31 +1,6 @@
-#include <iostream>
-#include <cstdlib>
-#include <string>
-
-#include <unistd.h>
+#include "InterpreterTest.h"
 
 #include "benchmark/benchmark.h"
-
-static int runTutorial(const std::string& dir, const std::string& filename) {
-  if (getenv("ROOTSYS") == nullptr) {
-    std::cerr << "Couldn't find ROOTSYS environment variable!\n";
-    exit(1);
-  }
-  std::string rootsys = getenv("ROOTSYS");
-  std::string fullpath = rootsys + "/" + dir + "/" + filename;
-  std::string thisroot = rootsys + "/bin/thisroot.sh";
-  // FIXME: no source in /usr/dash
-  std::string rootInvocation = "source \"" + thisroot + "\" && root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
-    return std::system(rootInvocation.c_str());
-}
-
-static void TestTutorial(benchmark::State &state, const char *dir, const char *tutorial) {
-  // size_t peakSize = 0;
-  for(auto _ : state){
-      runTutorial(dir, tutorial);
-   }
-  // state.counters["PeakRSS"] = peakSize;
-}
 
 BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "hsimple.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_TMVAGAexample, "tutorials/", "tmva/TMVAGAexample.C")->Unit(benchmark::kMicrosecond);
@@ -38,24 +13,5 @@ BENCHMARK_CAPTURE(TestTutorial, Test_roofit105, "tutorials/", "roofit/rf105_func
 BENCHMARK_CAPTURE(TestTutorial, Test_roofit109, "tutorials/", "roofit/rf109_chi2residpull.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_roofit110, "tutorials/", "roofit/rf110_normintegration.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_roofit204, "tutorials/", "roofit/rf204_extrangefit.C")->Unit(benchmark::kMicrosecond);
-
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_minuit2, "tutorials/", "fit/minuit2FitBench.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_minuit2Gaus, "tutorials/", "fit/minuit2GausFit.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_quadp, "tutorials/", "quadp/portfolio.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_foam, "tutorials/", "foam/foam_demo.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_fftw, "tutorials/", "fft/FFT.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_higgs, "tutorials/", "mlp/mlpHiggs.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_regression, "tutorials/", "mlp/mlpRegression.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_higgs, "tutorials/", "mlp/mlpHiggs.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_regression, "tutorials/", "mlp/mlpRegression.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_assembly, "tutorials/", "geom/assembly.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_na49, "tutorials/", "geom/na49.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamAlice, "tutorials/", "geom/geamAlice.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamAtlas, "tutorials/", "geom/geamAtlas.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mp3player, "tutorials/", "geom/mp3player.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamD0, "tutorials/", "geom/geamD0.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_radionucl, "tutorials/", "geom/RadioNuclides.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_rootgeom, "tutorials/", "geom/rootgeom.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geodemo, "tutorials/", "geom/geodemo.C")->Unit(benchmark::kMicrosecond);
 
 BENCHMARK_MAIN();
