@@ -182,7 +182,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    m.setStrategy(0);
    m.setProfile(0);
    m.setLogFile("benchmigradlog");
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       m.migrad();
    }
    delete data;
@@ -219,7 +219,7 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    m.setStrategy(0);
    m.setProfile(0);
    m.setLogFile("benchmigradnchanellog");
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       m.migrad();
    }
    delete data;
@@ -257,7 +257,7 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    m.setProfile(0);
    m.setLogFile("benchhesselog");
    m.migrad();
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       m.hesse();
    }
    delete data;
@@ -293,7 +293,7 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    m.setProfile(0);
    m.setLogFile("benchminoslog");
    m.migrad();
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       m.minos();
    }
    delete data;

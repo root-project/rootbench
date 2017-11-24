@@ -13,13 +13,18 @@ static int runTutorial(const std::string& dir, const std::string& filename) {
   }
   std::string rootsys = getenv("ROOTSYS");
   std::string fullpath = rootsys + "/" + dir + "/" + filename;
-  std::string rootInvocation = "root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
-  return std::system(rootInvocation.c_str());
+  std::string thisroot = rootsys + "/bin/thisroot.sh";
+  // FIXME: no source in /usr/dash
+  std::string rootInvocation = "source \"" + thisroot + "\" && root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
+    return std::system(rootInvocation.c_str());
 }
 
 static void TestTutorial(benchmark::State &state, const char *dir, const char *tutorial) {
-   while (state.KeepRunning())
+  // size_t peakSize = 0;
+  for(auto _ : state){
       runTutorial(dir, tutorial);
+   }
+  // state.counters["PeakRSS"] = peakSize;
 }
 
 BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "hsimple.C")->Unit(benchmark::kMicrosecond);
