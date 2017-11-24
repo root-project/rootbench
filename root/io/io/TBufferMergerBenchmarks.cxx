@@ -22,7 +22,7 @@ int GetNumberHardwareThreads()
 static void BM_TBufferFile_CreateEmpty(benchmark::State &state)
 {
    const char *filename = "empty.root";
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       TBufferMerger m(std::unique_ptr<TMemFile>(new TMemFile(filename, "RECREATE")));
    }
 }
@@ -40,7 +40,7 @@ static void BM_TBufferFile_GetFile(benchmark::State &state)
       // when we benchmark IO.
       Merger = new TBufferMerger(std::unique_ptr<TMemFile>(new TMemFile("virtual_file.root", "RECREATE")));
    }
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       // Run the test as normal.
       auto myFile = Merger->GetFile();
    }
@@ -94,7 +94,7 @@ static void BM_TBufferFile_FillTreeWithRandomData(benchmark::State &state)
       Merger = new TBufferMerger(std::unique_ptr<TMemFile>(new TMemFile("virtual_file.root", "RECREATE")));
    }
    int flush = state.range(0);
-   while (state.KeepRunning())
+   for (auto _ : state)
       FillTreeWithRandomData(*Merger, flush);
    auto size = Merger->GetFile()->GetSize();
    std::stringstream ss;

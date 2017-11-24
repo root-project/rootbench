@@ -23,7 +23,7 @@ Point<T> sp6(p_x(ggen), p_y(ggen), p_z(ggen));
 template <typename T>
 static void BM_Transform3D(benchmark::State &state)
 {
-   while (state.KeepRunning()) {
+   for (auto _ : state){
       ROOT::Math::Impl::Transform3D<T> st(sp1, sp2, sp3, sp4, sp5, sp6);
       st.Translation();
    }
@@ -38,7 +38,7 @@ using Point = ROOT::Math::PositionVector3D<ROOT::Math::Cartesian3D<T>, ROOT::Mat
 template <typename T>
 static void BM_Point3D(benchmark::State &state)
 {
-   while (state.KeepRunning())
+   for (auto _ : state)
       Point<T> sp1, sp2, sp3, sp4, sp5, sp6;
 }
 
@@ -48,7 +48,7 @@ BENCHMARK_TEMPLATE(BM_Point3D, ROOT::Double_v)->Range(8, 8 << 10)->Complexity(be
 template <typename T>
 static void BM_Point3D_Gen(benchmark::State &state)
 {
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       Point<T> sp1(p_x(ggen), p_y(ggen), p_z(ggen));
    }
 }
@@ -59,7 +59,7 @@ template <typename T>
 static void BM_Plane3D(benchmark::State &state)
 {
    const double a(p0(ggen)), b(p1(ggen)), c(p2(ggen)), d(p3(ggen));
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       Plane<T> sc_plane(a, b, c, d);
    }
 }
@@ -71,7 +71,7 @@ template <typename T>
 static void BM_Plane3D_Hessian(benchmark::State &state)
 {
    const double a(p0(ggen)), b(p1(ggen)), c(p2(ggen)), d(p3(ggen));
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       Plane<T> sc_plane(a, b, c, d);
       sc_plane.HesseDistance();
    }
@@ -83,7 +83,7 @@ template <typename T>
 static void BM_Plane3D_Normal(benchmark::State &state)
 {
    const double a(p0(ggen)), b(p1(ggen)), c(p2(ggen)), d(p3(ggen));
-   while (state.KeepRunning()) {
+   for (auto _ : state) {
       Plane<T> sc_plane(a, b, c, d);
       sc_plane.Normal();
    }
