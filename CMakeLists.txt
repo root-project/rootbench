@@ -26,39 +26,11 @@ find_package(ROOT REQUIRED)
 #---Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
+include(GoogleBenchmark)
+
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
-
-#---Removing -Woverloaded-virtual from inherited ROOT compilation flags (gbenchmark is crashing)
-string(REPLACE "-Woverloaded-virtual" "" GBENCHMARK_CMAKE_CXX_FLAGS ${ROOT_CXX_FLAGS})
-
-#---Find and install google benchmark
-ExternalProject_Add(
-  googlebenchmark
-  GIT_REPOSITORY https://github.com/google/benchmark.git
-  GIT_TAG master
-  UPDATE_COMMAND ""
-  # TIMEOUT 10
-  # # Force separate output paths for debug and release builds to allow easy
-  # # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
-  # CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
-  #            -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
-  #            -Dgtest_force_shared_crt=ON
-  CMAKE_ARGS -G ${CMAKE_GENERATOR}
-  -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-  -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-  -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-  -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-  -DCMAKE_CXX_FLAGS=${GBENCHMARK_CMAKE_CXX_FLAGS}
-  -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-  # Disable install step
-  INSTALL_COMMAND ""
-  BUILD_BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/googletest-prefix/src/libbenchmark.a"
-  # Wrap download, configure and build steps in a script to log output
-  LOG_DOWNLOAD ON
-  LOG_CONFIGURE ON
-  LOG_BUILD ON)
 
 include(RootBenchOptions)
 
@@ -71,19 +43,6 @@ if(coverage)
   set(CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_SHAREDLINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 endif()
-
-# Specify include dirs for googlebenchmark
-ExternalProject_Get_Property(googlebenchmark source_dir)
-set(GBENCHMARK_INCLUDE_DIR ${source_dir}/include)
-
-# Libraries
-ExternalProject_Get_Property(googlebenchmark binary_dir)
-set(_GBENCH_LIBRARY_PATH ${binary_dir}/)
-
-# Register googlebenchmark
-add_library(gbenchmark IMPORTED STATIC GLOBAL)
-set_property(TARGET gbenchmark PROPERTY IMPORTED_LOCATION ${_GBENCH_LIBRARY_PATH}/src/libbenchmark.a)
-add_dependencies(gbenchmark googlebenchmark)
 
 # Enable and setup CTest.
 include(RootBenchCTest)
