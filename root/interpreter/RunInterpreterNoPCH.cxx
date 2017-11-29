@@ -13,10 +13,10 @@ BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_higgs, "tutorials/", "mlp/mlpHigg
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_regression, "tutorials/", "mlp/mlpRegression.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_assembly, "tutorials/", "geom/assembly.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_na49, "tutorials/", "geom/na49.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamAlice, "tutorials/", "geom/geamAlice.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamAtlas, "tutorials/", "geom/geamAtlas.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geomAlice, "tutorials/", "geom/geomAlice.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geomAtlas, "tutorials/", "geom/geomAtlas.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mp3player, "tutorials/", "geom/mp3player.C")->Unit(benchmark::kMicrosecond);
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamD0, "tutorials/", "geom/geamD0.C")->Unit(benchmark::kMicrosecond);
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamD0, "tutorials/", "geom/geomD0.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_radionucl, "tutorials/", "geom/RadioNuclides.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_rootgeom, "tutorials/", "geom/rootgeom.C")->Unit(benchmark::kMicrosecond);
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geodemo, "tutorials/", "geom/geodemo.C")->Unit(benchmark::kMicrosecond);
