@@ -6,7 +6,7 @@ string(REPLACE "-Woverloaded-virtual" "" GBENCHMARK_CMAKE_CXX_FLAGS ${ROOT_CXX_F
 ExternalProject_Add(
   googlebenchmark
   GIT_REPOSITORY https://github.com/google/benchmark.git
-  GIT_TAG master
+  GIT_TAG v1.3.0
   UPDATE_COMMAND ""
   # TIMEOUT 10
   # # Force separate output paths for debug and release builds to allow easy
