@@ -1,4 +1,4 @@
-#add_subdirectory(math)
+add_subdirectory(math)
 add_subdirectory(io)
 add_subdirectory(interpreter)
 if (ROOT_roofit_FOUND AND ROOT_xml_FOUND)
