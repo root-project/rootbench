@@ -142,8 +142,8 @@ static void BM_Cartesian3D_Scale(benchmark::State &state)
 
    ComputeProcessedEntities(state, sizeof(T), VecTraits<T>::Sum(checksum));
 }
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Scale, double)->Range(8 << 10, 8 << 20);
-BENCHMARK_TEMPLATE(BM_Cartesian3D_Scale, ROOT::Double_v)->Range(8 << 10, 8 << 20);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Scale, double)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
+BENCHMARK_TEMPLATE(BM_Cartesian3D_Scale, ROOT::Double_v)->Range(8 << 10, 8 << 20)->Unit(benchmark::kMicrosecond);
 
 // Define our main.
 BENCHMARK_MAIN();
