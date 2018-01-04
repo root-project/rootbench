@@ -2,7 +2,7 @@
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
-  cmake_parse_arguments(ARG "" "" "LIBRARIES" ${ARGN})
+  cmake_parse_arguments(ARG "" "" "LABEL;LIBRARIES" ${ARGN})
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
   set(source_files ${ARG_UNPARSED_ARGUMENTS})
   add_executable(${benchmark} ${source_files})
@@ -19,7 +19,7 @@ function(RB_ADD_GBENCHMARK benchmark)
   #  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}
   #  LABELS "benchmark")
   add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false)
-  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 300 RUN_SERIAL TRUE)
+  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 300 LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
 endfunction(RB_ADD_GBENCHMARK)
 
 #----------------------------------------------------------------------------
