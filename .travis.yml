@@ -151,6 +151,8 @@ script:
     cp -av $HOME_FOLDER/rootgcno/rootgcno/* $HOME_FOLDER/coveralls/ &> copy_output.log
     echo "Cloning ROOT sources"
     git clone https://github.com/root-project/root.git $HOME_FOLDER/rootsource
+    mkdir $HOME_FOLDER/travis-fix
+    git clone https://github.com/slodki/travis-wait-log.git $HOME_FOLDER/travis-fix
   fi
 - echo $ROOTSYS
 - mkdir $HOME_FOLDER/build
@@ -166,34 +168,19 @@ script:
       touch $HOME_FOLDER/build/coverage.init_part1
       echo "LCOV init part 1 (due complex setup of CI slaves for ROOT builds)"
       find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      travis_wait $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
-      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=>`echo $ROOTSYS/`" \
+      export LCOV_PATH_ROOTSYS="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`\""
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
+      --rc $LCOV_PATH_ROOTSYS \
       --output-file $HOME_FOLDER/build/coverage.init_part1
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       touch $HOME_FOLDER/build/coverage.init_part2
       echo "LCOV init part 2 (due complex setup of CI slaves for ROOT builds)"
-      travis_wait $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
-      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=>`echo $HOME_FOLDER/rootsource/`" \
+      export LCOV_PATH_ROOT="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/rootsource/`\""
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
+      --rc $LCOV_PATH_ROOT \
       --output-file $HOME_FOLDER/build/coverage.init_part2
-  fi
-- |
-  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      touch $HOME_FOLDER/build/coverage.init_part11
-      echo "LCOV init part 1.1 (due complex setup of CI slaves for ROOT builds)"
-      find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      travis_wait $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
-      --rc "geninfo_adjust_src_path=/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=>`echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.init_part11
-  fi
-- |
-  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      touch $HOME_FOLDER/build/coverage.init_part22
-      echo "LCOV init part 2.1 (due complex setup of CI slaves for ROOT builds)"
-      travis_wait $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
-      --rc "geninfo_adjust_src_path=/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=>`echo $HOME_FOLDER/rootsource/`" \
-      --output-file $HOME_FOLDER/build/coverage.init_part22
   fi
 - ctest || true
 - |
@@ -201,34 +188,19 @@ script:
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
       touch $HOME_FOLDER/build/coverage.info_part1
       echo "LCOV info part 1 (due complex setup of CI slaves for ROOT builds)"
-      travis_wait $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
-      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=>`echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part1 &> log
-  fi
-- |
-  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      touch $HOME_FOLDER/build/coverage.info_part11
-      echo "LCOV info part 1.1 (due complex setup of CI slaves for ROOT builds)"
-      travis_wait $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
-      --rc "geninfo_adjust_src_path=/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=>`echo $ROOTSYS/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part11 &> log
+      export LCOV_PATH_ROOTSYS="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`\""
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -d $HOME_FOLDER/coveralls/ --no-markers --quiet  --base-directory `pwd` --ignore-errors graph \
+      --rc $LCOV_PATH_ROOTSYS \
+      --output-file $HOME_FOLDER/build/coverage.info_part1
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       echo "LCOV info part 2 (due complex setup of CI slaves for ROOT builds)"
+      export LCOV_PATH_ROOT="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/rootsource/`\""
       touch $HOME_FOLDER/build/coverage.info_part2
-      travis_wait $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
-      --rc "geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=>`echo $HOME_FOLDER/rootsource/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part2 &> log
-  fi
-- |
-  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      echo "LCOV info part 2.1 (due complex setup of CI slaves for ROOT builds)"
-      touch $HOME_FOLDER/build/coverage.info_part22
-      travis_wait $LCOV -c -d $HOME_FOLDER/coveralls/ --base-directory `pwd` --ignore-errors graph \
-      --rc "geninfo_adjust_src_path=/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=>`echo $HOME_FOLDER/rootsource/`" \
-      --output-file $HOME_FOLDER/build/coverage.info_part22 &> log
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -d $HOME_FOLDER/coveralls/ --no-markers --quiet  --base-directory `pwd` --ignore-errors graph \
+      --rc $LCOV_PATH_ROOT \
+      --output-file $HOME_FOLDER/build/coverage.info_part2
   fi
 
 after_success:
@@ -237,7 +209,6 @@ after_success:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       echo "LCOV combining all parts"
       $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total
-      $LCOV -a $HOME_FOLDER/build/coverage.init_part11 -a $HOME_FOLDER/build/coverage.init_part22 -a $HOME_FOLDER/build/coverage.info_part11 -a $HOME_FOLDER/build/coverage.info_part22 -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2* -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/build/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
