@@ -19,7 +19,7 @@ function(RB_ADD_GBENCHMARK benchmark)
   #  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}
   #  LABELS "benchmark")
   add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false)
-  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 300)
+  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 300 RUN_SERIAL TRUE)
 endfunction(RB_ADD_GBENCHMARK)
 
 #----------------------------------------------------------------------------
