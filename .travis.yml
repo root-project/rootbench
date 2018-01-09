@@ -116,15 +116,14 @@ before_install:
   - sudo mount -t cvmfs sft.cern.ch /cvmfs/sft.cern.ch
   - ls /cvmfs/sft.cern.ch
   # Install coveralls
-  - sudo gem install coveralls-lcov -v 1.5.0
+  - sudo gem install coveralls-lcov -v 1.5.1
   - sudo gem install lcoveralls
   # Install GSL 2.0
   # FIXME: We should have it somewhere in cvmfs.
   #- sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
   #- sudo apt-get install libgsl2
   - source /cvmfs/sft.cern.ch/lcg/views/LCG_rootext20170929/x86_64-ubuntu1404-gcc48-opt/setup.sh
-  - export LANG=en_US.UTF-8
-  - export LANGUAGE=en_US:en
+  - sudo locale-gen en_US.UTF-8
 
 install:
   - |
@@ -232,14 +231,14 @@ after_success:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       echo "LCOV combining all parts"
       $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2*  \*/interpreter/* -o $HOME_FOLDER/build/coverage.total
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/build/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total &> log
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total &> log
       $LCOV -r $HOME_FOLDER/build/coverage.total \*/rootbench/root/* -o $HOME_FOLDER/build/coverage.total &> log
       $LCOV -l $HOME_FOLDER/build/coverage.total
       cd ../rootbench
-      iconv -c -f utf-8 -t ascii $HOME_FOLDER/build/coverage.total &> log
-      coveralls-lcov -v --source-encoding=US-ASCII $HOME_FOLDER/build/coverage.total
+      iconv -c -f utf-8 -t utf-8 -c $HOME_FOLDER/build/coverage.total &> log
+      coveralls-lcov -v $HOME_FOLDER/build/coverage.total
   fi
 on_failure:
   -|
