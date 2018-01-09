@@ -1,4 +1,6 @@
-sudo: true
+sudo: false
+
+dist: trusty
 
 language: cpp
 
@@ -32,7 +34,7 @@ matrix:
     # queue faster while not blocking Linux builds from occuring.
 
     # Coverage
-    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-DCoverage=On"
+    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-Dcoverage=ON"
       compiler: gcc
       addons:
         apt:
@@ -96,74 +98,128 @@ matrix:
           packages: [*common_deps, 'clang-5.0', 'g++-multilib', 'libc6-dbg']
 
 before_install:
-  - wget https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
-  - sudo dpkg -i cvmfs-release-latest_all.deb
-  - sudo apt-get update
-  - sudo apt-get install cvmfs cvmfs-config-default
-  - rm -f cvmfs-release-latest_all.deb
-  - sudo mkdir -p /etc/cvmfs/
-  - echo "CVMFS_REPOSITORIES=sft.cern.ch,projects.cern.ch" > default.local
-  - echo "CVMFS_HTTP_PROXY=DIRECT" >> default.local
-  - sudo mv default.local /etc/cvmfs/
-  - sudo /etc/init.d/autofs stop
-  - sudo cvmfs_config setup
-  - sudo mkdir -p /cvmfs/sft-nightlies.cern.ch
-  - sudo mount -t cvmfs sft-nightlies.cern.ch /cvmfs/sft-nightlies.cern.ch
-  - ls /cvmfs/sft-nightlies.cern.ch
-  # Install GSL 2.0
-  # FIXME: We should have it somewhere in cvmfs.
-  - sudo add-apt-repository -y ppa:tsvetko.tsvetkov/trusty-backports && sudo apt-get update
-  - sudo apt-get install libgsl2
-
-install:
-  - |
-    pwd
-    HOME_FOLDER=$(pwd)/../
-    export GCOV_PREFIX_STRIP=0
-    export GCOV_PREFIX=`pwd`
-    if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-       PATH=~/.local/bin:${PATH};
-       pip install --user --upgrade pip;
-       pip install --user cpp-coveralls;
-    fi
+  - export LANG=en_US.UTF-8
+  - export LANGUAGE=en_US:en
+  # Install coveralls
+  - gem install coveralls-lcov -v 1.5.0
 
 script:
-- echo "Exporting latest ROOT binaries."
+- echo "Downloading Latest ROOT binaries."
 - |
+  pwd
+  HOME_FOLDER=$(pwd)/../
   # Go one level up from REPO_SLUG/rootbench
   cd $HOME_FOLDER
+  mkdir root
   d=$(date +%a)
   for i in `seq 1 7`; do
-    ROOT_LOCATION=/cvmfs/sft-nightlies.cern.ch/lcg/nightlies/rootcov/$d/ROOT/
-    ROOT_THISROOT=$ROOT_LOCATION/HEAD-*/x86_64-ubuntu1404-gcc48-opt/bin/thisroot.sh
-    if ls $ROOT_THISROOT ; then
+    ROOT_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/ROOT-HEAD_507d5-x86_64-ubuntu1404-gcc48-opt.tgz
+    if curl -s -f --head $ROOT_TAR ; then
        break;
     fi
     d=$(date +%a -d "$d - 1 day")
   done;
 - |
   cd root
-  echo "Initializing ROOT $ROOT_THISROOT"
-  source $ROOT_THISROOT
-  which root
+  echo "Downloading and untaring $ROOT_TAR" && echo -en "travis_fold:start:untar.ROOT"
+  curl $ROOT_TAR | tar xvz > untar-details.log
+  ls -la
+  source ROOT/HEAD/x86_64-ubuntu1404-gcc48-opt/bin/thisroot.sh
   cd $HOME_FOLDER
+  echo -en "travis_fold:end:untar.ROOT"
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    echo "Downloading Latest ROOT .gcno binaries."
+    cd $HOME_FOLDER
+    mkdir $HOME_FOLDER/rootgcno
+    d=$(date +%a)
+    for i in `seq 1 7`; do
+      ROOTGCNO_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/rootgcno.tgz
+      if curl -s -f --head $ROOTGCNO_TAR ; then
+        break;
+      fi
+      d=$(date +%a -d "$d - 1 day")
+    done;
+    echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:untar.ROOTGCNO"
+    wget $ROOTGCNO_TAR
+    tar zxvf rootgcno.tgz -C $HOME_FOLDER/rootgcno > untar-details.log
+    mkdir $HOME_FOLDER/lcov && cd $HOME_FOLDER/lcov
+    wget https://github.com/linux-test-project/lcov/archive/v1.12.zip
+    unzip v1.12.zip
+    LCOV="`pwd`/lcov-1.12/bin/lcov --gcov-tool gcov"
+    mkdir -p $HOME_FOLDER/coveralls
+    cp -av $HOME_FOLDER/rootgcno/rootgcno/* $HOME_FOLDER/coveralls/ &> copy_output.log
+    echo "Cloning ROOT sources"
+    git clone https://github.com/root-project/root.git $HOME_FOLDER/rootsource
+    mkdir $HOME_FOLDER/travis-fix
+    git clone https://github.com/slodki/travis-wait-log.git $HOME_FOLDER/travis-fix
+  fi
+- echo $ROOTSYS
 - mkdir $HOME_FOLDER/build
 - cd $HOME_FOLDER/build
+- export GCOV_PREFIX=`pwd`
+- export GCOV_PREFIX_STRIP=0
 - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
         ${EXTRA_OPTS} ../rootbench
 - cmake --build .
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      touch $HOME_FOLDER/build/coverage.init_part1
+      echo "LCOV init part 1 (due complex setup of CI slaves for ROOT builds)"
+      find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
+      export LCOV_PATH_ROOTSYS="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`\""
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
+      --rc $LCOV_PATH_ROOTSYS \
+      --output-file $HOME_FOLDER/build/coverage.init_part1
+  fi
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      touch $HOME_FOLDER/build/coverage.init_part2
+      echo "LCOV init part 2 (due complex setup of CI slaves for ROOT builds)"
+      export LCOV_PATH_ROOT="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/rootsource/`\""
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
+      --rc $LCOV_PATH_ROOT \
+      --output-file $HOME_FOLDER/build/coverage.init_part2
+  fi
 - ctest || true
-- #find $HOME_FOLDER
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
+      touch $HOME_FOLDER/build/coverage.info_part1
+      echo "LCOV info part 1 (due complex setup of CI slaves for ROOT builds)"
+      export LCOV_PATH_ROOTSYS="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`\""
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -d $HOME_FOLDER/coveralls/ --no-markers --quiet  --base-directory `pwd` --ignore-errors graph \
+      --rc $LCOV_PATH_ROOTSYS \
+      --output-file $HOME_FOLDER/build/coverage.info_part1
+  fi
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      echo "LCOV info part 2 (due complex setup of CI slaves for ROOT builds)"
+      export LCOV_PATH_ROOT="\"geninfo_adjust_src_path=/mnt/vdb/lsf/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/rootsource/`\""
+      touch $HOME_FOLDER/build/coverage.info_part2
+      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -d $HOME_FOLDER/coveralls/ --no-markers --quiet  --base-directory `pwd` --ignore-errors graph \
+      --rc $LCOV_PATH_ROOT \
+      --output-file $HOME_FOLDER/build/coverage.info_part2
+  fi
 
 after_success:
 
 - |
-  # FIXME: Figure out the right coveralls arguments to send the reports.
-  if [ "${EXTRA_OPTS}" == "-DCoverage=On" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    coveralls --verbose --gcov-options '\-lp' --root $HOME_FOLDER --build-root $HOME_FOLDER;
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+      echo "LCOV combining all parts"
+      $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/build/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -r $HOME_FOLDER/build/coverage.total \*/rootbench/* -o $HOME_FOLDER/build/coverage.total
+      $LCOV -l $HOME_FOLDER/build/coverage.total
+      cd ../rootbench
+      file -i $HOME_FOLDER/build/coverage.total
+      CHARS=$(python -c 'print u"\xE2".encode("utf8")')
+      sed 's/['"$CHARS"']//g' < $HOME_FOLDER/build/coverage.total > $HOME_FOLDER/build/coverage.total.final
+      coveralls-lcov -v --source-encoding=US-ASCII $HOME_FOLDER/build/coverage.total.final
   fi
-
 on_failure:
   -|
    echo "Showing current directory contents"
