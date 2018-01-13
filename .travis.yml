@@ -1,6 +1,8 @@
 sudo: true
 
-language: cpp
+# Specifying none will let us define CXX and CC in the way we want.
+# See more: https://github.com/travis-ci/travis-ci/issues/6083
+language: none
 
 addons: &addons
   apt:
