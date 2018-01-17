@@ -48,7 +48,7 @@ Channel makeChannel(int channel, int nbins, int nnps, bool channel_crosstalk)
          Signal_Hist->Fill(bin + 0.5);
          Data_Hist->Fill(bin + 0.5);
       }
-      for (Int_t i = 0; i <= 20; ++i) {
+      for (Int_t i = 0; i <= nbins; ++i) {
          Background_Hist->Fill(bin + 0.5);
          Data_Hist->Fill(bin + 0.5);
       }
@@ -118,15 +118,13 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
    RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
    int chan = state.range(0);
-   std::cout << "channel is " << chan <<std::endl;
    int cpu = state.range(1);
-   std::string workspace_file = "worspace" + std::to_string(chan) + "chans_"  + std::to_string(cpu) + ".root";
-   TFile *infile = new TFile(workspace_file.c_str());
+   TFile *infile = new TFile("workspace.root","RECREATE");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(chan, 10, 3, workspace_file.c_str());
+   buildBinnedTest(chan, 10, 2, "workspace.root");
    std::cout << "Workspace for tests was created!" << std::endl;
    //}
-   infile = TFile::Open(workspace_file.c_str());
+   infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
    RooAbsData *data = w->data("obsData");
    ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
@@ -159,7 +157,7 @@ static void BM_RooFit_BinnedTestHesse_NChannel(benchmark::State &state)
    int cpu = state.range(1);
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(chan, 10, 3, "workspace.root");
+   buildBinnedTest(chan, 10, 2, "workspace.root");
    std::cout << "Workspace for tests was created!" << std::endl;
       //   }
    infile = TFile::Open("workspace.root");
@@ -200,7 +198,7 @@ static void BM_RooFit_BinnedTestMinos_NChannel(benchmark::State &state)
    int cpu = state.range(1);
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(chan, 10, 3, "workspace.root");
+   buildBinnedTest(chan, 10, 2, "workspace.root");
    std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile = TFile::Open("workspace.root");
@@ -232,14 +230,14 @@ static void BM_RooFit_BinnedTestMinos_NChannel(benchmark::State &state)
 //############## Run # Channel Tests ############################### 
 
 static void ChanArguments(benchmark::internal::Benchmark* b) {
-  for (int i = 1; i <= 4; ++i)
+  for (int i = 1; i <= 10; ++i)
     for (int j = 1; j <= 3; ++j)
       b->Args({i, j});
 }
 
-// BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(3);
-// BENCHMARK(BM_RooFit_BinnedTestHesse_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(3);
-// BENCHMARK(BM_RooFit_BinnedTestMinos_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(10);
+//BENCHMARK(BM_RooFit_BinnedTestHesse_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+//BENCHMARK(BM_RooFit_BinnedTestMinos_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
 
 
 //############## End Of #ChannelTtests ###############################
@@ -256,13 +254,12 @@ static void BM_RooFit_BinnedTestMigrad_NBin(benchmark::State &state)
    RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
    int bin = state.range(0);
    int cpu = state.range(1);
-   std::string workspace_file = "worspace" + std::to_string(bin) + "bins_"  + std::to_string(cpu) + ".root";
-   TFile *infile = new TFile(workspace_file.c_str());
+   TFile *infile = new TFile("workspace.root","RECREATE");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(1, bin, 3, workspace_file.c_str());
+   buildBinnedTest(1, bin, 2, "workspace.root");
    std::cout << "Workspace for tests was created!" << std::endl;
    //}
-   infile = TFile::Open(workspace_file.c_str());
+   infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
    RooAbsData *data = w->data("obsData");
    ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
@@ -294,7 +291,7 @@ static void BM_RooFit_BinnedTestHesse_NBin(benchmark::State &state)
    int cpu = state.range(1);
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(1, bin, 3, "workspace.root");
+   buildBinnedTest(1, bin, 2, "workspace.root");
    std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile = TFile::Open("workspace.root");
@@ -335,7 +332,7 @@ static void BM_RooFit_BinnedTestMinos_NBin(benchmark::State &state)
    int cpu = state.range(1);
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(1, bin, 3, "workspace.root");
+   buildBinnedTest(1, bin, 2, "workspace.root");
    std::cout << "Workspace for tests was created!" << std::endl;
    //   }
    infile = TFile::Open("workspace.root");
@@ -367,14 +364,14 @@ static void BM_RooFit_BinnedTestMinos_NBin(benchmark::State &state)
 //############## Run # Bin Tests #################################### 
 
 static void BinArguments(benchmark::internal::Benchmark* b) {
-  for (int i = 1; i <= 1; ++i)
-    for (int j = 1; j <= 1; ++j)
-      b->Args({10000000, j});
+  for (int i = 1; i <= 10; ++i)
+    for (int j = 1; j <= 3; ++j)
+      b->Args({i*10, j});
 }
 
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
-// BENCHMARK(BM_RooFit_BinnedTestHesse_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(3);
-// BENCHMARK(BM_RooFit_BinnedTestMinos_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestMigrad_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(10);
+//BENCHMARK(BM_RooFit_BinnedTestHesse_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+//BENCHMARK(BM_RooFit_BinnedTestMinos_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
 
 
 

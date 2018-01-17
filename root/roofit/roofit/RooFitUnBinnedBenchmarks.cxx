@@ -184,7 +184,7 @@ static void EventArguments(benchmark::internal::Benchmark* b) {
       b->Args({i*100000, j});
 }
 
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Apply(EventArguments)->UseRealTime()->Iterations(12);
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Apply(EventArguments)->UseRealTime()->Iterations(10);
 // BENCHMARK(BM_RooFit_BDecayGaussResolution)->Apply(EventArguments)->UseRealTime()->Iterations(12);
 // BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Apply(EventArguments)->UseRealTime()->Iterations(12);
 
