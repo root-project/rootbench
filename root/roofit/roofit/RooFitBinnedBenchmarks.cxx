@@ -230,20 +230,18 @@ static void BM_RooFit_BinnedTestMinos_NChannel(benchmark::State &state)
 //############## Run # Channel Tests ############################### 
 
 static void ChanArguments(benchmark::internal::Benchmark* b) {
-  for (int i = 1; i <= 10; ++i)
+  for (int i = 1; i <= 4; ++i)
     for (int j = 1; j <= 3; ++j)
       b->Args({i, j});
 }
 
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(10);
-//BENCHMARK(BM_RooFit_BinnedTestHesse_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
-//BENCHMARK(BM_RooFit_BinnedTestMinos_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
-
+BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestHesse_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestMinos_NChannel)->Apply(ChanArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
 
 //############## End Of #ChannelTtests ###############################
 //####################################################################
 //############## Start Of #Bin Tests #################################
-
 
 static void BM_RooFit_BinnedTestMigrad_NBin(benchmark::State &state)
 {
@@ -364,16 +362,14 @@ static void BM_RooFit_BinnedTestMinos_NBin(benchmark::State &state)
 //############## Run # Bin Tests #################################### 
 
 static void BinArguments(benchmark::internal::Benchmark* b) {
-  for (int i = 1; i <= 10; ++i)
+  for (int i = 1; i <= 4; ++i)
     for (int j = 1; j <= 3; ++j)
-      b->Args({i*10, j});
+      b->Args({i*5, j});
 }
 
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(10);
-//BENCHMARK(BM_RooFit_BinnedTestHesse_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
-//BENCHMARK(BM_RooFit_BinnedTestMinos_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
-
-
+BENCHMARK(BM_RooFit_BinnedTestMigrad_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestHesse_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestMinos_NBin)->Apply(BinArguments)->UseRealTime()->Unit(benchmark::kMicrosecond)->Iterations(1);
 
 //############## End Of Tests ########################################
 //####################################################################
