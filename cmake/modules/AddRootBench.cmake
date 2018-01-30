@@ -18,8 +18,13 @@ function(RB_ADD_GBENCHMARK benchmark)
   #  COMMAND ${benchmark}
   #  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}
   #  LABELS "benchmark")
+  if(${ARG_LABEL} STREQUAL "long")
+    set(${TIMEOUT_VALUE} 1200)
+  elseif($ARG_LABEL STREQUAL "short")
+    set(${TIMEOUT_VALUE} 3600)
+  endif()
   add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false)
-  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT 300 LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
 endfunction(RB_ADD_GBENCHMARK)
 
 #----------------------------------------------------------------------------
