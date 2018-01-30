@@ -179,13 +179,13 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
 
 
 static void EventArguments(benchmark::internal::Benchmark* b) {
-  for (int i = 1; i <=10; ++i )
+  for (int i = 1; i <=4; ++i )
     for (int j = 1; j <= 4; ++j)
-      b->Args({i*100000, j});
+      b->Args({i*10000, j});
 }
 
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Apply(EventArguments)->UseRealTime()->Iterations(10);
-// BENCHMARK(BM_RooFit_BDecayGaussResolution)->Apply(EventArguments)->UseRealTime()->Iterations(12);
-// BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Apply(EventArguments)->UseRealTime()->Iterations(12);
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Apply(EventArguments)->UseRealTime()->Iterations(1);
+BENCHMARK(BM_RooFit_BDecayGaussResolution)->Apply(EventArguments)->UseRealTime()->Iterations(1);
+BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Apply(EventArguments)->UseRealTime()->Iterations(1);
 
 BENCHMARK_MAIN();
