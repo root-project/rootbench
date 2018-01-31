@@ -36,7 +36,7 @@ Sample addVariations(Sample asample, int nnps, bool channel_crosstalk, int chann
    return asample;
 }
 
-Channel makeChannel(int channel, int nbins, int nnps, bool channel_crosstalk)
+Channel makeChannel(int channel, int nbins, int nnps)
 {
    std::string channel_name = "Region" + std::to_string(channel);
    Channel chan(channel_name);
@@ -76,7 +76,6 @@ Channel makeChannel(int channel, int nbins, int nnps, bool channel_crosstalk)
 void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const char *name_rootfile = "")
 {
    std::cout << "in build binned test with output" << name_rootfile << std::endl;
-   bool channel_crosstalk = true;
    Measurement meas("meas", "meas");
    meas.SetPOI("SignalStrength");
    meas.SetLumi(1.0);
@@ -84,7 +83,7 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
    meas.AddConstantParam("Lumi");
    Channel chan;
    for (int channel = 0; channel < n_channels; ++channel) {
-      chan = makeChannel(channel, nbins, nnps, channel_crosstalk);
+      chan = makeChannel(channel, nbins, nnps);
       meas.AddChannel(chan);
    }
    HistoToWorkspaceFactoryFast hist2workspace(meas);
