@@ -1,1 +1,1 @@
-set(coverage OFF "Test coverage")
+set(coverage "RootBenchmark coverage" OFF)
