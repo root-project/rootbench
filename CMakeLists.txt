@@ -33,6 +33,7 @@ include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
 
 include(RootBenchOptions)
+message(STATUS "Coverage testing for rootbench.git is: " ${coverage})
 
 #---Enable test coverage -----------------------------------------------------------------------
 if(coverage)
