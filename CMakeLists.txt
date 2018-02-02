@@ -32,6 +32,7 @@ include(GoogleBenchmark)
 include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
 
+#---Include rootbench options
 include(RootBenchOptions)
 
 #---Enable test coverage -----------------------------------------------------------------------
