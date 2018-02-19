@@ -12,17 +12,14 @@ This repository contains a set of relatively small programs (usually based on [g
 Collection of benchmarks and performance monitoring applications
 
 ## Building
-Clone the repo
+ROOTBench can be built standalone and as part of ROOT. If you want to enable ROOTBench for ROOT just add the `-Drootbench=On` option to your cmake configuration.
 
-    $ git clone https://github.com/root-project/rootbench.git
-    
-Make a directory for building
-
-    $ mkdir build
-    $ cd build
-    
-Run cmake and make
-
-    $ cmake ../rootbench
-    $ make
-
+### Building ROOTBench standalone
+ROOTBench should be able to find ROOT at configuration time. Make sure you ran `source $ROOTSYS/bin/thisroot.sh`.
+```bash
+git clone https://github.com/root-project/rootbench.git
+mkdir build
+cd build
+cmake ../rootbench
+cmake --build . -- -j4
+```
