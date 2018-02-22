@@ -1,6 +1,6 @@
 # CMakeLists.txt for rootbench package. It creates a number of benchmarks executables to monitor 
 # the performance of ROOT.
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.4.3 FATAL_ERROR)
 project(rootbench)
 
 include(CMakeToolsHelpers OPTIONAL)
