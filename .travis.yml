@@ -205,7 +205,7 @@ script:
       --rc $LCOV_PATH_ROOT \
       --output-file $HOME_FOLDER/build/coverage.init_part2
   fi
-- ctest -L short || true
+- ctest --output-on-failure -L short || true
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
       find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
