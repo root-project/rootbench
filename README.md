@@ -33,6 +33,11 @@ This repository is being integrated in two steps:
   
 The integration process depends on the overall benchmarking time. Contributors are encouraged to write well-focused microbenchmarks ensuring good benchmarking coverage. Non-overlapping microbenchmarks seem to be the only reasonable way to control the pressure on the infrastructure.
 
+### Conventions
+There are several practical conventions that we should follow:
+  * Coding conventions -- ROOTBench follows the [coding conventions of ROOT](https://root.cern.ch/coding-conventions) to a great extent.
+  * The routines used for benchmarking shall have the following names `BM_CLASSNAME_ROUTINE` -- the `BM` prefix allows us (or tools) to easily identify which is the main benchmarking function.  
+
 ### Simple benchmark template
 Add file called CLASSNAMEBenchmarks.cxx where CLASSNAME is the name of the ROOT class we benchmark.
 
