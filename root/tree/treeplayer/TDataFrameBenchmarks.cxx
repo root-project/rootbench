@@ -6,7 +6,7 @@
 #include <vector>
 using namespace ROOT::Experimental;
 
-// TODO change hardcoded path with env variable or equivalent
+// FIXME change hardcoded path with env variable or equivalent
 const std::string scratchDir = "/tmp/tmpfs";
 
 static void TDF_CreateEmpty(benchmark::State &state)
