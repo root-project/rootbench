@@ -153,6 +153,7 @@ static void BM_TDF_FillHistoRangeDeduction(benchmark::State &state)
 }
 BENCHMARK(BM_TDF_FillHistoRangeDeduction)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000);
 
+#ifdef R__USE_IMT
 // Fill a histogram from multiple-threads, merge partial results of each thread
 static void BM_TDF_FillHistoMT(benchmark::State &state)
 {
@@ -174,5 +175,6 @@ static void BM_TDF_FillHistoRangeDeductionMT(benchmark::State &state)
    ROOT::DisableImplicitMT();
 }
 BENCHMARK(BM_TDF_FillHistoRangeDeductionMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000);
+#endif // R__USE_IMT
 
 BENCHMARK_MAIN();
