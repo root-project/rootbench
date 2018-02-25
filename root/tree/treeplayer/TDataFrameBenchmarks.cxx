@@ -67,7 +67,6 @@ static void TDF_FilterJitted(benchmark::State &state)
 }
 BENCHMARK(TDF_FilterJitted)->Unit(benchmark::kMicrosecond);
 
-
 static void TDF_NoOpLoop(benchmark::State &state)
 {
    for (auto _ : state)
@@ -99,8 +98,8 @@ BENCHMARK(TDF_NoOpLoopOnCustomColumn)->Unit(benchmark::kMicrosecond)->Arg(0)->Ar
 // measure time taken checking an upstream filter
 static void TDF_NoOpLoopWithFilter(benchmark::State &state)
 {
-  for (auto _ : state)
-     *TDataFrame(state.range(0)).Filter(Yes).Count();
+   for (auto _ : state)
+      *TDataFrame(state.range(0)).Filter(Yes).Count();
 }
 BENCHMARK(TDF_NoOpLoopWithFilter)->Unit(benchmark::kMicrosecond)->Arg(0)->Arg(1)->Arg(100)->Arg(100000);
 
