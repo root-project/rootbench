@@ -26,8 +26,6 @@ find_package(ROOT REQUIRED)
 #---Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
-include(GoogleBenchmark)
-
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(default_build_type "Release")
   message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
@@ -37,6 +35,8 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
+
+include(GoogleBenchmark)
 
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
