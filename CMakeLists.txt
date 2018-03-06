@@ -14,6 +14,8 @@ set(CMAKE_MODULE_PATH
   )
 
 include(AddRootBench)
+# Add the path to benchmarking libraries.
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the 
 # final ROOT installation or a local build directory. In both cases it is using
