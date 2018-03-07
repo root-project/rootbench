@@ -14,8 +14,6 @@ set(CMAKE_MODULE_PATH
   )
 
 include(AddRootBench)
-# Add the path to benchmarking libraries.
-include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the 
 # final ROOT installation or a local build directory. In both cases it is using
@@ -57,8 +55,11 @@ if(coverage)
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 endif()
 
-# Enable and setup CTest.
+#---Enable and setup CTest.
 include(RootBenchCTest)
 
-#---Add the now all the sub-directories on this repository
+#---Add the support libraries.
+add_subdirectory(lib)
+
+#---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)

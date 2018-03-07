@@ -3,6 +3,8 @@
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
   cmake_parse_arguments(ARG "" "" "LABEL;LIBRARIES" ${ARGN})
+  # FIXME: Move to target_include_directories.
+  include_directories(BEFORE ${CMAKE_SOURCE_DIR}/include)
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
   set(source_files ${ARG_UNPARSED_ARGUMENTS})
   add_executable(${benchmark} ${source_files})
@@ -28,7 +30,14 @@ function(RB_ADD_GBENCHMARK benchmark)
 endfunction(RB_ADD_GBENCHMARK)
 
 #----------------------------------------------------------------------------
-# function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
+# function RB_ADD_LIBRARY(<library> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
-#function(RB_ADD_GBENCHMARK benchmark)
-#endfunction(RB_ADD_GBENCHMARK)
+function(RB_ADD_LIBRARY library)
+  cmake_parse_arguments(ARG "" "" "LIBRARIES;DEPENDENCIES" ${ARGN})
+  set(sources ${ARG_UNPARSED_ARGUMENTS})
+  include_directories(BEFORE ${CMAKE_SOURCE_DIR}/include)
+  add_library(${library} STATIC ${sources})
+  if (ARG_LIBRARIES OR ARG_DEPENDENCIES)
+    target_link_libraries(${library} ${ARG_LIBRARIES} ${ARG_DEPENDENCIES})
+  endif()
+endfunction(RB_ADD_LIBRARY)

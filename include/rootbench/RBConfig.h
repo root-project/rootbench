@@ -1,5 +1,8 @@
+///\file This file contains utility functions which simplify running benchmarks.
 
 #include <stdlib.h>
+
+#include "rootbench/ErrorHandling.h"
 
 namespace RB {
   /// Returns a path to temporary file system (preferably in-memory). The path
@@ -10,7 +13,14 @@ namespace RB {
   const char* GetTempFs() {
     if (char* tempfs = std::getenv("RB_TEMP_FS"))
       return tempfs;
-    // Instead of aborting return something that cannot be a path.
-    return "@@@ Please set the RB_TEMP_FS env variable @@@";
+
+    rb_unreachable("Please set the RB_TEMP_FS env variable!");
+  }
+
+  const char* GetRootSys() {
+    if (char* rootsys = std::getenv("ROOTSYS"))
+      return rootsys;
+
+    rb_unreachable("Please set the ROOTSYS env variable!");
   }
 }
