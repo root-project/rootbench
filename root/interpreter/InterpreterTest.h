@@ -35,7 +35,8 @@ static void TestTutorial(benchmark::State &state, const char *dir, const char *t
         end - start);
       state.SetIterationTime(elapsed_seconds.count());
       std::string memorytutorial = "cat \"" + perftutorial + "\"| grep 'Maximum resident set size' | awk '{print $6}' > tmp_mem_file";
-      std::system(memorytutorial.c_str());
+      int res = std::system(memorytutorial.c_str());
+      (void) res;
       std::ifstream("tmp_mem_file") >> peakSize;
    }
    state.counters.insert({{"RSS", peakSize}});
