@@ -14,7 +14,7 @@ function(RB_ADD_GBENCHMARK benchmark)
   # FIXME: For better coherence we could restrict the libraries the test suite could link
   # against. For example, tests in Core should link only against libCore. This could be tricky
   # to implement because some ROOT components create more than one library.
-  target_link_libraries(${benchmark} ${ARG_LIBRARIES} gbenchmark)
+  target_link_libraries(${benchmark} ${ARG_LIBRARIES} gbenchmark RBSupport)
   #ROOT_PATH_TO_STRING(mangled_name ${benchmark} PATH_SEPARATOR_REPLACEMENT "-")
   #ROOT_ADD_TEST(gbench${mangled_name}
   #  COMMAND ${benchmark}

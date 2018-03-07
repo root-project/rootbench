@@ -14,6 +14,9 @@ namespace RB {
 /// expression which states that it is undefined behavior for the compiler to
 /// reach this point. Otherwise is not defined.
 ///
+#ifndef __has_builtin
+# define __has_builtin(x) 0
+#endif
 #if __has_builtin(__builtin_unreachable)
 # define RB_BUILTIN_UNREACHABLE __builtin_unreachable()
 #elif defined(_MSC_VER)
@@ -31,9 +34,9 @@ namespace RB {
 ///
 #ifndef NDEBUG
 #define rb_unreachable(msg)                                   \
-  ::rb::rb_unreachable_internal(msg, __FILE__, __LINE__)
+  ::RB::rb_unreachable_internal(msg, __FILE__, __LINE__)
 #elif defined(RB_BUILTIN_UNREACHABLE)
 #define rb_unreachable(msg) RB_BUILTIN_UNREACHABLE
 #else
-#define rb_unreachable(msg) ::rb::rb_unreachable_internal()
+#define rb_unreachable(msg) ::RB::rb_unreachable_internal()
 #endif
