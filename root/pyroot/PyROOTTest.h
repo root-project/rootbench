@@ -11,12 +11,10 @@
 
 #include <chrono>
 
+#include "rootbench/RBConfig.h"
+
 static int runTutorial(const std::string& dir, const std::string& filename) {
-  if (getenv("ROOTSYS") == nullptr) {
-    std::cerr << "Couldn't find ROOTSYS environment variable!\n";
-    exit(1);
-  }
-  std::string rootsys = getenv("ROOTSYS");
+  std::string rootsys = RB::GetRootSys();
   std::string fullpath = rootsys + "/" + dir + "/" + filename;
   std::string rootInvocation = "root -l -b -q -e 'TPython::Exec(\" exec( open(\"" + fullpath + "\").read())\")'";
     return std::system(rootInvocation.c_str());
