@@ -13,6 +13,9 @@ set(CMAKE_MODULE_PATH
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules"
   )
 
+#Define ROOTbench source tree
+set(ROOTBENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
 include(AddRootBench)
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the 
