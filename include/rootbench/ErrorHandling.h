@@ -1,11 +1,19 @@
 ///\file Error handling.
 
+#ifdef __GNUC__
+#define RB_ATTRIBUTE_NORETURN __attribute__((noreturn))
+#elif defined(_MSC_VER)
+#define RB_ATTRIBUTE_NORETURN __declspec(noreturn)
+#else
+#define RB_ATTRIBUTE_NORETURN
+#endif
+
 namespace RB {
   /// This function calls abort(), and prints the optional message to stderr.
   /// Use the rb_unreachable macro (that adds location info), instead of
   /// calling this function directly.
   ///
-  void
+  RB_ATTRIBUTE_NORETURN void
   rb_unreachable_internal(const char *msg = nullptr, const char *file = nullptr,
                           unsigned line = 0);
 }
@@ -40,3 +48,8 @@ namespace RB {
 #else
 #define rb_unreachable(msg) ::RB::rb_unreachable_internal()
 #endif
+
+/// Marks that the current location is not supposed to be reachable.
+/// It prints the message and location info to stderr and aborts.
+#define rb_abort(msg)                                        \
+  ::RB::rb_unreachable_internal(msg, __FILE__, __LINE__)
