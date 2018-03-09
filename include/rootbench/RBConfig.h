@@ -14,13 +14,13 @@ namespace RB {
     if (char* tempfs = std::getenv("RB_TEMP_FS"))
       return tempfs;
 
-    rb_unreachable("Please set the RB_TEMP_FS env variable!");
+    rb_abort("Please set the RB_TEMP_FS env variable!");
   }
 
   const char* GetRootSys() {
     if (char* rootsys = std::getenv("ROOTSYS"))
       return rootsys;
 
-    rb_unreachable("Please set the ROOTSYS env variable!");
+    rb_abort("Please set the ROOTSYS env variable!");
   }
 }
