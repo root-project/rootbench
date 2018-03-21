@@ -1,8 +1,15 @@
-dist: xenial
+#Xenial is still not supported by Travis
+#dist: xenial
+dist: trusty
+
 sudo: required
 
 language: generic
 
+services:
+  - docker
+
+#Don't need this anymore! We use container!
 addons: &addons
   apt:
     sources: &sources
@@ -21,12 +28,6 @@ cache:
     - apt
     - ccache
 
-# Do not build our sync branch.
-branches:
-  only:
-    - master
-    - "*Travis*"
-
 matrix:
   include:
     # There seems to be a hard limit to how many machines a Travis build will
@@ -35,67 +36,24 @@ matrix:
 
     # Coverage
     - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-Dcoverage=ON"
-      compiler: gcc
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'lcov']
-
     # GCC 5
     - env: CXX=g++ CC=gcc BUILD_TYPE=Debug
-      compiler: gcc
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'g++-5', 'g++-5-multilib', 'libc6-dbg']
+
     - env: CXX=g++ CC=gcc BUILD_TYPE=Release
-      compiler: gcc
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'g++-5', 'g++-5-multilib', 'libc6-dbg']
-
     # GCC 6
-    - env: CXX=g++-6 CC=gcc BUILD_TYPE=Debug
-      compiler: gcc
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'g++-6', 'g++-6-multilib', 'libc6-dbg']
-    - env: CXX=g++-6 CC=gcc BUILD_TYPE=Release
-      compiler: gcc
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'g++-6', 'g++-6-multilib', 'libc6-dbg']
+    - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Debug
 
+    - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Release
     # Clang 5
     - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug
-      compiler: clang
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'clang-5.0', 'g++-multilib', 'libc6-dbg']
+
     - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Release
-      compiler: clang
-      os: linux
-      addons:
-        apt:
-          sources: *sources
-          packages: [*common_deps, 'clang-5.0', 'g++-multilib', 'libc6-dbg']
+
 
 before_install:
-  - sudo apt-get install lsb-release
   - wget https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
   - sudo dpkg -i cvmfs-release-latest_all.deb
   - sudo apt-get update
-  - sudo apt-get upgrade
   - sudo apt-get install cvmfs cvmfs-config-default
   - rm -f cvmfs-release-latest_all.deb
   - sudo mkdir -p /etc/cvmfs/
@@ -104,129 +62,59 @@ before_install:
   - sudo mv default.local /etc/cvmfs/
   - sudo /etc/init.d/autofs stop
   - sudo cvmfs_config setup
-  - sudo cvmfs_config probe
-  # Install coveralls
-  - sudo gem install coveralls-lcov -v 1.5.1
-  - sudo gem install lcoveralls
-  - source /cvmfs/sft.cern.ch/lcg/views/LCG_rootext20171122/x86_64-ubuntu1604-gcc54-opt/setup.sh
-  - sudo locale-gen en_US.UTF-8
-
-install:
+  - sudo mkdir -p /cvmfs/sft-nightlies.cern.ch
+  - sudo mount -t cvmfs sft-nightlies.cern.ch /cvmfs/sft-nightlies.cern.ch
+  - ls /cvmfs/sft-nightlies.cern.ch
+  - sudo mkdir -p /cvmfs/sft.cern.ch
+  - sudo mount -t cvmfs sft.cern.ch /cvmfs/sft.cern.ch
+  - ls /cvmfs/sft.cern.ch
+# Time to docker
+  - docker pull ubuntu:16.04
+  - docker run --privileged -d -v $(pwd):/travis/rootbench -v $HOME/.ccache:/root/.ccache -v /cvmfs/sft.cern.ch:/cvmfs/sft.cern.ch -w /travis/rootbench --name xenial ubuntu:16.04 tail -f /dev/null
+  - docker exec xenial apt-get update
+  - docker exec xenial apt-get -y upgrade
+  - docker exec xenial apt-get install -y software-properties-common ccache cmake libtbb-dev wget ruby ruby-dev python curl git unzip g++
+  - docker exec xenial add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - docker exec xenial add-apt-repository ppa:glasen/freetype2
+  - docker exec xenial apt-get install -y freetype2-demos
   - |
-    pwd
-    HOME_FOLDER=$(pwd)/../
-    if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-       PATH=~/.local/bin:${PATH};
-       pip install --user --upgrade pip;
-       pip install --user cpp-coveralls;
+    if [ "${CXX}" == "g++-6" ]; then
+      docker exec xenial apt-get update
+      docker exec xenial apt-get install -y gcc-6 g++-6
     fi
-
+  - |
+    if [ "${CXX}" == "clang++-5.0" ]; then
+      docker exec xenial apt-get update
+      docker exec xenial apt-get install -y clang-5.0
+    fi
+  - docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/before-install.sh"
 script:
-- echo "Exporting latest ROOT binaries."
-- |
-  # Go one level up from REPO_SLUG/rootbench
-  cd $HOME_FOLDER
-  d=$(date +%a)
-  for i in `seq 1 7`; do
-    ROOT_LOCATION=/cvmfs/sft-nightlies.cern.ch/lcg/nightlies/rootcov/$d/ROOT/
-    ROOT_THISROOT=$ROOT_LOCATION/HEAD-*/x86_64-ubuntu1604-gcc54-opt/bin/thisroot.sh
-    if ls $ROOT_THISROOT ; then
-       break;
-    fi
-    d=$(date +%a -d "$d - 1 day")
-  done;
-- echo "Initializing ROOT $ROOT_THISROOT"
-- source $ROOT_THISROOT
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    echo "Downloading Latest ROOT .gcno binaries."
-    cd $HOME_FOLDER
-    mkdir $HOME_FOLDER/rootgcno
-    d=$(date +%a)
-    for i in `seq 1 7`; do
-      ROOTGCNO_TAR=http://lcgpackages.web.cern.ch/lcgpackages/tarFiles/nightlies/rootcov/$d/rootgcno.tgz
-      if curl -s -f --head $ROOTGCNO_TAR ; then
-        break;
-      fi
-      d=$(date +%a -d "$d - 1 day")
-    done;
-    echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:untar.ROOTGCNO"
-    wget $ROOTGCNO_TAR
-    tar zxvf rootgcno.tgz -C $HOME_FOLDER/rootgcno > untar-details.log
-    mkdir $HOME_FOLDER/lcov && cd $HOME_FOLDER/lcov
-    wget https://github.com/linux-test-project/lcov/archive/v1.12.zip
-    unzip v1.12.zip
-    LCOV="`pwd`/lcov-1.12/bin/lcov --gcov-tool gcov"
-    mkdir -p $HOME_FOLDER/coveralls
-    cp -av $HOME_FOLDER/rootgcno/rootgcno/* $HOME_FOLDER/coveralls/ &> copy_output.log
-    echo "Cloning ROOT sources"
-    git clone https://github.com/root-project/root.git $HOME_FOLDER/rootsource
-    mkdir $HOME_FOLDER/travis-fix
-    git clone https://github.com/slodki/travis-wait-log.git $HOME_FOLDER/travis-fix
+    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/rootgcno.sh";
   fi
-- mkdir $HOME_FOLDER/build
-- cd $HOME_FOLDER/build
-- export GCOV_PREFIX=`pwd`
-- export GCOV_PREFIX_STRIP=0
-- cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
-        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
-        ${EXTRA_OPTS} ../rootbench
-- cmake --build .
+- docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && export CC=${CC} && export CXX=${CXX} && export BUILD_TYPE=${BUILD_TYPE} && export EXTRA_OPTS=${EXTRA_OPTS} && . /travis/rootbench/travis-scripts/configure.sh"
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      touch $HOME_FOLDER/build/coverage.init_part1
-      echo "LCOV init part 1 (due complex setup of CI slaves for ROOT builds)"
-      find $HOME_FOLDER/build -name "*.gcno" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      export LCOV_PATH_ROOTSYS="\"geninfo_adjust_src_path=/mnt/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`\""
-      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
-      --rc $LCOV_PATH_ROOTSYS \
-      --output-file $HOME_FOLDER/build/coverage.init_part1
+    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-part1.sh";
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      touch $HOME_FOLDER/build/coverage.init_part2
-      echo "LCOV init part 2 (due complex setup of CI slaves for ROOT builds)"
-      export LCOV_PATH_ROOT="\"geninfo_adjust_src_path=/mnt/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/rootsource/`\""
-      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -i -d $HOME_FOLDER/coveralls/ --no-markers --quiet --base-directory `pwd` \
-      --rc $LCOV_PATH_ROOT \
-      --output-file $HOME_FOLDER/build/coverage.init_part2
+    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-part2.sh";
   fi
-- ctest --output-on-failure -L short || true
+- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export HOME_FOLDER=/travis/ && cd /travis/build && ctest --output-on-failure -L short"
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      find $HOME_FOLDER/build -name "*.gcda" -exec cp "{}" $HOME_FOLDER/coveralls/ \;
-      touch $HOME_FOLDER/build/coverage.info_part1
-      echo "LCOV info part 1 (due complex setup of CI slaves for ROOT builds)"
-      export LCOV_PATH_ROOTSYS="\"geninfo_adjust_src_path=/mnt/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT-HEAD-build/=> `echo $ROOTSYS/`\""
-      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -d $HOME_FOLDER/coveralls/ --no-markers --quiet  --base-directory `pwd` --ignore-errors graph \
-      --rc $LCOV_PATH_ROOTSYS \
-      --output-file $HOME_FOLDER/build/coverage.info_part1
+    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-info-part1.sh";
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      echo "LCOV info part 2 (due complex setup of CI slaves for ROOT builds)"
-      export LCOV_PATH_ROOT="\"geninfo_adjust_src_path=/mnt/build/workspace/lcg_ext_rootcov/BUILDTYPE/Release/COMPILER/native/LABEL/ubuntu14/build/projects/ROOT-HEAD/src/ROOT/HEAD/=> `echo $HOME_FOLDER/rootsource/`\""
-      touch $HOME_FOLDER/build/coverage.info_part2
-      $HOME_FOLDER/travis-fix/travis_wait_log 5 $LCOV -c -d $HOME_FOLDER/coveralls/ --no-markers --quiet  --base-directory `pwd` --ignore-errors graph \
-      --rc $LCOV_PATH_ROOT \
-      --output-file $HOME_FOLDER/build/coverage.info_part2
+    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-info-part2.sh";
   fi
 after_success:
-
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-      echo "LCOV combining all parts"
-      $LCOV -a $HOME_FOLDER/build/coverage.init_part1 -a $HOME_FOLDER/build/coverage.init_part2 -a $HOME_FOLDER/build/coverage.info_part1 -a $HOME_FOLDER/build/coverage.info_part2 -o $HOME_FOLDER/build/coverage.total &> log
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2*  \*/interpreter/* -o $HOME_FOLDER/build/coverage.total &> log
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/build/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total &> log
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/mnt/vdb/lsf/workspace/lcg_ext_rootcov/* -o $HOME_FOLDER/build/coverage.total &> log
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/rootbench/root/* -o $HOME_FOLDER/build/coverage.total &> log
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/graf3d/eve/src/TEveTrans.cxx -o $HOME_FOLDER/build/coverage.total &> log
-      $LCOV -r $HOME_FOLDER/build/coverage.total \*/interpreter/cling/test/Pragmas/P* -o $HOME_FOLDER/build/coverage.total &> log
-      #perl -p -i -e "s|$ROOTSYS||g" coverage.total
-      #perl -p -i -e "s|$HOME_folder/rootsource||g" coverage.total
-      cd ../rootsource
-      LINES=0 $HOME_FOLDER/travis-fix/travis_wait_log 1 coveralls-lcov -v $HOME_FOLDER/build/coverage.total
+    docker exec -t xenial /bin/bssh -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/coveralls.sh";
   fi
 on_failure:
   -|
