@@ -2,6 +2,8 @@
 
 This repository contains a set of relatively small programs (usually based on [gbenchmark](https://github.com/google/benchmark) micro benchmarking infrastructure) built on top of [ROOT](https://github.com/root-project/root). Their primary goal is to provide stable performance metrics which can be monitored over time.
 
+Results of nightly run of ROOT benchmarks could be discovered in the Rootbench.git Grafana instance: [RootBench Grafana](https://rootbnch-grafana-test.cern.ch/).
+
 # Project Health
 |       |     |
 | :---: |:---:|
