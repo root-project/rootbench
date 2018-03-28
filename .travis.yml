@@ -9,17 +9,6 @@ language: generic
 services:
   - docker
 
-#Don't need this anymore! We use container!
-addons: &addons
-  apt:
-    sources: &sources
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-5.0
-    packages: &common_deps
-      - gcc-6
-      - cmake
-      - libtbb-dev
-
 notifications:
   email:
       on_failure: never
@@ -102,7 +91,7 @@ script:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
     docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-part2.sh";
   fi
-- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export HOME_FOLDER=/travis/ && cd /travis/build && ctest --output-on-failure -L short"
+- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export RB_TEMP_FS=/travis/ && export HOME_FOLDER=/travis/ && cd /travis/build && ctest --output-on-failure -L short"
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
     docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-info-part1.sh";
@@ -114,7 +103,7 @@ script:
 after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bssh -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/coveralls.sh";
+    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/coveralls.sh";
   fi
 on_failure:
   -|
