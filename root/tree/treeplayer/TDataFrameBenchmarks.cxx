@@ -4,10 +4,12 @@
 #include "benchmark/benchmark.h"
 #include <string>
 #include <vector>
+
+#include "rootbench/RBConfig.h"
+
 using namespace ROOT::Experimental;
 
-// FIXME change hardcoded path with env variable or equivalent
-const std::string scratchDir = "/tmp/tmpfs";
+const std::string scratchDir = RB::GetTempFs();
 
 static void BM_TDF_CreateEmpty(benchmark::State &state)
 {
