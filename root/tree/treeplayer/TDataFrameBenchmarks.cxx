@@ -22,10 +22,10 @@ static void BM_TDF_CreateFromFile(benchmark::State &state)
 {
    const auto fname = scratchDir + "/tdf_createfromfile.root";
    const auto treeName = "t";
-   TDataFrame(0).Snapshot<>("t", fname, {});
+   TDataFrame(0).Snapshot<>(treeName, fname, {});
 
    for (auto _ : state)
-      TDataFrame("t", fname);
+      TDataFrame(treeName, fname);
 
    gSystem->Unlink(fname.c_str());
 }
@@ -80,10 +80,10 @@ static void BM_TDF_NoOpLoopOnFile(benchmark::State &state)
 {
    const auto fname = scratchDir + "/tdf_nooplooponfile" + std::to_string(state.range(0)) + ".root";
    const auto treeName = "t";
-   TDataFrame(state.range(0)).Snapshot<>("t", fname, {});
+   TDataFrame(state.range(0)).Snapshot<>(treeName, fname, {});
 
    for (auto _ : state)
-      TDataFrame("t", fname).Foreach([] {});
+      TDataFrame(treeName, fname).Foreach([] {});
 
    gSystem->Unlink(fname.c_str());
 }
