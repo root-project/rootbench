@@ -62,7 +62,7 @@ before_install:
   - docker run --privileged -d -v $(pwd):/travis/rootbench -v $HOME/.ccache:/root/.ccache -v /cvmfs/sft.cern.ch:/cvmfs/sft.cern.ch -w /travis/rootbench --name xenial ubuntu:16.04 tail -f /dev/null
   - docker exec xenial apt-get update
   - docker exec xenial apt-get -y upgrade
-  - docker exec xenial apt-get install -y software-properties-common ccache cmake libtbb-dev wget ruby ruby-dev python curl git unzip g++
+  - docker exec xenial apt-get install -y software-properties-common ccache cmake libtbb-dev wget ruby ruby-dev python curl git unzip g++ libatlas3-base
   - docker exec xenial add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - docker exec xenial add-apt-repository ppa:glasen/freetype2
   - docker exec xenial apt-get install -y freetype2-demos
