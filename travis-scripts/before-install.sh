@@ -14,4 +14,6 @@ mv default.local /etc/cvmfs/
 /etc/init.d/autofs stop
 cvmfs_config setup
 source /cvmfs/sft.cern.ch/lcg/views/LCG_rootext20171122/x86_64-ubuntu1604-gcc54-opt/setup.sh
-env
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/
+echo export LD_LIBRARY_PATH=`echo $LD_LIBRARY_PATH` >> /travis/.bashrc
+echo export PATH=`echo $PATH` >> /travis/.bashrc
