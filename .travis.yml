@@ -30,11 +30,11 @@ matrix:
 
     - env: CXX=g++ CC=gcc BUILD_TYPE=Release
     # GCC 6
-    - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Debug
+    - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
 
     - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Release
     # Clang 5
-    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug
+    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
 
     - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Release
 
