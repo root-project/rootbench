@@ -34,7 +34,7 @@ matrix:
 
     - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Release
     # Clang 5
-    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
+    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON" EXTRA_FLAGS="-v"
 
     - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Release
 
@@ -82,7 +82,7 @@ script:
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
     docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/rootgcno.sh";
   fi
-- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export HOME_FOLDER=/travis/ && export CC=${CC} && export CXX=${CXX} && export BUILD_TYPE=${BUILD_TYPE} && export EXTRA_OPTS=${EXTRA_OPTS} && . /travis/rootbench/travis-scripts/configure.sh"
+- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export HOME_FOLDER=/travis/ && export CC=${CC} && export CXX=${CXX} && export BUILD_TYPE=${BUILD_TYPE} && export EXTRA_OPTS=${EXTRA_OPTS} && export EXTRA_FLAGS=${EXTRA_FLAGS} && . /travis/rootbench/travis-scripts/configure.sh"
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
     docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-part1.sh";
