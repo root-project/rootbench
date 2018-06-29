@@ -1,4 +1,4 @@
-RB_ADD_GBENCHMARK(TDFBenchmarks
+RB_ADD_GBENCHMARK(RDFBenchmarks
   RDataFrameBenchmarks.cxx
   LABEL short
   LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
