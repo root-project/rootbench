@@ -39,14 +39,14 @@ int Zero()
 static void BM_RDF_Define(benchmark::State &state)
 {
    for (auto _ : state)
-      RDataFrame(0).Define("", Zero);
+      RDataFrame(0).Define("d", Zero);
 }
 BENCHMARK(BM_RDF_Define)->Unit(benchmark::kMicrosecond);
 
 static void BM_RDF_DefineJitted(benchmark::State &state)
 {
    for (auto _ : state)
-      RDataFrame(0).Define("", "0");
+      RDataFrame(0).Define("d", "0");
 }
 BENCHMARK(BM_RDF_DefineJitted)->Unit(benchmark::kMicrosecond);
 
