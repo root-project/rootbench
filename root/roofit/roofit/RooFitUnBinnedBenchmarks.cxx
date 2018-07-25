@@ -21,10 +21,6 @@ using namespace RooFit;
 
 #include "benchmark/benchmark.h"
 
-// using namespace RooFit;
-// using namespace RooStats;
-// using namespace HistFactory;
-
 static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
