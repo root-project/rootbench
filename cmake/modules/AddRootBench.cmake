@@ -5,6 +5,7 @@ function(RB_ADD_GBENCHMARK benchmark)
   cmake_parse_arguments(ARG "" "" "LABEL;LIBRARIES" ${ARGN})
   # FIXME: Move to target_include_directories.
   include_directories(BEFORE ${ROOTBENCH_SOURCE_DIR}/include)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
   set(source_files ${ARG_UNPARSED_ARGUMENTS})
   add_executable(${benchmark} ${source_files})
