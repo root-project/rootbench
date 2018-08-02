@@ -67,10 +67,17 @@ void CNN_ECAL_test(TString archName) {
     // Input Layout
     TString inputLayoutString("InputLayout=1|32|32");
 
-    TString layoutString("Layout=CONV|12|3|3|1|1|1|1|RELU,CONV|12|3|3|1|1|1|1|RELU,MAXPOOL|2|2|2|2,"
-                         "CONV|12|3|3|1|1|1|1|RELU,CONV|12|3|3|1|1|1|1|RELU,MAXPOOL|2|2|2|2,"
-                         "RESHAPE|1|1|768|FLAT,DENSE|64|RELU,DENSE|32|"
-                         "RELU,DENSE|1|LINEAR");
+    TString layoutString("Layout="
+                         "CONV|12|3|3|1|1|1|1|RELU,"
+                         "CONV|12|3|3|1|1|1|1|RELU,"
+                         "MAXPOOL|2|2|2|2,"
+                         "CONV|12|3|3|1|1|1|1|RELU,"
+                         "CONV|12|3|3|1|1|1|1|RELU,"
+                         "MAXPOOL|2|2|2|2,"
+                         "RESHAPE|1|1|768|FLAT,"
+                         "DENSE|64|RELU,"
+                         "DENSE|32|RELU,"
+                         "DENSE|1|LINEAR");
 
     // Batch Layout
     TString batchLayoutString("BatchLayout=32|1|1024");
