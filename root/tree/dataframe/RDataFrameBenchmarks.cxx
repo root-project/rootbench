@@ -165,7 +165,7 @@ static void BM_RDF_FillHistoMT(benchmark::State &state)
       *RDataFrame(state.range(0)).Histo1D<ULong64_t>(h, "tdfentry_");
    ROOT::DisableImplicitMT();
 }
-BENCHMARK(BM_RDF_FillHistoMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000);
+BENCHMARK(BM_RDF_FillHistoMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000)->Iterations(100);
 // FIXME booking the following benchmark causes a segfault
 // BENCHMARK(BM_RDF_FillHistoMT)->Unit(benchmark::kMicrosecond)->UseRealTime()->ThreadPerCpu();
 
@@ -176,7 +176,7 @@ static void BM_RDF_FillHistoRangeDeductionMT(benchmark::State &state)
       *RDataFrame(state.range(0)).Histo1D<ULong64_t>("tdfentry_");
    ROOT::DisableImplicitMT();
 }
-BENCHMARK(BM_RDF_FillHistoRangeDeductionMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000);
+BENCHMARK(BM_RDF_FillHistoRangeDeductionMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000)->Iterations(100);
 #endif // R__USE_IMT
 
 BENCHMARK_MAIN();
