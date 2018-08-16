@@ -1,6 +1,15 @@
 #include "ConvNetBenchmarks.h"
+#include "benchmark/benchmark.h"
 
-int main() {
+static void BM_ConvolutionalNetwork_CPU(benchmark::State &state)
+{
     TString architecture("CPU");
-    CNN_ECAL_test(architecture);
+
+    // Benchmarking
+    for (auto _ : state) {
+        CNN_benchmark(architecture);
+    }
 }
+BENCHMARK(BM_ConvolutionalNetwork_CPU);
+
+BENCHMARK_MAIN();
