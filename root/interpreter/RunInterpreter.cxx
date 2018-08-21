@@ -2,6 +2,7 @@
 
 #include "benchmark/benchmark.h"
 
+BENCHMARK_CAPTURE(TestTutorial, Test_startup, "", "")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_hsimple, "tutorials/", "hsimple.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_TMVAGAexample, "tutorials/", "tmva/TMVAGAexample.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_TMVAGAexample2, "tutorials/", "tmva/TMVAGAexample2.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
