@@ -36,7 +36,8 @@ void CNN_benchmark(TString archName) {
 
    // Creating the factory object
    TMVA::Factory *factory = new TMVA::Factory( "TMVAClassification", outputFile,
-                                               "!Correlations:!V:!Silent:Color:DrawProgressBar:AnalysisType=Classification:!ModelPersistence:Transformations=None" );
+                                               "!Correlations:!V:!Silent:Color:DrawProgressBar:"
+                                               "AnalysisType=Classification:!ModelPersistence:Transformations=None" );
    TMVA::DataLoader *dataloader = new TMVA::DataLoader("dataset_cnn_ecal");
 
    TTree *signalTree = (TTree*)input->Get("sgn");
@@ -56,7 +57,9 @@ void CNN_benchmark(TString archName) {
    auto vars = datainfo.GetListOfVariables();
    std::cout << "number of variables is " << vars.size() << std::endl;
 
-   TString trainAndTestOpt = TString::Format("nTrain_Signal=%d:nTrain_Background=%d:nTest_Signal=%d:nTest_Background=%d:SplitMode=Random:NormMode=NumEvents:!V",ntrainEvts,ntrainEvts,ntestEvts,ntestEvts );
+   TString trainAndTestOpt = TString::Format("nTrain_Signal=%d:nTrain_Background=%d:nTest_Signal=%d:nTest_Background=%d:"
+                                             "SplitMode=Random:NormMode=NumEvents:!V",
+                                             ntrainEvts, ntrainEvts, ntestEvts, ntestEvts);
    TCut mycuts = "";
    TCut mycutb = "";
    dataloader->PrepareTrainingAndTestTree(mycuts, mycutb, trainAndTestOpt);
@@ -71,32 +74,32 @@ void CNN_benchmark(TString archName) {
    TString inputLayoutString("InputLayout=1|32|32");
 
    TString layoutString("Layout="
-                              "CONV|12|3|3|1|1|1|1|RELU,"
-                              "CONV|12|3|3|1|1|1|1|RELU,"
-                              "MAXPOOL|2|2|2|2,"
-                              "CONV|12|3|3|1|1|1|1|RELU,"
-                              "CONV|12|3|3|1|1|1|1|RELU,"
-                              "MAXPOOL|2|2|2|2,"
-                              "RESHAPE|1|1|768|FLAT,"
-                              "DENSE|64|RELU,"
-                              "DENSE|32|RELU,"
-                              "DENSE|1|LINEAR");
+                        "CONV|12|3|3|1|1|1|1|RELU,"
+                        "CONV|12|3|3|1|1|1|1|RELU,"
+                        "MAXPOOL|2|2|2|2,"
+                        "CONV|12|3|3|1|1|1|1|RELU,"
+                        "CONV|12|3|3|1|1|1|1|RELU,"
+                        "MAXPOOL|2|2|2|2,"
+                        "RESHAPE|1|1|768|FLAT,"
+                        "DENSE|64|RELU,"
+                        "DENSE|32|RELU,"
+                        "DENSE|1|LINEAR");
 
    // Batch Layout
    TString batchLayoutString("BatchLayout=32|1|1024");
 
    // Training strategies.
    TString training0("LearningRate=1e-5,Momentum=0.0,Repetitions=1,"
-                           "ConvergenceSteps=10,BatchSize=32,TestRepetitions=1,"
-                           "MaxEpochs=10,Optimizer=ADAM,"
-                           "WeightDecay=1e-4,Regularization=None");
+                     "ConvergenceSteps=10,BatchSize=32,TestRepetitions=1,"
+                     "MaxEpochs=10,Optimizer=ADAM,"
+                     "WeightDecay=1e-4,Regularization=None");
 
    TString trainingStrategyString ("TrainingStrategy=");
    trainingStrategyString += training0;
 
    // General Options.
    TString cnnOptions("!H:V:ErrorStrategy=CROSSENTROPY:VarTransform=None:"
-                            "WeightInitialization=XAVIERUNIFORM");
+                      "WeightInitialization=XAVIERUNIFORM");
 
    cnnOptions.Append(":"); cnnOptions.Append(inputLayoutString);
    cnnOptions.Append(":"); cnnOptions.Append(batchLayoutString);
