@@ -13,12 +13,12 @@ BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_higgs, "tutorials/", "mlp/mlpHigg
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mlp_regression, "tutorials/", "mlp/mlpRegression.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_assembly, "tutorials/", "geom/assembly.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_na49, "tutorials/", "geom/na49.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geomAlice, "tutorials/", "geom/geomAlice.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geomAtlas, "tutorials/", "geom/geomAtlas.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_rootgeom, "tutorials/", "geom/rootgeom.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_parallel_world, "tutorials/", "geom/parallel_world.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_mp3player, "tutorials/", "geom/mp3player.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geamD0, "tutorials/", "geom/geomD0.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geometry, "tutorials/", "geom/geometry.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_radionucl, "tutorials/", "geom/RadioNuclides.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 BENCHMARK_CAPTURE(TestTutorial, Test_nopch_rootgeom, "tutorials/", "geom/rootgeom.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_nopch_geodemo, "tutorials/", "geom/geodemo.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_nopch_xtruSamples, "tutorials/", "geom/xtruSamples.C")->Unit(benchmark::kMicrosecond)->UseManualTime();
 
 BENCHMARK_MAIN();
