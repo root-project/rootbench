@@ -1,2 +1,4 @@
 add_subdirectory(genvector)
-add_subdirectory(mathcore)
+if(ROOT_veccore_FOUND)
+   add_subdirectory(mathcore)
+endif()
