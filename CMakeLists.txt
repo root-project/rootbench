@@ -1,4 +1,4 @@
-# CMakeLists.txt for rootbench package. It creates a number of benchmarks executables to monitor 
+# CMakeLists.txt for rootbench package. It creates a number of benchmarks executables to monitor
 # the performance of ROOT.
 cmake_minimum_required(VERSION 3.4.3 FATAL_ERROR)
 project(rootbench)
@@ -18,13 +18,23 @@ set(ROOTBENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 include(AddRootBench)
 
-# You need first to tell CMake where to find the ROOT installation. This can either be the 
+# You need first to tell CMake where to find the ROOT installation. This can either be the
 # final ROOT installation or a local build directory. In both cases it is using
 # the $ROOTSYS environment variable to locate it.
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 
 #---Locate the ROOT package and defines a number of variables (e.g. ROOT_INCLUDE_DIRS)
-find_package(ROOT REQUIRED)
+find_package(ROOT REQUIRED CONFIG)
+
+#---In case of ROOT C++ modules, we need to know where are PCMs and add them in LD_LIBRARY_PATH
+# through setting up environment properties in set_tests_properties().
+if(NOT DEFINED ROOTSYS)
+  set(ROOTSYS $ENV{ROOTSYS})
+  if(NOT DEFINED ROOTSYS)
+    message(FATAL_ERROR "ROOTSYS is not set!")
+  endif()
+endif()
+get_filename_component(ROOT_LIBRARY_DIR "${ROOTSYS}/lib" ABSOLUTE)
 
 #---Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
