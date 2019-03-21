@@ -26,7 +26,9 @@ function(RB_ADD_GBENCHMARK benchmark)
     set(${TIMEOUT_VALUE} 3600)
   endif()
   add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false)
-  set_tests_properties(rootbench-${benchmark} PROPERTIES TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+  set_tests_properties(rootbench-${benchmark} PROPERTIES
+                                              ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
+                                              TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
 endfunction(RB_ADD_GBENCHMARK)
 
 #----------------------------------------------------------------------------
