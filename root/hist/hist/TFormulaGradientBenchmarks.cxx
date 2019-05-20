@@ -5,37 +5,62 @@
 
 #include <benchmark/benchmark.h>
 
-static void BM_TFormula_GausTFormulaPerf_Clad(benchmark::State &state) {
-  auto h = new TF1("f1", "gaus");
-  double p[] = {3, 1, 2};
+// Generate clad gradient function and evaluate it.
+inline static void clad_eval(TF1*, TFormula* f, Double_t* x, Double_t* result) {
+  f->GradientPar(x, result);
+}
+
+// Evaluate gradient via numerical method.
+inline static void numerical_eval(TF1* h, TFormula*, Double_t* x, Double_t* result) {
+  h->GradientPar(x, result);
+}
+
+// Benchmark for the formula with given name.
+// EVAL is either clad_eval to benchmark clad or numerical_eval to benchmark
+// numerical method.
+template <typename F>
+static void BM_TFormulaPerf(benchmark::State &state, const char* formula, F&& eval) {
+  auto h = new TF1("f1", formula);
+  int Npar = h->GetNpar();
+  double* p = new double[Npar];
+  for (int i = 0; i < Npar; i++) p[i] = std::rand() % 100;
   h->SetParameters(p);
-  double x[] = {0};
-  TFormula::GradientStorage result_clad(3);
+  int Ndim = h->GetNdim();
+  double* x = new double[Ndim]{};
+  for (int i = 0; i < Ndim; i++) x[i] = std::rand() % 100;
+  TFormula::GradientStorage result(Npar);
   TFormula *f = h->GetFormula();
+  f->GenerateGradientPar();
 
-  for (auto _ : state) {
-    f->GenerateGradientPar();
-    f->GradientPar(x, result_clad.data());
-  }
+  for (auto _ : state)
+    eval(h, f, x, result.data());
+  delete[] p;
+  delete[] x;
 }
 
-BENCHMARK(BM_TFormula_GausTFormulaPerf_Clad);
+#define DEFINE_BM_TFormulaPerf_CLAD(formula) \
+  BENCHMARK_CAPTURE(BM_TFormulaPerf, formula##_Clad, #formula, clad_eval);
 
-static void BM_TFormula_GausTFormulaPerf_Numerical(benchmark::State &state) {
-  auto h = new TF1("f1", "gaus");
-  double p[] = {3, 1, 2};
-  h->SetParameters(p);
-  double x[] = {0};
-  TFormula::GradientStorage result_num(3);
+#define DEFINE_BM_TFormulaPerf_NUMERICAL(formula) \
+  BENCHMARK_CAPTURE(BM_TFormulaPerf, formula##_Numerical, #formula, numerical_eval);
 
-  for (auto _ : state) {
-    h->GradientPar(x, result_num.data());
-  }
-}
+#define DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(formula) \
+  DEFINE_BM_TFormulaPerf_CLAD(formula) \
+  DEFINE_BM_TFormulaPerf_NUMERICAL(formula)
 
-BENCHMARK(BM_TFormula_GausTFormulaPerf_Numerical);
+DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(gaus)
 
-static void BM_TFormula_GausPerf_Clad(benchmark::State &state) {
+DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(expo)
+
+//DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(crystalball)
+
+DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(breitwigner)
+
+DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(cheb0)
+DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(cheb1)
+DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(cheb2)
+
+static void BM_TFormula_GausFit_Clad(benchmark::State &state) {
   auto f1 = new TF1("f1", "gaus");
   auto h1 = new TH1D("h1", "h1", 1000000, -5, 5);
   double p1[] = {1, 0, 1.5};
@@ -51,9 +76,9 @@ static void BM_TFormula_GausPerf_Clad(benchmark::State &state) {
   }
 }
 
-BENCHMARK(BM_TFormula_GausPerf_Clad);
+BENCHMARK(BM_TFormula_GausFit_Clad);
 
-static void BM_TFormula_GausPerf_Numerical(benchmark::State &state) {
+static void BM_TFormula_GausFit_Numerical(benchmark::State &state) {
   auto f1 = new TF1("f1", "gaus");
   auto h1 = new TH1D("h1", "h1", 1000000, -5, 5);
   double p1[] = {1, 0, 1.5};
@@ -67,4 +92,4 @@ static void BM_TFormula_GausPerf_Numerical(benchmark::State &state) {
   }
 }
 
-BENCHMARK(BM_TFormula_GausPerf_Numerical);
+BENCHMARK(BM_TFormula_GausFit_Numerical);
