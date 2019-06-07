@@ -4,6 +4,7 @@ RB_ADD_GBENCHMARK(RDFBenchmarks
   LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
 
 RB_ADD_GBENCHMARK(DFBenchmarks
-  df_vs_tree.cxx
+  RDataFrame_vs_Tree.cxx
   LABEL short
   LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
+
