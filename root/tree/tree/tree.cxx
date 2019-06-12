@@ -5,6 +5,9 @@
 #include <benchmark/benchmark.h>
 
 #include <vector>
+#include "rootbench/RBConfig.h"
+
+const std::string scratchDir = RB::GetTempFs();
 
 static constexpr auto treeName = "Events";
 static constexpr auto fileNameOneBranch = "dataonebranch.root";
@@ -12,6 +15,10 @@ static constexpr auto fileNameTwoBranches = "datatwobranches.root";
 static constexpr auto branchOne = "x";
 static constexpr auto branchTwo = "y";
 static constexpr auto nEntries = 8000;
+static auto pathOneBranch = (scratchDir + "/" + fileNameOneBranch).c_str();
+static auto pathTwoBranches = (scratchDir + "/" + fileNameTwoBranches).c_str();
+
+
 
 // an assert implementation that is not no-op for optimized builds
 void ensure(bool b)
@@ -25,7 +32,7 @@ void MakeDataOneBranch()
    const bool hasData = gSystem->AccessPathName(fileNameOneBranch) == 0;
    if (hasData)
       return;
-   TFile f(fileNameOneBranch, "create");
+   TFile f(pathOneBranch, "create");
    TTree t(treeName, treeName);
    int x = 42;
    t.Branch(branchOne, &x);
@@ -39,7 +46,7 @@ void MakeDataTwoBranches()
    const bool hasData = gSystem->AccessPathName(fileNameTwoBranches) == 0;
    if (hasData)
       return;
-   TFile f(fileNameTwoBranches, "create");
+   TFile f(pathTwoBranches, "create");
    TTree t(treeName, treeName);
    int x = 42;
    int y = 84;
@@ -53,7 +60,7 @@ void MakeDataTwoBranches()
 static void TreeGetEntryReadOneOfOne(benchmark::State &state)
 {
    MakeDataOneBranch();
-   TFile f(fileNameOneBranch);
+   TFile f(pathOneBranch);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    t->SetBranchStatus("*", false);
@@ -76,7 +83,7 @@ BENCHMARK(TreeGetEntryReadOneOfOne);
 static void TreeGetEntryReadNoneOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
-   TFile f(fileNameTwoBranches);
+   TFile f(pathTwoBranches);
    auto t = static_cast<TTree *>(f.Get(treeName));
    t->SetBranchStatus("*", kFALSE);
    const auto nEntries = t->GetEntries();
@@ -90,7 +97,7 @@ BENCHMARK(TreeGetEntryReadNoneOfTwo);
 static void TreeGetEntryReadOneOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
-   TFile f(fileNameTwoBranches);
+   TFile f(pathTwoBranches);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    t->SetBranchStatus("*", false);
@@ -113,7 +120,7 @@ BENCHMARK(TreeGetEntryReadOneOfTwo);
 static void TreeGetEntryReadTwoOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
-   TFile f(fileNameTwoBranches);
+   TFile f(pathTwoBranches);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    t->SetBranchAddress(branchOne, &x);
@@ -134,7 +141,7 @@ BENCHMARK(TreeGetEntryReadTwoOfTwo);
 static void BranchGetEntryReadOneOfOne(benchmark::State &state)
 {
    MakeDataOneBranch();
-   TFile f(fileNameOneBranch);
+   TFile f(pathOneBranch);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    auto b = t->GetBranch(branchOne);
@@ -156,7 +163,7 @@ BENCHMARK(BranchGetEntryReadOneOfOne);
 static void BranchGetEntryReadOneOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
-   TFile f(fileNameTwoBranches);
+   TFile f(pathTwoBranches);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    auto b = t->GetBranch(branchOne);
