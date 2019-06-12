@@ -7,11 +7,17 @@
 #include <benchmark/benchmark.h>
 
 #include <vector>
+#include <rootbench/RBConfig.h>
+
+const std::string scratchDir = RB::GetTempFs();
 
 static constexpr auto treeName = "Events";
 static constexpr auto fileName = "databranchelement.root";
 static constexpr auto branchName = "arr";
 static constexpr auto nEntries = 8000;
+static auto pathToFile = (scratchDir + "/" + fileName).c_str();
+
+
 
 // an assert implementation that is not no-op for optimized builds
 void ensure(bool b)
@@ -22,7 +28,7 @@ void ensure(bool b)
 
 void MakeDataFixedArray()
 {
-   TFile f(fileName, "recreate");
+   TFile f(pathToFile, "recreate");
    TTree t(treeName, treeName);
    int x[8] = {1, 2, 3, 4, 5, 6, 7, 8};
    t.Branch(branchName, x, (std::string(branchName) + "[8]/I").c_str());
@@ -33,7 +39,7 @@ void MakeDataFixedArray()
 
 void MakeDataVarArray()
 {
-   TFile f(fileName, "recreate");
+   TFile f(pathToFile, "recreate");
    TTree t(treeName, treeName);
    int n = 8;
    int *x = new int[n]{1, 2, 3, 4, 5, 6, 7, 8};
@@ -46,7 +52,7 @@ void MakeDataVarArray()
 
 void MakeDataStdVector()
 {
-   TFile f(fileName, "recreate");
+   TFile f(pathToFile, "recreate");
    TTree t(treeName, treeName);
    std::vector<int> x({1,2,3,4,5,6,7,8});
    t.Branch(branchName, &x);
@@ -58,7 +64,7 @@ void MakeDataStdVector()
 static void FixedSizeArrayTBranch(benchmark::State &state)
 {
    MakeDataFixedArray();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    auto b = t->GetBranch(branchName);
    volatile int n = 8; // hopefully compiler won't optimize for n
@@ -82,7 +88,7 @@ BENCHMARK(FixedSizeArrayTBranch);
 static void VarSizeArrayTBranch(benchmark::State &state)
 {
    MakeDataVarArray();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    auto b = t->GetBranch(branchName);
    volatile int n = 8; // hopefully compiler won't optimize for n
@@ -106,7 +112,7 @@ BENCHMARK(VarSizeArrayTBranch);
 static void StdVectorTBranch(benchmark::State &state)
 {
    MakeDataStdVector();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    auto b = t->GetBranch(branchName);
    std::vector<int> *v = nullptr;
@@ -128,7 +134,7 @@ BENCHMARK(StdVectorTBranch);
 
 static void RunReaderArray(benchmark::State &state)
 {
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    TTreeReader r(t);
    TTreeReaderArray<int> vec(r, branchName);

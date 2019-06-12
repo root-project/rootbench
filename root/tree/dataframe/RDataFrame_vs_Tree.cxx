@@ -1,3 +1,4 @@
+#include "RDataFrameBench.h"
 #include <ROOT/RDataFrame.hxx>
 #include <ROOT/RVec.hxx>
 #include <TFile.h>
@@ -19,6 +20,7 @@ static constexpr auto fileName = "data.root";
 static constexpr auto scalarBranch = "x";
 static constexpr auto vectorBranch = "vec";
 static constexpr auto nEntries = 100000;
+static auto pathToFile = (scratchDir + "/" + fileName).c_str();
 
 // an assert implementation that is not no-op for optimized builds
 void ensure(bool b)
@@ -63,7 +65,7 @@ BENCHMARK(CreateDFFromTFileAndBookSum);
 static void SumScalarTBranchGetEntry(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    auto b = t->GetBranch(scalarBranch);
@@ -86,7 +88,7 @@ BENCHMARK(SumScalarTBranchGetEntry);
 static void SumScalarTTreeGetEntry(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    t->SetBranchStatus("*", false);
@@ -109,7 +111,7 @@ BENCHMARK(SumScalarTTreeGetEntry);
 static void SumScalarTTreeReader(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    TTreeReader r(t);
    TTreeReaderValue<int> x(r, scalarBranch);
@@ -180,7 +182,7 @@ BENCHMARK(SumScalarAfter5Defines);
 static void SumVectorTBranchGetEntry(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    auto vec = new std::vector<int>;
    auto b = t->GetBranch(vectorBranch);
@@ -203,7 +205,7 @@ BENCHMARK(SumVectorTBranchGetEntry);
 static void SumVectorTTreeReader(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(fileName);
+   TFile f(pathToFile);
    auto t = static_cast<TTree *>(f.Get(treeName));
    TTreeReader r(t);
    TTreeReaderArray<int> vec(r, vectorBranch);
@@ -258,5 +260,3 @@ static void SumVectorAfter5Defines(benchmark::State &state)
    ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 BENCHMARK(SumVectorAfter5Defines);
-
-BENCHMARK_MAIN();

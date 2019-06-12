@@ -1,3 +1,4 @@
+#include "RDataFrameBench.h"
 #include "ROOT/RDataFrame.hxx"
 #include "TROOT.h"   // ROOT::EnableImplicitMT
 #include "TSystem.h" // TSystem::Unlink
