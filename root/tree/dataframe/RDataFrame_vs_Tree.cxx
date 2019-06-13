@@ -7,11 +7,12 @@
 #include <TTreeReader.h>
 #include <TTreeReaderValue.h>
 #include <TTreeReaderArray.h>
-
+#include <stdio.h>
 #include <benchmark/benchmark.h>
 
 #include <cstdlib> // abort
 #include <vector>
+#include <cstring>
 
 using ROOT::RVec;
 
@@ -20,7 +21,8 @@ static constexpr auto fileName = "data.root";
 static constexpr auto scalarBranch = "x";
 static constexpr auto vectorBranch = "vec";
 static constexpr auto nEntries = 100000;
-static auto pathToFile = (scratchDir + "/" + fileName).c_str();
+static const auto pathToFile = scratchDir + "/" + fileName;
+
 
 // an assert implementation that is not no-op for optimized builds
 void ensure(bool b)
@@ -31,12 +33,12 @@ void ensure(bool b)
 
 void MakeDataIfNeeded()
 {
-   const bool hasData = gSystem->AccessPathName("data.root") == 0;
+   const bool hasData = gSystem->AccessPathName(pathToFile.c_str()) == 0;
    if (!hasData)
       ROOT::RDataFrame(nEntries)
          .Define(scalarBranch, [] { return 42; })
          .Define(vectorBranch, [] { return std::vector<int>{1, 2, 3, 4, 5, 6, 7, 8}; })
-         .Snapshot<int, std::vector<int>>(treeName, fileName, {scalarBranch, vectorBranch});
+         .Snapshot<int, std::vector<int>>(treeName, pathToFile.c_str(), {scalarBranch, vectorBranch});
 }
 
 static void CreateEmptyDF(benchmark::State &state)
@@ -50,7 +52,7 @@ static void CreateDFFromTFile(benchmark::State &state)
 {
    MakeDataIfNeeded();
    for (auto _ : state)
-      ROOT::RDataFrame(treeName, fileName);
+      ROOT::RDataFrame(treeName, pathToFile.c_str());
 }
 BENCHMARK(CreateDFFromTFile);
 
@@ -58,14 +60,14 @@ static void CreateDFFromTFileAndBookSum(benchmark::State &state)
 {
    MakeDataIfNeeded();
    for (auto _ : state)
-      ROOT::RDataFrame(treeName, fileName).Sum<int>(scalarBranch);
+      ROOT::RDataFrame(treeName, pathToFile.c_str()).Sum<int>(scalarBranch);
 }
 BENCHMARK(CreateDFFromTFileAndBookSum);
 
 static void SumScalarTBranchGetEntry(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(pathToFile);
+   TFile f(pathToFile.c_str());
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    auto b = t->GetBranch(scalarBranch);
@@ -88,7 +90,7 @@ BENCHMARK(SumScalarTBranchGetEntry);
 static void SumScalarTTreeGetEntry(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(pathToFile);
+   TFile f(pathToFile.c_str());
    auto t = static_cast<TTree *>(f.Get(treeName));
    int x;
    t->SetBranchStatus("*", false);
@@ -111,7 +113,7 @@ BENCHMARK(SumScalarTTreeGetEntry);
 static void SumScalarTTreeReader(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(pathToFile);
+   TFile f(pathToFile.c_str());
    auto t = static_cast<TTree *>(f.Get(treeName));
    TTreeReader r(t);
    TTreeReaderValue<int> x(r, scalarBranch);
@@ -182,7 +184,7 @@ BENCHMARK(SumScalarAfter5Defines);
 static void SumVectorTBranchGetEntry(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(pathToFile);
+   TFile f(pathToFile.c_str());
    auto t = static_cast<TTree *>(f.Get(treeName));
    auto vec = new std::vector<int>;
    auto b = t->GetBranch(vectorBranch);
@@ -205,7 +207,7 @@ BENCHMARK(SumVectorTBranchGetEntry);
 static void SumVectorTTreeReader(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   TFile f(pathToFile);
+   TFile f(pathToFile.c_str());
    auto t = static_cast<TTree *>(f.Get(treeName));
    TTreeReader r(t);
    TTreeReaderArray<int> vec(r, vectorBranch);
