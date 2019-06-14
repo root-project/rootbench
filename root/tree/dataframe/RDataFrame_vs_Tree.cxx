@@ -132,7 +132,7 @@ BENCHMARK(SumScalarTTreeReader);
 static void SumScalarDF(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   ROOT::RDataFrame df(treeName, fileName);
+   ROOT::RDataFrame df(treeName, pathToFile.c_str());
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<int>(scalarBranch);
@@ -144,7 +144,7 @@ static void SumScalarWithForeach(benchmark::State &state)
 {
    MakeDataIfNeeded();
    int sum = 0;
-   ROOT::RDataFrame df(treeName, fileName);
+   ROOT::RDataFrame df(treeName, pathToFile.c_str());
    for (auto _ : state) {
       sum = 0;
       df.Foreach([&sum](int x) { sum += x; }, {scalarBranch});
@@ -157,7 +157,7 @@ BENCHMARK(SumScalarWithForeach);
 static void SumScalarAfter1Define(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   auto df = ROOT::RDataFrame(treeName, fileName).Define("defined_var", [](int x) { return x; }, {scalarBranch});
+   auto df = ROOT::RDataFrame(treeName, pathToFile.c_str()).Define("defined_var", [](int x) { return x; }, {scalarBranch});
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<int>("defined_var");
@@ -168,7 +168,7 @@ BENCHMARK(SumScalarAfter1Define);
 static void SumScalarAfter5Defines(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   auto df = ROOT::RDataFrame(treeName, fileName)
+   auto df = ROOT::RDataFrame(treeName, pathToFile.c_str())
                 .Define("def1", [](int x) { return x; }, {scalarBranch})
                 .Define("def2", [](int x) { return x; }, {"def1"})
                 .Define("def3", [](int x) { return x; }, {"def2"})
@@ -227,7 +227,7 @@ BENCHMARK(SumVectorTTreeReader);
 static void SumVectorDF(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   ROOT::RDataFrame df(treeName, fileName);
+   ROOT::RDataFrame df(treeName, pathToFile.c_str());
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<RVec<int>>(vectorBranch);
@@ -239,7 +239,7 @@ static void SumVectorAfter1Define(benchmark::State &state)
 {
    MakeDataIfNeeded();
    auto df =
-      ROOT::RDataFrame(treeName, fileName).Define("defined_var", [](const RVec<int> &v) { return v; }, {vectorBranch});
+      ROOT::RDataFrame(treeName, pathToFile.c_str()).Define("defined_var", [](const RVec<int> &v) { return v; }, {vectorBranch});
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<RVec<int>>("defined_var");
@@ -250,7 +250,7 @@ BENCHMARK(SumVectorAfter1Define);
 static void SumVectorAfter5Defines(benchmark::State &state)
 {
    MakeDataIfNeeded();
-   auto df = ROOT::RDataFrame(treeName, fileName)
+   auto df = ROOT::RDataFrame(treeName, pathToFile.c_str())
                 .Define("def1", [](const RVec<int> &v) { return v; }, {vectorBranch})
                 .Define("def2", [](const RVec<int> &v) { return v; }, {"def1"})
                 .Define("def3", [](const RVec<int> &v) { return v; }, {"def2"})
