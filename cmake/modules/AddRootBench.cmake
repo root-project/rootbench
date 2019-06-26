@@ -45,10 +45,13 @@ function(RB_ADD_GBENCHMARK benchmark)
   # to implement because some ROOT components create more than one library.
   target_link_libraries(${benchmark} ${ARG_LIBRARIES} gbenchmark RBSupport rt)
   #ROOT_PATH_TO_STRING(mangled_name ${benchmark} PATH_SEPARATOR_REPLACEMENT "-")
-  #ROOT_ADD_TEST(gbench${mangled_name}
-  #  COMMAND ${benchmark}
-  #  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}
-  #  LABELS "benchmark")
+  if(ARG_POSTCMD)
+    set(postcmd POSTCMD ${ARG_POSTCMD})
+  endif()
+  if(flamegraph)
+      set(postcmd ${postcmd} "${PROJECT_SOURCE_DIR}/rootbench-scripts/flamegraph.sh")
+      add_dependencies(${benchmark} flamegraph-download)
+  endif()
   if(${ARG_LABEL} STREQUAL "long")
     set(${TIMEOUT_VALUE} 1200)
   elseif($ARG_LABEL STREQUAL "short")

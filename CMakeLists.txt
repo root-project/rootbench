@@ -16,6 +16,9 @@ set(CMAKE_MODULE_PATH
 #Define ROOTbench source tree
 set(ROOTBENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
+#---Include rootbench options
+include(RootBenchOptions)
+
 include(AddRootBench)
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the
@@ -55,9 +58,6 @@ include(PytestBenchmark)
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
-
-#---Include rootbench options
-include(RootBenchOptions)
 
 #---Enable test coverage -----------------------------------------------------------------------
 if(coverage)
