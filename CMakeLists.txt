@@ -55,6 +55,11 @@ endif()
 include(GoogleBenchmark)
 include(PytestBenchmark)
 
+if(flamegraph)
+  include(FlameGraph)
+  add_custom_target(flamegraph-download DEPENDS FlameGraph)
+endif()
+
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
