@@ -13,13 +13,19 @@ set(CMAKE_MODULE_PATH
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules"
   )
 
-#Define ROOTbench source tree
+#---Define ROOTbench source tree
 set(ROOTBENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 #---Include rootbench options
 include(RootBenchOptions)
 
 include(AddRootBench)
+
+#---ROOTbench dependencies
+find_program(TIME_EXECUTABLE time)
+if(NOT TIME_EXECUTABLE)
+  message(WARNING "/usr/bin/time is requirement for rootbench.git")
+endif()
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the
 # final ROOT installation or a local build directory. In both cases it is using
@@ -54,6 +60,12 @@ endif()
 
 include(GoogleBenchmark)
 if(flamegraph)
+  # Check if perf is available in OS:
+  find_program(PERF_EXECUTABLE perf)
+  if(NOT PERF_EXECUTABLE)
+    message(WARNING "Perf is not available in your system, please install it.")
+    set(flamegraph OFF CACHE BOOL "")
+  endif()
   include(FlameGraph)
   add_custom_target(flamegraph-download DEPENDS FlameGraph)
 endif()
