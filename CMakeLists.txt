@@ -23,8 +23,12 @@ include(AddRootBench)
 
 #---ROOTbench dependencies
 find_program(TIME_EXECUTABLE time)
+# Testing valid output of /usr/bin/time -v
+exec_program(${TIME_EXECUTABLE} ARGS -v ${CMAKE_COMMAND} -E environment OUTPUT_VARIABLE TIME_OUTPUT RETURN_VALUE TIME_EXECUTABLE_VALID)
 if(NOT TIME_EXECUTABLE)
-  message(WARNING "/usr/bin/time is requirement for rootbench.git")
+    if(NOT TIME_EXECUTABLE_VALID)
+      message(FATAL_ERROR "/usr/bin/time is a requirement for rootbench.git")
+    endif()
 endif()
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the
