@@ -63,7 +63,7 @@ if(flamegraph)
   # Check if perf is available in OS:
   find_program(PERF_EXECUTABLE perf)
   if(NOT PERF_EXECUTABLE)
-    message(WARNING "Perf is not available in your system, please install it.")
+    message(WARNING "Perf is not available in your system, please install it. Turning off the flamegraph option.")
     set(flamegraph OFF CACHE BOOL "")
   endif()
   include(FlameGraph)
