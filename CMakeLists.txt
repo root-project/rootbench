@@ -63,11 +63,12 @@ if(flamegraph)
   # Check if perf is available in OS:
   find_program(PERF_EXECUTABLE perf)
   if(NOT PERF_EXECUTABLE)
-    message(WARNING "Perf is not available in your system, please install it. Turning off the flamegraph option.")
+    message(WARNING "Perf is not available in your system, please install it.")
     set(flamegraph OFF CACHE BOOL "")
+  else()
+    include(FlameGraph)
+    add_custom_target(flamegraph-download DEPENDS FlameGraph)
   endif()
-  include(FlameGraph)
-  add_custom_target(flamegraph-download DEPENDS FlameGraph)
 endif()
 
 #---Add ROOT include direcories and used compilation flags
