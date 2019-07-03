@@ -76,3 +76,42 @@ add_subdirectory(lib)
 
 #---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)
+
+#option(flamegraph "generate FlameGraphs for all benchmarks option" OFF)
+
+#if(flamegraph)
+#add_custom_target(flamegraph)
+#add_custom_command(TARGET flamegraph
+#		   POST_BUILD
+#		   COMMAND ${CMAKE_COMMAND} -E copy
+#		           ${CMAKE_SOURCE_DIR}/flamegraph_final.sh
+#        	           ${CMAKE_CURRENT_BINARY_DIR}/flamegraph_final.sh
+#			   ${CMAKE_CURRENT_BINARY_DIR}/flamegraph_final.sh -a
+#			   )
+#endif()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

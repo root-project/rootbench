@@ -61,7 +61,7 @@ void MakeDataStdVector()
    t.Write();
 }
 
-static void FixedSizeArrayTBranch(benchmark::State &state)
+static void BM_TTreePlayer_FixedSizeArrayTBranch(benchmark::State &state)
 {
    MakeDataFixedArray();
    TFile f(pathToFile.c_str());
@@ -83,9 +83,9 @@ static void FixedSizeArrayTBranch(benchmark::State &state)
    }
    ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
-BENCHMARK(FixedSizeArrayTBranch);
+BENCHMARK(BM_TTreePlayer_FixedSizeArrayTBranch);
 
-static void VarSizeArrayTBranch(benchmark::State &state)
+static void BM_TTreePlayer_VarSizeArrayTBranch(benchmark::State &state)
 {
    MakeDataVarArray();
    TFile f(pathToFile.c_str());
@@ -107,9 +107,9 @@ static void VarSizeArrayTBranch(benchmark::State &state)
    }
    ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
-BENCHMARK(VarSizeArrayTBranch);
+BENCHMARK(BM_TTreePlayer_VarSizeArrayTBranch);
 
-static void StdVectorTBranch(benchmark::State &state)
+static void BM_TTreePlayer_StdVectorTBranch(benchmark::State &state)
 {
    MakeDataStdVector();
    TFile f(pathToFile.c_str());
@@ -130,7 +130,7 @@ static void StdVectorTBranch(benchmark::State &state)
    }
    ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
-BENCHMARK(StdVectorTBranch);
+BENCHMARK(BM_TTreePlayer_StdVectorTBranch);
 
 static void RunReaderArray(benchmark::State &state)
 {
@@ -151,25 +151,25 @@ static void RunReaderArray(benchmark::State &state)
    ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 
-static void FixedSizeArrayReaderArray(benchmark::State &state)
+static void BM_TTreePlayer_FixedSizeArrayReaderArray(benchmark::State &state)
 {
    MakeDataFixedArray();
    RunReaderArray(state);
 }
-BENCHMARK(FixedSizeArrayReaderArray);
+BENCHMARK(BM_TTreePlayer_FixedSizeArrayReaderArray);
 
-static void VarSizeArrayReaderArray(benchmark::State &state)
+static void BM_TTreePlayer_VarSizeArrayReaderArray(benchmark::State &state)
 {
    MakeDataVarArray();
    RunReaderArray(state);
 }
-BENCHMARK(VarSizeArrayReaderArray);
+BENCHMARK(BM_TTreePlayer_VarSizeArrayReaderArray);
 
-static void StdVectorReaderArray(benchmark::State &state)
+static void BM_TTreePlayer_StdVectorReaderArray(benchmark::State &state)
 {
    MakeDataStdVector();
    RunReaderArray(state);
 }
-BENCHMARK(StdVectorReaderArray);
+BENCHMARK(BM_TTreePlayer_StdVectorReaderArray);
 
 BENCHMARK_MAIN();
