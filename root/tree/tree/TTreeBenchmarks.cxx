@@ -1,3 +1,4 @@
+#include "RDataFrameBench.h"
 #include <TFile.h>
 #include <TSystem.h>
 #include <TTree.h>
@@ -57,7 +58,7 @@ void MakeDataTwoBranches()
    t.Write();
 }
 
-static void TreeGetEntryReadOneOfOne(benchmark::State &state)
+static void BM_TTree_GetEntryReadOneOfOne(benchmark::State &state)
 {
    MakeDataOneBranch();
    TFile f(pathOneBranch.c_str());
@@ -78,9 +79,9 @@ static void TreeGetEntryReadOneOfOne(benchmark::State &state)
    }
    ensure(sum == 42 * nEntries);
 }
-BENCHMARK(TreeGetEntryReadOneOfOne);
+BENCHMARK(BM_TTree_GetEntryReadOneOfOne);
 
-static void TreeGetEntryReadNoneOfTwo(benchmark::State &state)
+static void BM_TTree_GetEntryReadNoneOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
    TFile f(pathTwoBranches.c_str());
@@ -92,9 +93,9 @@ static void TreeGetEntryReadNoneOfTwo(benchmark::State &state)
          t->GetEntry(e);
    }
 }
-BENCHMARK(TreeGetEntryReadNoneOfTwo);
+BENCHMARK(BM_TTree_GetEntryReadNoneOfTwo);
 
-static void TreeGetEntryReadOneOfTwo(benchmark::State &state)
+static void BM_TTree_GetEntryReadOneOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
    TFile f(pathTwoBranches.c_str());
@@ -115,9 +116,9 @@ static void TreeGetEntryReadOneOfTwo(benchmark::State &state)
    }
    ensure(sum == 42 * nEntries);
 }
-BENCHMARK(TreeGetEntryReadOneOfTwo);
+BENCHMARK(BM_TTree_GetEntryReadOneOfTwo);
 
-static void TreeGetEntryReadTwoOfTwo(benchmark::State &state)
+static void BM_TTree_GetEntryReadTwoOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
    TFile f(pathTwoBranches.c_str());
@@ -136,9 +137,9 @@ static void TreeGetEntryReadTwoOfTwo(benchmark::State &state)
    }
    ensure(sum == 42 * nEntries);
 }
-BENCHMARK(TreeGetEntryReadTwoOfTwo);
+BENCHMARK(BM_TTree_GetEntryReadTwoOfTwo);
 
-static void BranchGetEntryReadOneOfOne(benchmark::State &state)
+static void BM_TTree_BranchGetEntryReadOneOfOne(benchmark::State &state)
 {
    MakeDataOneBranch();
    TFile f(pathOneBranch.c_str());
@@ -158,9 +159,9 @@ static void BranchGetEntryReadOneOfOne(benchmark::State &state)
    }
    ensure(sum == 42 * nEntries);
 }
-BENCHMARK(BranchGetEntryReadOneOfOne);
+BENCHMARK(BM_TTree_BranchGetEntryReadOneOfOne);
 
-static void BranchGetEntryReadOneOfTwo(benchmark::State &state)
+static void BM_TTree_BranchGetEntryReadOneOfTwo(benchmark::State &state)
 {
    MakeDataTwoBranches();
    TFile f(pathTwoBranches.c_str());
@@ -180,6 +181,6 @@ static void BranchGetEntryReadOneOfTwo(benchmark::State &state)
    }
    ensure(sum == 42 * nEntries);
 }
-BENCHMARK(BranchGetEntryReadOneOfTwo);
+BENCHMARK(BM_TTree_BranchGetEntryReadOneOfTwo);
 
 BENCHMARK_MAIN();
