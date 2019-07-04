@@ -71,17 +71,17 @@ static void BM_TTreePlayer_FixedSizeArrayTBranch(benchmark::State &state)
    int *x = new int[n];
    b->SetAddress(x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
          for (auto i = 0; i < n; ++i)
             sum += x[i];
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreePlayer_FixedSizeArrayTBranch);
 
@@ -95,17 +95,17 @@ static void BM_TTreePlayer_VarSizeArrayTBranch(benchmark::State &state)
    int *x = new int[n];
    b->SetAddress(x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
          for (auto i = 0; i < n; ++i)
             sum += x[i];
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreePlayer_VarSizeArrayTBranch);
 
@@ -118,17 +118,17 @@ static void BM_TTreePlayer_StdVectorTBranch(benchmark::State &state)
    std::vector<int> *v = nullptr;
    b->SetAddress(&v);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
-         for (auto e : *v)
-            sum += e;
+         for (auto e_ : *v)
+            sum += e_;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreePlayer_StdVectorTBranch);
 
