@@ -68,16 +68,16 @@ static void BM_TTree_GetEntryReadOneOfOne(benchmark::State &state)
    t->SetBranchStatus(branchOne, true);
    t->SetBranchAddress(branchOne, &x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          t->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_GetEntryReadOneOfOne);
 
@@ -87,9 +87,9 @@ static void BM_TTree_GetEntryReadNoneOfTwo(benchmark::State &state)
    TFile f(pathTwoBranches.c_str());
    auto t = static_cast<TTree *>(f.Get(treeName));
    t->SetBranchStatus("*", kFALSE);
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
-      for (Long64_t e = 0ll; e < nEntries; ++e)
+      for (Long64_t e = 0ll; e < nEntries_; ++e)
          t->GetEntry(e);
    }
 }
@@ -105,16 +105,16 @@ static void BM_TTree_GetEntryReadOneOfTwo(benchmark::State &state)
    t->SetBranchStatus(branchOne, true);
    t->SetBranchAddress(branchOne, &x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          t->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_GetEntryReadOneOfTwo);
 
@@ -126,16 +126,16 @@ static void BM_TTree_GetEntryReadTwoOfTwo(benchmark::State &state)
    int x;
    t->SetBranchAddress(branchOne, &x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          t->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_GetEntryReadTwoOfTwo);
 
@@ -148,16 +148,16 @@ static void BM_TTree_BranchGetEntryReadOneOfOne(benchmark::State &state)
    auto b = t->GetBranch(branchOne);
    t->SetBranchAddress(branchOne, &x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_BranchGetEntryReadOneOfOne);
 
@@ -170,16 +170,16 @@ static void BM_TTree_BranchGetEntryReadOneOfTwo(benchmark::State &state)
    auto b = t->GetBranch(branchOne);
    t->SetBranchAddress(branchOne, &x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_BranchGetEntryReadOneOfTwo);
 
