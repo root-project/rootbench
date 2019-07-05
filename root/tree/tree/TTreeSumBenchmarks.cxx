@@ -44,16 +44,16 @@ static void BM_TTreeSum_SumScalarTBranchGetEntry(benchmark::State &state)
    auto b = t->GetBranch(scalarBranch);
    b->SetAddress(&x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTreeSum_SumScalarTBranchGetEntry);
 
@@ -67,16 +67,16 @@ static void BM_TTreeSum_SumScalarTTreeGetEntry(benchmark::State &state)
    t->SetBranchStatus(scalarBranch, true);
    t->SetBranchAddress(scalarBranch, &x);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          t->GetEntry(e);
          sum += x;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTreeSum_SumScalarTTreeGetEntry);
 
@@ -108,17 +108,17 @@ static void BM_TTreeSum_SumVectorTBranchGetEntry(benchmark::State &state)
    auto b = t->GetBranch(vectorBranch);
    b->SetAddress(&vec);
    int sum = 0;
-   const auto nEntries = t->GetEntries();
+   const auto nEntries_ = t->GetEntries();
    for (auto _ : state) {
       sum = 0;
-      for (Long64_t e = 0ll; e < nEntries; ++e) {
+      for (Long64_t e = 0ll; e < nEntries_; ++e) {
          b->GetEntry(e);
          for (auto el : *vec)
             sum += el;
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreeSum_SumVectorTBranchGetEntry);
 
