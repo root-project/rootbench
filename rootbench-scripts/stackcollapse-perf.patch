@@ -1,0 +1,13 @@
+diff --git a/stackcollapse-perf.pl b/stackcollapse-perf.pl
+index e91f7de..fe88660 100755
+--- a/stackcollapse-perf.pl
++++ b/stackcollapse-perf.pl
+@@ -80,7 +80,7 @@ my $include_pid = 0;    # include process ID with process name
+ my $include_tid = 0;    # include process & thread ID with process name
+ my $include_addrs = 0;    # include raw address where a symbol can't be found
+ my $tidy_java = 1;    # condense Java signatures
+-my $tidy_generic = 1;    # clean up function names a little
++my $tidy_generic = 0;    # clean up function names a little
+ my $target_pname;    # target process name from perf invocation
+ my $event_filter = "";    # event type filter, defaults to first encountered event
+ my $event_defaulted = 0;  # whether we defaulted to an event (none provided)
