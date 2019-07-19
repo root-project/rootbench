@@ -5,4 +5,5 @@
 #----------------------------------------------------------------------------
 option(coverage OFF)
 option(rootbench-datafiles OFF)
-option(flamegraph "FlameGraph generation option" OFF)
+option(flamegraphCPU "CPU FlameGraph generation option" OFF)
+option(flamegraphMem "Memory FlameGraph generation option" OFF)
