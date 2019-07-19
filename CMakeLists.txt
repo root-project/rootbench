@@ -65,7 +65,7 @@ endif()
 include(GoogleBenchmark)
 include(PytestBenchmark)
 
-if(flamegraph)
+if(flamegraphCPU OR flamegraphMem)
   # Check if perf is available in OS:
   find_program(PERF_EXECUTABLE perf)
   if(NOT PERF_EXECUTABLE)
@@ -109,3 +109,4 @@ add_subdirectory(tools)
 
 #---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)
+configure_file(${PROJECT_SOURCE_DIR}/rootbench-scripts/.rootrc ${PROJECT_BINARY_DIR} COPYONLY)
