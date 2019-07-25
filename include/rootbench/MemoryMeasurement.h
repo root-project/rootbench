@@ -10,4 +10,3 @@ int getMemoryMeasurement(std::string& perftutorial);
 
 //extracting filename from given path
 std::string getFileName(std::string& path);
-
