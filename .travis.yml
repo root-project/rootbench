@@ -1,13 +1,25 @@
-#Xenial is still not supported by Travis
-#dist: xenial
-dist: trusty
-
+dist: xenial
 sudo: required
+language: cpp
 
-language: generic
-
-services:
-  - docker
+packages:
+    - software-properties-common
+    - ccache
+    - libtbb-dev
+    - wget
+    - ruby
+    - ruby-dev
+    - python
+    - curl
+    - git
+    - unzip
+    - g++
+    - gfortran
+    - libatlas3-base
+    - libatlas-base-dev
+    - libgsl0-dev
+    - libfreetype6-dev
+    - davix
 
 notifications:
   email:
@@ -19,35 +31,167 @@ cache:
 
 matrix:
   include:
-    # There seems to be a hard limit to how many machines a Travis build will
-    # across all platforms. By interleaving OS X, the hope is to get in the
-    # queue faster while not blocking Linux builds from occuring.
-
-    # Coverage
-    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug EXTRA_OPTS="-Dcoverage=ON"
-    # GCC 5
-    - env: CXX=g++ CC=gcc BUILD_TYPE=Debug
-
-    - env: CXX=g++ CC=gcc BUILD_TYPE=Release
-    # GCC 6
-    - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
-
-    - env: CXX=g++-6 CC=gcc-6 BUILD_TYPE=Release
-    # GCC 7
-    # FIXME: gcc8 should be added after Ubuntu will fix missing includes in the package
-    - env: CXX=g++-7 CC=gcc-7 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
-
-    - env: CXX=g++-7 CC=gcc-7 BUILD_TYPE=Release
-    # Clang 5
-    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON" EXTRA_FLAGS="-v"
-
-    - env: CXX=clang++-5.0 CC=clang-5.0 BUILD_TYPE=Release
-
-    # Clang 6
-    - env: CXX=clang++-6.0 CC=clang-6.0 BUILD_TYPE=Debug EXTRA_OPTS="-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
-
-    - env: CXX=clang++-6.0 CC=clang-6.0 BUILD_TYPE=Release
-
+    - compiler: gcc
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+          - g++-9
+      env:
+        - COMPILER="gcc-9"
+    - compiler: gcc
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+          - g++-8
+      env:
+        - COMPILER="gcc-8"
+    - compiler: gcc
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+          - g++-7
+      env:
+        - COMPILER="gcc-7"
+    - compiler: gcc
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+          - g++-6
+      env:
+        - COMPILER="gcc-6"
+    - compiler: gcc
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+          - g++-5
+      env:
+        - COMPILER="gcc-5"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-9
+      env:
+        - COMPILER="clang-9"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-8
+      env:
+        - COMPILER="clang-8"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-7
+      env:
+        - COMPILER="clang-7"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-6.0
+      env:
+        - COMPILER="clang-6.0"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-5.0
+      env:
+        - COMPILER="clang-5.0"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-4.0
+      env:
+        - COMPILER="clang-4.0"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+          - clang-3.9
+      env:
+        - COMPILER="clang-3.9"
+    - compiler: clang
+      addons:
+        apt:
+          update: true
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+          - clang-8
+      env:
+        - COMPILER="clang-8"
+        - EXTRA_OPTS="-Dcoverage=ON"
+    # To be added later when we will have ROOT build in CVMFS
+    #- os: osx
+    #  osx_image: xcode9.4  # macOS-10.13
+    #  compiler: clang
+    #  env:
+    #    - COMPILER=clang
+    #- os: osx
+    #  osx_image: xcode10.2  # macOS-10.14
+    #  compiler: clang
+    #  env:
+    #    - COMPILER=clang      
+    #- os: osx
+    #  osx_image: xcode10.2  # macOS-10.14
+    #  compiler: clang
+    #  env:
+    #    - COMPILER=clang
 
 before_install:
   - wget https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
@@ -56,72 +200,42 @@ before_install:
   - sudo apt-get install cvmfs cvmfs-config-default
   - rm -f cvmfs-release-latest_all.deb
   - sudo mkdir -p /etc/cvmfs/
-  - echo "CVMFS_REPOSITORIES=sft.cern.ch,projects.cern.ch" > default.local
+  - echo "CVMFS_REPOSITORIES=sft.cern.ch,sft-nightlies.cern.ch,projects.cern.ch" > default.local
   - echo "CVMFS_HTTP_PROXY=DIRECT" >> default.local
   - sudo mv default.local /etc/cvmfs/
   - sudo /etc/init.d/autofs stop
   - sudo cvmfs_config setup
-  - sudo mkdir -p /cvmfs/sft-nightlies.cern.ch
-  - sudo mount -t cvmfs sft-nightlies.cern.ch /cvmfs/sft-nightlies.cern.ch
-  - ls /cvmfs/sft-nightlies.cern.ch
-  - sudo mkdir -p /cvmfs/sft.cern.ch
-  - sudo mount -t cvmfs sft.cern.ch /cvmfs/sft.cern.ch
-  - ls /cvmfs/sft.cern.ch
-# Time to docker
-  - docker pull ubuntu:16.04
-  - docker run --privileged -d -v $(pwd):/travis/rootbench -v $HOME/.ccache:/root/.ccache -v /cvmfs/sft.cern.ch:/cvmfs/sft.cern.ch -w /travis/rootbench --name xenial ubuntu:16.04 tail -f /dev/null
-  - docker exec xenial apt-get -y update
-  - docker exec xenial apt-get -y upgrade
-  - docker exec xenial apt-get install -y software-properties-common ccache cmake libtbb-dev wget ruby ruby-dev python curl git unzip g++ gfortran libatlas3-base libatlas-base-dev libgsl0-dev libfreetype6-dev
-  - docker exec xenial add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - docker exec -t xenial /bin/bash -c "wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -"
-  - docker exec xenial apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main"
-  - docker exec xenial apt-get -y update
-  - docker exec -t xenial /bin/bash -c "echo '/usr/lib/atlas-base' | tee /etc/ld.so.conf.d/atlas-lib.conf && ldconfig"
-  - |
-    if [ "${CXX}" == "g++-6" ]; then
-      docker exec xenial apt-get install -y gcc-6 g++-6
-    fi
-  - |
-    if [ "${CXX}" == "g++-7" ]; then
-      docker exec xenial apt-get install -y gcc-7 g++-7
-    fi
-  - |
-    if [ "${CXX}" == "clang++-5.0" ]; then
-      docker exec xenial apt-get install -y clang-5.0
-    fi
-  - |
-    if [ "${CXX}" == "clang++-6.0" ]; then
-      docker exec xenial apt-get install -y clang-6.0
-    fi
-  - docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/before-install.sh"
+
+  - gem install coveralls-lcov -v 1.5.1
+  - gem install lcoveralls
+  
 script:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/rootgcno.sh";
+    . $TRAVIS_BUILD_DIR/travis-scripts/rootgcno.sh;
   fi
-- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export HOME_FOLDER=/travis/ && export CC=${CC} && export CXX=${CXX} && export BUILD_TYPE=${BUILD_TYPE} && export EXTRA_OPTS=${EXTRA_OPTS} && export EXTRA_FLAGS=${EXTRA_FLAGS} && . /travis/rootbench/travis-scripts/configure.sh"
+- . $TRAVIS_BUILD_DIR/travis-scripts/configure.sh
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-part1.sh";
-  fi
-- |
-  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-part2.sh";
-  fi
-- docker exec -t xenial /bin/bash -c "source /travis/.bashrc && export RB_TEMP_FS=/travis/ && export HOME_FOLDER=/travis/ && cd /travis/build && ctest --output-on-failure -L short"
-- |
-  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-info-part1.sh";
+    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-part1.sh;
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/lcov-info-part2.sh";
+    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-part2.sh;
+  fi
+- export RB_TEMP_FS=${HOME} && cd $HOME/build && ctest --output-on-failure -L short
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-info-part1.sh;
+  fi
+- |
+  if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
+    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-info-part2.sh;
   fi
 after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    docker exec -t xenial /bin/bash -c "export HOME_FOLDER=/travis/ && . /travis/rootbench/travis-scripts/coveralls.sh";
+    . $TRAVIS_BUILD_DIR/travis-scripts/coveralls.sh;
   fi
 on_failure:
   -|
