@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $HOME_FOLDER
+cd $HOME
   d=$(date +%a)
   for i in `seq 1 7`; do
     ROOT_LOCATION=/cvmfs/sft-nightlies.cern.ch/lcg/nightlies/rootcov/$d/ROOT
@@ -13,14 +13,14 @@ cd $HOME_FOLDER
   done;
 echo "Initializing ROOT $ROOT_THISROOT"
 source $ROOT_THISROOT
-echo export ROOTSYS=`echo $ROOTSYS` >> /travis/.bashrc
-echo source $ROOTSYS/bin/thisroot.sh >> /travis/.bashrc
-cat /travis/.bashrc
-mkdir -p $HOME_FOLDER/build
-cd $HOME_FOLDER/build
+echo export ROOTSYS=`echo $ROOTSYS` >> $HOME/.bashrc
+echo source $ROOTSYS/bin/thisroot.sh >> $HOME/.bashrc
+cat $HOME/.bashrc
+mkdir -p $HOME/build
+cd $HOME/build
 export GCOV_PREFIX=`pwd`
 export GCOV_PREFIX_STRIP=0
 cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS}" \
-        ${EXTRA_OPTS} ../rootbench
+        ${EXTRA_OPTS} $TRAVIS_BUILD_DIR
 cmake --build .
