@@ -14,9 +14,9 @@ echo "Downloading and untaring $ROOTGCNO_TAR" && echo -en "travis_fold:start:unt
 wget $ROOTGCNO_TAR
 tar zxvf rootgcno.tgz -C $HOME/rootgcno > untar-details.log
 mkdir $HOME/lcov && cd $HOME/lcov
-wget https://github.com/linux-test-project/lcov/archive/v1.12.zip
-unzip v1.12.zip
-LCOV="`pwd`/lcov-1.12/bin/lcov"
+wget https://github.com/linux-test-project/lcov/archive/v1.14.zip
+unzip v1.14.zip
+LCOV="`pwd`/lcov-1.14/bin/lcov"
 echo export LCOV=`echo $LCOV` >> /travis/.bashrc
 mkdir -p $HOME/coveralls
 cp -av $HOME/rootgcno/rootgcno/* $HOME/coveralls/ &> copy_output.log
