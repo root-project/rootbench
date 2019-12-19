@@ -1,5 +1,5 @@
 #!/bin/bash
-source /travis/.bashrc
+source $HOME/.bashrc
 echo "LCOV combining all parts"
 $LCOV -a $HOME/build/coverage.init_part1 -a $HOME/build/coverage.init_part2 -a $HOME/build/coverage.info_part1 -a $HOME/build/coverage.info_part2 -o $HOME/build/coverage.total &> log
 $LCOV -r $HOME/build/coverage.total \*/usr* \*/*-prefix/* \*/G__*.cxx \*/install/* \*/qtgsi/* \*/Pythia8/* \*/TDav* \*/CMake*.cpp  \*/*.gen  \*/*.inc  \*/*.def  \*/VecCore/* \*/Roo1* \*/Roo2*  \*/interpreter/* -o $HOME/build/coverage.total &> log

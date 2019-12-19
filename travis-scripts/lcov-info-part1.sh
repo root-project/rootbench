@@ -1,5 +1,5 @@
 #!/bin/bash
-source /travis/.bashrc
+source $HOME/.bashrc
 find $HOME/build -name "*.gcda" -exec cp "{}" $HOME/coveralls/ \;
 touch $HOME/build/coverage.info_part1
 echo "LCOV info part 1 (due complex setup of CI slaves for ROOT builds)"
