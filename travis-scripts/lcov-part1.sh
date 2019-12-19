@@ -1,5 +1,5 @@
 #!/bin/bash
-source /travis/.bashrc
+source $HOME/.bashrc
 touch $HOME/build/coverage.init_part1
 echo "LCOV init part 1 (due complex setup of CI slaves for ROOT builds)"
 find $HOME/build -name "*.gcno" -exec cp "{}" $HOME/coveralls/ \;
