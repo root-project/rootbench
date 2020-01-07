@@ -71,16 +71,6 @@ matrix:
           - g++-6
       env:
         - COMPILER="gcc-6"
-    - compiler: gcc
-      addons:
-        apt:
-          update: true
-          sources:
-          - sourceline: 'ppa:ubuntu-toolchain-r/test'
-          packages:
-          - g++-5
-      env:
-        - COMPILER="gcc-5"
     - compiler: clang
       addons:
         apt:
@@ -163,18 +153,16 @@ matrix:
           - clang-3.9
       env:
         - COMPILER="clang-3.9"
-    - compiler: clang
+    - compiler: gcc-5
       addons:
         apt:
           update: true
           sources:
           - sourceline: 'ppa:ubuntu-toolchain-r/test'
-          - sourceline: "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
-            key_url: "http://apt.llvm.org/llvm-snapshot.gpg.key"
           packages:
-          - clang-8
+          - g++-5
       env:
-        - COMPILER="clang-8"
+        - COMPILER="gcc-5"
         - EXTRA_OPTS="-Dcoverage=ON"
     # To be added later when we will have ROOT build in CVMFS
     #- os: osx
