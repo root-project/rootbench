@@ -68,6 +68,12 @@ if(coverage)
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 endif()
 
+#---Enable data download ----------------------------------------------------------------------
+if(rootbench_datafiles)
+  message(STATUS "INFO: rootbench_datafiles option is ON. Multiple data files are getting pulled from https://root.cern.ch/files/rootbench")
+  include(RootBenchDataFiles)
+endif(rootbench_datafiles)
+
 #---Enable and setup CTest.
 include(RootBenchCTest)
 
