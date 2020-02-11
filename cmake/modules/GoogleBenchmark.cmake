@@ -9,7 +9,7 @@ set(GBENCHMARK_LIBRARY_NAME ${CMAKE_STATIC_LIBRARY_PREFIX}benchmark${CMAKE_STATI
 ExternalProject_Add(
   googlebenchmark
   GIT_REPOSITORY https://github.com/google/benchmark.git
-  GIT_TAG v1.3.0
+  GIT_TAG v1.5.0
   UPDATE_COMMAND ""
   # TIMEOUT 10
   # # Force separate output paths for debug and release builds to allow easy
@@ -24,6 +24,7 @@ ExternalProject_Add(
   -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
   -DCMAKE_CXX_FLAGS=${GBENCHMARK_CMAKE_CXX_FLAGS}
+  -DBENCHMARK_ENABLE_TESTING=OFF
   # Disable install step
   INSTALL_COMMAND ""
   BUILD_BYPRODUCTS "${GBENCHMARK_PREFIX}/src/googlebenchmark-build/src/${GBENCHMARK_LIBRARY_NAME}"

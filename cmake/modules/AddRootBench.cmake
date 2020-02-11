@@ -2,7 +2,7 @@
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
-  cmake_parse_arguments(ARG "" "" "LABEL;LIBRARIES" ${ARGN})
+  cmake_parse_arguments(ARG "" "" "LABEL;LIBRARIES;DATAFILES" ${ARGN})
   # FIXME: Move to target_include_directories.
   include_directories(BEFORE ${ROOTBENCH_SOURCE_DIR}/include)
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
@@ -25,6 +25,16 @@ function(RB_ADD_GBENCHMARK benchmark)
   elseif($ARG_LABEL STREQUAL "short")
     set(${TIMEOUT_VALUE} 3600)
   endif()
+  # Prepare data files for benchmarks
+  foreach(file ${ARG_DATAFILES})
+    set(list_files ${file} ${list_files})
+    if(EXISTS ${CMAKE_BINARY_DIR}/rootbench_datafiles/${file})
+      file(COPY ${CMAKE_BINARY_DIR}/rootbench_datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    else()
+      message(ERROR "You are missing some ROOT data files. Please rerun CMake with option -Drootbench_datafiles=ON.")
+    endif()
+  endforeach(file ${ARG_DATAFILES})
+  # Add benchmark as a CTest
   add_test(NAME rootbench-${benchmark} COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false)
   set_tests_properties(rootbench-${benchmark} PROPERTIES
                                               ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
