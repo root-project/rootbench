@@ -8,3 +8,8 @@ RB_ADD_GBENCHMARK(THistBenchmarks
    THistFillBenchmarks.cxx
    LABEL short
    LIBRARIES Hist Core)
+
+RB_ADD_GBENCHMARK(RHistBenchmarks
+   RHistFillBenchmarks.cxx
+   LABEL short
+   LIBRARIES RHist)
