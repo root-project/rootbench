@@ -69,16 +69,19 @@ if(coverage)
 endif()
 
 #---Enable data download ----------------------------------------------------------------------
-if(rootbench_datafiles)
-  message(STATUS "INFO: rootbench_datafiles option is ON. Multiple data files are getting pulled from https://root.cern.ch/files/rootbench")
+if(rootbench-datafiles)
+  message(STATUS "INFO: rootbench-datafiles option is ON. Multiple data files are getting pulled from https://root.cern.ch/files/rootbench")
   include(RootBenchDataFiles)
-endif(rootbench_datafiles)
+endif(rootbench-datafiles)
 
 #---Enable and setup CTest.
 include(RootBenchCTest)
 
 #---Add the support libraries.
 add_subdirectory(lib)
+
+#---Add tools directory (executables for data generation and etc.)
+add_subdirectory(tools)
 
 #---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)
