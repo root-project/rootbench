@@ -5,44 +5,73 @@
 
 #include <iostream>
 #include <future>
+#include <thread>
+
+
+
+
+// Define benchmark arguments
+static void FillArguments(benchmark::internal::Benchmark *b)
+{
+   // Number of data points
+   for(int i = 3; i <= 3000000; i *= 10)
+      // Number of bins
+      for(int k = 10; k <= 10000; k *= 10)
+         b->Args({i, k, k / 2});
+}
+
+static void ConcurrentFillArguments(benchmark::internal::Benchmark *b)
+{
+   // Number of data points
+   for(int i = 3; i <= 3000000; i *= 10)
+      // Number of threads
+      for(int j = 1; j <= 1024; j *= 2)
+         // Number of bins
+         for(int k = 10; k <= 10000; k *= 10)
+            b->Args({i, j, k, k / 2});
+}
 
 
 
 // Benchmark for simple Fill on 2D hist
 static void BM_RHist_Fill(benchmark::State &state)
 {
-   ROOT::Experimental::RH2D hist{{100, 0., 1.}, {{0., 1., 2., 3., 10.}}};
+   int nbOfBinsForFirstAxis = state.range(1);
+   int nbOfBinsForSecondAxis = state.range(2);
 
+   ROOT::Experimental::RH2D hist{{nbOfBinsForFirstAxis, 0., 1.}, {nbOfBinsForSecondAxis, 0., 10.}};
+
+   int nbOfDataPoints = state.range(0); 
    for (auto _ : state) {
       // Fill without weight
-      for (int i = 0; i < 3000; ++i) {
-         hist.Fill({(double)i / 100, (double)i / 10});
+      for (int i = 0; i < nbOfDataPoints; ++i) {
+         hist.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).});
       }
 
       // Fill with weights
-      for (int i = 0; i < 3000; ++i) {
-         hist.Fill({(double)i / 100, (double)i / 10});
+      for (int i = 0; i < nbOfDataPoints; ++i) {
+         hist.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).});
       }
    }
 }
-BENCHMARK(BM_RHist_Fill);
+BENCHMARK(BM_RHist_Fill) -> Apply(FillArguments);
 
 
 
 using Filler_t = ROOT::Experimental::RHistConcurrentFiller<ROOT::Experimental::RH2D, 1024>;
 
 // Functions for benchmarking ConcurrentFill
-void fillWithoutWeight(Filler_t filler)
+void fillWithoutWeight(Filler_t filler, int nbOfDataPoints)
 {
-   for (int i = 0; i < 3000; ++i) {
-      filler.Fill({(double)i / 100, (double)i / 10});
+   for (int i = 0; i < nbOfDataPoints; ++i) {
+      filler.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).});
    }
 }
 
-void fillWithWeights(Filler_t filler)
+void fillWithWeights(Filler_t filler, int nbOfDataPoints)
 {
-   for (int i = 0; i < 3000; ++i) {
-      filler.Fill({(double)i / 100, (double)i / 10}, (float)i);
+   for (int i = 0; i < nbOfDataPoints; ++i) {
+      filler.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).}, i.f);
    }
 }
 
@@ -51,16 +80,19 @@ void fillWithWeights(Filler_t filler)
 // Benchmark for ConcurrentFill on 2D hist
 static void BM_RHist_ConcurrentFill(benchmark::State &state)
 {
-   ROOT::Experimental::RH2D hist{{100, 0., 1.}, {{0., 1., 2., 3., 10.}}};
+   int nbOfBinsForFirstAxis = state.range(2);
+   int nbOfBinsForSecondAxis = state.range(3);
+   ROOT::Experimental::RH2D hist{{nbOfBinsForFirstAxis, 0., 1.}, {nbOfBinsForSecondAxis, 0., 10.}};
 
    ROOT::Experimental::RHistConcurrentFillManager<ROOT::Experimental::RH2D> fillMgr(hist);
       
-   std::array<std::thread, 2> threads;
+   int nbOfThreads = state.range(1);
+   std::array<std::thread, nbOfThreads> threads;
 
    for (auto _ : state) {
       // ConcurrentFill without weight
       for (auto &thr : threads) {
-         thr = std::thread(fillWithoutWeight, fillMgr.MakeFiller());
+         thr = std::thread(fillWithoutWeight, fillMgr.MakeFiller(), state.range(0));
       }
 
       for (auto &thr : threads)
@@ -68,14 +100,14 @@ static void BM_RHist_ConcurrentFill(benchmark::State &state)
 
       // ConcurrentFill with weights
       for (auto &thr : threads) {
-         thr = std::thread(fillWithWeights, fillMgr.MakeFiller());
+         thr = std::thread(fillWithWeights, fillMgr.MakeFiller(), state.range(0));
       }
 
       for (auto &thr : threads)
          thr.join();
    }
 }
-BENCHMARK(BM_RHist_ConcurrentFill);
+BENCHMARK(BM_RHist_ConcurrentFill) -> Apply(ConcurrentFillArguments);
 
 
 
