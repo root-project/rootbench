@@ -14,18 +14,18 @@
 static void FillArguments(benchmark::internal::Benchmark *b)
 {
    // Number of data points
-   for(int i = 3; i <= 3000000; i *= 10)
+   for(int i = 3; i <= 3000000; i *= 100)
       // Number of bins
-      for(int k = 10; k <= 10000; k *= 10)
+      for(int k = 10; k <= 1000; k *= 10)
          b->Args({i, k, k / 2});
 }
 
 static void ConcurrentFillArguments(benchmark::internal::Benchmark *b)
 {
    // Number of data points
-   for(int i = 3; i <= 3000000; i *= 100)
+   for(int i = 3; i <= 3000000; i *= 1000)
       // Number of threads
-      for(int j = 1; j <= 512; j *= 8)
+      for(int j = 1; j <= 64; j *= 8)
          // Number of bins
          for(int k = 10; k <= 1000; k *= 10)
             b->Args({i, j, k, k / 2});
