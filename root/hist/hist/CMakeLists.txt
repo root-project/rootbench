@@ -12,4 +12,4 @@ RB_ADD_GBENCHMARK(THistBenchmarks
 RB_ADD_GBENCHMARK(RHistBenchmarks
    RHistFillBenchmarks.cxx
    LABEL short
-   LIBRARIES RHist)
+   LIBRARIES ROOTHist Core)
