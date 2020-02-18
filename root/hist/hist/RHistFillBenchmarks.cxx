@@ -45,12 +45,14 @@ static void BM_RHist_Fill(benchmark::State &state)
    for (auto _ : state) {
       // Fill without weight
       for (int i = 0; i < nbOfDataPoints; ++i) {
-         hist.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).});
+         float d = static_cast< float >(i);
+         hist.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)});
       }
 
       // Fill with weights
       for (int i = 0; i < nbOfDataPoints; ++i) {
-         hist.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).});
+         float d = static_cast< float >(i);
+         hist.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)}, d);
       }
    }
 }
@@ -64,14 +66,16 @@ using Filler_t = ROOT::Experimental::RHistConcurrentFiller<ROOT::Experimental::R
 void fillWithoutWeight(Filler_t filler, int nbOfDataPoints)
 {
    for (int i = 0; i < nbOfDataPoints; ++i) {
-      filler.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).});
+      float d = static_cast< float >(i);
+      filler.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)});
    }
 }
 
 void fillWithWeights(Filler_t filler, int nbOfDataPoints)
 {
    for (int i = 0; i < nbOfDataPoints; ++i) {
-      filler.Fill({i / nbOfDataPoints., i / (nbOfDataPoints / 10).}, i.f);
+      float d = static_cast< float >(i);
+      filler.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)}, d);
    }
 }
 
@@ -86,8 +90,8 @@ static void BM_RHist_ConcurrentFill(benchmark::State &state)
 
    ROOT::Experimental::RHistConcurrentFillManager<ROOT::Experimental::RH2D> fillMgr(hist);
       
-   int nbOfThreads = state.range(1);
-   std::array<std::thread, nbOfThreads> threads;
+   std::size_t nbOfThreads = state.range(1);
+   std::thread threads[nbOfThreads];
 
    for (auto _ : state) {
       // ConcurrentFill without weight
