@@ -18,6 +18,9 @@ ROOTBench can be built standalone and as part of ROOT. If you want to enable ROO
 
 ### Building ROOTBench standalone
 ROOTBench should be able to find ROOT at configuration time. Make sure you ran `source $ROOTSYS/bin/thisroot.sh`.
+
+> **:warning: This Project uses submodules!**  
+> **Either use `git clone --recursive` or run `git submodule update --init -- recursive` after cloning the repository, otherwise the build will fail!**
 ```bash
 git clone https://github.com/root-project/rootbench.git
 mkdir build
