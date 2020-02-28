@@ -9,7 +9,9 @@ RB_ADD_GBENCHMARK(THistBenchmarks
    LABEL short
    LIBRARIES Hist Core)
 
+if(ROOT_root7_FOUND)
 RB_ADD_GBENCHMARK(RHistBenchmarks
    RHistFillBenchmarks.cxx
    LABEL short
    LIBRARIES ROOTHist Core)
+endif()
