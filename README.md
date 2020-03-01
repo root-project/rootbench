@@ -23,8 +23,13 @@ git clone https://github.com/root-project/rootbench.git
 mkdir build
 cd build
 cmake ../rootbench
-cmake --build . -- -j4
+cmake --build . -- -j$(nproc)
 ```
+also, you can use 
+```
+cmake --build . -- -jN
+```
+where 'N' is the maximum number of processor cores you want to use.
 ## Extending the benchmarks
 ROOTBench relies on [Google Benchmark](https://github.com/google/benchmark). We recommend to read the [available documentation](https://github.com/google/benchmark/blob/master/README.md) and browse the existing examples [here](https://github.com/google/benchmark/tree/master/test) for more advanced usage.
 
