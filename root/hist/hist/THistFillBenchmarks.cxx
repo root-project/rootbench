@@ -68,17 +68,17 @@ std::map<int, std::map<int, TH2D*>> histFill = { { 10, { { 5, &hist1 }, { 50, &h
                                     { 100, { { 5, &hist4 }, { 50, &hist5 }, { 500, &hist6 } } },
                                     { 1000, { { 5, &hist7 }, { 50, &hist8 }, { 500, &hist9 } } } };
 
-static void FillHist(int nbOfDataPoints, int nbOfBinsForFirstAxis, int nbOfBinsForSecondAxis) 
+static void FillHist(int nbOfDataPoints, TH2D * hist) 
 {
    // Fill without weight
    for (int i = 0; i < nbOfDataPoints; ++i) {
       double d = static_cast< double >(i);
-      histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->Fill(d / nbOfDataPoints, d / (nbOfDataPoints / 10));
+      hist->Fill(d / nbOfDataPoints, d / (nbOfDataPoints / 10));
    }
    // Fill with weights
    for (int i = 0; i < nbOfDataPoints; ++i) {
       double d = static_cast< double >(i);
-      histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->Fill(d / nbOfDataPoints, d / (nbOfDataPoints / 10), d);
+      hist->Fill(d / nbOfDataPoints, d / (nbOfDataPoints / 10), d);
    }
 }
 
@@ -90,7 +90,7 @@ static void BM_THist_Fill(benchmark::State &state)
    int nbOfBinsForSecondAxis = state.range(2);
 
    for (auto _ : state)
-      FillHist(nbOfDataPoints, nbOfBinsForFirstAxis, nbOfBinsForSecondAxis);
+      FillHist(nbOfDataPoints, histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]);
 }
 BENCHMARK(BM_THist_Fill) -> Apply(FillArguments);
 
