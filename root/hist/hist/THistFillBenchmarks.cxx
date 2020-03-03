@@ -3,9 +3,6 @@
 
 #include "benchmark/benchmark.h"
 
-#include <iostream>
-#include <vector>
-
 // Define benchmark arguments
 static void FillArguments(benchmark::internal::Benchmark *b)
 {
