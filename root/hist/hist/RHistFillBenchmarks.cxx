@@ -6,9 +6,7 @@
 #include <iostream>
 #include <future>
 #include <thread>
-
-
-
+#include <map>
 
 // Define benchmark arguments
 static void FillArguments(benchmark::internal::Benchmark *b)
@@ -32,29 +30,44 @@ static void ConcurrentFillArguments(benchmark::internal::Benchmark *b)
 }
 
 
+// Histograms with different bin configurations for Fill
+ROOT::Experimental::RH2D hist1{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist2{{10, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist3{{10, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist4{{100, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist5{{100, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist6{{100, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist7{{1000, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist8{{1000, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist9{{1000, 0.1, 1.}, {1000 / 2, 0., 10.}};
+
+std::map<int, std::map<int, ROOT::Experimental::RH2D*>> histFill = { { 10, { { 5, &hist1 }, { 50, &hist2 }, { 500, &hist3} } },
+                                                               { 100, { { 5, &hist4 }, { 50, &hist5 }, { 500, &hist6 } } },
+                                                               { 1000, { { 5, &hist7 }, { 50, &hist8 }, { 500, &hist9 } } } };
+
+static void FillHist(int nbOfDataPoints, ROOT::Experimental::RH2D * hist)
+{
+   // Fill without weight
+   for (int i = 0; i < nbOfDataPoints; ++i) {
+      double d = static_cast< double >(i);
+      hist->Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)});
+   }
+   // Fill with weights
+   for (int i = 0; i < nbOfDataPoints; ++i) {
+      double d = static_cast< double >(i);
+      hist->Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)}, d);
+   }
+}
 
 // Benchmark for simple Fill on 2D hist
 static void BM_RHist_Fill(benchmark::State &state)
 {
+   int nbOfDataPoints = state.range(0);
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
-   ROOT::Experimental::RH2D hist{{nbOfBinsForFirstAxis, 0., 1.}, {nbOfBinsForSecondAxis, 0., 10.}};
-
-   int nbOfDataPoints = state.range(0); 
-   for (auto _ : state) {
-      // Fill without weight
-      for (int i = 0; i < nbOfDataPoints; ++i) {
-         float d = static_cast< float >(i);
-         hist.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)});
-      }
-
-      // Fill with weights
-      for (int i = 0; i < nbOfDataPoints; ++i) {
-         float d = static_cast< float >(i);
-         hist.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)}, d);
-      }
-   }
+   for (auto _ : state)
+      FillHist(nbOfDataPoints, histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]);
 }
 BENCHMARK(BM_RHist_Fill) -> Apply(FillArguments);
 
