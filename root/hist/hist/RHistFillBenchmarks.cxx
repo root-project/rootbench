@@ -1,4 +1,5 @@
 #include "ROOT/RHist.hxx"
+#include "ROOT/span.hxx"
 #include "ROOT/RHistConcurrentFill.hxx"
 
 #include "benchmark/benchmark.h"
@@ -29,6 +30,33 @@ static void ConcurrentFillArguments(benchmark::internal::Benchmark *b)
             b->Args({i, j, k, k / 2});
 }
 
+using CoordArray_t = ROOT::Experimental::Hist::RCoordArray<2>;
+
+// Create array for x coordinates
+std::vector<CoordArray_t> MakeCoorVec(int nbOfDataPoints)
+{
+   std::vector<CoordArray_t> vec;
+   for (int j = 0; j < nbOfDataPoints; ++j) {
+      double d = static_cast< double >(j);
+      vec.push_back({ d / nbOfDataPoints, d / (nbOfDataPoints / 10) });
+   }
+   return vec;
+}
+
+// Create array for weights
+std::vector<double> MakeWeightVec(int nbOfDataPoints)
+{
+   std::vector<double> vec;
+   for (int j = 0; j < nbOfDataPoints; ++j) {
+      double d = static_cast< double >(j);
+      vec.push_back(d);
+   }
+   return vec;
+}
+
+// Arrays of coordinates and weights
+std::vector<CoordArray_t> coords = MakeCoorVec(3000000);
+std::vector<double> weights = MakeWeightVec(3000000);
 
 // Histograms with different bin configurations for Fill
 ROOT::Experimental::RH2D hist1{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
@@ -71,7 +99,36 @@ static void BM_RHist_Fill(benchmark::State &state)
 }
 BENCHMARK(BM_RHist_Fill) -> Apply(FillArguments);
 
+// Histograms with different bin configurations for FillN
+ROOT::Experimental::RH2D hist11{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist12{{10, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist13{{10, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist14{{100, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist15{{100, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist16{{100, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist17{{1000, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist18{{1000, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist19{{1000, 0.1, 1.}, {1000 / 2, 0., 10.}};
 
+std::map<int, std::map<int, ROOT::Experimental::RH2D*>> histFillN = { { 10, { { 5, &hist11 }, { 50, &hist12 }, { 500, &hist13} } },
+                                    { 100, { { 5, &hist14 }, { 50, &hist15 }, { 500, &hist16 } } },
+                                    { 1000, { { 5, &hist17 }, { 50, &hist18 }, { 500, &hist19 } } } };
+
+// Benchmark for simple FillN on 2D hist
+static void BM_RHist_FillN(benchmark::State &state)
+{
+   int nbOfDataPoints = state.range(0);
+   int nbOfBinsForFirstAxis = state.range(1);
+   int nbOfBinsForSecondAxis = state.range(2);
+
+   for (auto _ : state) {
+      // FillN without weight
+      histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints), std::span<const double>(&weights[0], nbOfDataPoints));
+      // FillN with weights
+      histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints));
+   }
+}
+BENCHMARK(BM_RHist_FillN) -> Apply(FillArguments);
 
 using Filler_t = ROOT::Experimental::RHistConcurrentFiller<ROOT::Experimental::RH2D, 1024>;
 
@@ -91,8 +148,6 @@ void fillWithWeights(Filler_t filler, int nbOfDataPoints)
       filler.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)}, d);
    }
 }
-
-
 
 // Benchmark for ConcurrentFill on 2D hist
 static void BM_RHist_ConcurrentFill(benchmark::State &state)
@@ -125,8 +180,6 @@ static void BM_RHist_ConcurrentFill(benchmark::State &state)
    }
 }
 BENCHMARK(BM_RHist_ConcurrentFill) -> Apply(ConcurrentFillArguments);
-
-
 
 // Call main()
 BENCHMARK_MAIN();
