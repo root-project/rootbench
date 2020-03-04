@@ -4,6 +4,7 @@
 #include "benchmark/benchmark.h"
 
 #include <map>
+#include <vector>
 
 // Define benchmark arguments
 static void FillArguments(benchmark::internal::Benchmark *b)
@@ -89,8 +90,10 @@ static void BM_THist_Fill(benchmark::State &state)
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
+   auto hist = histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
+
    for (auto _ : state)
-      FillHist(nbOfDataPoints, histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]);
+      FillHist(nbOfDataPoints, hist);
 }
 BENCHMARK(BM_THist_Fill) -> Apply(FillArguments);
 
@@ -116,11 +119,13 @@ static void BM_THist_FillN(benchmark::State &state)
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
+   auto hist = histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
+
    for (auto _ : state) {
       // FillN without weight
-      histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], &weights[0], 1);
+      hist->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], &weights[0], 1);
       // FillN with weights
-      histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], NULL, 1);
+      hist->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], NULL, 1);
    }
 }
 BENCHMARK(BM_THist_FillN) -> Apply(FillArguments);
