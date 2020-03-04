@@ -8,6 +8,7 @@
 #include <future>
 #include <thread>
 #include <map>
+#include <vector>
 
 // Define benchmark arguments
 static void FillArguments(benchmark::internal::Benchmark *b)
@@ -94,8 +95,10 @@ static void BM_RHist_Fill(benchmark::State &state)
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
+   auto hist = histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
+
    for (auto _ : state)
-      FillHist(nbOfDataPoints, histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]);
+      FillHist(nbOfDataPoints, hist);
 }
 BENCHMARK(BM_RHist_Fill) -> Apply(FillArguments);
 
@@ -121,11 +124,13 @@ static void BM_RHist_FillN(benchmark::State &state)
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
+   auto hist = histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
+
    for (auto _ : state) {
       // FillN without weight
-      histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints), std::span<const double>(&weights[0], nbOfDataPoints));
+      hist->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints), std::span<const double>(&weights[0], nbOfDataPoints));
       // FillN with weights
-      histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis]->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints));
+      hist->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints));
    }
 }
 BENCHMARK(BM_RHist_FillN) -> Apply(FillArguments);
