@@ -56,7 +56,7 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
       // TH1D & TH2D histograms to be filled with data
       auto hdmd = new TH1D("hdmd", "dm_d", 40, 0.13, 0.17);
       auto h2 = new TH2D("h2", "ptD0 vs dm_d", 30, 0.135, 0.165, 30, -3, 6);
-      for (auto i : ntuple->GetViewRange()) {
+      for (auto i : ntuple->GetEntryRange()) {
          if (i == 0) {
             state.PauseTiming();
          } else {
@@ -73,22 +73,22 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
          if (TMath::Abs(etads_dView(i)) >= 1.5)
             continue;
 
-         if (nhitrpView(*trackView.GetViewRange(i).begin() + ik) *
-                nhitrpView(*trackView.GetViewRange(i).begin() + ipi) <=
+         if (nhitrpView(*trackView.GetCollectionRange(i).begin() + ik) *
+                nhitrpView(*trackView.GetCollectionRange(i).begin() + ipi) <=
              1)
             continue;
-         if (rendView(*trackView.GetViewRange(i).begin() + ik) - rstartView(*trackView.GetViewRange(i).begin() + ik) <=
+         if (rendView(*trackView.GetCollectionRange(i).begin() + ik) - rstartView(*trackView.GetCollectionRange(i).begin() + ik) <=
              22)
             continue;
-         if (rendView(*trackView.GetViewRange(i).begin() + ipi) -
-                rstartView(*trackView.GetViewRange(i).begin() + ipi) <=
+         if (rendView(*trackView.GetCollectionRange(i).begin() + ipi) -
+                rstartView(*trackView.GetCollectionRange(i).begin() + ipi) <=
              22)
             continue;
-         if (nlhkView(*trackView.GetViewRange(i).begin() + ik) <= 0.1)
+         if (nlhkView(*trackView.GetCollectionRange(i).begin() + ik) <= 0.1)
             continue;
-         if (nlhpiView(*trackView.GetViewRange(i).begin() + ipi) <= 0.1)
+         if (nlhpiView(*trackView.GetCollectionRange(i).begin() + ipi) <= 0.1)
             continue;
-         if (nlhpiView(*trackView.GetViewRange(i).begin() + ipis) <= 0.1)
+         if (nlhpiView(*trackView.GetCollectionRange(i).begin() + ipis) <= 0.1)
             continue;
          if (njetsView(i) < 1)
             continue;
