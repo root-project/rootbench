@@ -1,9 +1,7 @@
 # - Configure and install ROOTBENCH data files
 #
 #
-
 set(rootbenchsite "http://root.cern.ch/files/rootbench")
-set(compression_algorithms "lzma;zlib;none;zstd;lz4")
 set(timeout 3600)
 
 function(download_file url filename) # hash_type hash
@@ -15,14 +13,14 @@ function(download_file url filename) # hash_type hash
         #EXPECTED_HASH ${hash_type}=${hash}
         #TLS_VERIFY ON
       )
+  else()
+    message(STATUS "INFO: " ${file} " was already downloaded from ${url}")
   endif()
 endfunction(download_file)
 
-foreach(n ${compression_algorithms})
-  # TBD: Change names (remove tilda)!
-  set(file_to_download "${rootbenchsite}/h1dst~${n}.root")
-  set(file_to_save "${PROJECT_BINARY_DIR}/rootbench-datafiles/h1dst-${n}.root")
-  download_file(${file_to_download} ${file_to_save})
-endforeach()
-
+function(get_file filelist)
+    set(file_to_download "${rootbenchsite}/${file}")
+    set(file_to_save "${PROJECT_BINARY_DIR}/rootbench-datafiles/${file}")
+    download_file(${file_to_download} ${file_to_save})
+endfunction(get_file)
 
