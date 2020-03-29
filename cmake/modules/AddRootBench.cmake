@@ -32,9 +32,11 @@ function(RB_ADD_GBENCHMARK benchmark)
     if(EXISTS ${CMAKE_BINARY_DIR}/rootbench-datafiles/${file})
       file(COPY ${CMAKE_BINARY_DIR}/rootbench-datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
     else()
-      message(ERROR ${file} "is missing. Please rerun CMake with option -Drootbench-datafiles=ON.")
+      get_file(${file})
+      file(COPY ${CMAKE_BINARY_DIR}/rootbench-datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
     endif()
   endforeach(file ${ARG_DOWNLOAD_DATAFILES})
+
    # Add dependencies to benchmark
   if(ARG_DEPENDS)
     add_dependencies(${benchmark} ${ARG_DEPENDS})
