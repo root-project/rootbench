@@ -8,7 +8,10 @@ RB_ADD_GBENCHMARK(TFile_RDFSnapshot
   LABEL short
   LIBRARIES Core RIO ROOTDataFrame MathCore) 
 
-RB_ADD_GBENCHMARK(TFile_MainEvent
-  TFile_MainEvent.cxx
-  LABEL short
-  LIBRARIES Core RIO) 
+if(rootbench-datafiles)
+  RB_ADD_GBENCHMARK(CompressionBenchmarks_MainEvent
+    TFile_CompressionBenchmarks_MainEvent.cxx
+    LABEL short
+    LIBRARIES Core RIO
+    DOWNLOAD_DATAFILES Event0-sample.root)
+endif()

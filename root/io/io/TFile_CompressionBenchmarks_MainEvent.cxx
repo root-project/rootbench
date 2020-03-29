@@ -21,7 +21,7 @@ static std::string GetAlgoName(int algo) {
 }
 
 static void BM_MainEvent_Compress(benchmark::State &state, int algo) {
-   TFile *oldfile = new TFile("Event0.root");
+   TFile *oldfile = new TFile("Event0-sample.root");
    TTree *oldtree = (TTree*)oldfile->Get("T");
 
    int comp_level = state.range(0);
@@ -75,6 +75,9 @@ static void BM_MainEvent_Compress_LZMA(benchmark::State &state) {
 static void BM_MainEvent_Compress_LZ4(benchmark::State &state) {
    BM_MainEvent_Compress(state, 4);
 }
+static void BM_MainEvent_Compress_ZSTD(benchmark::State &state) {
+   BM_MainEvent_Compress(state, 5);
+}
 
 
 static void BM_MainEvent_Decompress_ZLIB(benchmark::State &state) {
@@ -86,34 +89,44 @@ static void BM_MainEvent_Decompress_LZMA(benchmark::State &state) {
 static void BM_MainEvent_Decompress_LZ4(benchmark::State &state) {
    BM_MainEvent_Decompress(state, 4);
 }
+static void BM_MainEvent_Decompress_ZSTD(benchmark::State &state) {
+   BM_MainEvent_Decompress(state, 5);
+}
 
 
 
 BENCHMARK(BM_MainEvent_Compress_ZLIB)
-->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6)->Arg(7)->Arg(8)->Arg(9)
-->Unit(benchmark::kMillisecond);
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 BENCHMARK(BM_MainEvent_Compress_LZMA)
-->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6)->Arg(7)->Arg(8)->Arg(9)
-->Unit(benchmark::kMillisecond);
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 BENCHMARK(BM_MainEvent_Compress_LZ4)
-->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6)->Arg(7)->Arg(8)->Arg(9)
-->Unit(benchmark::kMillisecond);
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
+BENCHMARK(BM_MainEvent_Compress_ZSTD)
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 
 BENCHMARK(BM_MainEvent_Decompress_ZLIB)
-->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6)->Arg(7)->Arg(8)->Arg(9)
-->Unit(benchmark::kMillisecond);
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 BENCHMARK(BM_MainEvent_Decompress_LZMA)
-->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6)->Arg(7)->Arg(8)->Arg(9)
-->Unit(benchmark::kMillisecond);
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 BENCHMARK(BM_MainEvent_Decompress_LZ4)
-->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6)->Arg(7)->Arg(8)->Arg(9)
-->Unit(benchmark::kMillisecond);
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
+
+BENCHMARK(BM_MainEvent_Decompress_ZSTD)
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 
 BENCHMARK_MAIN();
