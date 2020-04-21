@@ -50,6 +50,36 @@ function(RB_ADD_GBENCHMARK benchmark)
                                               TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
 endfunction(RB_ADD_GBENCHMARK)
 
+
+#----------------------------------------------------------------------------
+# function RB_ADD_PYTESTBENCHMARK(file_name)
+#
+# Dependency: pytest with pytest-benchmark and PyROOT modules
+#
+#----------------------------------------------------------------------------
+function(RB_ADD_PYTESTBENCHMARK file_name)
+  if(ROOT_pyroot_experimental_FOUND)
+    set(ROOT_ENV ROOTSYS=${ROOTSYS}
+        PATH=${ROOTSYS}/bin:$ENV{PATH}
+        LD_LIBRARY_PATH=${ROOTSYS}/lib:${ROOTSYS}/lib/${python_dir}:$ENV{LD_LIBRARY_PATH}
+        PYTHONPATH=${ROOTSYS}/lib:${ROOTSYS}/lib/${python_dir}:$ENV{PYTHONPATH})
+  elseif(ROOT_pyroot_FOUND)
+    set(ROOT_ENV ROOTSYS=${ROOTSYS}
+        PATH=${ROOTSYS}/bin:$ENV{PATH}
+        LD_LIBRARY_PATH=${ROOTSYS}/lib:$ENV{LD_LIBRARY_PATH}
+        PYTHONPATH=${ROOTSYS}/lib:$ENV{PYTHONPATH})
+  else()
+    message(STATUS "ROOT was configured without PyROOT support. Python benchmarks will be disabled!")
+  endif()
+  if(PYTEST_FOUND AND (ROOT_pyroot_experimental_FOUND OR ROOT_pyroot_FOUND))
+    #string(REGEX REPLACE "[_]" "-" good_name "${name}")
+    ROOT_ADD_TEST(rootbench-${file_name}
+                COMMAND ${PYTHON_EXECUTABLE} -B -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/${file_name}.py -v
+                ENVIRONMENT ${ROOT_ENV})
+  endif()
+endfunction()
+
+
 #----------------------------------------------------------------------------
 # function RB_ADD_LIBRARY(<library> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
@@ -93,6 +123,7 @@ endfunction(RB_ADD_TOOL)
 # IMPORTANT: it works only for mixed mode: ROOT pcms and here it is still old non-module style.
 # [something to be fixed on ROOT CMake side]
 #
+# Requires:  ROOT_GENERATE_DICTIONARY()
 #-------------------------------------------------------------------------------
 function(RB_GENERATE_DICTIONARY dictname)
   CMAKE_PARSE_ARGUMENTS(ARG "" "" "LINKDEF;DEPENDS;OPTIONS" ${ARGN})
