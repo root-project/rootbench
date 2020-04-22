@@ -1,0 +1,10 @@
+# ROOT requirements for third-party Python packages (synced from root.git + numpy)
+
+# PyROOT: ROOT.Numba.Declare decorator
+numba>=0.48.0
+
+# TMVA: BDT inference engine
+xgboost>=0.81
+
+# rootbench.git
+numpy

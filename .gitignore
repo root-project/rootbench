@@ -44,3 +44,8 @@ CMakeLists.txt.user
 
 # Other Stuff
 *.d
+
+#Python
+
+__pycache__/
+*.py[cod]
