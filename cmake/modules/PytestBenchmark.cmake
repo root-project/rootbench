@@ -25,3 +25,8 @@ endif()
 
 # Find mandatory dependency (for Python benchmarks), but quietly :)
 find_python_module(pytest QUIET)
+
+if(NOT PYTEST_FOUND)
+message(STATUS "Be aware that pytest benchmarks are not enabled (missing pytest & pytest-benchmark dependency). 
+                Please install them using pip and provided requirements.txt")
+endif()
