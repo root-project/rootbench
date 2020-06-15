@@ -100,7 +100,7 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
    }
 }
 BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1LZ4, "lz4")->Unit(benchmark::kMicrosecond)->Iterations(5);
-BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1ZSTD, "zstd")->Unit(benchmark::kMicrosecond)->Iterations(5);
+BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1ZLIB, "zlib")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1LZMA, "lzma")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1ZSTD, "zstd")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1None, "none")->Unit(benchmark::kMicrosecond)->Iterations(5);
@@ -226,7 +226,7 @@ static void BM_TTree_H1(benchmark::State &state, const std::string &comprAlgorit
    }
 }
 BENCHMARK_CAPTURE(BM_TTree_H1, BM_TTree_H1LZ4, "lz4")->Unit(benchmark::kMicrosecond)->Iterations(5);
-BENCHMARK_CAPTURE(BM_TTree_H1, BM_TTree_H1ZSTD, "zstd")->Unit(benchmark::kMicrosecond)->Iterations(5);
+BENCHMARK_CAPTURE(BM_TTree_H1, BM_TTree_H1ZLIB, "zlib")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_TTree_H1, BM_TTree_H1LZMA, "lzma")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_TTree_H1, BM_TTree_H1ZSTD, "zstd")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_TTree_H1, BM_TTree_H1None, "none")->Unit(benchmark::kMicrosecond)->Iterations(5);
