@@ -6,8 +6,19 @@ if(ROOT_root7_FOUND)
   add_custom_command(TARGET libh1eventlibgen POST_BUILD
                             COMMAND ${CMAKE_COMMAND} -E copy
                                 ${CMAKE_CURRENT_BINARY_DIR}/libh1event.so
-                                ${CMAKE_BINARY_DIR}/libh1event.so)
-                    
+				${CMAKE_BINARY_DIR}/lib/libh1event.so)
+  if(ROOT_runtime_cxxmodules)
+    add_custom_command(TARGET libh1eventlibgen POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+				${CMAKE_CURRENT_BINARY_DIR}/h1event.pcm
+				${CMAKE_BINARY_DIR}/lib/h1event.pcm)
+  else()
+    add_custom_command(TARGET libh1eventlibgen POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+                                ${CMAKE_CURRENT_BINARY_DIR}/liblibh1event_rdict.pcm
+                                ${CMAKE_BINARY_DIR}/lib/liblibh1event_rdict.pcm)
+  endif()
+			
   RB_ADD_TOOL(gen_h1 ${CMAKE_CURRENT_SOURCE_DIR}/src/gen_h1.cxx
             LIBRARIES Core Hist Imt RIO Tree TreePlayer 
             ROOTDataFrame ROOTVecOps ROOTNTuple libh1eventlibgen
