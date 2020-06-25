@@ -92,7 +92,21 @@ def extract_from_gbenchmark(lines):
 
     data = []
     for row in reader:
-        data.append({h: row[i] for i, h in enumerate(header)})
+        d = {h: row[i] for i, h in enumerate(header)}
+        for k, v in d.items():
+            try:
+                d[k] = float(v)
+            except ValueError:
+                # We consider that if error was empty then bool value is False
+                if k == 'error_occurred':
+                    d[k] = bool(False)
+                # for others we consider that expected value for empty string shoudl be float
+                elif d[k] == '':
+                    d[k] = float(0)
+                else:
+                    d[k] = v
+        print(d)
+        data.append(d)
     logger.debug('Extracted %u measurements', len(data))
 
     return data
