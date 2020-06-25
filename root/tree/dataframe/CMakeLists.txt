@@ -7,3 +7,5 @@ RB_ADD_GBENCHMARK(RDFBenchmarks
 if(NUMPY_FOUND)
   RB_ADD_PYTESTBENCHMARK(pytest_rdataframe)
 endif()
+
+add_subdirectory(LoopSUSYFrame)
