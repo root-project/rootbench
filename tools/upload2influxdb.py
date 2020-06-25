@@ -5,6 +5,8 @@ import csv
 from influxdb import InfluxDBClient
 import os
 import logging
+from datetime import datetime
+import json
 
 
 logger = logging.getLogger('')
@@ -56,15 +58,67 @@ def create_influxdb_client(database_url, database_name, username, password, port
 
 
 def extract_from_gbenchmark(lines):
-    return None
+    skip_lines = 10
+    if not len(lines) >= skip_lines:
+        for line in lines:
+            logger.debug(line)
+        logger.error('gbenchmark csv does not have correct layout')
+        raise Exception
+
+    # Drop the first lines, being crap
+    lines = lines[skip_lines:]
+
+    # Read data
+    reader = csv.reader(lines)
+    header = next(reader)
+    logger.debug('Extract fields from gbenchmark: %s', header)
+    # TODO: Make this check more robust
+    if not header[0] == 'name':
+        logger.error('gbenchmark header does not have correct layout')
+        raise Exception
+
+    data = []
+    for row in reader:
+        data.append({h: row[i] for i, h in enumerate(header)})
+    logger.debug('Extracted %u measurements', len(data))
+
+    return data
 
 
 def extract_from_pytest(lines):
-    return None
+    reader = csv.reader(lines)
+    header = next(reader)
+    logger.debug('Extract fields from pytest: %s', header)
+    # TODO: Make this check more robust
+    if not header[0] == 'id':
+        logger.error('pytest header does not have correct layout')
+        raise Exception
+
+    data = []
+    for row in reader:
+        data.append({h: row[i] for i, h in enumerate(header)})
+    logger.debug('Extracted %u measurements', len(data))
+
+    return data
 
 
-def upload(client, data):
-    pass
+def upload(client, data, dry_run):
+    time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+    influx_metric = []
+    for d in data:
+        influx_metric.append(
+                {
+                    "measurement": 'foo', # TODO: FIXME: How shall we call the measurement?
+                    "tags": {},
+                    "time": time,
+                    "fields": d,
+                    }
+            )
+    logger.debug('Influx metric: %s', json.dumps(influx_metric, indent=4, sort_keys=True))
+    if not dry_run:
+        client.write_points(influx_metric)
+    else:
+        logger.warning('Running in dry mode, nothing has been uploaded.')
 
 
 def main(basedir, influx_client, dry_run):
@@ -95,11 +149,9 @@ def main(basedir, influx_client, dry_run):
                 data = extract_from_pytest(lines)
             else:
                 raise Exception('Something went wrong with detecting the benchmark type')
-            logger.debug('Extracted data from csv: %s', data)
 
             # Upload data to the Influx database
-            if not dry_run:
-                upload(client, data)
+            upload(client, data, dry_run)
 
 
 if __name__ == '__main__':
