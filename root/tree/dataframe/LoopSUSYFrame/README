@@ -1,0 +1,4 @@
+This code was copied and adapted from https://gitlab.cern.ch/atlas-phys-susy-wg/Common/LoopSUSYFrame on 25/06/2020 with the permission of the authors.
+
+It is a real RDataFrame application used to perform ntuple->ntuple transformations in the ATLAS SUSY group.
+Out of all possible running configurations, we use the stopH analysis with no systematics or AF2 systematics, which seem to be the most common use-cases.
