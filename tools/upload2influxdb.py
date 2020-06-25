@@ -32,6 +32,8 @@ def parse_arguments():
             help='Base directory to be searched for csv files')
     parser.add_argument('--database-url', type=str, required=True,
             help='URL of the database')
+    parser.add_argument('--port', type=int, required=True,
+            help='Port for the connection to the database')
     parser.add_argument('--database-name', type=str, required=True,
             help='Name of the database')
     parser.add_argument('--username', type=str, required=True,
@@ -42,10 +44,20 @@ def parse_arguments():
             help='Log level [debug, info]')
     parser.add_argument('--dry-run', action='store_true', default=False,
             help='Running without uploading to the Influx database')
+    parser.add_argument('--name', type=str, required=True,
+            help='Additional data: name')
+    parser.add_argument('--buildtype', type=str, required=True,
+            help='Additional data: buildtype')
+    parser.add_argument('--buildopts', type=str, required=True,
+            help='Additional data: buildopts')
+    parser.add_argument('--nodelabel', type=str, required=True,
+            help='Additional data: nodelabel')
+    parser.add_argument('--compiler', type=str, required=True,
+            help='Additional data: compiler')
     return parser.parse_args()
 
 
-def create_influxdb_client(database_url, database_name, username, password, port=8080):
+def create_influxdb_client(database_url, database_name, username, password, port):
     client = InfluxDBClient(
             host=database_url,
             port=port,
@@ -58,15 +70,18 @@ def create_influxdb_client(database_url, database_name, username, password, port
 
 
 def extract_from_gbenchmark(lines):
-    skip_lines = 10
-    if not len(lines) >= skip_lines:
-        for line in lines:
-            logger.debug(line)
+    idx = None
+    for i, line in enumerate(lines):
+        if line.startswith('name,'):
+            idx = i
+            break
+
+    if idx == None:
         logger.error('gbenchmark csv does not have correct layout')
         raise Exception
 
     # Drop the first lines, being crap
-    lines = lines[skip_lines:]
+    lines = lines[idx:]
 
     # Read data
     reader = csv.reader(lines)
@@ -102,13 +117,14 @@ def extract_from_pytest(lines):
     return data
 
 
-def upload(client, data, dry_run):
+def upload(client, data, dry_run, additional_data):
     time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
     influx_metric = []
     for d in data:
+        d.update(additional_data)
         influx_metric.append(
                 {
-                    "measurement": 'foo', # TODO: FIXME: How shall we call the measurement?
+                    "measurement": 'gbenchmark',
                     "tags": {},
                     "time": time,
                     "fields": d,
@@ -121,7 +137,7 @@ def upload(client, data, dry_run):
         logger.warning('Running in dry mode, nothing has been uploaded.')
 
 
-def main(basedir, influx_client, dry_run):
+def main(basedir, influx_client, dry_run, additional_data):
     for root, dirs, files in os.walk(basedir, topdown=True):
         for filename in files:
             # Find csv files
@@ -151,11 +167,18 @@ def main(basedir, influx_client, dry_run):
                 raise Exception('Something went wrong with detecting the benchmark type')
 
             # Upload data to the Influx database
-            upload(client, data, dry_run)
+            upload(client, data, dry_run, additional_data)
 
 
 if __name__ == '__main__':
     args = parse_arguments()
     setup_logging(args.log_level)
-    client = create_influxdb_client(args.database_url, args.database_name, args.username, args.password)
-    main(args.basedir, client, args.dry_run)
+    client = create_influxdb_client(args.database_url, args.database_name, args.username, args.password, args.port)
+    additional_data = {
+            'name': args.name,
+            'buildtype': args.buildtype,
+            'buildopts': args.buildopts,
+            'nodelabel': args.nodelabel,
+            'compiler': args.compiler,
+            }
+    main(args.basedir, client, args.dry_run, additional_data)
