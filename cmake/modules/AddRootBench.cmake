@@ -76,7 +76,7 @@ function(RB_ADD_PYTESTBENCHMARK file_name)
     if(PYTEST_FOUND)
       file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${file_name}.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${file_name}.py USE_SOURCE_PERMISSIONS)
       ROOT_ADD_TEST(rootbench-${file_name}
-                COMMAND ${PYTHON_EXECUTABLE} -B -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/${file_name}.py -v
+                COMMAND ${PYTHON_EXECUTABLE} -B -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/${file_name}.py -v --csv rootbench_${file_name}.csv
                 ENVIRONMENT ${ROOT_ENV})
     endif()
   else()
