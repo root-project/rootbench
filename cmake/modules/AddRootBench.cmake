@@ -52,7 +52,7 @@ function(RB_ADD_GBENCHMARK benchmark)
                                               TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
   else()
     add_test(NAME rootbench-${benchmark}
-          COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false
+          COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false
           )
     set_tests_properties(rootbench-${benchmark} PROPERTIES
                                       ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
