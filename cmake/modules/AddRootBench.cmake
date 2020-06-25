@@ -68,7 +68,7 @@ endfunction(RB_ADD_GBENCHMARK)
 #
 #----------------------------------------------------------------------------
 function(RB_ADD_PYTESTBENCHMARK file_name)
-  if(ROOT_pyroot_experimental_FOUND OR ROOT_pyroot_FOUND)
+  if(ROOT_pyroot_legacy_FOUND OR ROOT_pyroot_FOUND)
     set(ROOT_ENV ROOTSYS=${ROOTSYS}
         PATH=${ROOTSYS}/bin:$ENV{PATH}
         LD_LIBRARY_PATH=${ROOTSYS}/lib:$ENV{LD_LIBRARY_PATH}
