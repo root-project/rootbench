@@ -2,7 +2,7 @@
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
-  cmake_parse_arguments(ARG "" "" "DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES;" ${ARGN})
+  cmake_parse_arguments(ARG "" "" "DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES;FIXTURE_SETUP" ${ARGN})
   # FIXME: Move to target_include_directories.
   include_directories(BEFORE ${ROOTBENCH_SOURCE_DIR}/include)
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
@@ -42,12 +42,22 @@ function(RB_ADD_GBENCHMARK benchmark)
     add_dependencies(${benchmark} ${ARG_DEPENDS})
   endif()
   # Add benchmark as a CTest
-  add_test(NAME rootbench-${benchmark}
+  if(ARG_FIXTURE_SETUP)
+    add_test(NAME rootbench-${benchmark}
           COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false
           )
-  set_tests_properties(rootbench-${benchmark} PROPERTIES
+    set_tests_properties(rootbench-${benchmark} PROPERTIES
+                                              FIXTURES_SETUP ${ARG_FIXTURE_SETUP}
                                               ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
                                               TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+  else()
+    add_test(NAME rootbench-${benchmark}
+          COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false
+          )
+    set_tests_properties(rootbench-${benchmark} PROPERTIES
+                                      ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
+                                      TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+  endif()
 endfunction(RB_ADD_GBENCHMARK)
 
 
