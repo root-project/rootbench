@@ -44,8 +44,6 @@ def parse_arguments():
             help='Log level [debug, info]')
     parser.add_argument('--dry-run', action='store_true', default=False,
             help='Running without uploading to the Influx database')
-    parser.add_argument('--name', type=str, required=True,
-            help='Additional data: name')
     parser.add_argument('--buildtype', type=str, required=True,
             help='Additional data: buildtype')
     parser.add_argument('--buildopts', type=str, required=True,
@@ -111,7 +109,9 @@ def extract_from_pytest(lines):
 
     data = []
     for row in reader:
-        data.append({h: row[i] for i, h in enumerate(header)})
+        d = {h: row[i] for i, h in enumerate(header)}
+        d.update({'name': d['id']})
+        data.append(d)
     logger.debug('Extracted %u measurements', len(data))
 
     return data
@@ -175,7 +175,6 @@ if __name__ == '__main__':
     setup_logging(args.log_level)
     client = create_influxdb_client(args.database_url, args.database_name, args.username, args.password, args.port)
     additional_data = {
-            'name': args.name,
             'buildtype': args.buildtype,
             'buildopts': args.buildopts,
             'nodelabel': args.nodelabel,
