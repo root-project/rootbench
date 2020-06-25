@@ -2,7 +2,7 @@
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
-  cmake_parse_arguments(ARG "" "" "DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES;FIXTURE_SETUP" ${ARGN})
+  cmake_parse_arguments(ARG "" "" "DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES;FIXTURE_SETUP;FIXTURES_DOWNLOAD" ${ARGN})
   # FIXME: Move to target_include_directories.
   include_directories(BEFORE ${ROOTBENCH_SOURCE_DIR}/include)
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
@@ -25,24 +25,24 @@ function(RB_ADD_GBENCHMARK benchmark)
   elseif($ARG_LABEL STREQUAL "short")
     set(${TIMEOUT_VALUE} 3600)
   endif()
-  # Prepare data files for benchmarks!
-  # All datafiles generated or downloaded on different step (configuration step) 
-  foreach(file ${ARG_DOWNLOAD_DATAFILES})
-    set(list_files ${file} ${list_files})
-    if(EXISTS ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file})
-      file(COPY ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-    else()
-      get_file(${file})
-      file(COPY ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-    endif()
-  endforeach(file ${ARG_DOWNLOAD_DATAFILES})
-
    # Add dependencies to benchmark
   if(ARG_DEPENDS)
     add_dependencies(${benchmark} ${ARG_DEPENDS})
   endif()
   # Add benchmark as a CTest
+  foreach(file ${ARG_FIXTURES_DOWNLOAD})
+    #set(list_files ${file} ${list_files})
+    if(NOT EXISTS ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file})
+      add_test(NAME rootbench-fixture-download-${file} COMMAND wget -O ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file} ${file}
+    )
+    endif()
+  endforeach(file ${ARG_FIXTURES_DOWNLOAD})
   if(ARG_FIXTURE_SETUP)
+    add_test(NAME rootbench-fixture-setup-${benchmark}
+          COMMAND ${ARG_FIXTURE_SETUP}
+          )
+    set_tests_properties(rootbench-fixture-setup-${benchmark} PROPERTIES
+          DEPENDS rootbench-fixture-download-${benchmark})
     add_test(NAME rootbench-${benchmark}
           COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false
           )
@@ -54,9 +54,16 @@ function(RB_ADD_GBENCHMARK benchmark)
     add_test(NAME rootbench-${benchmark}
           COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-${benchmark}.csv --benchmark_color=false
           )
-    set_tests_properties(rootbench-${benchmark} PROPERTIES
+    if(${ARG_FIXTURES_DOWNLOAD})
+      set_tests_properties(rootbench-${benchmark} PROPERTIES
+                                      FIXTURES_SETUP ${ARG_FIXTURE_DOWNLOAD}
                                       ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
                                       TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+    else()
+      set_tests_properties(rootbench-${benchmark} PROPERTIES
+                                      ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
+                                      TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+    endif()
   endif()
 endfunction(RB_ADD_GBENCHMARK)
 

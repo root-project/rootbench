@@ -81,8 +81,5 @@ include(RootBenchCTest)
 #---Add the support libraries.
 add_subdirectory(lib)
 
-#---Add tools directory (executables for data generation and etc.)
-add_subdirectory(tools)
-
 #---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)
