@@ -2,7 +2,7 @@
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
-  cmake_parse_arguments(ARG "" "" "DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES;FIXTURE_SETUP" ${ARGN})
+  cmake_parse_arguments(ARG "" "" "SETUP;DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES" ${ARGN})
   # FIXME: Move to target_include_directories.
   include_directories(BEFORE ${ROOTBENCH_SOURCE_DIR}/include)
   include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
@@ -25,39 +25,39 @@ function(RB_ADD_GBENCHMARK benchmark)
   elseif($ARG_LABEL STREQUAL "short")
     set(${TIMEOUT_VALUE} 3600)
   endif()
-  # Prepare data files for benchmarks!
-  # All datafiles generated or downloaded on different step (configuration step) 
-  foreach(file ${ARG_DOWNLOAD_DATAFILES})
-    set(list_files ${file} ${list_files})
-    if(EXISTS ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file})
-      file(COPY ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-    else()
-      get_file(${file})
-      file(COPY ${PROJECT_BINARY_DIR}/rootbench-datafiles/${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-    endif()
-  endforeach(file ${ARG_DOWNLOAD_DATAFILES})
-
    # Add dependencies to benchmark
   if(ARG_DEPENDS)
     add_dependencies(${benchmark} ${ARG_DEPENDS})
   endif()
-  # Add benchmark as a CTest
-  if(ARG_FIXTURE_SETUP)
-    add_test(NAME rootbench-${benchmark}
-          COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false
-          )
-    set_tests_properties(rootbench-${benchmark} PROPERTIES
-                                              FIXTURES_SETUP ${ARG_FIXTURE_SETUP}
-                                              ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
-                                              TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
-  else()
-    add_test(NAME rootbench-${benchmark}
-          COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false
-          )
-    set_tests_properties(rootbench-${benchmark} PROPERTIES
-                                      ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
-                                      TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE)
+
+  # Add fixture to download required dataset files from https://root.cern.ch/files/rootbench
+  if(ARG_DOWNLOAD_DATAFILES)
+      add_test(NAME rootbench-fixture-download-${benchmark}
+               COMMAND ${PROJECT_BINARY_DIR}/tools/download_files.sh
+               ${RB_DATASETDIR} ${ARG_DOWNLOAD_DATAFILES})
+      set_tests_properties(rootbench-fixture-download-${benchmark} PROPERTIES FIXTURES_SETUP download-${benchmark}-datafiles)
   endif()
+
+  if(ARG_SETUP)
+     set(COUNTER 0)
+     foreach(CMD ${ARG_SETUP})
+       separate_arguments(CMD UNIX_COMMAND ${CMD})
+       add_test(NAME rootbench-fixture-setup-${benchmark}-${COUNTER} COMMAND ${CMD})
+       set_tests_properties(rootbench-fixture-setup-${benchmark}-${COUNTER} PROPERTIES
+                            FIXTURES_SETUP setup-${benchmark}
+                            FIXTURES_REQUIRED download-${benchmark}-datafiles)
+       MATH(EXPR COUNTER "${COUNTER}+1")
+     endforeach()
+     unset(COUNTER)
+  endif()
+
+  # Add benchmark as a CTest
+  add_test(NAME rootbench-${benchmark}
+           COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false)
+  set_tests_properties(rootbench-${benchmark} PROPERTIES
+                       ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
+                       TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
+                       FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
 endfunction(RB_ADD_GBENCHMARK)
 
 

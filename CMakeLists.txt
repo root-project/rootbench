@@ -72,7 +72,6 @@ endif()
 #---Enable data download ----------------------------------------------------------------------
 if(rootbench-datafiles)
   message(STATUS "INFO: rootbench-datafiles option is ON. Multiple data files are getting pulled from https://root.cern.ch/files/rootbench")
-  include(RootBenchDataFiles)
 endif(rootbench-datafiles)
 set(RB_DATASETDIR ${PROJECT_BINARY_DIR}/rootbench-datafiles)
 

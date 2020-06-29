@@ -20,6 +20,8 @@
 #include <TPaveStats.h>
 #include <TStyle.h>
 
+#include <rootbench/RBConfig.h>
+
 
 static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgorithm)
 {
@@ -29,7 +31,7 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
    // Create a RNTuple model
    auto model = RNTupleModel::Create();
    // Open RNtuple file with RNTuple reader
-   std::string path = "h1dst-" + comprAlgorithm + ".ntuple";
+   std::string path = RB::GetDataDir() + "/h1dst-" + comprAlgorithm + ".ntuple";
    auto ntuple = RNTupleReader::Open(std::move(model), "h42", path);
    // Creating RNTuple views
    auto dm_dView = ntuple->GetView<float>("event.dm_d");
@@ -107,7 +109,7 @@ BENCHMARK_CAPTURE(BM_RNTuple_H1, BM_RNTuple_H1None, "none")->Unit(benchmark::kMi
 
 static void BM_TTree_H1(benchmark::State &state, const std::string &comprAlgorithm)
 {
-   std::string path = "h1dst-" + comprAlgorithm + ".root";
+   std::string path = RB::GetDataDir() + "/h1dst-" + comprAlgorithm + ".root";
    auto file = TFile::Open(path.c_str());
    auto tree = file->Get<TTree>("h42");
    float md0_d;
