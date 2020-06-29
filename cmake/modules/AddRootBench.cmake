@@ -3,10 +3,9 @@
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
   cmake_parse_arguments(ARG "" "" "SETUP;DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES" ${ARGN})
-  # FIXME: Move to target_include_directories.
-  include_directories(${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
   set(source_files ${ARG_UNPARSED_ARGUMENTS})
   add_executable(${benchmark} ${source_files})
+  target_include_directories(${benchmark} PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
   set_property(TARGET ${benchmark} PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
   # Note we cannot use ROOT_EXECUTABLE without user-specified set of LIBRARIES to link with.
   # The test suites should choose this in their specific CMakeLists.txt file.
