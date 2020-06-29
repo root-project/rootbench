@@ -2,7 +2,7 @@
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
-  cmake_parse_arguments(ARG "" "" "SETUP;DOWNLOAD_DATAFILES;DEPENDS;LABEL;LIBRARIES" ${ARGN})
+  cmake_parse_arguments(ARG "" "LABEL" "SETUP;DOWNLOAD_DATAFILES;DEPENDS;LIBRARIES" ${ARGN})
   set(source_files ${ARG_UNPARSED_ARGUMENTS})
   add_executable(${benchmark} ${source_files})
   target_include_directories(${benchmark} PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${GBENCHMARK_INCLUDE_DIR})
