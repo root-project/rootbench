@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 #include "rootbench/ErrorHandling.h"
+#include <rootbench/Constants.h> // RB::kDatasetDirectory
+#include <string>
 
 namespace RB {
   /// Returns a path to temporary file system (preferably in-memory). The path
@@ -22,5 +24,10 @@ namespace RB {
       return rootsys;
 
     rb_abort("Please set the ROOTSYS env variable!");
+  }
+
+  /// Return the absolute path to the directory where data will be downloaded
+  std::string GetDataDir() {
+      return RB::kDatasetDirectory;
   }
 }
