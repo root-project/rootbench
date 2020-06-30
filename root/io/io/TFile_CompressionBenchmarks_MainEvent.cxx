@@ -21,7 +21,7 @@ static std::string GetAlgoName(int algo) {
 }
 
 static void BM_MainEvent_Compress(benchmark::State &state, int algo) {
-   TFile *oldfile = new TFile("Event0-sample.root");
+   TFile *oldfile = new TFile((RB::GetDataDir() + "/Event0-sample.root").c_str());
    TTree *oldtree = (TTree*)oldfile->Get("T");
 
    int comp_level = state.range(0);
