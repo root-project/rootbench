@@ -139,7 +139,7 @@ def upload(client, data, dry_run, additional_data):
         influx_metric.append(
                 {
                     "measurement": 'gbenchmark',
-                    "tags": {},
+                    "tags": { 'buildopts', 'buildtype', 'compiler', 'name', 'nodelabel', 'rootbenchmark'},
                     "time": time,
                     "fields": d,
                     }
