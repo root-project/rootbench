@@ -196,34 +196,37 @@ before_install:
 
   - gem install coveralls-lcov -v 1.5.1
   - gem install lcoveralls
+
+  - wget https://root.cern/download/nightly/root_v6.23.01.Linux-ubuntu16-x86_64-gcc5.4.tar.gz
+  - tar xvfz https://root.cern/download/nightly/root_v6.23.01.Linux-ubuntu16-x86_64-gcc5.4.tar.gz 
   
 script:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    . $TRAVIS_BUILD_DIR/travis-scripts/rootgcno.sh;
+    . $TRAVIS_BUILD_DIR/.travis/lcov/rootgcno.sh;
   fi
-- . $TRAVIS_BUILD_DIR/travis-scripts/configure.sh
+- . $TRAVIS_BUILD_DIR/.travis/configure.sh
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-part1.sh;
+    . $TRAVIS_BUILD_DIR/.travis/lcov/lcov-part1.sh;
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-part2.sh;
+    . $TRAVIS_BUILD_DIR/.travis/lcov/lcov-part2.sh;
   fi
 - export RB_TEMP_FS=${HOME} && cd $HOME/build && ctest --output-on-failure -L short
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-info-part1.sh;
+    . $TRAVIS_BUILD_DIR/.travis/lcov/lcov-info-part1.sh;
   fi
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    . $TRAVIS_BUILD_DIR/travis-scripts/lcov-info-part2.sh;
+    . $TRAVIS_BUILD_DIR/.travis/lcov/lcov-info-part2.sh;
   fi
 after_success:
 - |
   if [ "${EXTRA_OPTS}" == "-Dcoverage=ON" -a "${TRAVIS_OS_NAME}" == "linux" ]; then
-    . $TRAVIS_BUILD_DIR/travis-scripts/coveralls.sh;
+    . $TRAVIS_BUILD_DIR/.travis/lcov/coveralls.sh;
   fi
 on_failure:
   -|
