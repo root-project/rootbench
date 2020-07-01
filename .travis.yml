@@ -198,7 +198,7 @@ before_install:
   - gem install lcoveralls
 
   - wget https://root.cern/download/nightly/root_v6.23.01.Linux-ubuntu16-x86_64-gcc5.4.tar.gz
-  - tar xvfz https://root.cern/download/nightly/root_v6.23.01.Linux-ubuntu16-x86_64-gcc5.4.tar.gz 
+  - tar xvfz root_v6.23.01.Linux-ubuntu16-x86_64-gcc5.4.tar.gz 
   
 script:
 - |

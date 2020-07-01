@@ -11,7 +11,7 @@ cd $HOME
   #  fi
   #  d=$(date +%a -d "$d - 1 day")
   #done;
-ROOT_THISROOT=$HOME/root_v6.23.01.Linux-ubuntu16-x86_64-gcc5.4/bin/thisroot.sh
+ROOT_THISROOT=$HOME/root/bin/thisroot.sh
 echo "Initializing ROOT in $ROOT_THISROOT"
 source $ROOT_THISROOT
 echo export ROOTSYS=`echo $ROOTSYS` >> $HOME/.bashrc
