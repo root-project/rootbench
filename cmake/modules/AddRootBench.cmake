@@ -1,4 +1,35 @@
 #----------------------------------------------------------------------------
+# function RB_ADD_DOWNLOAD_FIXTURE(<benchmark> DOWNLOAD_DATAFILES filenames)
+#----------------------------------------------------------------------------
+function(RB_ADD_DOWNLOAD_FIXTURE benchmark)
+  cmake_parse_arguments(ARG "" "" "DOWNLOAD_DATAFILES" ${ARGN})
+  # Add fixture to download required dataset files from https://root.cern.ch/files/rootbench
+  add_test(NAME rootbench-fixture-download-${benchmark}
+           COMMAND ${PROJECT_BINARY_DIR}/tools/download_files.sh
+           ${RB_DATASETDIR} ${ARG_DOWNLOAD_DATAFILES})
+  set_tests_properties(rootbench-fixture-download-${benchmark} PROPERTIES FIXTURES_SETUP download-${benchmark}-datafiles)
+endfunction(RB_ADD_DOWNLOAD_FIXTURE)
+
+
+#----------------------------------------------------------------------------
+# function RB_ADD_SETUP_FIXTURE(<benchmark> SETUP commands)
+#----------------------------------------------------------------------------
+function(RB_ADD_SETUP_FIXTURE benchmark)
+  cmake_parse_arguments(ARG "" "" "SETUP" ${ARGN})
+  set(COUNTER 0)
+  foreach(CMD ${ARG_SETUP})
+    separate_arguments(CMD UNIX_COMMAND ${CMD})
+    add_test(NAME rootbench-fixture-setup-${benchmark}-${COUNTER} COMMAND ${CMD})
+    set_tests_properties(rootbench-fixture-setup-${benchmark}-${COUNTER} PROPERTIES
+                         FIXTURES_SETUP setup-${benchmark}
+                         FIXTURES_REQUIRED download-${benchmark}-datafiles)
+    MATH(EXPR COUNTER "${COUNTER}+1")
+  endforeach()
+  unset(COUNTER)
+endfunction(RB_ADD_SETUP_FIXTURE)
+
+
+#----------------------------------------------------------------------------
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
@@ -28,25 +59,12 @@ function(RB_ADD_GBENCHMARK benchmark)
     add_dependencies(${benchmark} ${ARG_DEPENDS})
   endif()
 
-  # Add fixture to download required dataset files from https://root.cern.ch/files/rootbench
   if(ARG_DOWNLOAD_DATAFILES)
-      add_test(NAME rootbench-fixture-download-${benchmark}
-               COMMAND ${PROJECT_BINARY_DIR}/tools/download_files.sh
-               ${RB_DATASETDIR} ${ARG_DOWNLOAD_DATAFILES})
-      set_tests_properties(rootbench-fixture-download-${benchmark} PROPERTIES FIXTURES_SETUP download-${benchmark}-datafiles)
+      RB_ADD_DOWNLOAD_FIXTURE(${benchmark} DOWNLOAD_DATAFILES ${ARG_DOWNLOAD_DATAFILES})
   endif()
 
   if(ARG_SETUP)
-     set(COUNTER 0)
-     foreach(CMD ${ARG_SETUP})
-       separate_arguments(CMD UNIX_COMMAND ${CMD})
-       add_test(NAME rootbench-fixture-setup-${benchmark}-${COUNTER} COMMAND ${CMD})
-       set_tests_properties(rootbench-fixture-setup-${benchmark}-${COUNTER} PROPERTIES
-                            FIXTURES_SETUP setup-${benchmark}
-                            FIXTURES_REQUIRED download-${benchmark}-datafiles)
-       MATH(EXPR COUNTER "${COUNTER}+1")
-     endforeach()
-     unset(COUNTER)
+     RB_ADD_SETUP_FIXTURE(${benchmark} SETUP ${ARG_SETUP})
   endif()
 
   # Add benchmark as a CTest
@@ -60,25 +78,42 @@ endfunction(RB_ADD_GBENCHMARK)
 
 
 #----------------------------------------------------------------------------
-# function RB_ADD_PYTESTBENCHMARK(file_name)
+# function RB_ADD_PYTESTBENCHMARK(<benchmark> filename)
 #
 # Dependency: pytest with pytest-benchmark and PyROOT modules
 #
 #----------------------------------------------------------------------------
-function(RB_ADD_PYTESTBENCHMARK file_name)
+function(RB_ADD_PYTESTBENCHMARK benchmark)
+  cmake_parse_arguments(ARG "" "LABEL" "SETUP;DOWNLOAD_DATAFILES" ${ARGN})
   if(ROOT_pyroot_experimental_FOUND OR ROOT_pyroot_FOUND)
-    set(ROOT_ENV ROOTSYS=${ROOTSYS}
-        PATH=${ROOTSYS}/bin:$ENV{PATH}
-        LD_LIBRARY_PATH=${ROOTSYS}/lib:$ENV{LD_LIBRARY_PATH}
-        PYTHONPATH=${ROOTSYS}/lib:$ENV{PYTHONPATH})
-    if(PYTEST_FOUND)
-      file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${file_name}.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${file_name}.py USE_SOURCE_PERMISSIONS)
-      ROOT_ADD_TEST(rootbench-${file_name}
-                COMMAND ${PYTHON_EXECUTABLE} -B -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/${file_name}.py -v --csv rootbench-pytest-${file_name}.csv
-                ENVIRONMENT ${ROOT_ENV})
+    if(${ARG_LABEL} STREQUAL "long")
+      set(${TIMEOUT_VALUE} 1200)
+    elseif($ARG_LABEL STREQUAL "short")
+      set(${TIMEOUT_VALUE} 3600)
     endif()
-  else()
-    message(STATUS "ROOT was configured without PyROOT support. Python benchmarks will be disabled!")
+    set(filename ${ARG_UNPARSED_ARGUMENTS})
+
+    if(PYTEST_FOUND)
+      if(ARG_DOWNLOAD_DATAFILES)
+          RB_ADD_DOWNLOAD_FIXTURE(${benchmark} DOWNLOAD_DATAFILES ${ARG_DOWNLOAD_DATAFILES})
+      endif()
+
+      if(ARG_SETUP)
+         RB_ADD_SETUP_FIXTURE(${benchmark} SETUP ${ARG_SETUP})
+      endif()
+
+      file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${filename} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} USE_SOURCE_PERMISSIONS)
+
+      add_test(NAME rootbench-${benchmark}
+               COMMAND ${PYTHON_EXECUTABLE} -B -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -v --csv rootbench-pytest-${benchmark}.csv)
+      set_tests_properties(rootbench-${benchmark} PROPERTIES
+                           ENVIRONMENT "LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH};PYTHONPATH=${ROOTSYS}/lib:$ENV{PYTHONPATH};RB_DATASETDIR=${RB_DATASETDIR}"
+                           TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
+                           FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
+    else()
+      message(STATUS "ROOT was configured without PyROOT support. Python benchmarks will be disabled!")
+    endif()
+
   endif()
 endfunction()
 
