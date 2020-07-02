@@ -105,7 +105,6 @@ def extract_from_gbenchmark(lines):
                     d[k] = float(0)
                 else:
                     d[k] = v
-        print(d)
         data.append(d)
     logger.debug('Extracted %u measurements', len(data))
 
@@ -134,15 +133,17 @@ def extract_from_pytest(lines):
 def upload(client, data, dry_run, additional_data):
     time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
     influx_metric = []
+    tags = additional_data
     for d in data:
-        d.update(additional_data)
+        tags['name'] = d['name']
+        tags['rootbenchmark'] = d['filename']
         influx_metric.append(
                 {
-                    "measurement": 'gbenchmark',
-                    "tags": { 'buildopts', 'buildtype', 'compiler', 'name', 'nodelabel', 'rootbenchmark'},
-                    "time": time,
-                    "fields": d,
-                    }
+                    'measurement': 'gbenchmark',
+                    'tags': tags,
+                    'time': time,
+                    'fields': d,
+                }
             )
     logger.debug('Influx metric: %s', json.dumps(influx_metric, indent=4, sort_keys=True))
     if not dry_run:
@@ -179,6 +180,10 @@ def main(basedir, influx_client, dry_run, additional_data):
                 data = extract_from_pytest(lines)
             else:
                 raise Exception('Something went wrong with detecting the benchmark type')
+
+            # Add filename to data
+            for d in data:
+                d['filename'] = filename
 
             # Upload data to the Influx database
             upload(client, data, dry_run, additional_data)
