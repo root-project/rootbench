@@ -67,6 +67,24 @@ def create_influxdb_client(database_url, database_name, username, password, port
     return client
 
 
+def autodetect_dtype(x):
+    # Raise a ValueError if it's empty and jump over that entry
+    if x in ['', None]:
+        raise ValueError
+    # Try to convert to bool
+    if x in ['true', 'True']:
+        return True
+    if x in ['false', 'False']:
+        return False
+    # Try to convert to float
+    try:
+        return float(x)
+    except:
+        pass
+    # If no conversion works, return the inital value as string
+    return str(x)
+
+
 def extract_from_gbenchmark(lines):
     idx = None
     for i, line in enumerate(lines):
@@ -92,19 +110,13 @@ def extract_from_gbenchmark(lines):
 
     data = []
     for row in reader:
-        d = {h: row[i] for i, h in enumerate(header)}
-        for k, v in d.items():
+        d_raw = {h: row[i] for i, h in enumerate(header)}
+        d = {}
+        for k, v in d_raw.items():
             try:
-                d[k] = float(v)
+                d[k] = autodetect_dtype(v)
             except ValueError:
-                # We consider that if error was empty then bool value is False
-                if k == 'error_occurred':
-                    d[k] = bool(False)
-                # for others we consider that expected value for empty string shoudl be float
-                elif d[k] == '':
-                    d[k] = float(0)
-                else:
-                    d[k] = v
+                pass
         data.append(d)
     logger.debug('Extracted %u measurements', len(data))
 
@@ -122,7 +134,13 @@ def extract_from_pytest(lines):
 
     data = []
     for row in reader:
-        d = {h: row[i] for i, h in enumerate(header)}
+        d_raw = {h: row[i] for i, h in enumerate(header)}
+        d = {}
+        for k, v in d_raw.items():
+            try:
+                d[k] = autodetect_dtype(v)
+            except ValueError:
+                pass
         d.update({'name': d['id']})
         data.append(d)
     logger.debug('Extracted %u measurements', len(data))
