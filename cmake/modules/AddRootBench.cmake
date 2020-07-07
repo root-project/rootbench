@@ -100,12 +100,16 @@ endfunction(RB_ADD_LIBRARY)
 # function RB_ADD_TOOL(<binary> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_TOOL binary)
-  cmake_parse_arguments(ARG "" "" "LIBRARIES;DEPENDENCIES" ${ARGN})
+  cmake_parse_arguments(ARG "" "" "LIBRARIES;DEPENDS" ${ARGN})
   set(sources ${ARG_UNPARSED_ARGUMENTS})
   include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/include)
   add_executable(${binary} ${sources})
+  # Add dependencies to binary
+  if(ARG_DEPENDS)
+     add_dependencies(${binary} ${ARG_DEPENDS})
+   endif()
   if (ARG_LIBRARIES OR ARG_DEPENDENCIES)
-    target_link_libraries(${binary} ${ARG_LIBRARIES} ${ARG_DEPENDENCIES})
+    target_link_libraries(${binary} ${ARG_LIBRARIES})
   endif()
 endfunction(RB_ADD_TOOL)
 
@@ -139,18 +143,20 @@ function(RB_GENERATE_DICTIONARY dictname)
       list(APPEND FULL_PATH_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/${hdr})
     endif()
   endforeach()
+  
   ROOT_GENERATE_DICTIONARY(${dictname} ${FULL_PATH_HEADERS}
                            MODULE ${dictname}
                            LINKDEF ${ARG_LINKDEF}
                            OPTIONS ${ARG_OPTIONS}
                            DEPENDENCIES ${ARG_DEPENDS})
-  set(targetname_libgen ${dictname}libgen)
+  set(targetname_libgen lib${dictname})
+  message(STATUS ${targetname_libgen})
   add_library(${targetname_libgen} EXCLUDE_FROM_ALL SHARED ${dictname}.cxx)
   set_target_properties(${targetname_libgen} PROPERTIES  ${ROOT_LIBRARY_PROPERTIES} )
   target_link_libraries(${targetname_libgen} ${ROOT_LIBRARIES})
   set_target_properties(${targetname_libgen} PROPERTIES PREFIX "")
   set_property(TARGET ${targetname_libgen}
-               PROPERTY OUTPUT_NAME ${dictname})
+               PROPERTY OUTPUT_NAME lib${dictname})
   set_property(TARGET ${targetname_libgen}
                APPEND PROPERTY INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
   add_dependencies(${targetname_libgen} ${dictname})
