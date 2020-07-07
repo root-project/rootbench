@@ -106,7 +106,7 @@ int main(int argc, char **argv)
    for (auto p : inputFiles)
       tree->Add(p.c_str());
 
-   gSystem->Load("./libh1event.so");
+   gSystem->Load("libh1event");
    // Create a ntuple model with a single field
    auto model = RNTupleModel::Create();
    auto ev = model->MakeField<H1Event>("event");
