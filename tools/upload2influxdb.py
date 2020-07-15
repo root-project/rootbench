@@ -158,7 +158,7 @@ def upload(client, data, dry_run, additional_data):
         influx_metric.append(
                 {
                     'measurement': 'gbenchmark',
-                    'tags': tags,
+                    'tags': tags.copy(), # we have to copy the dict since we change it in the loop
                     'time': time,
                     'fields': d,
                 }
