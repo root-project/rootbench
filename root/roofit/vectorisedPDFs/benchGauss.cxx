@@ -14,6 +14,26 @@
  * listed in LICENSE (http://roofit.sourceforge.net/license.txt)             *
  *****************************************************************************/
 
+/**
+ * \file
+ * Benchmark ia simple mock fit model
+ *    model(x) = Gauss( x | mean, sigma )
+ *
+ * Run the following workflows:
+ * 0. Evaluate fit model for 500k data events with batch data loading and SIMD (if compiler flags activated).
+ * 1. As above, but use old RooFit strategy of single-value data loading.
+ * 2. Compute probabilities for each data event. That is, run step 0 and normalise values.
+ * 3. As above, but use old RooFit strategy.
+ * 4. Compute log-likelihoods, i.e. run step 2 and apply -log(LH).
+ * 5. As above, but use old RooFit strategy.
+ *
+ * 6. Similar to step 0, but dataset contains entries for both x and sigma. This invokes
+ *    a less-optimised implementation of the Gaussian distribution, as it's a rare use case.
+ * 7. as 1., but for less optimised implementation.
+ * 8. as 2., but ...
+ * 9. as 3., but ...
+ */
+
 #include "benchmark/benchmark.h"
 
 #include "RooRealVar.h"

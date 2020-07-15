@@ -14,6 +14,21 @@
  * listed in LICENSE (http://roofit.sourceforge.net/license.txt)             *
  *****************************************************************************/
 
+/**
+ * \file
+ * Benchmark a simple mock fit model
+ *    sum(x) = frac * Gauss(x) + (1-frac) * Exponential(x)
+ *
+ * Run 6 different workflows:
+ * 0. Evaluate fit model for 2 M data events with batch data loading and SIMD (if compiler flags activated).
+ * 1. As above, but use old RooFit strategy of single-value data loading.
+ * 2. Compute probabilities for each data event. That is, run step 0 and normalise values.
+ * 3. As above, but use old RooFit strategy.
+ * 4. Compute log-likelihoods, i.e. run step 2 and apply -log(LH).
+ * 5. As above, but use old RooFit strategy.
+ *
+ */
+
 #include "benchmark/benchmark.h"
 
 #include "RooRealVar.h"
@@ -41,6 +56,8 @@ void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
 enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
   runBatchNorm, runSingleNorm,
   runBatchNormLogs, runSingleNormLogs};
+
+
 
 static void benchAddPdfGaussExp(benchmark::State& state) {
   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
