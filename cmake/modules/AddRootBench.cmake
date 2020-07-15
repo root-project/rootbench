@@ -111,7 +111,7 @@ function(RB_ADD_PYTESTBENCHMARK benchmark)
                            TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
                            FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
     else()
-      message(STATUS "pytest was not found, don't add Python benchmark" ${benchmark})
+      message(STATUS "pytest was not found, benchmark " ${benchmark} " will be ignored")
     endif()
 
   else()
