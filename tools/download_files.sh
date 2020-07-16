@@ -31,7 +31,12 @@ pushd $OUT_DIR
 for FNAME in "$@"; do
    echo -n "Downloading ${FNAME}..."
    if [[ ! -e "${FNAME}" ]]; then
-      curl --silent --show-error --remote-name "${BASEURL}/${FNAME}"
+      HTTP_CODE=$(curl --silent --show-error -w '%{http_code}' --remote-name "${BASEURL}/${FNAME}")
+      if [[ "${HTTP_CODE}" != "200" ]]; then
+         echo "There was an error retrieving file '${FNAME}'. HTTP response was ${HTTP_CODE}" 1>&2
+         rm -f ${FNAME}
+         exit 3
+      fi
       echo "done"
    else
       echo "file already present"
