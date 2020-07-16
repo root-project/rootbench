@@ -4,11 +4,13 @@ RB_ADD_GBENCHMARK(RDFBenchmarks
     LABEL short
     LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
 
-RB_ADD_GBENCHMARK(gbenchmark-df102_NanoAODDimuonAnalysis
-    df102_NanoAODDimuonAnalysis.C
-    DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root
-    LABEL long
-    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps Gpad Graf)
+if(rootbench-datafiles)
+    RB_ADD_GBENCHMARK(gbenchmark-df102_NanoAODDimuonAnalysis
+        df102_NanoAODDimuonAnalysis.C
+        DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root
+        LABEL long
+        LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps Gpad Graf)
+endif()
 
 if(NUMPY_FOUND)
     RB_ADD_PYTESTBENCHMARK(pytest-rdataframe-asnumpy rdataframe_asnumpy.py LABEL short)
