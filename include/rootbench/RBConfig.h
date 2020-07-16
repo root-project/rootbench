@@ -1,4 +1,6 @@
 ///\file This file contains utility functions which simplify running benchmarks.
+#ifndef RB_CONFIG_H
+#define RB_CONFIG_H
 
 #include <stdlib.h>
 
@@ -31,3 +33,5 @@ namespace RB {
       return RB::kDatasetDirectory;
   }
 }
+
+#endif
