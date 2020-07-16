@@ -32,6 +32,13 @@ namespace RB {
   inline std::string GetDataDir() {
       return RB::kDatasetDirectory;
   }
+
+  /// Like assert, but it does not disappear if -DNDEBUG
+  inline void Ensure(bool b)
+  {
+     if (!b)
+        std::abort();
+  }
 }
 
 #endif

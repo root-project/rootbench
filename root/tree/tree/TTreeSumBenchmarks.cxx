@@ -15,12 +15,6 @@
 
 #include "rootbench/RBConfig.h"
 
-inline void ensure(bool b)
-{
-   if (!b)
-      std::abort();
-}
-
 using ROOT::RVec;
 
 static constexpr auto treeName = "Events";
@@ -59,7 +53,7 @@ static void BM_TTreeSum_SumScalarTBranchGetEntry(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTreeSum_SumScalarTBranchGetEntry);
 
@@ -82,7 +76,7 @@ static void BM_TTreeSum_SumScalarTTreeGetEntry(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTreeSum_SumScalarTTreeGetEntry);
 
@@ -101,7 +95,7 @@ static void BM_TTreeSum_SumScalarTTreeReader(benchmark::State &state)
          sum += *x;
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   RB::Ensure(sum == 42 * nEntries);
 }
 BENCHMARK(BM_TTreeSum_SumScalarTTreeReader);
 
@@ -124,7 +118,7 @@ static void BM_TTreeSum_SumVectorTBranchGetEntry(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreeSum_SumVectorTBranchGetEntry);
 
@@ -144,6 +138,6 @@ static void BM_TTreeSum_SumVectorTTreeReader(benchmark::State &state)
             sum += e;
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 BENCHMARK(BM_TTreeSum_SumVectorTTreeReader);

@@ -16,13 +16,6 @@ static constexpr auto nEntries = 8000;
 static auto pathOneBranch = RB::GetTempFs() + "/" + fileNameOneBranch;
 static auto pathTwoBranches = RB::GetTempFs() + "/" + fileNameTwoBranches;
 
-// an assert implementation that is not no-op for optimized builds
-inline void ensure(bool b)
-{
-   if (!b)
-      std::abort();
-}
-
 void MakeDataOneBranch()
 {
    const bool hasData = gSystem->AccessPathName(fileNameOneBranch) == 0;
@@ -72,7 +65,7 @@ static void BM_TTree_GetEntryReadOneOfOne(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_GetEntryReadOneOfOne);
 
@@ -109,7 +102,7 @@ static void BM_TTree_GetEntryReadOneOfTwo(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_GetEntryReadOneOfTwo);
 
@@ -130,7 +123,7 @@ static void BM_TTree_GetEntryReadTwoOfTwo(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_GetEntryReadTwoOfTwo);
 
@@ -152,7 +145,7 @@ static void BM_TTree_BranchGetEntryReadOneOfOne(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_BranchGetEntryReadOneOfOne);
 
@@ -174,7 +167,7 @@ static void BM_TTree_BranchGetEntryReadOneOfTwo(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries_);
+   RB::Ensure(sum == 42 * nEntries_);
 }
 BENCHMARK(BM_TTree_BranchGetEntryReadOneOfTwo);
 
