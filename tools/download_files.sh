@@ -9,7 +9,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 if [[ $# -lt 2 ]]; then
-   echo "Usage: $0 <output_dir> <file_url> [file_url]..."
+   echo "Usage: $0 <output_dir> <file_url> [file_url]..." 1>&2
    exit 1
 fi
 
@@ -18,7 +18,7 @@ shift
 
 # Check output directory exists, create it if needed
 if [[ -e "$OUT_DIR" && ! -d "$OUT_DIR" ]]; then
-   echo "Path \"$OUT_DIR\" already exists and it is not a directory, aborting"
+   echo "Path \"$OUT_DIR\" already exists and it is not a directory, aborting" 1>&2
    exit 2
 elif [[ ! -e "$OUT_DIR" ]]; then
    mkdir -p "$OUT_DIR"
