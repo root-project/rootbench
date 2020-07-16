@@ -32,9 +32,7 @@ void payload(const std::vector<std::string>& files, bool enable_imt)
 #endif // R__USE_IMT
 
    // Create dataframe from NanoAOD files
-   ROOT::RDataFrame df("Events",
-                      {"root://eospublic.cern.ch//eos/root-eos/cms_opendata_2012_nanoaod/Run2012B_DoubleMuParked.root",
-                       "root://eospublic.cern.ch//eos/root-eos/cms_opendata_2012_nanoaod/Run2012C_DoubleMuParked.root"});
+   ROOT::RDataFrame df("Events", files);
 
    // For simplicity, select only events with exactly two muons and require opposite charge
    auto df_2mu = df.Filter("nMuon == 2", "Events with exactly two muons");
