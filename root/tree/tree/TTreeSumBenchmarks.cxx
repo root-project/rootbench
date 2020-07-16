@@ -1,4 +1,3 @@
-#include "RDataFrameBench.h"
 #include <ROOT/RDataFrame.hxx>
 #include <ROOT/RVec.hxx>
 #include <TFile.h>
@@ -14,6 +13,13 @@
 #include <vector>
 #include <cstring>
 
+#include "rootbench/RBConfig.h"
+
+inline void ensure(bool b)
+{
+   if (!b)
+      std::abort();
+}
 
 using ROOT::RVec;
 
@@ -22,7 +28,7 @@ static constexpr auto fileName = "data.root";
 static constexpr auto scalarBranch = "x";
 static constexpr auto vectorBranch = "vec";
 static constexpr auto nEntries = 100000;
-static const auto pathToFile = scratchDir + "/" + fileName;
+static const auto pathToFile = RB::GetTempFs() + "/" + fileName;
 
 
 void MakeDataIfNeeded()

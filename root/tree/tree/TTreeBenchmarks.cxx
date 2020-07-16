@@ -1,4 +1,3 @@
-#include "RDataFrameBench.h"
 #include <TFile.h>
 #include <TSystem.h>
 #include <TTree.h>
@@ -8,21 +7,17 @@
 #include <vector>
 #include "rootbench/RBConfig.h"
 
-const std::string scratchDir = RB::GetTempFs();
-
 static constexpr auto treeName = "Events";
 static constexpr auto fileNameOneBranch = "dataonebranch.root";
 static constexpr auto fileNameTwoBranches = "datatwobranches.root";
 static constexpr auto branchOne = "x";
 static constexpr auto branchTwo = "y";
 static constexpr auto nEntries = 8000;
-static auto pathOneBranch = scratchDir + "/" + fileNameOneBranch;
-static auto pathTwoBranches = scratchDir + "/" + fileNameTwoBranches;
-
-
+static auto pathOneBranch = RB::GetTempFs() + "/" + fileNameOneBranch;
+static auto pathTwoBranches = RB::GetTempFs() + "/" + fileNameTwoBranches;
 
 // an assert implementation that is not no-op for optimized builds
-void ensure(bool b)
+inline void ensure(bool b)
 {
    if (!b)
       std::abort();
