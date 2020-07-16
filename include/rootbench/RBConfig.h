@@ -14,14 +14,14 @@ namespace RB {
   ///
   ///\returns invalid path if the variable is not set.
   ///
-  std::string GetTempFs() {
+  inline std::string GetTempFs() {
     if (char* tempfs = std::getenv("RB_TEMP_FS"))
       return tempfs;
 
     rb_abort("Please set the RB_TEMP_FS env variable!");
   }
 
-  std::string GetRootSys() {
+  inline std::string GetRootSys() {
     if (char* rootsys = std::getenv("ROOTSYS"))
       return rootsys;
 
@@ -29,7 +29,7 @@ namespace RB {
   }
 
   /// Return the absolute path to the directory where data will be downloaded
-  std::string GetDataDir() {
+  inline std::string GetDataDir() {
       return RB::kDatasetDirectory;
   }
 }
