@@ -12,14 +12,14 @@ namespace RB {
   ///
   ///\returns invalid path if the variable is not set.
   ///
-  const char* GetTempFs() {
+  std::string GetTempFs() {
     if (char* tempfs = std::getenv("RB_TEMP_FS"))
       return tempfs;
 
     rb_abort("Please set the RB_TEMP_FS env variable!");
   }
 
-  const char* GetRootSys() {
+  std::string GetRootSys() {
     if (char* rootsys = std::getenv("ROOTSYS"))
       return rootsys;
 
