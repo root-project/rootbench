@@ -10,6 +10,8 @@ def payload(path, enable_imt):
     # Enable multi-threading
     if enable_imt:
         ROOT.ROOT.EnableImplicitMT()
+    else:
+        ROOT.ROOT.DisableImplicitMT()
 
     # Create a ROOT dataframe for each dataset
     df = {}
