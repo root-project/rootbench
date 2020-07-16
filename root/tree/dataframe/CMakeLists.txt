@@ -41,3 +41,4 @@ if(rootbench-datafiles)
 endif()
 
 add_subdirectory(LoopSUSYFrame)
+add_subdirectory(wmass)
