@@ -20,12 +20,12 @@ using namespace ROOT::VecOps;
 static const std::vector<std::string> files = {RB::GetDataDir() + "/Run2012B_DoubleMuParked.root",
                                                RB::GetDataDir() + "/Run2012C_DoubleMuParked.root"};
 
-void payload(const std::vector<std::string>& files, bool enable_imt)
+void payload(const std::vector<std::string>& files, unsigned int nthreads)
 {
-   // Enable multi-threading
 #ifdef R__USE_IMT
-   if (enable_imt) {
-      ROOT::EnableImplicitMT();
+   // Enable multi-threading
+   if (nthreads) {
+      ROOT::EnableImplicitMT(nthreads);
    } else {
       ROOT::DisableImplicitMT();
    }
@@ -77,15 +77,17 @@ void payload(const std::vector<std::string>& files, bool enable_imt)
 static void df102_NanoAODDimuonAnalysis_noimt(benchmark::State &state)
 {
    for (auto _ : state)
-      payload(files, false);
+      payload(files, 0);
 }
 
 static void df102_NanoAODDimuonAnalysis_imt(benchmark::State &state)
 {
-   for (auto _ : state)
-      payload(files, true);
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      payload(files, nthreads);
+   }
 }
 
 BENCHMARK(df102_NanoAODDimuonAnalysis_noimt)->Repetitions(1);
-BENCHMARK(df102_NanoAODDimuonAnalysis_imt)->Repetitions(1);
+BENCHMARK(df102_NanoAODDimuonAnalysis_imt)->Repetitions(1)->Arg(8);
 BENCHMARK_MAIN();
