@@ -8,14 +8,17 @@
 #include "Math/Vector4D.h"
 #include "TStyle.h"
 
+#include <vector>
+#include <string>
+
 #include "benchmark/benchmark.h"
 #include "rootbench/RBConfig.h"
 
 
 using namespace ROOT::VecOps;
 
-static const std::vector<std::string> files = {std::string(RB::kDatasetDirectory) + "/Run2012B_DoubleMuParked.root",
-                                               std::string(RB::kDatasetDirectory) + "/Run2012C_DoubleMuParked.root"};
+static const std::vector<std::string> files = {RB::GetDataDir() + "/Run2012B_DoubleMuParked.root",
+                                               RB::GetDataDir() + "/Run2012C_DoubleMuParked.root"};
 
 void payload(const std::vector<std::string>& files, bool enable_imt)
 {
@@ -85,6 +88,6 @@ static void df102_NanoAODDimuonAnalysis_imt(benchmark::State &state)
       payload(files, true);
 }
 
-BENCHMARK(df102_NanoAODDimuonAnalysis_noimt);
-BENCHMARK(df102_NanoAODDimuonAnalysis_imt);
+BENCHMARK(df102_NanoAODDimuonAnalysis_noimt)->Repetitions(1);
+BENCHMARK(df102_NanoAODDimuonAnalysis_imt)->Repetitions(1);
 BENCHMARK_MAIN();
