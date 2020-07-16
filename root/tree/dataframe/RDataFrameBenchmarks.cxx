@@ -1,4 +1,3 @@
-#include "RDataFrameBench.h"
 #include "ROOT/RDataFrame.hxx"
 #include "TROOT.h"   // ROOT::EnableImplicitMT
 #include "TSystem.h" // TSystem::Unlink
@@ -10,8 +9,6 @@
 
 using namespace ROOT;
 
-const std::string scratchDir = RB::GetTempFs();
-
 static void BM_RDataFrame_CreateEmpty(benchmark::State &state)
 {
    for (auto _ : state)
@@ -21,7 +18,7 @@ BENCHMARK(BM_RDataFrame_CreateEmpty)->Unit(benchmark::kMicrosecond);
 
 static void BM_RDataFrame_CreateFromFile(benchmark::State &state)
 {
-   const auto fname = scratchDir + "/tdf_createfromfile.root";
+   const auto fname = RB::GetTempFs() + "/tdf_createfromfile.root";
    const auto treeName = "t";
    RDataFrame(0).Snapshot<>(treeName, fname, {});
 
@@ -79,7 +76,7 @@ BENCHMARK(BM_RDataFrame_NoOpLoop)->Unit(benchmark::kMicrosecond)->Arg(0)->Arg(1)
 
 static void BM_RDataFrame_NoOpLoopOnFile(benchmark::State &state)
 {
-   const auto fname = scratchDir + "/tdf_nooplooponfile" + std::to_string(state.range(0)) + ".root";
+   const auto fname = RB::GetTempFs() + "/tdf_nooplooponfile" + std::to_string(state.range(0)) + ".root";
    const auto treeName = "t";
    RDataFrame(state.range(0)).Snapshot<>(treeName, fname, {});
 
