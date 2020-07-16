@@ -10,6 +10,12 @@ if(rootbench-datafiles)
         DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root
         LABEL long
         LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps Gpad Graf)
+
+    RB_ADD_GBENCHMARK(RDataFrameh1Analysis
+        RDataFrameh1Analysis.cxx
+        LABEL long
+        DOWNLOAD_DATAFILES h1analysis.root
+        LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
 endif()
 
 if(NUMPY_FOUND)
