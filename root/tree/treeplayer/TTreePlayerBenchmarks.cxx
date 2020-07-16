@@ -18,14 +18,6 @@ static constexpr auto nEntries = 8000;
 static auto pathToFile = scratchDir + "/" + fileName;
 
 
-
-// an assert implementation that is not no-op for optimized builds
-void ensure(bool b)
-{
-   if (!b)
-      std::abort();
-}
-
 void MakeDataFixedArray()
 {
    TFile f(pathToFile.c_str(), "recreate");
@@ -81,7 +73,7 @@ static void BM_TTreePlayer_FixedSizeArrayTBranch(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreePlayer_FixedSizeArrayTBranch);
 
@@ -105,7 +97,7 @@ static void BM_TTreePlayer_VarSizeArrayTBranch(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreePlayer_VarSizeArrayTBranch);
 
@@ -128,7 +120,7 @@ static void BM_TTreePlayer_StdVectorTBranch(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries_);
 }
 BENCHMARK(BM_TTreePlayer_StdVectorTBranch);
 
@@ -148,7 +140,7 @@ static void RunReaderArray(benchmark::State &state)
       }
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 
 static void BM_TTreePlayer_FixedSizeArrayReaderArray(benchmark::State &state)

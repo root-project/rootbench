@@ -25,12 +25,6 @@ static constexpr auto nEntries = 100000;
 static const auto pathToFile = RB::GetTempFs() + "/" + fileName;
 
 
-inline void ensure(bool b)
-{
-   if (!b)
-      std::abort();
-}
-
 void MakeDataIfNeeded()
 {
    const bool hasData = gSystem->AccessPathName(pathToFile.c_str()) == 0;
@@ -71,7 +65,7 @@ static void BM_RDataFrameSum_SumScalarDF(benchmark::State &state)
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<int>(scalarBranch);
-   ensure(sum == 42 * nEntries);
+   RB::Ensure(sum == 42 * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumScalarDF);
 
@@ -85,7 +79,7 @@ static void BM_RDataFrameSum_SumScalarWithForeach(benchmark::State &state)
       df.Foreach([&sum](int x) { sum += x; }, {scalarBranch});
       benchmark::DoNotOptimize(sum);
    }
-   ensure(sum == 42 * nEntries);
+   RB::Ensure(sum == 42 * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumScalarWithForeach);
 
@@ -96,7 +90,7 @@ static void BM_RDataFrameSum_SumScalarAfter1Define(benchmark::State &state)
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<int>("defined_var");
-   ensure(sum == 42 * nEntries);
+   RB::Ensure(sum == 42 * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumScalarAfter1Define);
 
@@ -112,7 +106,7 @@ static void BM_RDataFrameSum_SumScalarAfter5Defines(benchmark::State &state)
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<int>("def5");
-   ensure(sum == 42 * nEntries);
+   RB::Ensure(sum == 42 * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumScalarAfter5Defines);
 
@@ -123,7 +117,7 @@ static void BM_RDataFrameSum_SumVectorDF(benchmark::State &state)
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<RVec<int>>(vectorBranch);
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumVectorDF);
 
@@ -135,7 +129,7 @@ static void BM_RDataFrameSum_SumVectorAfter1Define(benchmark::State &state)
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<RVec<int>>("defined_var");
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumVectorAfter1Define);
 
@@ -151,6 +145,6 @@ static void BM_RDataFrameSum_SumVectorAfter5Defines(benchmark::State &state)
    int sum = 0;
    for (auto _ : state)
       sum = *df.Sum<RVec<int>>("def5");
-   ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
+   RB::Ensure(sum == (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8) * nEntries);
 }
 BENCHMARK(BM_RDataFrameSum_SumVectorAfter5Defines);
