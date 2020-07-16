@@ -205,8 +205,8 @@ path = os.environ["RB_DATASETDIR"]
 
 
 def test_df104_HiggsToTwoPhotons_noimt(benchmark):
-    benchmark.pedantic(payload, kwargs={'path': path, 'enable_imt': True}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'path': path, 'enable_imt': False}, iterations=1, rounds=1)
 
 
 def test_df104_HiggsToTwoPhotons_imt(benchmark):
-    benchmark.pedantic(payload, kwargs={'path': path, 'enable_imt': False}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'path': path, 'enable_imt': True}, iterations=1, rounds=1)
