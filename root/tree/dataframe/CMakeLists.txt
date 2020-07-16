@@ -14,3 +14,11 @@ RB_ADD_PYTESTBENCHMARK(pytest-df102_NanoAODDimuonAnalysis
     LABEL long)
 
 add_subdirectory(LoopSUSYFrame)
+
+if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
+   RB_ADD_GBENCHMARK(ZPeak
+      zpeak.cxx
+      LIBRARIES Core Hist Imt RIO MathCore Physics Tree TreePlayer ROOTDataFrame ROOTVecOps
+      DOWNLOAD_DATAFILES zpeak_data_small.root
+      LABEL long)
+endif()
