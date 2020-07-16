@@ -6,10 +6,10 @@ import pytest
 import os
 
 
-def payload(path, enable_imt):
+def payload(path, nthreads):
     # Enable multi-threading
-    if enable_imt:
-        ROOT.ROOT.EnableImplicitMT()
+    if nthreads:
+        ROOT.ROOT.EnableImplicitMT(nthreads)
     else:
         ROOT.ROOT.DisableImplicitMT()
 
@@ -205,8 +205,8 @@ path = os.environ["RB_DATASETDIR"]
 
 
 def test_df104_HiggsToTwoPhotons_noimt(benchmark):
-    benchmark.pedantic(payload, kwargs={'path': path, 'enable_imt': False}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 0}, iterations=1, rounds=1)
 
 
 def test_df104_HiggsToTwoPhotons_imt(benchmark):
-    benchmark.pedantic(payload, kwargs={'path': path, 'enable_imt': True}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 8}, iterations=1, rounds=1)
