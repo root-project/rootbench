@@ -17,8 +17,8 @@
 
 using namespace ROOT::VecOps;
 
-static const std::vector<std::string> files = {RB::GetDataDir() + "/Run2012B_DoubleMuParked.root",
-                                               RB::GetDataDir() + "/Run2012C_DoubleMuParked.root"};
+static const std::vector<std::string> local_files = {RB::GetDataDir() + "/Run2012B_DoubleMuParked.root",
+                                                     RB::GetDataDir() + "/Run2012C_DoubleMuParked.root"};
 
 void payload(const std::vector<std::string>& files, unsigned int nthreads)
 {
@@ -77,14 +77,14 @@ void payload(const std::vector<std::string>& files, unsigned int nthreads)
 static void df102_NanoAODDimuonAnalysis_noimt(benchmark::State &state)
 {
    for (auto _ : state)
-      payload(files, 0);
+      payload(local_files, 0);
 }
 
 static void df102_NanoAODDimuonAnalysis_imt(benchmark::State &state)
 {
    for (auto _ : state) {
       const auto nthreads = state.range(0);
-      payload(files, nthreads);
+      payload(local_files, nthreads);
    }
 }
 
