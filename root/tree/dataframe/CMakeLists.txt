@@ -30,7 +30,7 @@ endif()
 
 add_subdirectory(LoopSUSYFrame)
 
-if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
+if(rootbench-datafiles AND ((CMAKE_CXX_FLAGS STRLESS_EQUAL "-std=c++17") OR (CMAKE_CXX_STANDARD GREATER 14)))
    RB_ADD_GBENCHMARK(ZPeak
       zpeak.cxx
       LIBRARIES Core Hist Imt RIO MathCore Physics Tree TreePlayer ROOTDataFrame ROOTVecOps
