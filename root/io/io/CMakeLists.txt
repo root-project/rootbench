@@ -14,4 +14,10 @@ if(rootbench-datafiles)
     LABEL short
     LIBRARIES Core RIO
     DOWNLOAD_DATAFILES Event0-sample.root)
+  
+  RB_ADD_GBENCHMARK(CompressionBenchmarks_LHCb
+    TFile_LHCb_Benchmarks.cxx
+    LABEL short
+    LIBRARIES Core RIO
+    DOWNLOAD_DATAFILES lhcb_B2ppKK2011_md_noPIDstrip.root)
 endif()
