@@ -26,4 +26,10 @@ if(rootbench-datafiles)
     LABEL short
     LIBRARIES Core RIO
     DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root)
+  
+  RB_ADD_GBENCHMARK(CompressionBenchmarks_ATLAS
+    TFile_ATLAS_Benchmarks.cxx
+    LABEL short
+    LIBRARIES Core RIO
+    DOWNLOAD_DATAFILES gg_data-zstd.root)
 endif()
