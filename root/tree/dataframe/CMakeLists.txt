@@ -7,7 +7,7 @@ RB_ADD_GBENCHMARK(RDFBenchmarks
 if(rootbench-datafiles)
     RB_ADD_GBENCHMARK(gbenchmark-df102_NanoAODDimuonAnalysis
         df102_NanoAODDimuonAnalysis.C
-        DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root
+        DOWNLOAD_DATAFILES Run2012BC_DoubleMuParked_Muons.root
         LABEL long
         LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps Gpad Graf)
 
@@ -25,7 +25,7 @@ endif()
 if(rootbench-datafiles)
     RB_ADD_PYTESTBENCHMARK(pytest-df102_NanoAODDimuonAnalysis
         df102_NanoAODDimuonAnalysis.py
-        DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root
+        DOWNLOAD_DATAFILES Run2012BC_DoubleMuParked_Muons.root
         LABEL long)
 
     RB_ADD_PYTESTBENCHMARK(pytest-df104_HiggsToTwoPhotons

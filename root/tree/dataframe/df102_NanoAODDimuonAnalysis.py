@@ -6,14 +6,12 @@ import pytest
 import os
 
 
-files = ROOT.std.vector("string")(2)
-files[0] = os.path.join(os.environ["RB_DATASETDIR"], "Run2012B_DoubleMuParked.root")
-files[1] = os.path.join(os.environ["RB_DATASETDIR"], "Run2012C_DoubleMuParked.root")
+files = os.path.join(os.environ["RB_DATASETDIR"], "Run2012BC_DoubleMuParked_Muons.root")
 
-def payload(files, enable_imt):
+def payload(files, nthreads):
     # Enable multi-threading
-    if enable_imt:
-        ROOT.ROOT.EnableImplicitMT()
+    if nthreads > 1:
+        ROOT.ROOT.EnableImplicitMT(nthreads)
     else:
         ROOT.ROOT.DisableImplicitMT()
 
@@ -61,8 +59,8 @@ def payload(files, enable_imt):
 
 
 def test_df102_NanoAODDimuonAnalysis_imt(benchmark):
-    benchmark.pedantic(payload, kwargs={'files': files, 'enable_imt': True}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'files': files, 'nthreads': 8}, iterations=1, rounds=1)
 
 
 def test_df102_NanoAODDimuonAnalysis_noimt(benchmark):
-    benchmark.pedantic(payload, kwargs={'files': files, 'enable_imt': False}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'files': files, 'nthreads': 1}, iterations=1, rounds=1)
