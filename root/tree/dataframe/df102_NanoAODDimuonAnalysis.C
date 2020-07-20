@@ -17,8 +17,7 @@
 
 using namespace ROOT::VecOps;
 
-static const std::vector<std::string> local_files = {RB::GetDataDir() + "/Run2012B_DoubleMuParked.root",
-                                                     RB::GetDataDir() + "/Run2012C_DoubleMuParked.root"};
+static const std::vector<std::string> local_files = {RB::GetDataDir() + "/Run2012BC_DoubleMuParked_Muons.root"};
 
 void payload(const std::vector<std::string>& files, unsigned int nthreads)
 {
