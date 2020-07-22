@@ -1,5 +1,6 @@
 #include <TFile.h>
 #include <TSystem.h>
+#include <TBranch.h>
 #include <TTree.h>
 
 #include <benchmark/benchmark.h>
