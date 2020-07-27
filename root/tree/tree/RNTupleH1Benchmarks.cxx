@@ -25,7 +25,6 @@
 
 static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgorithm)
 {
-   using ENTupleInfo = ROOT::Experimental::ENTupleInfo;
    using RNTupleModel = ROOT::Experimental::RNTupleModel;
    using RNTupleReader = ROOT::Experimental::RNTupleReader;
    // Create a RNTuple model
