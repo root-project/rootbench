@@ -1,7 +1,5 @@
 if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
-   ROOT_GENERATE_DICTIONARY(G__SignalAnalysis inc/classes.h
-                            MODULE SignalAnalysis
-                            LINKDEF LinkDef.h)
+   ROOT_GENERATE_DICTIONARY(G__SignalAnalysis inc/classes.h LINKDEF LinkDef.h)
 
    file(COPY RDFprocessor/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR} FILES_MATCHING PATTERN "*.py")
    file(COPY python/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR} FILES_MATCHING PATTERN "*.py")
@@ -22,6 +20,7 @@ if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy
       G__SignalAnalysis.cxx)
    add_dependencies(SignalAnalysis G__SignalAnalysis)
    target_include_directories(SignalAnalysis PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+   target_link_libraries(SignalAnalysis PUBLIC ROOT::Hist ROOT::ROOTDataFrame)
 
    RB_ADD_PYTESTBENCHMARK(wmassAnalysis
       runSignalAnalysis.py
