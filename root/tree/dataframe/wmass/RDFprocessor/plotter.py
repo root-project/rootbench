@@ -82,7 +82,7 @@ class plotter:
 
         for group in self.histos: 
 
-            print (group[0])[0].GetName()
+            print ((group[0])[0].GetName())
 
             hs = ROOT.THStack((group[0])[0].GetName(),"")
 

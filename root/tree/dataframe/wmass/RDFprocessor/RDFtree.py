@@ -128,7 +128,7 @@ class RDFtree:
         for l in blist:
             branchList.push_back(l)
 
-        print time.time()-self.start, "before snapshot"
+        print(time.time()-self.start, "before snapshot")
 
         if not len(blist)==0:
             out = self.node[node].Snapshot(self.treeName,self.outputFile, branchList, opts)
@@ -145,7 +145,7 @@ class RDFtree:
 
         # now write all the outputs together
 
-        print "Writing output files in "+ self.outputDir
+        print("Writing output files in "+ self.outputDir)
 
         os.chdir(self.outputDir)
         self.fout = ROOT.TFile(self.outputFile, "update")
@@ -165,7 +165,7 @@ class RDFtree:
 
                 elif 'vector' in type(obj).__cpp_name__:
                     
-                    print "writing group of histos "
+                    print("writing group of histos ")
                     
                     for h in obj:
                         obj_number =  obj_number+1
@@ -180,7 +180,7 @@ class RDFtree:
         self.fout.Close()
         os.chdir("..")
 
-        print self.entries.GetValue(), "events processed in "+"{:0.1f}".format(time.time()-self.start), "s", "rate", self.entries.GetValue()/(time.time()-self.start), "histograms written: ", obj_number
+        print(self.entries.GetValue(), "events processed in "+"{:0.1f}".format(time.time()-self.start), "s", "rate", self.entries.GetValue()/(time.time()-self.start), "histograms written: ", obj_number)
 
     def getObjects(self, node):
 
@@ -188,7 +188,7 @@ class RDFtree:
 
     def saveGraph(self):
 
-        print self.graph
+        print(self.graph)
 
         from graphviz import Digraph
 
