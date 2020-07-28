@@ -1,3 +1,4 @@
+from six import iteritems
 from header import *
 import copy
 
@@ -153,7 +154,7 @@ class RDFtree:
     
         obj_number = 0
 
-        for branchDir, objs in self.objs.iteritems():
+        for branchDir, objs in iteritems(self.objs):
 
             if not self.fout.GetDirectory(branchDir): self.fout.mkdir(branchDir)
             
@@ -194,7 +195,7 @@ class RDFtree:
 
         dot = Digraph(name='my analysis', filename = 'graph.pdf')
 
-        for node, nodelist in self.graph.iteritems():
+        for node, nodelist in iteritems(self.graph):
 
             dot.node(node, node)
             for n in nodelist:
