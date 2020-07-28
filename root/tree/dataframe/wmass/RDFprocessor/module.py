@@ -1,4 +1,5 @@
 # Base class from which the other modules will inherit
+from six import iteritems
 import ROOT
 from header import *
 
@@ -33,7 +34,7 @@ class module:
 
         if syst:
 
-            for nom, variations in syst.iteritems(): 
+            for nom, variations in iteritems(syst): 
 
                 if len(variations)>0: # case variations
 
