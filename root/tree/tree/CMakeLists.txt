@@ -16,7 +16,7 @@ if(ROOT_root7_FOUND AND rootbench-datafiles AND ROOT_dataframe_FOUND)
             DEPENDS libh1event
   )
 
-  RB_ADD_GBENCHMARK(RNTupleAnalysisBenchmarks
+  RB_ADD_GBENCHMARK(RNTupleH1Benchmarks
     RNTupleH1Benchmarks.cxx
     LABEL short
     LIBRARIES Core Hist MathCore RIO Tree ROOTNTuple
