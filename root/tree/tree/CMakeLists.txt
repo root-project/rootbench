@@ -18,7 +18,7 @@ if(ROOT_root7_FOUND)
 endif()
 
 if(ROOT_root7_FOUND AND rootbench-datafiles)
-  RB_ADD_GBENCHMARK(RNTupleAnalysisBenchmarks
+  RB_ADD_GBENCHMARK(RNTupleH1Benchmarks
     RNTupleH1Benchmarks.cxx
     LABEL short
     LIBRARIES Core Hist MathCore RIO Tree ROOTNTuple
