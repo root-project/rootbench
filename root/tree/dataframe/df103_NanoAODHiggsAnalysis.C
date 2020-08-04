@@ -278,7 +278,7 @@ void payload(unsigned int nthreads)
 {
 #ifdef R__USE_IMT
    // Enable multi-threading
-   if (nthreads) {
+   if (nthreads > 1) {
       ROOT::EnableImplicitMT(nthreads);
    } else {
       ROOT::DisableImplicitMT();
