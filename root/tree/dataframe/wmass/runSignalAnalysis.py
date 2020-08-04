@@ -19,6 +19,8 @@ def analysis(nthreads):
     else:
         ROOT.ROOT.DisableImplicitMT()
 
+    ROOT.gInterpreter.AddIncludePath('./')
+    ROOT.gInterpreter.Declare('#include "inc/classes.h"')
     ROOT.gSystem.Load('libSignalAnalysis.so')
 
 
