@@ -26,6 +26,17 @@ if(rootbench-datafiles)
         DOWNLOAD_DATAFILES Run2012BC_DoubleMuParked_Muons.root
         LABEL long)
 
+    RB_ADD_GBENCHMARK(gbenchmark-df103_NanoAODHiggsAnalysis
+        df103_NanoAODHiggsAnalysis.C
+        DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root Run2012B_DoubleElectron.root Run2012C_DoubleElectron.root SMHiggsToZZTo4L.root ZZTo4mu.root ZZTo4e.root
+        LABEL long
+        LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps Gpad Graf)
+
+    RB_ADD_PYTESTBENCHMARK(pytest-df103_NanoAODHiggsAnalysis
+        df103_NanoAODHiggsAnalysis.py
+        DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root Run2012C_DoubleMuParked.root Run2012B_DoubleElectron.root Run2012C_DoubleElectron.root SMHiggsToZZTo4L.root ZZTo4mu.root ZZTo4e.root
+        LABEL long)
+
     RB_ADD_PYTESTBENCHMARK(pytest-df104_HiggsToTwoPhotons
         df104_HiggsToTwoPhotons.py
         DOWNLOAD_DATAFILES data_A.GamGam.root data_B.GamGam.root data_C.GamGam.root data_D.GamGam.root mc_343981.ggH125_gamgam.GamGam.root mc_345041.VBFH125_gamgam.GamGam.root
