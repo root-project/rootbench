@@ -3,6 +3,7 @@ if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy
 
    file(COPY RDFprocessor/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR} FILES_MATCHING PATTERN "*.py")
    file(COPY python/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR} FILES_MATCHING PATTERN "*.py")
+   file(COPY inc/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/inc)
 
    add_library(SignalAnalysis SHARED
       src/TH3weightsHelper.cpp
