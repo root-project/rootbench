@@ -55,7 +55,6 @@ static void BM_MainEvent_Decompress(benchmark::State &state, int algo) {
       TFile *hfile = new TFile(filename.c_str());
       TTree *tree = (TTree*)hfile->Get("T");
       (void)tree; // silence unused variable warnings. ROOT internals use this tree.
-      TBranch *branch = tree->GetBranch("event");
 
       Int_t nevent = (Int_t)tree->GetEntries();
 
