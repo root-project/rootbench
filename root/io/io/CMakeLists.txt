@@ -6,7 +6,7 @@ RB_ADD_GBENCHMARK(IOBenchmarks
 RB_ADD_GBENCHMARK(TFile_RDFSnapshot
   TFile_RDFSnapshot.cxx
   LABEL short
-  LIBRARIES Core RIO ROOTDataFrame MathCore)
+LIBRARIES Core RIO ROOTDataFrame Tree TreePlayer MathCore)
 
 if(rootbench-datafiles)
   RB_ADD_GBENCHMARK(CompressionBenchmarks_MainEvent
