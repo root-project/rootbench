@@ -42,7 +42,9 @@ if(rootbench-datafiles)
         DOWNLOAD_DATAFILES data_A.GamGam.root data_B.GamGam.root data_C.GamGam.root data_D.GamGam.root mc_343981.ggH125_gamgam.GamGam.root mc_345041.VBFH125_gamgam.GamGam.root
         LABEL long)
 
-    if (CMAKE_CXX_FLAGS MATCHES "-std=c\\+\\+17" OR CMAKE_CXX_STANDARD GREATER 14)
+    # FIXME there will be no need to check CMAKE_CXX_FLAGS when ROOT exports CMAKE_CXX_STANDARD
+    # (see https://github.com/root-project/rootbench/issues/156)
+    if (CMAKE_CXX_FLAGS MATCHES "-std=c\\+\\+14" OR CMAKE_CXX_STANDARD GREATER_EQUAL 14)
         RB_ADD_GBENCHMARK(ZPeak
            zpeak.cxx
            LIBRARIES Core Hist Imt RIO MathCore Physics Tree TreePlayer ROOTDataFrame ROOTVecOps
