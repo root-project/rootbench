@@ -6,77 +6,62 @@
 #include "rootbench/RBConfig.h"
 
 
-static void BM_TFile_RDFSnapshot_ZLIB(benchmark::State &state) {
-   ROOT::EnableImplicitMT();
-   ROOT::RDF::RSnapshotOptions options;
-   options.fCompressionAlgorithm = ROOT::ECompressionAlgorithm::kZLIB;
-
+auto SetupRDF() {
    // We create an empty data frame
    ROOT::RDataFrame tdf(100000);
    // We now fill it with random numbers
    gRandom->SetSeed(1);
    auto tdf_1 = tdf.Define("rnd", []() { return gRandom->Gaus(); });
+   return tdf_1;
+}
 
-   for (auto _ : state) {
-      //And we write out the dataset on disk
-      tdf_1.Snapshot("randomNumbers", "bench_data.root", "", options);
-   }
+auto SetupRDFOptions(ROOT::ECompressionAlgorithm alg, int level) {
+  ROOT::RDF::RSnapshotOptions options;
+  options.fCompressionAlgorithm = alg;
+  options.fCompressionLevel = level;
+  return options;
+}
+
+
+static void BM_TFile_RDFSnapshot_ZLIB(benchmark::State &state) {
+  auto tdf = SetupRDF();
+  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kZLIB, 1);
+  for (auto _ : state) {
+     //And we write out the dataset on disk
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
+  }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_ZLIB)->Unit(benchmark::kMicrosecond);
 
 
 static void BM_TFile_RDFSnapshot_LZ4(benchmark::State &state) {
-   ROOT::EnableImplicitMT();
-   ROOT::RDF::RSnapshotOptions options;
-   options.fCompressionAlgorithm = ROOT::ECompressionAlgorithm::kLZ4;
-
-   // We create an empty data frame
-   ROOT::RDataFrame tdf(100000);
-   // We now fill it with random numbers
-   gRandom->SetSeed(1);
-   auto tdf_1 = tdf.Define("rnd", []() { return gRandom->Gaus(); });
-
-   for (auto _ : state) {
-      //And we write out the dataset on disk
-      tdf_1.Snapshot("randomNumbers", "bench_data.root", "", options);
-   }
+  auto tdf = SetupRDF();
+  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kLZ4, 4);
+  for (auto _ : state) {
+     //And we write out the dataset on disk
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
+  }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_LZ4)->Unit(benchmark::kMicrosecond);
 
 
 static void BM_TFile_RDFSnapshot_LZMA (benchmark::State &state) {
-   ROOT::EnableImplicitMT();
-   ROOT::RDF::RSnapshotOptions options;
-   options.fCompressionAlgorithm = ROOT::ECompressionAlgorithm::kLZMA;
-
-   // We create an empty data frame
-   ROOT::RDataFrame tdf(100000);
-   // We now fill it with random numbers
-   gRandom->SetSeed(1);
-   auto tdf_1 = tdf.Define("rnd", []() { return gRandom->Gaus(); });
-
-   for (auto _ : state) {
-      //And we write out the dataset on disk
-      tdf_1.Snapshot("randomNumbers", "bench_data.root", "", options);
-   }
+  auto tdf = SetupRDF();
+  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kLZMA, 8);
+  for (auto _ : state) {
+     //And we write out the dataset on disk
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
+  }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_LZMA)->Unit(benchmark::kMicrosecond);
 
 static void BM_TFile_RDFSnapshot_ZSTD (benchmark::State &state) {
-   ROOT::EnableImplicitMT();
-   ROOT::RDF::RSnapshotOptions options;
-   options.fCompressionAlgorithm = ROOT::ECompressionAlgorithm::kZSTD;
-
-   // We create an empty data frame
-   ROOT::RDataFrame tdf(100000);
-   // We now fill it with random numbers
-   gRandom->SetSeed(1);
-   auto tdf_1 = tdf.Define("rnd", []() { return gRandom->Gaus(); });
-
-   for (auto _ : state) {
-      //And we write out the dataset on disk
-      tdf_1.Snapshot("randomNumbers", "bench_data.root", "", options);
-   }
+  auto tdf = SetupRDF();
+  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kZSTD, 6);
+  for (auto _ : state) {
+     //And we write out the dataset on disk
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
+  }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_ZSTD)->Unit(benchmark::kMicrosecond);
 
