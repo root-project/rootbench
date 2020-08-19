@@ -84,19 +84,19 @@ static void BM_LHCb_Decompress_ZSTD(benchmark::State &state) {
 
 BENCHMARK(BM_LHCb_Decompress_ZLIB)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(3);
 
 BENCHMARK(BM_LHCb_Decompress_LZMA)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(3);
 
 BENCHMARK(BM_LHCb_Decompress_LZ4)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(3);
 
 BENCHMARK(BM_LHCb_Decompress_ZSTD)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(3);
 
 
 BENCHMARK_MAIN();
