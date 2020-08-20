@@ -26,7 +26,7 @@ static void BM_LHCb_Decompress(benchmark::State &state, int algo) {
     int comp_level = state.range(0);
     std::string comp_setting = std::to_string(algo * 100 + comp_level);
     std::string old_filename = (RB::GetDataDir() + "/lhcb_B2ppKK2011_md_noPIDstrip.root").c_str();
-    std::string new_filename = "level_" + std::to_string(comp_level) + "_lhcb_" + GetAlgoName(algo) + ".root";
+    std::string new_filename = (RB::GetTempFs() + "level_" + std::to_string(comp_level) + "_lhcb_" + GetAlgoName(algo) + ".root");
 
     gSystem->Exec(("hadd -v 0 -f" + comp_setting + " " + new_filename + " " + old_filename).c_str());
 
