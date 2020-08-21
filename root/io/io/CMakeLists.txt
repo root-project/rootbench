@@ -3,10 +3,12 @@ RB_ADD_GBENCHMARK(IOBenchmarks
   LABEL short
   LIBRARIES Core RIO Tree TreePlayer)
 
-RB_ADD_GBENCHMARK(TFile_RDFSnapshot
-  TFile_RDFSnapshot.cxx
-  LABEL short
-LIBRARIES Core RIO ROOTDataFrame Tree TreePlayer MathCore)
+if(ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
+  RB_ADD_GBENCHMARK(TFile_RDFSnapshot
+    TFile_RDFSnapshot.cxx
+    LABEL short
+  LIBRARIES Core RIO ROOTDataFrame Tree TreePlayer MathCore)
+endif()
 
 if(rootbench-datafiles)
   RB_ADD_GBENCHMARK(CompressionBenchmarks_MainEvent
