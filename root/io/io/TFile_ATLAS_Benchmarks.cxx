@@ -55,36 +55,9 @@ static void BM_ATLAS_Decompress(benchmark::State &state, int algo, std::string f
     gSystem->Exec(("rm -f " + new_filename).c_str());
 }
 
-
-static void BM_ATLAS_Decompress_Real_ZLIB(benchmark::State &state) {
-    BM_ATLAS_Decompress(state, 1, "atlasopendata_DataMuons");
-}
-static void BM_ATLAS_Decompress_Real_LZMA(benchmark::State &state) {
-    BM_ATLAS_Decompress(state, 2, "atlasopendata_DataMuons");
-}
-static void BM_ATLAS_Decompress_Real_LZ4(benchmark::State &state) {
-    BM_ATLAS_Decompress(state, 4, "atlasopendata_DataMuons");
-}
-static void BM_ATLAS_Decompress_Real_ZSTD(benchmark::State &state) {
-    BM_ATLAS_Decompress(state, 5, "atlasopendata_DataMuons");
-}
-
-BENCHMARK(BM_ATLAS_Decompress_Real_ZLIB)
-->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
-
-BENCHMARK(BM_ATLAS_Decompress_Real_LZMA)
-->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
-
-BENCHMARK(BM_ATLAS_Decompress_Real_LZ4)
-->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
-
-BENCHMARK(BM_ATLAS_Decompress_Real_ZSTD)
-->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
-
+// Benchmarks for ATLAS files of experimental (real) data are deleted
+// because it takes very long time.
+// TODO: find smaller file
 
 static void BM_ATLAS_Decompress_MC_ZLIB(benchmark::State &state) {
     BM_ATLAS_Decompress(state, 1, "atlasopendata_mc_117050.ttbar_lep");
@@ -101,19 +74,19 @@ static void BM_ATLAS_Decompress_MC_ZSTD(benchmark::State &state) {
 
 BENCHMARK(BM_ATLAS_Decompress_MC_ZLIB)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
+->Unit(benchmark::kMillisecond)->Iterations(2);
 
 BENCHMARK(BM_ATLAS_Decompress_MC_LZMA)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
+->Unit(benchmark::kMillisecond)->Iterations(2);
 
 BENCHMARK(BM_ATLAS_Decompress_MC_LZ4)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
+->Unit(benchmark::kMillisecond)->Iterations(2);
 
 BENCHMARK(BM_ATLAS_Decompress_MC_ZSTD)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(3);
+->Unit(benchmark::kMillisecond)->Iterations(2);
 
 
 BENCHMARK_MAIN();

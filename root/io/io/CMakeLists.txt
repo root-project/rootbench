@@ -31,5 +31,5 @@ if(rootbench-datafiles)
     TFile_ATLAS_Benchmarks.cxx
     LABEL short
     LIBRARIES Core RIO
-    DOWNLOAD_DATAFILES atlasopendata_mc_117050.ttbar_lep.root atlasopendata_DataMuons.root)
+    DOWNLOAD_DATAFILES atlasopendata_mc_117050.ttbar_lep.root)
 endif()
