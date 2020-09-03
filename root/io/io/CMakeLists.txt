@@ -11,11 +11,14 @@ if(ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14
 endif()
 
 if(rootbench-datafiles)
-  RB_ADD_GBENCHMARK(CompressionBenchmarks_MainEvent
-    TFile_CompressionBenchmarks_MainEvent.cxx
-    LABEL short
-    LIBRARIES Core RIO
-    DOWNLOAD_DATAFILES Event0-sample.root)
+  # Compression tests needs to have libEvent.so with is a part of ROOT build
+  if(TARGET Event)
+    RB_ADD_GBENCHMARK(CompressionBenchmarks_MainEvent
+      TFile_CompressionBenchmarks_MainEvent.cxx
+      LABEL short
+      LIBRARIES Core RIO
+      DOWNLOAD_DATAFILES Event0-sample.root)
+  endif()
 
   # FIXME: too long benchmarks, needs to be optimised
   #RB_ADD_GBENCHMARK(CompressionBenchmarks_LHCb

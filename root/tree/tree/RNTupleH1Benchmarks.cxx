@@ -3,7 +3,6 @@
 #include <ROOT/RDataFrame.hxx>
 #include <ROOT/RNTuple.hxx>
 #include <ROOT/RNTupleDS.hxx>
-#include <ROOT/RNTupleModel.hxx>
 #include <ROOT/RNTupleOptions.hxx>
 #include <ROOT/RNTupleView.hxx>
 
@@ -19,19 +18,18 @@
 #include <TMath.h>
 #include <TPaveStats.h>
 #include <TStyle.h>
+#include <TSystem.h>
 
 #include <rootbench/RBConfig.h>
 
 
 static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgorithm)
 {
-   using RNTupleModel = ROOT::Experimental::RNTupleModel;
    using RNTupleReader = ROOT::Experimental::RNTupleReader;
-   // Create a RNTuple model
-   auto model = RNTupleModel::Create();
+   gSystem->Load("./libh1event");
    // Open RNtuple file with RNTuple reader
    std::string path = RB::GetDataDir() + "/h1dst-" + comprAlgorithm + ".ntuple";
-   auto ntuple = RNTupleReader::Open(std::move(model), "h42", path);
+   auto ntuple = RNTupleReader::Open("h42", path);
    // Creating RNTuple views
    auto dm_dView = ntuple->GetView<float>("event.dm_d");
    auto rpd0_tView = ntuple->GetView<float>("event.rpd0_t");
