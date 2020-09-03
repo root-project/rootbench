@@ -5,6 +5,7 @@
 #include "benchmark/benchmark.h"
 #include "rootbench/RBConfig.h"
 
+#include <iostream>
 #include <map>
 
 static std::string GetAlgoName(int algo) {
@@ -32,6 +33,12 @@ static void BM_MainEvent_Compress(benchmark::State &state, int algo) {
       state.PauseTiming();
 
       TFile *newfile = new TFile(filename.c_str(),"recreate");
+      if (!TString(gSystem->GetLibraries()).Contains("Event")) {
+        if(gSystem->Load("$ROOTSYS/test/libEvent.so")) {
+          std::cout << "Could not load libEvent.so" << std::endl;
+          return;
+        }
+      }
       TTree *newtree = oldtree->CloneTree();
       (void)newtree; // silence unused variable warnings. ROOT internals use this tree.
       newfile->SetCompressionAlgorithm(algo);
