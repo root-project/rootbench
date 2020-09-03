@@ -31,6 +31,7 @@ static void BM_NanoAOD_Compress(benchmark::State &state, int algo) {
         state.PauseTiming();
 
         TFile *newfile = new TFile(filename.c_str(), "recreate");
+        gSystem->Load("libEvent")
         TTree *newtree = oldtree->CloneTree();
         newfile->SetCompressionAlgorithm(algo);
         newfile->SetCompressionLevel(comp_level);
@@ -126,4 +127,4 @@ BENCHMARK(BM_NanoAOD_Decompress_ZSTD)
 ->Unit(benchmark::kMillisecond)->Iterations(5);
 
 
-BENCHMARK_MAIN(); 
+BENCHMARK_MAIN();
