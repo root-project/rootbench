@@ -52,6 +52,14 @@ if(rootbench-datafiles)
            DOWNLOAD_DATAFILES zpeak_data_small.root
            LABEL long)
     endif()
+
+   if (ROOT_root7_FOUND)
+      RB_ADD_GBENCHMARK(RNTupleDSBenchmarks
+         RNTupleDSBenchmarks.cxx
+         LIBRARIES Core Hist RIO TreePlayer ROOTDataFrame
+         DOWNLOAD_DATAFILES B2HHH~none.ntuple
+         LABEL short)
+   endif()
 endif()
 
 add_subdirectory(LoopSUSYFrame)
