@@ -58,9 +58,10 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
       for (auto i : ntuple->GetEntryRange()) {
          if (i == 0) {
             state.PauseTiming();
-         } else {
+         } else if (i == 1) {
             state.ResumeTiming();
          }
+
          auto ik = ikView(i) - 1;
          auto ipi = ipiView(i) - 1;
          auto ipis = ipisView(i) - 1;
@@ -165,9 +166,9 @@ static void BM_TTree_H1(benchmark::State &state, const std::string &comprAlgorit
       auto hdmd = new TH1D("hdmd", "dm_d", 40, 0.13, 0.17);
       auto h2 = new TH2D("h2", "ptD0 vs dm_d", 30, 0.135, 0.165, 30, -3, 6);
       for (decltype(nEntries) entryId = 0; entryId < nEntries; ++entryId) {
-         if (entryId == 1) {
+         if (entryId == 0) {
             state.PauseTiming();
-         } else if (entryId == 2) {
+         } else if (entryId == 1) {
             state.ResumeTiming();
          }
 
