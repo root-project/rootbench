@@ -56,7 +56,7 @@ if(rootbench-datafiles)
    if (ROOT_root7_FOUND)
       RB_ADD_GBENCHMARK(RNTupleDSBenchmarks
          RNTupleDSBenchmarks.cxx
-         LIBRARIES Core Hist RIO TreePlayer ROOTDataFrame
+         LIBRARIES Core Hist RIO TreePlayer ROOTNTuple ROOTDataFrame
          DOWNLOAD_DATAFILES B2HHH~none.ntuple
          LABEL short)
    endif()
