@@ -273,7 +273,7 @@ def plot(sig, bkg, data, x_label, filename):
     d.SaveAs(filename)
 
 
-def payload(nthreads):
+def payload(nthreads, rungraphs):
     # Enable multi-threading
     if nthreads > 1:
         ROOT.ROOT.EnableImplicitMT(nthreads)
@@ -354,6 +354,12 @@ def payload(nthreads):
                                     .Histo1D(("h_data_4el", "", nbins, 70, 180), "H_mass", "weight")
 
     # Trigger event loops and retrieve histograms
+    if rungraphs:
+        ROOT.RDF.RunGraphs([
+            df_h_sig_4mu, df_h_bkg_4mu, df_h_data_4mu,
+            df_h_sig_4el, df_h_bkg_4el, df_h_data_4el
+            ])
+
     signal_4mu = df_h_sig_4mu.GetValue()
     background_4mu = df_h_bkg_4mu.GetValue()
     data_4mu = df_h_data_4mu.GetValue()
@@ -368,8 +374,12 @@ def payload(nthreads):
 
 
 def test_df103_NanoAODHiggsAnalysis_imt(benchmark):
-    benchmark.pedantic(payload, kwargs={'nthreads': 8}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'nthreads': 8, 'rungraphs': False}, iterations=1, rounds=1)
+
+
+def test_df103_NanoAODHiggsAnalysis_rungraphs(benchmark):
+    benchmark.pedantic(payload, kwargs={'nthreads': 8, 'rungraphs': True}, iterations=1, rounds=1)
 
 
 def test_df103_NanoAODHiggsAnalysis_noimt(benchmark):
-    benchmark.pedantic(payload, kwargs={'nthreads': 1}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'nthreads': 1, 'rungraphs': False}, iterations=1, rounds=1)

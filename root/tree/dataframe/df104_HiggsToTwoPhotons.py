@@ -6,7 +6,7 @@ import pytest
 import os
 
 
-def payload(path, nthreads):
+def payload(path, nthreads, rungraphs):
     # Enable multi-threading
     if nthreads:
         ROOT.ROOT.EnableImplicitMT(nthreads)
@@ -67,6 +67,8 @@ def payload(path, nthreads):
                 "m_yy", "weight")
 
     # Run the event loop
+    if rungraphs:
+        ROOT.RDF.RunGraphs([hists[s] for s in ["ggH", "VBF", "data"]])
     ggh = hists["ggH"].GetValue()
     vbf = hists["VBF"].GetValue()
     data = hists["data"].GetValue()
@@ -205,8 +207,11 @@ path = os.environ["RB_DATASETDIR"]
 
 
 def test_df104_HiggsToTwoPhotons_noimt(benchmark):
-    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 0}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 0, 'rungraphs': False}, iterations=1, rounds=1)
 
 
 def test_df104_HiggsToTwoPhotons_imt(benchmark):
-    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 8}, iterations=1, rounds=1)
+    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 8, 'rungraphs': False}, iterations=1, rounds=1)
+
+def test_df104_HiggsToTwoPhotons_rungraphs(benchmark):
+    benchmark.pedantic(payload, kwargs={'path': path, 'nthreads': 8, 'rungraphs': True}, iterations=1, rounds=1)
