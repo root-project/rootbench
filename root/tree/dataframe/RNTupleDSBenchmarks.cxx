@@ -1,3 +1,4 @@
+#include <ROOT/RNTuple.hxx>
 #include <ROOT/RNTupleDS.hxx>
 #include <ROOT/RDataFrame.hxx>
 
@@ -22,7 +23,8 @@ double GetKE(double px, double py, double pz)
    return sqrt(p2 + kKaonMassMeV*kKaonMassMeV);
 }
 
-auto Dataframe(ROOT::RDataFrame &frame)
+template <typename DF>
+auto Dataframe(DF &frame)
 {
    auto fn_muon_cut = [](int is_muon) { return !is_muon; };
    auto fn_k_cut = [](double prob_k) { return prob_k > 0.5; };
@@ -48,7 +50,7 @@ auto Dataframe(ROOT::RDataFrame &frame)
                            .Define("K3_E", GetKE, {"H3_PX", "H3_PY", "H3_PZ"})
                            .Define("B_E", fn_sum, {"K1_E", "K2_E", "K3_E"})
                            .Define("B_m", fn_mass, {"B_E", "B_P2"});
-   auto hMass = df_mass.Histo1D<double>({"B_mass", "", 500, 5050, 5500}, "B_m");
+   auto hMass = df_mass.template Histo1D<double>({"B_mass", "", 500, 5050, 5500}, "B_m");
 
    return hMass;
 }
@@ -56,13 +58,22 @@ auto Dataframe(ROOT::RDataFrame &frame)
 
 static void BM_RNTupleDS_LHCB(benchmark::State &state)
 {
+   auto model = ROOT::Experimental::RNTupleModel::Create();
+   auto ntuple =
+      ROOT::Experimental::RNTupleReader::Open(std::move(model), "DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
+   const Long64_t nEntries = ntuple->GetNEntries() * (state.range(0) / 100.);
+
    auto df = ROOT::Experimental::MakeNTupleDataFrame("DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
-   auto h_ptr = Dataframe(df);
+   auto df2 = df.Range(nEntries);
+   auto h_ptr = Dataframe(df2);
    for (auto _ : state)
       *h_ptr;
-   RB::Ensure(int(h_ptr->GetMean()) == 5262);
-   RB::Ensure(int(h_ptr->GetEntries()) == 23895);
+   if (state.range(0) == 100) {
+      // some sanity checks
+      RB::Ensure(int(h_ptr->GetMean()) == 5262);
+      RB::Ensure(int(h_ptr->GetEntries()) == 23895);
+   }
 }
-BENCHMARK(BM_RNTupleDS_LHCB)->Unit(benchmark::kMicrosecond)->Iterations(1);
+BENCHMARK(BM_RNTupleDS_LHCB)->Unit(benchmark::kMicrosecond)->Iterations(1)->Arg(100)->Arg(50)->Arg(25);
 
 BENCHMARK_MAIN();
