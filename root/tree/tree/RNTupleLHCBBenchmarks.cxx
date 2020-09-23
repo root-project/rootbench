@@ -49,9 +49,13 @@ static void BM_RNTuple_LHCB(benchmark::State &state)
 
    auto hMass = new TH1D("B_mass", "", 500, 5050, 5500);
 
+   const Long64_t nEntries = ntuple->GetNEntries() * (state.range(0) / 100.);
+
    for (auto _ : state) {
       hMass->Reset();
-      for (auto i : ntuple->GetEntryRange()) {
+      for (auto i = 0ll; i < nEntries; ++i) {
+         ntuple->LoadEntry(i);
+
          if (viewH1IsMuon(i) || viewH2IsMuon(i) || viewH3IsMuon(i)) {
             continue;
          }
@@ -84,11 +88,15 @@ static void BM_RNTuple_LHCB(benchmark::State &state)
          hMass->Fill(b_mass);
       }
    }
-   RB::Ensure(int(hMass->GetMean()) == 5262);
-   RB::Ensure(int(hMass->GetEntries()) == 23895);
+   if (state.range(0) == 100) {
+      // sanity checks
+      RB::Ensure(int(hMass->GetMean()) == 5262);
+      RB::Ensure(int(hMass->GetEntries()) == 23895);
+   }
    delete hMass;
 }
-BENCHMARK(BM_RNTuple_LHCB)->Unit(benchmark::kMicrosecond)->Iterations(3);
+// Arg is the % of events to be processed
+BENCHMARK(BM_RNTuple_LHCB)->Unit(benchmark::kMicrosecond)->Iterations(5)->Arg(100)->Arg(50)->Arg(25);
 
 BENCHMARK_MAIN();
 
