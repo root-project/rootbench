@@ -1,6 +1,7 @@
 // This test is an adaption of the RDataFrame tutorial df103 using only the 4el and 4mu channels
 
 #include "ROOT/RDataFrame.hxx"
+#include "ROOT/RDFHelpers.hxx"
 #include "ROOT/RVec.hxx"
 #include "ROOT/RDF/RInterface.hxx"
 #include "TCanvas.h"
@@ -274,7 +275,7 @@ void plot(T sig, T bkg, T data, const std::string &x_label, const std::string &f
    c->SaveAs(filename.c_str());
 }
 
-void payload(unsigned int nthreads)
+void payload(unsigned int nthreads, bool rungraphs)
 {
 #ifdef R__USE_IMT
    // Enable multi-threading
@@ -346,6 +347,12 @@ void payload(unsigned int nthreads)
                            .Histo1D({"h_data_4el", "", nbins, 70, 180}, "H_mass", "weight");
 
    // Produce histograms for different channels and make plots
+   if (rungraphs) {
+      ROOT::RDF::RunGraphs({
+            df_h_sig_4mu, df_h_bkg_4mu, df_h_data_4mu,
+            df_h_sig_4el, df_h_bkg_4el, df_h_data_4el
+            });
+   }
    plot(df_h_sig_4mu, df_h_bkg_4mu, df_h_data_4mu, "m_{4#mu} (GeV)", "higgs_4mu.pdf");
    plot(df_h_sig_4el, df_h_bkg_4el, df_h_data_4el, "m_{4e} (GeV)", "higgs_4el.pdf");
 }
@@ -353,17 +360,26 @@ void payload(unsigned int nthreads)
 static void df103_NanoAODHiggsAnalysis_noimt(benchmark::State &state)
 {
    for (auto _ : state)
-      payload(0);
+      payload(0, false);
 }
 
 static void df103_NanoAODHiggsAnalysis_imt(benchmark::State &state)
 {
    for (auto _ : state) {
       const auto nthreads = state.range(0);
-      payload(nthreads);
+      payload(nthreads, false);
+   }
+}
+
+static void df103_NanoAODHiggsAnalysis_rungraphs(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      payload(nthreads, true);
    }
 }
 
 BENCHMARK(df103_NanoAODHiggsAnalysis_noimt)->Repetitions(1);
 BENCHMARK(df103_NanoAODHiggsAnalysis_imt)->Repetitions(1)->Arg(8);
+BENCHMARK(df103_NanoAODHiggsAnalysis_rungraphs)->Repetitions(1)->Arg(8);
 BENCHMARK_MAIN();
