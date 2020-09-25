@@ -30,6 +30,29 @@ endfunction(RB_ADD_SETUP_FIXTURE)
 
 
 #----------------------------------------------------------------------------
+# function RB_ADD_FLAMEGRAPHCPU_FIXTURE(<benchmark>)
+#----------------------------------------------------------------------------
+function(RB_ADD_FLAMEGRAPHCPU_FIXTURE benchmark)
+  cmake_parse_arguments(ARG "" "" "" ${ARGN})
+  add_test(NAME rootbench-fixture-flamegraphcpu-${benchmark}
+           COMMAND ${PROJECT_BINARY_DIR}/tools/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -c)
+  set_tests_properties(rootbench-fixture-flamegraphcpu-${benchmark} PROPERTIES FIXTURES_CLEANUP flamegraphcpu-${benchmark})
+endfunction(RB_ADD_FLAMEGRAPHCPU_FIXTURE)
+
+
+#----------------------------------------------------------------------------
+# function RB_ADD_FLAMEGRAPHMEM_FIXTURE(<benchmark>)
+#----------------------------------------------------------------------------
+function(RB_ADD_FLAMEGRAPHMEM_FIXTURE benchmark)
+  cmake_parse_arguments(ARG "" "" "" ${ARGN})
+  add_test(NAME rootbench-fixture-flamegraphmem-${benchmark}
+  COMMAND ${PROJECT_BINARY_DIR}/tools/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -m)
+  set_tests_properties(rootbench-fixture-flamegraphmem-${benchmark} PROPERTIES FIXTURES_CLEANUP flamegraphmem-${benchmark})
+endfunction(RB_ADD_FLAMEGRAPHMEM_FIXTURE)
+
+
+
+#----------------------------------------------------------------------------
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
@@ -74,13 +97,21 @@ function(RB_ADD_GBENCHMARK benchmark)
      RB_ADD_SETUP_FIXTURE(${benchmark} SETUP ${ARG_SETUP})
   endif()
 
+  # Flamegraphs (both mem and cpu)
+  if(flamegraphCPU)
+    RB_ADD_FLAMEGRAPHCPU_FIXTURE(${benchmark})
+  endif()
+  if(flamegraphMem)
+    RB_ADD_FLAMEGRAPHMEM_FIXTURE(${benchmark})
+  endif()
+
   # Add benchmark as a CTest
   add_test(NAME rootbench-${benchmark}
            COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false)
   set_tests_properties(rootbench-${benchmark} PROPERTIES
                        ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
                        TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
-                       FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
+                       FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles;flamegraphcpu-${benchmark};flamegraphmem-${benchmark}")
 endfunction(RB_ADD_GBENCHMARK)
 
 
