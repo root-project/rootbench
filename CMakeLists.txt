@@ -65,16 +65,15 @@ endif()
 include(GoogleBenchmark)
 include(PytestBenchmark)
 
-if(flamegraphCPU OR flamegraphMem)
+if(flamegraph)
   # Check if perf is available in OS:
   find_program(PERF_EXECUTABLE perf)
   if(NOT PERF_EXECUTABLE)
     message(WARNING "Perf is not available in your system, please install it.")
     set(flamegraph OFF CACHE BOOL "")
-  else()
-    include(FlameGraph)
-    add_custom_target(flamegraph-download DEPENDS FlameGraph)
   endif()
+  include(FlameGraph)
+  message(STATUS "INFO: CPU & Mem FlameGraph generation option is enabled.")
 endif()
 
 #---Add ROOT include direcories and used compilation flags
@@ -109,4 +108,4 @@ add_subdirectory(tools)
 
 #---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)
-configure_file(${PROJECT_SOURCE_DIR}/rootbench-scripts/.rootrc ${PROJECT_BINARY_DIR} COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/tools/.rootrc ${PROJECT_BINARY_DIR} COPYONLY)

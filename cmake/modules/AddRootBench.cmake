@@ -32,24 +32,14 @@ endfunction(RB_ADD_SETUP_FIXTURE)
 #----------------------------------------------------------------------------
 # function RB_ADD_FLAMEGRAPHCPU_FIXTURE(<benchmark>)
 #----------------------------------------------------------------------------
-function(RB_ADD_FLAMEGRAPHCPU_FIXTURE benchmark)
+function(RB_ADD_FLAMEGRAPH_FIXTURE benchmark)
   cmake_parse_arguments(ARG "" "" "" ${ARGN})
-  add_test(NAME rootbench-fixture-flamegraphcpu-${benchmark}
-           COMMAND ${PROJECT_BINARY_DIR}/tools/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -c)
-  set_tests_properties(rootbench-fixture-flamegraphcpu-${benchmark} PROPERTIES FIXTURES_CLEANUP flamegraphcpu-${benchmark})
-endfunction(RB_ADD_FLAMEGRAPHCPU_FIXTURE)
-
-
-#----------------------------------------------------------------------------
-# function RB_ADD_FLAMEGRAPHMEM_FIXTURE(<benchmark>)
-#----------------------------------------------------------------------------
-function(RB_ADD_FLAMEGRAPHMEM_FIXTURE benchmark)
-  cmake_parse_arguments(ARG "" "" "" ${ARGN})
-  add_test(NAME rootbench-fixture-flamegraphmem-${benchmark}
-  COMMAND ${PROJECT_BINARY_DIR}/tools/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -m)
-  set_tests_properties(rootbench-fixture-flamegraphmem-${benchmark} PROPERTIES FIXTURES_CLEANUP flamegraphmem-${benchmark})
-endfunction(RB_ADD_FLAMEGRAPHMEM_FIXTURE)
-
+  add_test(NAME rootbench-fixture-flamegraph-${benchmark}
+  COMMAND ${PROJECT_BINARY_DIR}/tools/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -c -m)
+  set_tests_properties(rootbench-fixture-flamegraph-${benchmark} PROPERTIES
+                      ENVIRONMENT PATH=${PROJECT_BINARY_DIR}/FlameGraph-prefix/src/FlameGraph/:$ENV{PATH}
+                      FIXTURES_CLEANUP rootbench-${benchmark})
+endfunction(RB_ADD_FLAMEGRAPH_FIXTURE)
 
 
 #----------------------------------------------------------------------------
@@ -98,11 +88,9 @@ function(RB_ADD_GBENCHMARK benchmark)
   endif()
 
   # Flamegraphs (both mem and cpu)
-  if(flamegraphCPU)
-    RB_ADD_FLAMEGRAPHCPU_FIXTURE(${benchmark})
-  endif()
-  if(flamegraphMem)
-    RB_ADD_FLAMEGRAPHMEM_FIXTURE(${benchmark})
+  if(flamegraph)
+    RB_ADD_FLAMEGRAPH_FIXTURE(${benchmark})
+    add_dependencies(${benchmark} FlameGraph)
   endif()
 
   # Add benchmark as a CTest
@@ -111,7 +99,7 @@ function(RB_ADD_GBENCHMARK benchmark)
   set_tests_properties(rootbench-${benchmark} PROPERTIES
                        ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
                        TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
-                       FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles;flamegraphcpu-${benchmark};flamegraphmem-${benchmark}")
+                       FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
 endfunction(RB_ADD_GBENCHMARK)
 
 
