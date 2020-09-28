@@ -4,8 +4,11 @@ RB_ADD_GBENCHMARK(RDFBenchmarks
     LABEL short
     LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
 
-if(NUMPY_FOUND)
-    RB_ADD_PYTESTBENCHMARK(pytest-rdataframe-asnumpy rdataframe_asnumpy.py LABEL short)
+if(NUMPY_FOUND AND rootbench-datafiles)
+    RB_ADD_PYTESTBENCHMARK(pytest-rdataframe-asnumpy
+        rdataframe_asnumpy.py
+        DOWNLOAD_DATAFILES Run2012BC_DoubleMuParked_Muons.root data_A.GamGam.100k.root
+        LABEL long)
 endif()
 
 if(rootbench-datafiles)
