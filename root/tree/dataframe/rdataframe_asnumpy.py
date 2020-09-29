@@ -5,7 +5,7 @@ import os
 import ROOT
 
 nanoaod_file = os.path.join(os.environ["RB_DATASETDIR"], "Run2012BC_DoubleMuParked_Muons.root")
-ntuple_file = os.path.join(os.environ["RB_DATASETDIR"], "data_A.GamGam.100k.root")
+ntuple_file = os.path.join(os.environ["RB_DATASETDIR"], "data_A.GamGam.root")
 
 # Simple AsNumpy benchmark processing a minimal amount of data from memory
 
