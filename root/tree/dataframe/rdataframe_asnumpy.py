@@ -99,6 +99,8 @@ def test_rdataframe_asnumpy_manybranches_scalars_imt(benchmark):
     columns = get_column_names(scalars=True)
     benchmark.pedantic(payload_asnumpy_manybranches, kwargs={'nthreads': 8, 'columns': columns}, iterations=1, rounds=1)
 
+# NOTE: These benchmarks are disabled due to time constraints
+'''
 def test_rdataframe_asnumpy_manybranches_vectors_noimit(benchmark):
     ROOT.DisableImplicitMT()
     columns = get_column_names(vectors=True)
@@ -118,3 +120,4 @@ def test_rdataframe_asnumpy_manybranches_all_imt(benchmark):
     ROOT.DisableImplicitMT()
     columns = get_column_names(vectors=True, scalars=True, booleans=True)
     benchmark.pedantic(payload_asnumpy_manybranches, kwargs={'nthreads': 8, 'columns': columns}, iterations=1, rounds=1)
+'''
