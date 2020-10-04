@@ -22,9 +22,6 @@ Results of nightly run of ROOT benchmarks could be discovered in the Rootbench.g
 }
 ```
 
-## About
-Collection of benchmarks and performance monitoring applications
-
 ## Building
 ROOTBench can be built standalone and as part of ROOT. If you want to enable ROOTBench for ROOT just add the `-Drootbench=On` option to your cmake configuration.
 
