@@ -9,6 +9,18 @@ Results of nightly run of ROOT benchmarks could be discovered in the Rootbench.g
 | :---: |:---:|
 | Linux/OSX [![Build Status](https://travis-ci.org/root-project/rootbench.svg?branch=master)](https://travis-ci.org/root-project/rootbench) | Experimental Benchmark Coverage: [![Coverage Status](https://coveralls.io/repos/github/root-project/rootbench/badge.svg?branch=master)](https://coveralls.io/github/root-project/rootbench?branch=master)  |  
 
+## Cite
+```latex
+@inproceedings{shadura2019continuous,
+  title={Continuous Performance Benchmarking Framework for ROOT},
+  author={Shadura, Oksana and Vassilev, Vassil and Bockelman, Brian Paul},
+  booktitle={EPJ Web of Conferences},
+  volume={214},
+  pages={05003},
+  year={2019},
+  organization={EDP Sciences}
+}
+```
 
 ## About
 Collection of benchmarks and performance monitoring applications
