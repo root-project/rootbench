@@ -23,8 +23,7 @@ static void BM_RNTuple_LHCB(benchmark::State &state)
    using RNTupleReader = ROOT::Experimental::RNTupleReader;
    using RNTupleModel = ROOT::Experimental::RNTupleModel;
 
-   auto model = RNTupleModel::Create();
-   auto ntuple = RNTupleReader::Open(std::move(model), "DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
+   auto ntuple = RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
    auto viewH1IsMuon = ntuple->GetView<int>("H1_isMuon");
    auto viewH2IsMuon = ntuple->GetView<int>("H2_isMuon");
    auto viewH3IsMuon = ntuple->GetView<int>("H3_isMuon");
@@ -54,8 +53,6 @@ static void BM_RNTuple_LHCB(benchmark::State &state)
    for (auto _ : state) {
       hMass->Reset();
       for (auto i = 0ll; i < nEntries; ++i) {
-         ntuple->LoadEntry(i);
-
          if (viewH1IsMuon(i) || viewH2IsMuon(i) || viewH3IsMuon(i)) {
             continue;
          }
