@@ -43,7 +43,7 @@ function(RB_ADD_GBENCHMARK benchmark)
   # FIXME: For better coherence we could restrict the libraries the test suite could link
   # against. For example, tests in Core should link only against libCore. This could be tricky
   # to implement because some ROOT components create more than one library.
-  target_link_libraries(${benchmark} ${ARG_LIBRARIES} gbenchmark RBSupport rt)
+  target_link_libraries(${benchmark} PUBLIC ${ARG_LIBRARIES} gbenchmark RBSupport rt)
   #ROOT_PATH_TO_STRING(mangled_name ${benchmark} PATH_SEPARATOR_REPLACEMENT "-")
   #ROOT_ADD_TEST(gbench${mangled_name}
   #  COMMAND ${benchmark}
@@ -76,6 +76,29 @@ function(RB_ADD_GBENCHMARK benchmark)
                        FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
 endfunction(RB_ADD_GBENCHMARK)
 
+#----------------------------------------------------------------------------
+# function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
+#----------------------------------------------------------------------------
+function(RB_ADD_MEM_GBENCHMARK benchmark)
+  RB_ADD_GBENCHMARK(${benchmark} ${ARGN})
+
+  set (benchmark_env)
+  if(APPLE)
+    target_link_libraries(${benchmark} PUBLIC
+      -Wl,-bind_at_load -Wl,-undefined -Wl,dynamic_lookup
+      )
+    set (benchmark_env "DYLD_FORCE_FLAT_NAMESPACE=1" "DYLD_INSERT_LIBRARIES=$<TARGET_FILE:RBInstrumentation>")
+  elseif(NOT MSVC)
+    target_link_libraries(${benchmark} PUBLIC
+      -Wl,--unresolved-symbols=ignore-in-object-files
+      )
+    set (benchmark_env "LD_PRELOAD=$<TARGET_FILE:RBInstrumentation>")
+  endif()
+  if (benchmark_env)
+    set_property(TEST rootbench-${benchmark} APPEND PROPERTY ENVIRONMENT ${benchmark_env})
+  endif(benchmark_env)
+
+endfunction(RB_ADD_MEM_GBENCHMARK)
 
 #----------------------------------------------------------------------------
 # function RB_ADD_PYTESTBENCHMARK(<benchmark> filename)
@@ -126,12 +149,18 @@ endfunction()
 function(RB_ADD_LIBRARY library)
   cmake_parse_arguments(ARG "" "" "LIBRARIES;DEPENDENCIES" ${ARGN})
   set(sources ${ARG_UNPARSED_ARGUMENTS})
-  include_directories(BEFORE ${ROOTBENCH_SOURCE_DIR}/include)
   add_library(${library} STATIC ${sources})
-  if (ARG_LIBRARIES OR ARG_DEPENDENCIES)
-    target_link_libraries(${library} ${ARG_LIBRARIES} ${ARG_DEPENDENCIES})
-  endif()
+  target_include_directories(${library} BEFORE PUBLIC ${ROOTBENCH_SOURCE_DIR}/include)
+  target_link_libraries(${library} PUBLIC ${ARG_LIBRARIES} ${ARG_DEPENDENCIES} gbenchmark)
 endfunction(RB_ADD_LIBRARY)
+
+#----------------------------------------------------------------------------
+# function RB_ADD_C_LIBRARY(<library> source1 source2... LIBRARIES libs)
+#----------------------------------------------------------------------------
+function(RB_ADD_C_LIBRARY library)
+  RB_ADD_LIBRARY(${library} ${ARGN})
+  set_target_properties(${library} PROPERTIES LINKER_LANGUAGE C)
+endfunction(RB_ADD_C_LIBRARY)
 
 #----------------------------------------------------------------------------
 # function RB_ADD_TOOL(<binary> source1 source2... LIBRARIES libs)

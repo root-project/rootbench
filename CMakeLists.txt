@@ -82,6 +82,15 @@ if(rootbench-datafiles)
 endif(rootbench-datafiles)
 set(RB_DATASETDIR ${PROJECT_BINARY_DIR}/rootbench-datafiles)
 
+#---Define some constants for Constants.h.in ---------------------------------------------------
+if(WIN32)
+  set(RB_ON_WIN32 1)
+  set(RB_ON_UNIX 0)
+else(WIN32)
+  set(RB_ON_WIN32 0)
+  set(RB_ON_UNIX 1)
+endif()
+
 #---Enable and setup CTest.
 include(RootBenchCTest)
 

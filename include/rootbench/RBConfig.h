@@ -2,8 +2,9 @@
 #ifndef RB_CONFIG_H
 #define RB_CONFIG_H
 
-#include "rootbench/Support/ErrorHandling.h"
 #include <rootbench/Constants.h> // RB::kDatasetDirectory
+
+#include "rootbench/Support/ErrorHandling.h"
 
 #include <string>
 
@@ -29,16 +30,37 @@ namespace RB {
     rb_abort("Please set the ROOTSYS env variable!");
   }
 
+  constexpr const char* GetPreloadEnvVar() {
+#ifdef __APPLE__
+    // FIXME: Remove the need of DYLD_FORCE_FLAT_NAMESPACE by using interposing.
+    return "DYLD_INSERT_LIBRARIES";
+#elif defined(RB_ON_UNIX)
+    return "LD_PRELOAD";
+#else
+# error Unsupported Platform;
+#endif
+  }
+
+  /// Checks if we have set up the LD_PRELOAD mechanism for binary
+  /// instrumentation
+  inline bool IsLdPreloadEnabled() {
+    if (char* rootsys = std::getenv(GetPreloadEnvVar()))
+      return true;
+    return false;
+  }
+
   /// Return the absolute path to the directory where data will be downloaded
   inline std::string GetDataDir() {
-      return RB::kDatasetDirectory;
+    return RB::kDatasetDirectory;
   }
 
   /// Like assert, but it does not disappear if -DNDEBUG
-  inline void Ensure(bool b)
+  inline void Ensure(bool b, const std::string& reason = "")
   {
-     if (!b)
-        std::abort();
+    if (!b) {
+      printf("Aborting with reason: '%s'\n", reason.c_str());
+      std::abort();
+    }
   }
 }
 
