@@ -54,7 +54,14 @@ include(PytestBenchmark)
 
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
-add_definitions(${ROOT_CXX_FLAGS})
+string(REPLACE " " ";" ROOT_C_FLAGS_LIST ${ROOT_C_FLAGS})
+string(REPLACE " " ";" ROOT_CXX_FLAGS_LIST ${ROOT_CXX_FLAGS})
+foreach(C_COMPILE_FLAG ${ROOT_C_FLAGS_LIST})
+  add_compile_options($<$<COMPILE_LANGUAGE:C>:${C_COMPILE_FLAG}>)
+endforeach()
+foreach(CXX_COMPILE_FLAG ${ROOT_CXX_FLAGS_LIST})
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:${CXX_COMPILE_FLAG}>)
+endforeach()
 
 #---Include rootbench options
 include(RootBenchOptions)
