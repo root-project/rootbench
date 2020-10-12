@@ -26,5 +26,5 @@ if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy
    RB_ADD_PYTESTBENCHMARK(wmassAnalysis
       runSignalAnalysis.py
       LABEL long
-      DOWNLOAD_DATAFILES wmass.root)
+      DOWNLOAD_DATAFILES wmass_repeated_10k_events_800kevents.root)
 endif()
