@@ -24,7 +24,7 @@ def analysis(nthreads):
     ROOT.gSystem.Load('libSignalAnalysis.so')
 
 
-    inputFile = os.path.join(os.environ["RB_DATASETDIR"], "wmass.root")
+    inputFile = os.path.join(os.environ["RB_DATASETDIR"], "wmass_repeated_10k_events_800kevents.root")
 
     p = RDFtree(outputDir = '.', inputFile = inputFile, outputFile="/dev/null")
     p.branch(nodeToStart = 'input', nodeToEnd = 'basicSelection', modules = [getLumiWeight(xsec=61526.7, inputFile=inputFile), ROOT.defineHarmonics(), basicSelection()])
