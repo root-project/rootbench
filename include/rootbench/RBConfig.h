@@ -2,11 +2,12 @@
 #ifndef RB_CONFIG_H
 #define RB_CONFIG_H
 
-#include <stdlib.h>
-
-#include "rootbench/ErrorHandling.h"
+#include "rootbench/Support/ErrorHandling.h"
 #include <rootbench/Constants.h> // RB::kDatasetDirectory
+
 #include <string>
+
+#include <stdlib.h>
 
 namespace RB {
   /// Returns a path to temporary file system (preferably in-memory). The path
