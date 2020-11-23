@@ -1,5 +1,3 @@
 add_subdirectory(genvector)
-if(ROOT_veccore_FOUND)
-   add_subdirectory(mathcore)
-endif()
+add_subdirectory(mathcore)
 add_subdirectory(vecops)
