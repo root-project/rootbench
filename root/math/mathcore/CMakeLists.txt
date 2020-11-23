@@ -4,3 +4,8 @@ if(ROOT_veccore_FOUND)
      LABEL short
      LIBRARIES MathCore)
 endif()
+
+RB_ADD_GBENCHMARK(TRandomBenchmarks
+  TRandomBenchmarks.cxx
+  LABEL short
+  LIBRARIES MathCore Core)
