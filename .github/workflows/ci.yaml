@@ -28,8 +28,9 @@ jobs:
         channels: conda-forge
 
     - name: Conda install dependencies
-      run: conda create -n root-nightly -y -c https://root.cern/download/conda-nightly/latest -c conda-forge root-nightly cmake pytest pytest-benchmark pytest-csv numpy numba
-      run: conda activate root-nightly
+      run: |
+           conda create -n root-nightly -y -c https://root.cern/download/conda-nightly/latest -c conda-forge root-nightly cmake pytest pytest-benchmark pytest-csv numpy numba
+           conda activate root-nightly
 
     - name: Configure and build
       run: |
