@@ -39,6 +39,7 @@
 #include "RooRealVar.h"
 #include "RooGaussian.h"
 #include "RooDataSet.h"
+#include "RunContext.h"
 
 #include "RooRandom.h"
 void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
@@ -91,6 +92,7 @@ static void benchGauss(benchmark::State& state) {
   if (runConfig % 2 == 0)
     data->attachBuffers(observables);
 
+  BatchHelpers::RunContext evalData;
   std::vector<double> results(nEvents);
 
   for (auto _ : state) {
@@ -100,17 +102,19 @@ static void benchGauss(benchmark::State& state) {
       state.ResumeTiming();
 
       runConfig = static_cast<RunConfig_t>(runConfig % 6);
+      evalData.clear();
+      data->getBatches(evalData, 0, data->numEntries());
 
       if (runConfig == runBatchUnnorm) {
-        auto batchResult = pdf.getValBatch(0, data->numEntries());
+        auto batchResult = pdf.getValues(evalData, nullptr);
         if (batchResult.size() != (std::size_t) data->numEntries())
           throw std::runtime_error("Batch computation failed.");
       } else if (runConfig == runBatchNorm) {
-        auto batchResult = pdf.getValBatch(0, data->numEntries(), &observables);
+        auto batchResult = pdf.getValues(evalData, &observables);
         if (batchResult.size() != (std::size_t) data->numEntries())
           throw std::runtime_error("Batch computation failed.");
       } else if (runConfig == runBatchNormLogs) {
-        auto batchResult = pdf.getLogValBatch(0, data->numEntries(), &observables);
+        auto batchResult = pdf.getLogProbabilities(evalData, &observables);
         if (batchResult.size() != (std::size_t) data->numEntries())
           throw std::runtime_error("Batch computation failed.");
       } else if (runConfig == runSingleUnnorm) {
