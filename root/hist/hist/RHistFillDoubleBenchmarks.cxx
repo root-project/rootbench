@@ -34,7 +34,7 @@ static void ConcurrentFillArguments(benchmark::internal::Benchmark *b)
 using CoordArray_t = ROOT::Experimental::Hist::RCoordArray<2>;
 
 // Create array for x coordinates
-std::vector<CoordArray_t> MakeCoorVec(int nbOfDataPoints)
+static std::vector<CoordArray_t> MakeCoorVec(int nbOfDataPoints)
 {
    std::vector<CoordArray_t> vec;
    for (int j = 0; j < nbOfDataPoints; ++j) {
@@ -45,7 +45,7 @@ std::vector<CoordArray_t> MakeCoorVec(int nbOfDataPoints)
 }
 
 // Create array for weights
-std::vector<double> MakeWeightVec(int nbOfDataPoints)
+std::vector<double> MakeDoubleWeightVec(int nbOfDataPoints)
 {
    std::vector<double> vec;
    for (int j = 0; j < nbOfDataPoints; ++j) {
@@ -56,23 +56,23 @@ std::vector<double> MakeWeightVec(int nbOfDataPoints)
 }
 
 // Arrays of coordinates and weights
-std::vector<CoordArray_t> coords = MakeCoorVec(3000000);
-std::vector<double> weights = MakeWeightVec(3000000);
+static std::vector<CoordArray_t> coords = MakeCoorVec(3000000);
+std::vector<double> weightsDouble = MakeDoubleWeightVec(3000000);
 
 // Histograms with different bin configurations for Fill
-ROOT::Experimental::RH2D hist1{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist2{{10, 0.1, 1.}, {100 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist3{{10, 0.1, 1.}, {1000 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist4{{100, 0.1, 1.}, {10 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist5{{100, 0.1, 1.}, {100 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist6{{100, 0.1, 1.}, {1000 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist7{{1000, 0.1, 1.}, {10 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist8{{1000, 0.1, 1.}, {100 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist9{{1000, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist1Double{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist2Double{{10, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist3Double{{10, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist4Double{{100, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist5Double{{100, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist6Double{{100, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist7Double{{1000, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist8Double{{1000, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist9Double{{1000, 0.1, 1.}, {1000 / 2, 0., 10.}};
 
-std::map<int, std::map<int, ROOT::Experimental::RH2D*>> histFill = { { 10, { { 5, &hist1 }, { 50, &hist2 }, { 500, &hist3} } },
-                                                               { 100, { { 5, &hist4 }, { 50, &hist5 }, { 500, &hist6 } } },
-                                                               { 1000, { { 5, &hist7 }, { 50, &hist8 }, { 500, &hist9 } } } };
+std::map<int, std::map<int, ROOT::Experimental::RH2D*>> histFillDouble = { { 10, { { 5, &hist1Double }, { 50, &hist2Double }, { 500, &hist3Double} } },
+                                                               { 100, { { 5, &hist4Double }, { 50, &hist5Double }, { 500, &hist6Double } } },
+                                                               { 1000, { { 5, &hist7Double }, { 50, &hist8Double }, { 500, &hist9Double } } } };
 
 static void FillHist(int nbOfDataPoints, ROOT::Experimental::RH2D * hist)
 {
@@ -89,51 +89,51 @@ static void FillHist(int nbOfDataPoints, ROOT::Experimental::RH2D * hist)
 }
 
 // Benchmark for simple Fill on 2D hist
-static void BM_RHist_Fill(benchmark::State &state)
+static void BM_RHist_Fill_Double(benchmark::State &state)
 {
    int nbOfDataPoints = state.range(0);
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
-   auto hist = histFill[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
+   auto hist = histFillDouble[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
 
    for (auto _ : state)
       FillHist(nbOfDataPoints, hist);
 }
-BENCHMARK(BM_RHist_Fill) -> Apply(FillArguments);
+BENCHMARK(BM_RHist_Fill_Double) -> Apply(FillArguments);
 
 // Histograms with different bin configurations for FillN
-ROOT::Experimental::RH2D hist11{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist12{{10, 0.1, 1.}, {100 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist13{{10, 0.1, 1.}, {1000 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist14{{100, 0.1, 1.}, {10 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist15{{100, 0.1, 1.}, {100 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist16{{100, 0.1, 1.}, {1000 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist17{{1000, 0.1, 1.}, {10 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist18{{1000, 0.1, 1.}, {100 / 2, 0., 10.}};
-ROOT::Experimental::RH2D hist19{{1000, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist11Double{{10, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist12Double{{10, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist13Double{{10, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist14Double{{100, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist15Double{{100, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist16Double{{100, 0.1, 1.}, {1000 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist17Double{{1000, 0.1, 1.}, {10 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist18Double{{1000, 0.1, 1.}, {100 / 2, 0., 10.}};
+ROOT::Experimental::RH2D hist19Double{{1000, 0.1, 1.}, {1000 / 2, 0., 10.}};
 
-std::map<int, std::map<int, ROOT::Experimental::RH2D*>> histFillN = { { 10, { { 5, &hist11 }, { 50, &hist12 }, { 500, &hist13} } },
-                                    { 100, { { 5, &hist14 }, { 50, &hist15 }, { 500, &hist16 } } },
-                                    { 1000, { { 5, &hist17 }, { 50, &hist18 }, { 500, &hist19 } } } };
+std::map<int, std::map<int, ROOT::Experimental::RH2D*>> histFillNDouble = { { 10, { { 5, &hist11Double }, { 50, &hist12Double }, { 500, &hist13Double} } },
+                                    { 100, { { 5, &hist14Double }, { 50, &hist15Double }, { 500, &hist16Double } } },
+                                    { 1000, { { 5, &hist17Double }, { 50, &hist18Double }, { 500, &hist19Double } } } };
 
 // Benchmark for simple FillN on 2D hist
-static void BM_RHist_FillN(benchmark::State &state)
+static void BM_RHist_FillN_Double(benchmark::State &state)
 {
    int nbOfDataPoints = state.range(0);
    int nbOfBinsForFirstAxis = state.range(1);
    int nbOfBinsForSecondAxis = state.range(2);
 
-   auto hist = histFillN[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
+   auto hist = histFillNDouble[nbOfBinsForFirstAxis][nbOfBinsForSecondAxis];
 
    for (auto _ : state) {
-      // FillN without weight
-      hist->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints), std::span<const double>(&weights[0], nbOfDataPoints));
       // FillN with weights
+      hist->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints), std::span<const double>(&weightsDouble[0], nbOfDataPoints));
+      // FillN without weight
       hist->FillN(std::span<const CoordArray_t>(&coords[0], nbOfDataPoints));
    }
 }
-BENCHMARK(BM_RHist_FillN) -> Apply(FillArguments);
+BENCHMARK(BM_RHist_FillN_Double) -> Apply(FillArguments);
 
 using Filler_t = ROOT::Experimental::RHistConcurrentFiller<ROOT::Experimental::RH2D, 1024>;
 
@@ -141,7 +141,7 @@ using Filler_t = ROOT::Experimental::RHistConcurrentFiller<ROOT::Experimental::R
 void fillWithoutWeight(Filler_t filler, int nbOfDataPoints)
 {
    for (int i = 0; i < nbOfDataPoints; ++i) {
-      float d = static_cast< float >(i);
+      double d = static_cast< double >(i);
       filler.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)});
    }
 }
@@ -149,7 +149,7 @@ void fillWithoutWeight(Filler_t filler, int nbOfDataPoints)
 void fillWithWeights(Filler_t filler, int nbOfDataPoints)
 {
    for (int i = 0; i < nbOfDataPoints; ++i) {
-      float d = static_cast< float >(i);
+      double d = static_cast< double >(i);
       filler.Fill({d / nbOfDataPoints, d / (nbOfDataPoints / 10)}, d);
    }
 }
