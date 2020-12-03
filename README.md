@@ -1,4 +1,4 @@
-# ROOT Benchmarks
+#  ROOT Benchmarks
 
 This repository contains a set of relatively small programs (usually based on [gbenchmark](https://github.com/google/benchmark) micro benchmarking infrastructure) built on top of [ROOT](https://github.com/root-project/root). Their primary goal is to provide stable performance metrics which can be monitored over time.
 
