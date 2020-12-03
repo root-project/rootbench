@@ -16,7 +16,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.7", "2.7"]
+        # Python doesn't matter, conda had been built only with 3.8.5
+        python-version: ["3.8"]
 
     steps:
     - uses: actions/checkout@v2
