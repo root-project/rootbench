@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  run:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: [3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }} (Miniconda)
+      uses: goanpeca/setup-miniconda@v1
+      with:
+        auto-update-conda: true
+        python-version: ${{ matrix.python-version }}
+        channels: conda-forge
+
+    - name: Conda install dependencies
+      run: conda create -n root-nightly -y -c https://root.cern/download/conda-nightly/latest -c conda-forge root-nightly cmake pytest pytest-benchmark pytest-csv numpy numba
+      run: conda activate root-nightly
+
+    - name: Configure and build
+      run: |
+           mkdir -p build && cd build
+           $CONDA/bin/cmake ..
+           cmake --build .
+
+    - name: Run benchmarks
+      shell: bash
+      run: |
+           export PYTHONHOME=$CONDA
+           cd build
+           $CONDA/bin/ctest -V
