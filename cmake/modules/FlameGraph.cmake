@@ -9,3 +9,6 @@ ExternalProject_Add(FlameGraph
 	INSTALL_COMMAND ""
 	EXCLUDE_FROM_ALL 1
 )
+
+# Register flamegraph
+add_custom_target(flamegraph DEPENDS FlameGraph)
