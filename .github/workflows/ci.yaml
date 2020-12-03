@@ -15,8 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        python-version: [3.6, 3.7, 3.8]
+        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -26,12 +25,19 @@ jobs:
         auto-update-conda: true
         python-version: ${{ matrix.python-version }}
 
+    - name: "Configure conda"
+      shell: bash
+      run: |
+          conda init --all
+
     - name: Conda install dependencies
+      shell: bash
       run: |
            conda create -n root-nightly -y -c https://root.cern/download/conda-nightly/latest -c conda-forge root-nightly cmake pytest pytest-benchmark pytest-csv numpy numba
            conda activate root-nightly
 
     - name: Configure and build
+      shell: bash
       run: |
            mkdir -p build && cd build
            $CONDA/bin/cmake ..
