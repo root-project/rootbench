@@ -16,6 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
+        python-version: ["3.7", "2.7"]
 
     steps:
     - uses: actions/checkout@v2
@@ -25,27 +26,32 @@ jobs:
         auto-update-conda: true
         python-version: ${{ matrix.python-version }}
 
-    - name: "Configure conda"
-      shell: bash
+    - name: Conda info
+      shell: bash -l {0}
+      run: conda info
+
+    - name: "Init conda"
+      shell: bash -l {0}
       run: |
-          conda init --all
+          conda init bash
 
     - name: Conda install dependencies
-      shell: bash
+      shell: bash -l {0}
       run: |
            conda create -n root-nightly -y -c https://root.cern/download/conda-nightly/latest -c conda-forge root-nightly cmake pytest pytest-benchmark pytest-csv numpy numba
-           conda activate root-nightly
 
     - name: Configure and build
-      shell: bash
+      shell: bash -l {0}
       run: |
+           conda activate root-nightly
            mkdir -p build && cd build
-           $CONDA/bin/cmake ..
+           cmake ..
            cmake --build .
 
     - name: Run benchmarks
-      shell: bash
+      shell: bash -l {0}
       run: |
+           conda activate root-nightly
            export PYTHONHOME=$CONDA
            cd build
-           $CONDA/bin/ctest -V
+           ctest -V
