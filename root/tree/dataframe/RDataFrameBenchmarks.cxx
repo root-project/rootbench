@@ -45,6 +45,9 @@ static void BM_RDataFrame_DefineJitted(benchmark::State &state)
 {
    for (auto _ : state)
       RDataFrame(0).Define("d", "0");
+
+   // trigger actual jitting and clean cache of code to be jitted
+   RDataFrame(0).Count().GetValue();
 }
 BENCHMARK(BM_RDataFrame_DefineJitted)->Unit(benchmark::kMicrosecond);
 
@@ -64,6 +67,9 @@ static void BM_RDataFrame_FilterJitted(benchmark::State &state)
 {
    for (auto _ : state)
       RDataFrame(0).Filter("true");
+
+   // trigger actual jitting and clean cache of code to be jitted
+   RDataFrame(0).Count().GetValue();
 }
 BENCHMARK(BM_RDataFrame_FilterJitted)->Unit(benchmark::kMicrosecond);
 
