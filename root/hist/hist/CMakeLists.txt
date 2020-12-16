@@ -1,6 +1,11 @@
-RB_ADD_GBENCHMARK(HistBenchmarks
+RB_ADD_GBENCHMARK(TFormulaBenchmarks
   TFormulaBenchmarks.cxx
   TFormulaGradientBenchmarks.cxx
+  LABEL short
+  LIBRARIES Core Hist MathCore)
+
+RB_ADD_GBENCHMARK(FitGradBenchmarks
+  FitGradBenchmarks.cxx
   LABEL short
   LIBRARIES Core Hist MathCore)
 
