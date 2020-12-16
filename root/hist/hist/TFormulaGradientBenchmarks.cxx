@@ -1,7 +1,6 @@
 #include <TFormula.h>
 #include <TF1.h>
 #include <TFitResult.h>
-#include <TH1.h>
 
 #include <benchmark/benchmark.h>
 
@@ -60,42 +59,3 @@ DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(cheb0)
 DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(cheb1)
 DEFINE_BM_TFormulaPerf_CLAD_AND_NUMERICAL(cheb2)
 
-static void BM_TFormula_GausFit_Clad(benchmark::State &state) {
-  auto f1 = new TF1("f1", "gaus");
-  auto h1 = new TH1D("h1", "h1", 1000, -5, 5);
-  double p1[] = {1, 0, 1.5};
-  f1->SetParameters(p1);
-  h1->FillRandom("f1", 100000);
-  double p2[] = {100, 1, 3};
-  f1->SetParameters(p2);
-  // enable Clad in TFormula
-  f1->GetFormula()->GenerateGradientPar();
-
-  for (auto _ : state) {
-    auto r2 = h1->Fit(f1, "S G Q N"); // clad
-    if (r2->Status() != 0) Error("GausFit_Clad","Error fitting histogram");
-  }
-  delete f1;
-  delete h1;
-}
-
-BENCHMARK(BM_TFormula_GausFit_Clad);
-
-static void BM_TFormula_GausFit_Numerical(benchmark::State &state) {
-  auto f1 = new TF1("f1", "gaus");
-  auto h1 = new TH1D("h1", "h1", 1000, -5, 5);
-  double p1[] = {1, 0, 1.5};
-  f1->SetParameters(p1);
-  h1->FillRandom("f1", 100000);
-  double p2[] = {100, 1, 3};
-  f1->SetParameters(p2);
-
-  for (auto _ : state) {
-    auto r1 = h1->Fit(f1, "S Q N"); // numerical
-    if (r1->Status() != 0) Error("GausFit_Numerical","Error fitting histogram");
-  }
-  delete f1;
-  delete h1; 
-}
-
-BENCHMARK(BM_TFormula_GausFit_Numerical);
