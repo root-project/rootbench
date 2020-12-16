@@ -26,7 +26,7 @@ public:
 static void BM_TFormula_CreateEmpty(benchmark::State &state)
 {
    for (auto _ : state) {
-     TFormulaTests f();
+      TFormulaTests f("","");
    }
 }
 BENCHMARK(BM_TFormula_CreateEmpty);
