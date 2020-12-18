@@ -88,7 +88,7 @@ static void benchJohnsonPlusExp(benchmark::State& state) {
     data->attachBuffers(observables);
 
   std::vector<double> results(nEvents);
-  BatchHelpers::RunContext evalData;
+  RooBatchCompute::RunContext evalData;
 
   for (auto _ : state) {
     for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
