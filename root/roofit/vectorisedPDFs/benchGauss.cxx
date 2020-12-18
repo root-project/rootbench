@@ -92,7 +92,7 @@ static void benchGauss(benchmark::State& state) {
   if (runConfig % 2 == 0)
     data->attachBuffers(observables);
 
-  BatchHelpers::RunContext evalData;
+  RooBatchCompute::RunContext evalData;
   std::vector<double> results(nEvents);
 
   for (auto _ : state) {
