@@ -27,7 +27,7 @@ static void BM_TFormula_GausFit_Clad(benchmark::State &state) {
   delete h1;
 }
 
-BENCHMARK(BM_TFormula_GausFit_Clad);
+BENCHMARK(BM_TFormula_GausFit_Clad)->Unit(benchmark::kMillisecond);
 
 static void BM_TFormula_GausFit_Numerical(benchmark::State &state) {
   auto f1 = new TF1("f1", "gaus");
@@ -46,7 +46,7 @@ static void BM_TFormula_GausFit_Numerical(benchmark::State &state) {
   delete h1;
 }
 
-BENCHMARK(BM_TFormula_GausFit_Numerical);
+BENCHMARK(BM_TFormula_GausFit_Numerical)->Unit(benchmark::kMillisecond);
 
 // test class for building fit with many parameters (many gaussian + polynomial)
 class ManyGausFit {
@@ -153,6 +153,7 @@ public:
       initParams = std::vector<double>(fitFunc->GetParameters(), fitFunc->GetParameters() + fitFunc->GetNpar());
 
       // avoid computing Hessian at end of minimization
+      // Support for second derivatives using Clad is not there yet
       ROOT::Math::MinimizerOptions::SetDefaultStrategy(0);
       // try using Minuit whenever possible
       ROOT::Math::MinimizerOptions::SetDefaultMinimizer("Minuit2");
@@ -201,30 +202,32 @@ public:
       delete h1;
    }
 };
-// default values
-int ngaussians = 30;
-int nbins = 1000;   // nbins should be at least 10* ngaussians
+
 int printLevel = 0;
+// nbins should be at least > 10 * max(ngaussians) or the fits will start failing
+unsigned nbins = 2000;   // 5000 is ok of max gaussian is 64
 
 static void BM_TFormula_ManyGausFit_Clad(benchmark::State &state)
 {
+   unsigned ngaussians = state.range(0);
    ManyGausFit test(ngaussians, nbins, true,  printLevel);
    for (auto _ : state) {
       test.Fit();
    }
 }
-
-BENCHMARK(BM_TFormula_ManyGausFit_Clad);
+// iterate ngaussian from 2 to 64 : 2, 4, 8, ....,64
+BENCHMARK(BM_TFormula_ManyGausFit_Clad)->Unit(benchmark::kMillisecond)->RangeMultiplier(2)->Range(2, 64);
 
 static void BM_TFormula_ManyGausFit_Numerical(benchmark::State &state)
 {
+   unsigned ngaussians = state.range(0);
    ManyGausFit test(ngaussians, nbins, false, printLevel);
    for (auto _ : state) {
       test.Fit();
    }
 }
 
-BENCHMARK(BM_TFormula_ManyGausFit_Numerical);
+BENCHMARK(BM_TFormula_ManyGausFit_Numerical)->Unit(benchmark::kMillisecond)->RangeMultiplier(2)->Range(2, 64);
 
 // Define our main.
 //BENCHMARK_MAIN();
@@ -241,14 +244,6 @@ int main(int argc, char **argv) {
       } else if (arg == "-vv") {
         std::cout << "---running in very verbose mode" << std::endl;
         printLevel = 2;
-      }
-      else if (arg == "-nfunc") {
-         std::cout << "--- running using " << ngaussians << " functions" << std::endl;
-         ngaussians = atoi(argv[++i]);
-      }
-       else if (arg == "-nbins") {
-         std::cout << "--- running using " << nbins << " bins" << std::endl;
-         nbins = atoi(argv[++i]);
       }
    }
 
