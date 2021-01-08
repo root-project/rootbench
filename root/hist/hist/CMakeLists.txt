@@ -4,10 +4,12 @@ RB_ADD_GBENCHMARK(TFormulaBenchmarks
   LABEL short
   LIBRARIES Core Hist MathCore)
 
+if(ROOT_minuit2_FOUND)
 RB_ADD_GBENCHMARK(FitGradBenchmarks
   FitGradBenchmarks.cxx
   LABEL short
   LIBRARIES Core Hist MathCore)
+endif()
 
 RB_ADD_GBENCHMARK(THistBenchmarks
    THistFillBenchmarks.cxx
