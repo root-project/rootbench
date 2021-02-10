@@ -18,7 +18,7 @@ inline static void numerical_eval(TF1* h, TFormula*, Double_t* x, Double_t* resu
 // EVAL is either clad_eval to benchmark clad or numerical_eval to benchmark
 // numerical method.
 template <typename F>
-static void BM_TFormulaPerf(benchmark::State &state, const char* formula, F&& eval) {
+static void BM_TFormulaPerf(benchmark::State &state, const char* formula, F&& eval, bool useClad = false) {
   auto h = new TF1("f1", formula);
   int Npar = h->GetNpar();
   double* p = new double[Npar];
@@ -28,8 +28,11 @@ static void BM_TFormulaPerf(benchmark::State &state, const char* formula, F&& ev
   double* x = new double[Ndim]{};
   for (int i = 0; i < Ndim; i++) x[i] = std::rand() % 100;
   TFormula::GradientStorage result(Npar);
-  TFormula *f = h->GetFormula();
-  f->GenerateGradientPar();
+  TFormula *f = nullptr;
+  if (useClad) {
+     f = h->GetFormula();
+     f->GenerateGradientPar();
+  }
 
   for (auto _ : state)
     eval(h, f, x, result.data());
@@ -38,7 +41,7 @@ static void BM_TFormulaPerf(benchmark::State &state, const char* formula, F&& ev
 }
 
 #define DEFINE_BM_TFormulaPerf_CLAD(formula) \
-  BENCHMARK_CAPTURE(BM_TFormulaPerf, formula##_Clad, #formula, clad_eval);
+   BENCHMARK_CAPTURE(BM_TFormulaPerf, formula##_Clad, #formula, clad_eval, true);
 
 #define DEFINE_BM_TFormulaPerf_NUMERICAL(formula) \
   BENCHMARK_CAPTURE(BM_TFormulaPerf, formula##_Numerical, #formula, numerical_eval);
