@@ -16,12 +16,14 @@
 static int runTutorial(const std::string& dir, const std::string& filename, const std::string& perffile) {
   std::string rootsys = RB::GetRootSys();
   std::string rootInvocation;
+  std::string thisroot = rootsys + "/bin/thisroot.sh";
   if (!filename.empty()) {
     std::string fullpath = rootsys + "/" + dir + "/" + filename;
+    // FIXME: no source in /usr/dash
     // We are writing /usr/bin/time -v output in file to get maximum resident memory for the benchmark
-    rootInvocation = "/usr/bin/time -v -o \"" + perffile + "\" root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
+    rootInvocation = "source \"" + thisroot + "\" && /usr/bin/time -v -o \"" + perffile + "\" root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
   } else {
-    rootInvocation = "/usr/bin/time -v -o \"" + perffile + "\" root.exe -l -q -b ";
+    rootInvocation = "source \"" + thisroot + "\" && /usr/bin/time -v -o \"" + perffile + "\" root.exe -l -q -b ";
   }
 
     return std::system(rootInvocation.c_str());
