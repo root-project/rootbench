@@ -15,13 +15,15 @@
 
 static int runTutorial(const std::string& dir, const std::string& filename, const std::string& perffile) {
   std::string rootsys = RB::GetRootSys();
+  // FIXME: we dont know where to find root.exe 
+  std::string rootsysbin = rootsys + "/bin/";
   std::string rootInvocation;
   if (!filename.empty()) {
     std::string fullpath = rootsys + "/" + dir + "/" + filename;
     // We are writing /usr/bin/time -v output in file to get maximum resident memory for the benchmark
-    rootInvocation = "/usr/bin/time -v -o \"" + perffile + "\" root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
+    rootInvocation = "/usr/bin/time -v -o \"" + perffile + " " + rootsysbin + "\"root.exe -l -q -b -n -x \"" + fullpath + "\" -e return ";
   } else {
-    rootInvocation = "/usr/bin/time -v -o \"" + perffile + "\" root.exe -l -q -b ";
+    rootInvocation = "/usr/bin/time -v -o \"" + perffile + " " + rootsysbin + "\"root.exe -l -q -b ";
   }
 
     return std::system(rootInvocation.c_str());
