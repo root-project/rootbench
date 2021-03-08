@@ -79,6 +79,8 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
 
   RooRealVar fractionGaus("fractionGaus", "Fraction of Gauss component", 0.5, 0., 1.);
   RooAddPdf pdf("SumGausPois", "Sum of Gaus and Poisson", RooArgSet(gauss, ex), fractionGaus);
+  // to avoid a warning when computing the   unnormalized RooAddPdf values
+  pdf.fixCoefNormalization(x);
 
   auto data = pdf.generate(RooArgSet(x), nEvents);
 

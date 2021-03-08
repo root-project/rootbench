@@ -76,6 +76,8 @@ static void benchJohnsonPlusExp(benchmark::State& state) {
 
   RooRealVar a("a", "a", 0.5, 0., 1.);
   RooAddPdf sum("sum", "Johnson+exp", johnson, exp, a);
+  // to avoid a warning when computing the unnormalized RooAddPdf values
+  sum.fixCoefNormalization(mass);
 
 
   RooAbsPdf& pdf = sum;
