@@ -11,7 +11,8 @@ static std::string GetAlgoName(int algo) {
         {1, "zlib"},
         {2, "lzma"},
         {4, "lz4"},
-        {5, "zstd"}
+        {5, "zstd"},
+        {6, "flzma2"}
     };
 
     if (algoName.find(algo) != algoName.end())
@@ -93,6 +94,9 @@ static void BM_LHCb_Compress_LZ4(benchmark::State &state) {
 static void BM_LHCb_Compress_ZSTD(benchmark::State &state) {
     BM_LHCb_Compress(state, 5);
 }
+static void BM_LHCb_Compress_FLZMA2(benchmark::State &state) {
+    BM_LHCb_Compress(state, 6);
+}
 
 static void BM_LHCb_Decompress_ZLIB(benchmark::State &state) {
     BM_LHCb_Decompress(state, 1);
@@ -105,6 +109,9 @@ static void BM_LHCb_Decompress_LZ4(benchmark::State &state) {
 }
 static void BM_LHCb_Decompress_ZSTD(benchmark::State &state) {
     BM_LHCb_Decompress(state, 5);
+}
+static void BM_LHCb_Decompress_FLZMA2(benchmark::State &state) {
+    BM_LHCb_Decompress(state, 6);
 }
 
 
@@ -124,6 +131,9 @@ BENCHMARK(BM_LHCb_Compress_ZSTD)
 ->Arg(1)->Arg(6)->Arg(9)
 ->Unit(benchmark::kMillisecond)->Iterations(5);
 
+BENCHMARK(BM_LHCb_Compress_FLZMA2)
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
 
 BENCHMARK(BM_LHCb_Decompress_ZLIB)
 ->Arg(1)->Arg(6)->Arg(9)
@@ -138,6 +148,10 @@ BENCHMARK(BM_LHCb_Decompress_LZ4)
 ->Unit(benchmark::kMillisecond)->Iterations(5);
 
 BENCHMARK(BM_LHCb_Decompress_ZSTD)
+->Arg(1)->Arg(6)->Arg(9)
+->Unit(benchmark::kMillisecond)->Iterations(5);
+
+BENCHMARK(BM_LHCb_Decompress_FLZMA2)
 ->Arg(1)->Arg(6)->Arg(9)
 ->Unit(benchmark::kMillisecond)->Iterations(5);
 

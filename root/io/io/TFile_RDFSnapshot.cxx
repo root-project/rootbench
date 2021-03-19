@@ -65,4 +65,14 @@ static void BM_TFile_RDFSnapshot_ZSTD (benchmark::State &state) {
 }
 BENCHMARK(BM_TFile_RDFSnapshot_ZSTD)->Unit(benchmark::kMicrosecond);
 
+static void BM_TFile_RDFSnapshot_FLZMA2 (benchmark::State &state) {
+  auto tdf = SetupRDF();
+  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kFLZMA2, 6);
+  for (auto _ : state) {
+     //And we write out the dataset on disk
+     tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
+  }
+}
+BENCHMARK(BM_TFile_RDFSnapshot_FLZMA2)->Unit(benchmark::kMicrosecond);
+
 BENCHMARK_MAIN();

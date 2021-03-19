@@ -11,7 +11,8 @@ static std::string GetAlgoName(int algo) {
         {1, "zlib"},
         {2, "lzma"},
         {4, "lz4"},
-        {5, "zstd"}
+        {5, "zstd"},
+        {6, "flzma2"}
     };
 
     if (algoName.find(algo) != algoName.end())
