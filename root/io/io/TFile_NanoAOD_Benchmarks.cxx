@@ -1,5 +1,6 @@
 #include "TFile.h"
 #include "TTree.h"
+#include "TStopwatch.h"
 
 #include "benchmark/benchmark.h"
 #include "rootbench/RBConfig.h"
@@ -22,47 +23,58 @@ static std::string GetAlgoName(int algo) {
 }
 
 static void BM_NanoAOD_Compress(benchmark::State &state, int algo) {
-    TFile *oldfile = new TFile((RB::GetDataDir() + "/Run2012B_DoubleMuParked.root").c_str());
-    TTree *oldtree = (TTree*)oldfile->Get("Events");
-
+    std::string path = RB::GetDataDir() + "/NanoAOD_DoubleMuon_CMS2011OpenData.root";
+    auto oldfile = TFile::Open(path.c_str());
+    auto oldtree = oldfile->Get<TTree>("Events");
+    TStopwatch timer;
+    const auto nevents = oldtree->GetEntries();
     int comp_level = state.range(0);
     std::string filename = "level_" + std::to_string(comp_level) + "_nanoaod_" + GetAlgoName(algo) + ".root";
 
     for (auto _ : state) {
         state.PauseTiming();
 
-        TFile *newfile = new TFile(filename.c_str(), "recreate");
-        TTree *newtree = oldtree->CloneTree();
+        auto newfile = new TFile(filename.c_str(), "recreate");
         newfile->SetCompressionAlgorithm(algo);
         newfile->SetCompressionLevel(comp_level);
+        auto newtree = oldtree->CloneTree();
 
         state.ResumeTiming();
+        timer.Start();
         newfile->Write();
+        timer.Stop();
         state.PauseTiming();
 
-        state.counters["comp_size"] = newfile->GetBytesWritten();
+        state.counters["comp_size"] = newfile->GetSize();
+        double rtime = timer.RealTime();
+        double ctime = timer.CpuTime();
+        state.counters["mb_rts"] = newfile->GetSize()/rtime;
+        state.counters["mb_cts"] = newfile->GetSize()/ctime;
         newfile->Close();
-
         state.ResumeTiming();
     }
 }
 
 static void BM_NanoAOD_Decompress(benchmark::State &state, int algo) {
     int comp_level = state.range(0);
-
+    int nb;
+    TStopwatch timer;
     std::string filename = "level_" + std::to_string(comp_level) + "_nanoaod_" + GetAlgoName(algo) + ".root";
     for (auto _ : state) {
-        TFile *hfile = new TFile(filename.c_str());
-        TTree *tree = (TTree*)hfile->Get("Events");
-
-        Int_t nevent = (Int_t)tree->GetEntries();
-
-        Int_t nb = 0;
+        timer.Start();
+        TFile f(filename.c_str());
+        auto tree = static_cast<TTree *>(f.Get("Events"));
+        const auto nevents = tree->GetEntries();
         Int_t ev;
-
-        for (ev = 0; ev < nevent; ev++) {
+        for (ev = 0; ev < nevents; ++ev) {
             nb += tree->GetEntry(ev);
         }
+        timer.Stop();
+        double rtime = timer.RealTime();
+        double ctime = timer.CpuTime();
+        state.counters["mb_rts"] = f.GetSize()/rtime;
+        state.counters["mb_cts"] = f.GetSize()/ctime;
+        f.Close();
     }
 }
 
@@ -101,44 +113,44 @@ static void BM_NanoAOD_Decompress_FLZMA2(benchmark::State &state) {
 
 BENCHMARK(BM_NanoAOD_Compress_ZLIB)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Compress_LZMA)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Compress_LZ4)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Compress_ZSTD)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Compress_FLZMA2)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 
 BENCHMARK(BM_NanoAOD_Decompress_ZLIB)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Decompress_LZMA)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Decompress_LZ4)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Decompress_ZSTD)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 BENCHMARK(BM_NanoAOD_Decompress_FLZMA2)
 ->Arg(1)->Arg(6)->Arg(9)
-->Unit(benchmark::kMillisecond)->Iterations(5);
+->Unit(benchmark::kMillisecond)->Iterations(1);
 
 
 BENCHMARK_MAIN();
