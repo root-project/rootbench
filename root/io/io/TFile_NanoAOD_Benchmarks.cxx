@@ -23,7 +23,8 @@ static std::string GetAlgoName(int algo) {
 }
 
 static void BM_NanoAOD_Compress(benchmark::State &state, int algo) {
-    std::string path = RB::GetDataDir() + "/NanoAOD_DoubleMuon_CMS2011OpenData.root";
+    std::string path = RB::GetDataDir() + "/Run2012B_DoubleMuParked.root";
+    //std::string path = RB::GetDataDir() + "/NanoAOD_DoubleMuon_CMS2011OpenData.root";
     auto oldfile = TFile::Open(path.c_str());
     auto oldtree = oldfile->Get<TTree>("Events");
     TStopwatch timer;
@@ -48,8 +49,12 @@ static void BM_NanoAOD_Compress(benchmark::State &state, int algo) {
         state.counters["comp_size"] = newfile->GetSize();
         double rtime = timer.RealTime();
         double ctime = timer.CpuTime();
-        state.counters["mb_rts"] = newfile->GetSize()/rtime;
-        state.counters["mb_cts"] = newfile->GetSize()/ctime;
+        // For Run2012B_DoubleMuParked.root:
+        float size_mb = 774.619423;
+        // For NanoAOD_DoubleMuon_CMS2011OpenData.root:
+        //float size_mb = 774.619423;
+        state.counters["mb_rts"] = size_mb/rtime;
+        state.counters["mb_cts"] = size_mb/ctime;
         newfile->Close();
         state.ResumeTiming();
     }
@@ -72,8 +77,12 @@ static void BM_NanoAOD_Decompress(benchmark::State &state, int algo) {
         timer.Stop();
         double rtime = timer.RealTime();
         double ctime = timer.CpuTime();
-        state.counters["mb_rts"] = f.GetSize()/rtime;
-        state.counters["mb_cts"] = f.GetSize()/ctime;
+        // For Run2012B_DoubleMuParked.root:
+        float size_mb = 774.619423;
+        // For NanoAOD_DoubleMuon_CMS2011OpenData.root:
+        //float size_mb = 4871.365001;
+        state.counters["mb_rts"] = size_mb/rtime;
+        state.counters["mb_cts"] = size_mb/ctime;
         f.Close();
     }
 }

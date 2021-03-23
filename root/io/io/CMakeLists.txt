@@ -32,7 +32,7 @@ if(rootbench-datafiles AND experiment-datafiles)
     TFile_NanoAOD_Benchmarks.cxx
     LABEL short
     LIBRARIES Core RIO Tree
-    DOWNLOAD_DATAFILES NanoAOD_DoubleMuon_CMS2011OpenData.root)
+    DOWNLOAD_DATAFILES Run2012B_DoubleMuParked.root NanoAOD_DoubleMuon_CMS2011OpenData.root)
 
   RB_ADD_GBENCHMARK(CompressionBenchmarks_ATLAS
     TFile_ATLAS_Benchmarks.cxx

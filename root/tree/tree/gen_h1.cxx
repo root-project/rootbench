@@ -55,6 +55,8 @@ int GetCompressionSettings(std::string shorthand)
       return 207;
    if (shorthand == "zstd")
       return 505;
+   if (shorthand == "flzma2")
+      return 609;
    if (shorthand == "none")
       return 0;
    abort();
