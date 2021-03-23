@@ -183,4 +183,22 @@ static void BM_RDataFrame_FillHistoRangeDeductionMT(benchmark::State &state)
 BENCHMARK(BM_RDataFrame_FillHistoRangeDeductionMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000)->Iterations(100);
 #endif // R__USE_IMT
 
+static void BM_RDataFrame_JitLargeGraphs(benchmark::State &state)
+{
+   for (auto _ : state) {
+    ROOT::RDataFrame root(1);
+    std::vector<ROOT::RDF::RResultPtr<double>> dfs;
+    const auto n = state.range(0);
+    for (auto i = 0u; i < n; i++) {
+        const auto column = "x" + std::to_string(i);
+        auto define = root.Define(column, "42.f");
+        auto filter = define.Filter(column + " > 0.f");
+        auto sum = filter.Sum(column);
+        dfs.emplace_back(sum);
+    }
+    dfs[n - 1].GetValue();
+   }
+}
+BENCHMARK(BM_RDataFrame_JitLargeGraphs)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(1000)->Arg(10000);
+
 BENCHMARK_MAIN();
