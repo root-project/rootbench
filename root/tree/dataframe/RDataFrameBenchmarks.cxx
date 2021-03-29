@@ -183,6 +183,9 @@ static void BM_RDataFrame_FillHistoRangeDeductionMT(benchmark::State &state)
 BENCHMARK(BM_RDataFrame_FillHistoRangeDeductionMT)->Unit(benchmark::kMicrosecond)->Arg(100)->Arg(100000)->Iterations(100);
 #endif // R__USE_IMT
 
+// The graph here has a large breadth but small depth, which results in a large jitting time
+// but a very short runtime of the actual event loop. Therefore this benchmark is almost
+// exclusively measuring the jitting time.
 static void BM_RDataFrame_JitLargeGraphs(benchmark::State &state)
 {
    for (auto _ : state) {
