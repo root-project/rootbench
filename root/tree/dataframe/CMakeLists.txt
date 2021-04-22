@@ -12,6 +12,12 @@ if(NUMPY_FOUND AND rootbench-datafiles)
 endif()
 
 if(rootbench-datafiles)
+    RB_ADD_GBENCHMARK(gbenchmark-OpenDataBenchmarks
+        RDataFrameOpenDataBenchmarks.cxx
+        DOWNLOAD_DATAFILES Run2012B_SingleMu_1M.root Run2012B_SingleMu_10M.root
+        LABEL long
+        LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps Gpad Graf)
+
     RB_ADD_GBENCHMARK(gbenchmark-df102_NanoAODDimuonAnalysis
         df102_NanoAODDimuonAnalysis.C
         DOWNLOAD_DATAFILES Run2012BC_DoubleMuParked_Muons.root
