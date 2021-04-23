@@ -43,6 +43,23 @@ static void BM_RDataFrame_OpenDataBenchmark1_jitted(benchmark::State &state)
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
+void benchmark1_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath10M);
+    auto h = df.Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
+    *h;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark1_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark1_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
 // Benchmark 2
 
 void benchmark2_jitted(unsigned int nthreads) {
@@ -62,13 +79,30 @@ static void BM_RDataFrame_OpenDataBenchmark2_jitted(benchmark::State &state)
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
+void benchmark2_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath10M);
+    auto h = df.Histo1D<ROOT::RVec<float>>({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "Jet_pt");
+    *h;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark2_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark2_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
 // Benchmark 3
 
 void benchmark3_jitted(unsigned int nthreads) {
     set_nthreads(nthreads);
     ROOT::RDataFrame df("Events", filepath10M);
     auto h = df.Define("goodJet_pt", "Jet_pt[Jet_eta > 1.0]")
-              .Histo1D({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
+               .Histo1D({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
     *h;
 }
 
@@ -81,6 +115,25 @@ static void BM_RDataFrame_OpenDataBenchmark3_jitted(benchmark::State &state)
 }
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
+void benchmark3_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath10M);
+    auto goodJetPt = [](const ROOT::RVec<float>& pt, const ROOT::RVec<float>& eta){ return pt[eta > 1.0]; };
+    auto h = df.Define("goodJet_pt", goodJetPt, {"Jet_pt", "Jet_eta"})
+               .Histo1D<ROOT::RVec<float>>({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
+    *h;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark3_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark3_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
 // Benchmark 4
 
@@ -101,6 +154,26 @@ static void BM_RDataFrame_OpenDataBenchmark4_jitted(benchmark::State &state)
 }
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
+void benchmark4_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath10M);
+    using VecF = const ROOT::RVec<float>&;
+    auto filter = [](const ROOT::RVec<float>& pt, const ROOT::RVec<float>& eta){ return Sum(pt > 40 && abs(eta) < 1.0) > 1; };
+    auto h = df.Filter(filter, {"Jet_pt", "Jet_eta"}, "More than one jet with pt > 40 and abs(eta) < 1.0")
+               .Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
+    *h;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark4_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark4_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
 // Benchmark 5
 
@@ -140,6 +213,27 @@ static void BM_RDataFrame_OpenDataBenchmark5_jitted(benchmark::State &state)
 }
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
+void benchmark5_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath10M);
+    auto h = df.Filter([](unsigned int n) { return n >=2; }, {"nMuon"}, "At least two muons")
+               .Define("Dimuon_mass", benchmark5_compute_dimuon_masses, {"Muon_pt", "Muon_eta", "Muon_phi", "Muon_mass", "Muon_charge"})
+               .Filter([](const ROOT::RVec<float>& mass){ return Sum(mass > 60 && mass < 100) > 0; }, {"Dimuon_mass"},
+                       "At least one dimuon system with mass in range [60, 100]")
+               .Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
+    *h;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark5_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark5_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
 // Benchmark 6
 
@@ -194,6 +288,33 @@ static void BM_RDataFrame_OpenDataBenchmark6_jitted(benchmark::State &state)
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
+void benchmark6_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath1M);
+    auto df2 = df.Filter([](unsigned int n) { return n >= 3; }, {"nJet"}, "At least three jets")
+                 .Define("Trijet_idx", benchmark6_find_trijet, {"Jet_pt", "Jet_eta", "Jet_phi", "Jet_mass"});
+    auto h1 = df2.Define("Trijet_pt",
+                         [](const ROOT::RVec<float>& pt, const ROOT::RVec<std::size_t>& idx) { return Take(pt, idx); },
+                         {"Jet_pt", "Trijet_idx"})
+                 .Histo1D<ROOT::RVec<float>>({"", ";Trijet pt (GeV);N_{Events}", 100, 15, 40}, "Trijet_pt");
+    auto h2 = df2.Define("Trijet_leadingBtag",
+                         [](const ROOT::RVec<float>& btag, const ROOT::RVec<std::size_t>& idx) { return Max(Take(btag, idx)); },
+                         {"Jet_btag", "Trijet_idx"})
+                 .Histo1D<float>({"", ";Trijet leading b-tag;N_{Events}", 100, 0, 1}, "Trijet_leadingBtag");
+    *h1;
+    *h2;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark6_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark6_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
 // Benchmark 7
 
 ROOT::RVec<int> benchmark7_good_jets(const ROOT::RVec<float>& eta1, const ROOT::RVec<float>& phi1,
@@ -243,6 +364,33 @@ static void BM_RDataFrame_OpenDataBenchmark7_jitted(benchmark::State &state)
 }
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
+void benchmark7_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath1M);
+    auto h = df.Filter([](unsigned int n){ return n > 0;}, {"nJet"}, "At least one jet")
+               .Define("goodJet_antiMuon", benchmark7_good_jets, {"Jet_eta", "Jet_phi", "Muon_pt", "Muon_eta", "Muon_phi"})
+               .Define("goodJet_antiElectron", benchmark7_good_jets, {"Jet_eta", "Jet_phi", "Electron_pt", "Electron_eta", "Electron_phi"})
+               .Define("goodJet",
+                       [](const ROOT::RVec<int>& muon, const ROOT::RVec<int>& electron){ return muon || electron; },
+                       {"goodJet_antiMuon", "goodJet_antiElectron"})
+               .Filter([](const ROOT::RVec<int>& good){ return Sum(good) > 0; }, {"goodJet"})
+               .Define("goodJet_sumPt",
+                       [](const ROOT::RVec<int>& good, const ROOT::RVec<float>& pt) { return Sum(pt[good]); },
+                       {"goodJet", "Jet_pt"})
+               .Histo1D<float>({"", ";Jet p_{T} sum (GeV);N_{Events}", 100, 15, 200}, "goodJet_sumPt");
+    *h;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark7_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark7_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
 // Benchmark 8
 
@@ -312,6 +460,42 @@ static void BM_RDataFrame_OpenDataBenchmark8_jitted(benchmark::State &state)
 }
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+
+void benchmark8_compiled(unsigned int nthreads) {
+    set_nthreads(nthreads);
+    ROOT::RDataFrame df("Events", filepath10M);
+    auto concatF = [](const ROOT::RVec<float>& a, const ROOT::RVec<float>& b) { return Concatenate(a, b); };
+    auto concatI = [](const ROOT::RVec<int>& a, const ROOT::RVec<int>& b) { return Concatenate(a, b); };
+    auto df2 = df.Filter([](unsigned int nElectron, unsigned int nMuon) { return nElectron + nMuon > 2; },
+                         {"nElectron", "nMuon"}, "At least three leptons")
+                 .Define("Lepton_pt", concatF, {"Muon_pt", "Electron_pt"})
+                 .Define("Lepton_eta", concatF, {"Muon_eta", "Electron_eta"})
+                 .Define("Lepton_phi", concatF, {"Muon_phi", "Electron_phi"})
+                 .Define("Lepton_mass", concatF, {"Muon_mass", "Electron_mass"})
+                 .Define("Lepton_charge", concatI, {"Muon_charge", "Electron_charge"})
+                 .Define("Lepton_flavour",
+                         [](unsigned int nMuon, unsigned int nElectron) {
+                            return Concatenate(ROOT::RVec<int>(nMuon, 0), ROOT::RVec<int>(nElectron, 1));
+                         },
+                         {"nMuon", "nElectron"})
+                 .Define("AdditionalLepton_pt", benchmark8_additional_lepton_pt,
+                         {"Lepton_pt", "Lepton_eta", "Lepton_phi", "Lepton_mass", "Lepton_charge", "Lepton_flavour"})
+                 .Filter([](float pt){ return pt != -999; }, {"AdditionalLepton_pt"}, "No valid lepton pair found.");
+    auto h1 = df2.Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
+    auto h2 = df2.Histo1D<float>({"", ";Lepton p_{T} (GeV);N_{Events}", 100, 15, 60}, "AdditionalLepton_pt");
+    *h1;
+    *h2;
+}
+
+static void BM_RDataFrame_OpenDataBenchmark8_compiled(benchmark::State &state)
+{
+   for (auto _ : state) {
+      const auto nthreads = state.range(0);
+      benchmark8_compiled(nthreads);
+   }
+}
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
 // Main
 
