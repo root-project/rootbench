@@ -58,13 +58,13 @@ float GetDeltaRMin( int id1,
                     const ROOT::VecOps::RVec<float> &eta1,
                     const ROOT::VecOps::RVec<float> &phi1,
                     const ROOT::VecOps::RVec<float> &mass1,
-                    const ROOT::VecOps::RVec<bool>  &passOR1,
+                    const ROOT::VecOps::RVec<bool>  &,
                     const std::vector<short unsigned int> &idxs2,
                     const ROOT::VecOps::RVec<float> &pt2,
                     const ROOT::VecOps::RVec<float> &eta2,
                     const ROOT::VecOps::RVec<float> &phi2,
                     const ROOT::VecOps::RVec<float> &mass2,
-                    const ROOT::VecOps::RVec<bool>  &passOR2 )
+                    const ROOT::VecOps::RVec<bool>  &)
 {
   TLorentzVector vec1, vec2;
   double dR = 10000;

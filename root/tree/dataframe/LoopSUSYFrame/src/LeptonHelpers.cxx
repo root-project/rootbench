@@ -10,7 +10,7 @@
 #include <vector>
 
 // Some Helper Functions
-std::vector<std::string> GetLeptonBranches(const bool isdata, const std::string &syst) {
+std::vector<std::string> GetLeptonBranches(const bool isdata, const std::string &) {
 
 	std::vector<std::string> branches;
 
@@ -20,7 +20,7 @@ std::vector<std::string> GetLeptonBranches(const bool isdata, const std::string 
 	return branches;
 }
 
-std::vector<std::string> GetLeptonBranchesTest(const bool isdata, const std::string &syst, const std::string isSignallepTest) {
+std::vector<std::string> GetLeptonBranchesTest(const bool isdata, const std::string &, const std::string isSignallepTest) {
 
 	std::vector<std::string> branches;
 
@@ -30,7 +30,7 @@ std::vector<std::string> GetLeptonBranchesTest(const bool isdata, const std::str
 	return branches;
 }
 
-std::vector<std::string> GetCustomLeptonBranches(const bool isdata, const std::string &syst) {
+std::vector<std::string> GetCustomLeptonBranches(const bool isdata, const std::string &) {
 
   std::vector<std::string> branches;
 
@@ -550,7 +550,7 @@ float GetPbllMOD(
         const short unsigned int lep1_idx,
         const short unsigned int lep2_idx,
         const ROOT::VecOps::RVec<float> &pt,
-        const ROOT::VecOps::RVec<float> &eta,
+        const ROOT::VecOps::RVec<float> &,
         const ROOT::VecOps::RVec<float> &phi,
         const float MET,
         const float METphi)
@@ -570,7 +570,7 @@ float GetPhiMetPbll(
         const short unsigned int lep1_idx,
         const short unsigned int lep2_idx,
         const ROOT::VecOps::RVec<float> &pt,
-        const ROOT::VecOps::RVec<float> &eta,
+        const ROOT::VecOps::RVec<float> &,
         const ROOT::VecOps::RVec<float> &phi,
         const float MET,
         const float METphi)

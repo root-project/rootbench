@@ -303,10 +303,6 @@ int LoopSUSYFrame_main(int argc, const char *argv[])
   bool isMCa = false;
   bool isMCd = false;
   bool isMCe = false;
-  bool isData15 = false;
-  bool isData16 = false;
-  bool isData17 = false;
-  bool isData18 = false;
 
   bool isSignal = (signals.compare("none") != 0) ? true : false;
   float xsectFromFile = 1., kFactor = 1., filtEff = 1.;
@@ -488,37 +484,6 @@ int LoopSUSYFrame_main(int argc, const char *argv[])
     outputFile_name = outputFile_path + "/" + inputFile.substr(find_data, 20) + "." + analysis;
     std::cout << "out file name " << outputFile_name << std::endl;
     syst = {"NONE"}; //We never want to run syst on data
-
-    //what year is it?
-    std::size_t foundData15 = inputFile.find("data15");
-    std::size_t foundData16 = inputFile.find("data16");
-    std::size_t foundData17 = inputFile.find("data17");
-    std::size_t foundData18 = inputFile.find("data18");
-
-    if (foundData15 == std::string::npos)
-      isData15 = false;
-    else
-    {
-      isData15 = true;
-    }
-    if (foundData16 == std::string::npos)
-      isData16 = false;
-    else
-    {
-      isData16 = true;
-    }
-    if (foundData17 == std::string::npos)
-      isData17 = false;
-    else
-    {
-      isData17 = true;
-    }
-    if (foundData18 == std::string::npos)
-      isData18 = false;
-    else
-    {
-      isData18 = true;
-    }
   }
 
   std::cout << "Processing " << syst.size() << " variations" << std::endl;

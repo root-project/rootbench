@@ -36,7 +36,7 @@ readFFXML::readFFXML(const char* filename)
    delete xml;
 }
 
-void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std::vector<TString> &ele_systList, std::vector<TString> &muon_systList, std::map<TString,std::vector<TString>> &eleMap,  std::map<TString,std::vector<TString>> &muonMap)
+void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std::vector<TString> &ele_systList, std::vector<TString> &muon_systList, std::map<TString,std::vector<TString>> &eleMap,  std::map<TString,std::vector<TString>> &_muonMap)
 
 {
    // this function display all accessible information about xml node and its children
@@ -91,8 +91,8 @@ void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std
            eleMap["FFval"].push_back(content);
         } 
         if (parentName.Contains("muon")){
-           for(unsigned int i=0; i<vAttrName.size();i++) muonMap[vAttrName[i]].push_back(vAttrVal[i]);          
-           muonMap["FFval"].push_back(content);
+           for(unsigned int i=0; i<vAttrName.size();i++) _muonMap[vAttrName[i]].push_back(vAttrVal[i]);          
+           _muonMap["FFval"].push_back(content);
         } 
                
 
@@ -105,7 +105,7 @@ void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std
    // display all child nodes
    XMLNodePointer_t child = xml->GetChild(node);
    while (child!=0) {
-      GetNode(xml, child, level+2, ele_systList, muon_systList, eleMap, muonMap);
+      GetNode(xml, child, level+2, ele_systList, muon_systList, eleMap, _muonMap);
       child = xml->GetNext(child);
    }
 }
