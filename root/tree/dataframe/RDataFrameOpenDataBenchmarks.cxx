@@ -198,7 +198,7 @@ void benchmark4_compiled(unsigned int nthreads)
    set_nthreads(nthreads);
    ROOT::RDataFrame df("Events", filepath10M);
    using VecF = const ROOT::RVec<float> &;
-   auto filter = [](const ROOT::RVec<float> &pt, const ROOT::RVec<float> &eta) {
+   auto filter = [](VecF pt, VecF eta) {
       return Sum(pt > 40 && abs(eta) < 1.0) > 1;
    };
    auto h = df.Filter(filter, {"Jet_pt", "Jet_eta"}, "More than one jet with pt > 40 and abs(eta) < 1.0")
@@ -228,7 +228,7 @@ ROOT::RVec<float> benchmark5_compute_dimuon_masses(const ROOT::RVec<float> &pt, 
 {
    ROOT::RVec<float> masses;
    const auto c = ROOT::VecOps::Combinations(pt.size(), 2);
-   for (auto i = 0; i < pt.size(); i++) {
+   for (auto i = 0; i < int(pt.size()); i++) {
       const auto i1 = c[0][i];
       const auto i2 = c[1][i];
       if (charge[i1] == charge[i2])
@@ -238,7 +238,7 @@ ROOT::RVec<float> benchmark5_compute_dimuon_masses(const ROOT::RVec<float> &pt, 
       masses.push_back((p1 + p2).mass());
    }
    return masses;
-};
+}
 
 void benchmark5_jitted(unsigned int nthreads)
 {
@@ -304,11 +304,10 @@ ROOT::RVec<std::size_t> benchmark6_find_trijet(const ROOT::RVec<float> &pt, cons
       return ROOT::Math::PtEtaPhiMVector(pt[idx], eta[idx], phi[idx], mass[idx]);
    };
 
-   float trijet_mass = -1;
    float distance = 1e9;
    const auto top_mass = 172.5;
    std::size_t idx = 0;
-   for (auto i = 0; i < c[0].size(); i++) {
+   for (auto i = 0u; i < c[0].size(); i++) {
       auto p1 = make_p4(c[0][i]);
       auto p2 = make_p4(c[1][i]);
       auto p3 = make_p4(c[2][i]);
@@ -316,7 +315,6 @@ ROOT::RVec<std::size_t> benchmark6_find_trijet(const ROOT::RVec<float> &pt, cons
       const auto tmp_distance = std::abs(tmp_mass - top_mass);
       if (tmp_distance < distance) {
          distance = tmp_distance;
-         trijet_mass = tmp_mass;
          idx = i;
       }
    }
@@ -411,7 +409,7 @@ ROOT::RVec<int> benchmark7_good_jets(const ROOT::RVec<float> &eta1, const ROOT::
    }
 
    const auto c = ROOT::VecOps::Combinations(eta1, eta3);
-   for (auto i = 0; i < c[0].size(); i++) {
+   for (auto i = 0u; i < c[0].size(); i++) {
       const auto i1 = c[0][i];
       const auto i2 = c[1][i];
       const auto dr = ROOT::VecOps::DeltaR(eta1[i1], phi1[i1], eta2[i2], phi2[i2]);
@@ -501,7 +499,7 @@ float benchmark8_additional_lepton_pt(const ROOT::RVec<float> &pt, const ROOT::R
       return ROOT::Math::PtEtaPhiMVector(pt[idx], eta[idx], phi[idx], mass[idx]);
    };
 
-   for (auto i = 0; i < c[0].size(); i++) {
+   for (auto i = 0u; i < c[0].size(); i++) {
       const auto i1 = c[0][i];
       const auto i2 = c[1][i];
       if (charge[i1] == charge[i2])
@@ -521,7 +519,7 @@ float benchmark8_additional_lepton_pt(const ROOT::RVec<float> &pt, const ROOT::R
    if (best_i1 == -1)
       return lep_pt;
 
-   for (auto i = 0; i < pt.size(); i++) {
+   for (auto i = 0; i < int(pt.size()); i++) {
       if (i != best_i1 && i != best_i2 && pt[i] > lep_pt)
          lep_pt = pt[i];
    }
