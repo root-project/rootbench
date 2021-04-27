@@ -22,7 +22,7 @@ inline Double_t uniform_random(Double_t a, Double_t b)
       for(int i = 0;i < 16384;i++)                             \
           input_array1[i] = uniform_random(a, b);              \
                                                                \
-      while(state.KeepRunning()) {                             \
+      for(auto _ : state) {                                    \
           for(int i = 0;i < 16384;i++)                         \
               output_array[i] = TMath::tmathfunc(input_array1[i]);   \
       }                                                        \
@@ -39,7 +39,7 @@ inline Double_t uniform_random(Double_t a, Double_t b)
       for(int i = 0;i < 16384;i++)                             \
           input_array1[i] = uniform_random(a, b);            \
                                                                \
-      while(state.KeepRunning()) {                             \
+      for(auto _ : state) {                                        \
           for(int i = 0;i < 16384;i+=kVs) {                        \
               ROOT::Double_v x;                                    \
               vecCore::Load<ROOT::Double_v>(x, &input_array1[i]);  \
