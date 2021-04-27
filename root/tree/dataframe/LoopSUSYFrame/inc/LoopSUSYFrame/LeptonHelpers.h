@@ -236,7 +236,7 @@ inline auto FindLeptonsMC(const float ptelecut, const float ptmuocut)
 
 inline auto FindLeptonsLoose(const float ptelecut, const float ptmuocut)
 {
-	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, ROOT::VecOps::RVec<bool> &isSignallep) {
+	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, ROOT::VecOps::RVec<bool> &) {
 		std::vector<std::pair<float, short unsigned int>> the_leptons;
 
 		for (short unsigned int ilep = 0; ilep < ptleptons.size(); ilep++)
@@ -275,7 +275,7 @@ inline auto FindLeptonsLoose(const float ptelecut, const float ptmuocut)
 inline auto FindLeptonsLooseMC(const float ptelecut, const float ptmuocut)
 {
 
-	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, const ROOT::VecOps::RVec<bool> &isSignallep, const ROOT::VecOps::RVec<int> &Originlep, const int ChannelNumber) {
+	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, const ROOT::VecOps::RVec<bool> &, const ROOT::VecOps::RVec<int> &Originlep, const int ChannelNumber) {
 		std::vector<std::pair<float, short unsigned int>> the_leptons;
 
 		for (short unsigned int ilep = 0; ilep < ptleptons.size(); ilep++)
@@ -326,7 +326,7 @@ inline auto FindLeptonsLooseMC(const float ptelecut, const float ptmuocut)
 inline auto FindLeptonsLooseMC_withFakes(const float ptelecut, const float ptmuocut)
 {
 
-	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, const ROOT::VecOps::RVec<bool> &isSignallep, const ROOT::VecOps::RVec<int> &Originlep, const int ChannelNumber) {
+	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, const ROOT::VecOps::RVec<bool> &, const ROOT::VecOps::RVec<int> &, const int) {
 		std::vector<std::pair<float, short unsigned int>> the_leptons;
 
 		for (short unsigned int ilep = 0; ilep < ptleptons.size(); ilep++)
@@ -445,7 +445,7 @@ inline auto FindORLeptons()
 
 inline auto FindSignalLeptons_withFakes(const float ptelecut, const float ptmuocut)
 {
-	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, const ROOT::VecOps::RVec<bool> &isSignallep, const ROOT::VecOps::RVec<int> &Originlep, const int ChannelNumber) {
+	return [ptelecut, ptmuocut](const ROOT::VecOps::RVec<float> &ptleptons, const ROOT::VecOps::RVec<float> &etaleptons, const ROOT::VecOps::RVec<int> &flavlep, const ROOT::VecOps::RVec<bool> &passORlep, const ROOT::VecOps::RVec<bool> &isSignallep, const ROOT::VecOps::RVec<int> &, const int) {
 		std::vector<std::pair<float, short unsigned int>> the_leptons;
 		for (short unsigned int ilep = 0; ilep < ptleptons.size(); ilep++)
 		{
