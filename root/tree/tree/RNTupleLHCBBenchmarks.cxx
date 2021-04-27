@@ -21,7 +21,6 @@ double GetKE(double px, double py, double pz)
 static void BM_RNTuple_LHCB(benchmark::State &state)
 {
    using RNTupleReader = ROOT::Experimental::RNTupleReader;
-   using RNTupleModel = ROOT::Experimental::RNTupleModel;
 
    auto ntuple = RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
    auto viewH1IsMuon = ntuple->GetView<int>("H1_isMuon");
