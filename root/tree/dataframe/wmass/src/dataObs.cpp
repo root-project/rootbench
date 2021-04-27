@@ -30,8 +30,6 @@ RNode dataObs::run(RNode d){
   std::vector<std::string> PDF;
   for(int i =0; i<102; i++) PDF.push_back("replica" + std::to_string(i+1));
 
-  auto multByWeight = [](float a, const ROOT::VecOps::RVec<float> &w){ return a*w;};
-
   // then template to be fixed
 
   auto dFix = d.Filter("accMapEta<0.4");

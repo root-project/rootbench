@@ -3,7 +3,7 @@
 
 RNode getWeights::run(RNode d){
 
-    auto getNorm = [](float Wpt, float Wrap, const ROOT::VecOps::RVec<float> &AngCoeff, ROOT::VecOps::RVec<float> harmonicsVec, float totMap){
+    auto getNorm = [](float, float, const ROOT::VecOps::RVec<float> &AngCoeff, ROOT::VecOps::RVec<float> harmonicsVec, float totMap){
 
         float norm = harmonicsVec[8]*totMap;
         

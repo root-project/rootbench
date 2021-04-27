@@ -1,7 +1,7 @@
 #include "inc/TH1weightsHelper.hpp"
    /// This constructor takes all the parameters necessary to build the THnTs. In addition, it requires the names of
    /// the columns which will be used.
-   TH1weightsHelper::TH1weightsHelper(std::string name, std::string title, 
+   TH1weightsHelper::TH1weightsHelper(std::string name, std::string,
                     int nbinsX, std::vector<float> xbins,
                     std::vector<std::string> weightNames
                     )
