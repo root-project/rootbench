@@ -26,6 +26,7 @@ inline Double_t uniform_random(Double_t a, Double_t b)
           for(int i = 0;i < 16384;i++)                         \
               output_array[i] = TMath::tmathfunc(input_array1[i]);   \
       }                                                        \
+     (void)output_array;                                       \
   }
 
 #define BENCHMARK_VECTORIZED_TMATH_FUNCTION(tmathfunc, a, b)             \
