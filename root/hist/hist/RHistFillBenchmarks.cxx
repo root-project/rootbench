@@ -163,8 +163,8 @@ static void BM_RHist_ConcurrentFill(benchmark::State &state)
 
    ROOT::Experimental::RHistConcurrentFillManager<ROOT::Experimental::RH2D> fillMgr(hist);
       
-   std::size_t nbOfThreads = state.range(1);
-   std::thread threads[nbOfThreads];
+   const std::size_t nbOfThreads = state.range(1);
+   std::vector<std::thread> threads(nbOfThreads);
 
    for (auto _ : state) {
       // ConcurrentFill without weight
