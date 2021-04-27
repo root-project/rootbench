@@ -4,6 +4,7 @@
 #include "benchmark/benchmark.h"
 #include "rootbench/RBConfig.h"
 #include "Math/Vector4D.h"
+#include "TCanvas.h"
 
 /*
  * The original benchmark code and also the original input file can be found here:
@@ -35,7 +36,9 @@ void benchmark1_jitted(unsigned int nthreads)
    auto h = df.Histo1D({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark1_jitted.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark1_jitted.png");
 #endif
 }
 
@@ -55,7 +58,9 @@ void benchmark1_compiled(unsigned int nthreads)
    auto h = df.Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark1_compiled.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark1_compiled.png");
 #endif
 }
 
@@ -77,7 +82,9 @@ void benchmark2_jitted(unsigned int nthreads)
    auto h = df.Histo1D({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "Jet_pt");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark2_jitted.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark2_jitted.png");
 #endif
 }
 
@@ -97,7 +104,9 @@ void benchmark2_compiled(unsigned int nthreads)
    auto h = df.Histo1D<ROOT::RVec<float>>({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "Jet_pt");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark2_compiled.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark2_compiled.png");
 #endif
 }
 
@@ -120,7 +129,9 @@ void benchmark3_jitted(unsigned int nthreads)
                .Histo1D({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark3_jitted.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark3_jitted.png");
 #endif
 }
 
@@ -142,7 +153,9 @@ void benchmark3_compiled(unsigned int nthreads)
                .Histo1D<ROOT::RVec<float>>({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark3_compiled.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark3_compiled.png");
 #endif
 }
 
@@ -165,7 +178,9 @@ void benchmark4_jitted(unsigned int nthreads)
                .Histo1D({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark4_jitted.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark4_jitted.png");
 #endif
 }
 
@@ -190,7 +205,9 @@ void benchmark4_compiled(unsigned int nthreads)
                .Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark4_compiled.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark4_compiled.png");
 #endif
 }
 
@@ -235,7 +252,9 @@ void benchmark5_jitted(unsigned int nthreads)
                .Histo1D({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark5_jitted.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark5_jitted.png");
 #endif
 }
 
@@ -260,7 +279,9 @@ void benchmark5_compiled(unsigned int nthreads)
                .Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark5_compiled.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark5_compiled.png");
 #endif
 }
 
@@ -316,8 +337,13 @@ void benchmark6_jitted(unsigned int nthreads)
    *h1;
    *h2;
 #ifndef NDEBUG
-   h1->SaveAs("benchmark6_jitted_1.pdf");
-   h2->SaveAs("benchmark6_jitted_2.pdf");
+   TCanvas c;
+   c.Divide(2, 1);
+   c.cd(1);
+   h1->Draw();
+   c.cd(2);
+   h2->Draw();
+   c.SaveAs("benchmark6_jitted.png");
 #endif
 }
 
@@ -348,8 +374,13 @@ void benchmark6_compiled(unsigned int nthreads)
    *h1;
    *h2;
 #ifndef NDEBUG
-   h1->SaveAs("benchmark6_compiled_1.pdf");
-   h2->SaveAs("benchmark6_compiled_2.pdf");
+   TCanvas c;
+   c.Divide(2, 1);
+   c.cd(1);
+   h1->Draw();
+   c.cd(2);
+   h2->Draw();
+   c.SaveAs("benchmark6_compiled.png");
 #endif
 }
 
@@ -405,7 +436,9 @@ void benchmark7_jitted(unsigned int nthreads)
          .Histo1D({"", ";Jet p_{T} sum (GeV);N_{Events}", 100, 15, 200}, "goodJet_sumPt");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark7_jitted.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark7_jitted.png");
 #endif
 }
 
@@ -437,7 +470,9 @@ void benchmark7_compiled(unsigned int nthreads)
          .Histo1D<float>({"", ";Jet p_{T} sum (GeV);N_{Events}", 100, 15, 200}, "goodJet_sumPt");
    *h;
 #ifndef NDEBUG
-   h->SaveAs("benchmark7_compiled.pdf");
+   TCanvas c;
+   h->Draw();
+   c.SaveAs("benchmark7_compiled.png");
 #endif
 }
 
@@ -513,8 +548,13 @@ void benchmark8_jitted(unsigned int nthreads)
    *h1;
    *h2;
 #ifndef NDEBUG
-   h1->SaveAs("benchmark8_jitted_1.pdf");
-   h2->SaveAs("benchmark8_jitted_2.pdf");
+   TCanvas c;
+   c.Divide(2, 1);
+   c.cd(1);
+   h1->Draw();
+   c.cd(2);
+   h2->Draw();
+   c.SaveAs("benchmark8_jitted.png");
 #endif
 }
 
@@ -553,8 +593,13 @@ void benchmark8_compiled(unsigned int nthreads)
    *h1;
    *h2;
 #ifndef NDEBUG
-   h1->SaveAs("benchmark8_compiled_1.pdf");
-   h2->SaveAs("benchmark8_compiled_2.pdf");
+   TCanvas c;
+   c.Divide(2, 1);
+   c.cd(1);
+   h1->Draw();
+   c.cd(2);
+   h2->Draw();
+   c.SaveAs("benchmark8_compiled.png");
 #endif
 }
 
