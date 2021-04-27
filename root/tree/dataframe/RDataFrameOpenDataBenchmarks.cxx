@@ -33,6 +33,9 @@ void benchmark1_jitted(unsigned int nthreads) {
     ROOT::RDataFrame df("Events", filepath10M);
     auto h = df.Histo1D({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark1_jitted.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark1_jitted(benchmark::State &state)
@@ -49,6 +52,9 @@ void benchmark1_compiled(unsigned int nthreads) {
     ROOT::RDataFrame df("Events", filepath10M);
     auto h = df.Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark1_compiled.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark1_compiled(benchmark::State &state)
@@ -58,8 +64,7 @@ static void BM_RDataFrame_OpenDataBenchmark1_compiled(benchmark::State &state)
       benchmark1_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 2
 
@@ -68,6 +73,9 @@ void benchmark2_jitted(unsigned int nthreads) {
     ROOT::RDataFrame df("Events", filepath10M);
     auto h = df.Histo1D({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "Jet_pt");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark2_jitted.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark2_jitted(benchmark::State &state)
@@ -77,14 +85,16 @@ static void BM_RDataFrame_OpenDataBenchmark2_jitted(benchmark::State &state)
       benchmark2_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark2_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
     ROOT::RDataFrame df("Events", filepath10M);
     auto h = df.Histo1D<ROOT::RVec<float>>({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "Jet_pt");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark2_compiled.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark2_compiled(benchmark::State &state)
@@ -94,8 +104,7 @@ static void BM_RDataFrame_OpenDataBenchmark2_compiled(benchmark::State &state)
       benchmark2_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark2_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 3
 
@@ -105,6 +114,9 @@ void benchmark3_jitted(unsigned int nthreads) {
     auto h = df.Define("goodJet_pt", "Jet_pt[Jet_eta > 1.0]")
                .Histo1D({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark3_jitted.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark3_jitted(benchmark::State &state)
@@ -114,8 +126,7 @@ static void BM_RDataFrame_OpenDataBenchmark3_jitted(benchmark::State &state)
       benchmark3_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark3_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -124,6 +135,9 @@ void benchmark3_compiled(unsigned int nthreads) {
     auto h = df.Define("goodJet_pt", goodJetPt, {"Jet_pt", "Jet_eta"})
                .Histo1D<ROOT::RVec<float>>({"", ";Jet p_{T} (GeV);N_{Events}", 100, 15, 60}, "goodJet_pt");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark3_compiled.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark3_compiled(benchmark::State &state)
@@ -133,8 +147,7 @@ static void BM_RDataFrame_OpenDataBenchmark3_compiled(benchmark::State &state)
       benchmark3_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark3_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 4
 
@@ -144,6 +157,9 @@ void benchmark4_jitted(unsigned int nthreads) {
     auto h = df.Filter("Sum(Jet_pt > 40 && abs(Jet_eta) < 1.0) > 1", "More than one jet with pt > 40 and abs(eta) < 1.0")
                .Histo1D({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark4_jitted.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark4_jitted(benchmark::State &state)
@@ -153,8 +169,7 @@ static void BM_RDataFrame_OpenDataBenchmark4_jitted(benchmark::State &state)
       benchmark4_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark4_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -164,6 +179,9 @@ void benchmark4_compiled(unsigned int nthreads) {
     auto h = df.Filter(filter, {"Jet_pt", "Jet_eta"}, "More than one jet with pt > 40 and abs(eta) < 1.0")
                .Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark4_compiled.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark4_compiled(benchmark::State &state)
@@ -173,8 +191,7 @@ static void BM_RDataFrame_OpenDataBenchmark4_compiled(benchmark::State &state)
       benchmark4_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark4_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 5
 
@@ -203,6 +220,9 @@ void benchmark5_jitted(unsigned int nthreads) {
                .Filter("Sum(Dimuon_mass > 60 && Dimuon_mass < 100) > 0", "At least one dimuon system with mass in range [60, 100]")
                .Histo1D({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark5_jitted.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark5_jitted(benchmark::State &state)
@@ -212,8 +232,7 @@ static void BM_RDataFrame_OpenDataBenchmark5_jitted(benchmark::State &state)
       benchmark5_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark5_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -224,6 +243,9 @@ void benchmark5_compiled(unsigned int nthreads) {
                        "At least one dimuon system with mass in range [60, 100]")
                .Histo1D<float>({"", ";MET (GeV);N_{Events}", 100, 0, 2000}, "MET_sumet");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark5_compiled.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark5_compiled(benchmark::State &state)
@@ -233,8 +255,7 @@ static void BM_RDataFrame_OpenDataBenchmark5_compiled(benchmark::State &state)
       benchmark5_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark5_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 6
 
@@ -277,6 +298,10 @@ void benchmark6_jitted(unsigned int nthreads) {
                  .Histo1D({"", ";Trijet leading b-tag;N_{Events}", 100, 0, 1}, "Trijet_leadingBtag");
     *h1;
     *h2;
+    #ifndef NDEBUG
+        h1->SaveAs("benchmark6_jitted_1.pdf");
+        h2->SaveAs("benchmark6_jitted_2.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark6_jitted(benchmark::State &state)
@@ -286,8 +311,7 @@ static void BM_RDataFrame_OpenDataBenchmark6_jitted(benchmark::State &state)
       benchmark6_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark6_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -304,6 +328,10 @@ void benchmark6_compiled(unsigned int nthreads) {
                  .Histo1D<float>({"", ";Trijet leading b-tag;N_{Events}", 100, 0, 1}, "Trijet_leadingBtag");
     *h1;
     *h2;
+    #ifndef NDEBUG
+        h1->SaveAs("benchmark6_compiled_1.pdf");
+        h2->SaveAs("benchmark6_compiled_2.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark6_compiled(benchmark::State &state)
@@ -313,8 +341,7 @@ static void BM_RDataFrame_OpenDataBenchmark6_compiled(benchmark::State &state)
       benchmark6_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 7
 
@@ -354,6 +381,9 @@ void benchmark7_jitted(unsigned int nthreads) {
                .Define("goodJet_sumPt", "Sum(Jet_pt[goodJet])")
                .Histo1D({"", ";Jet p_{T} sum (GeV);N_{Events}", 100, 15, 200}, "goodJet_sumPt");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark7_jitted.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark7_jitted(benchmark::State &state)
@@ -363,8 +393,7 @@ static void BM_RDataFrame_OpenDataBenchmark7_jitted(benchmark::State &state)
       benchmark7_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark7_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -381,6 +410,9 @@ void benchmark7_compiled(unsigned int nthreads) {
                        {"goodJet", "Jet_pt"})
                .Histo1D<float>({"", ";Jet p_{T} sum (GeV);N_{Events}", 100, 15, 200}, "goodJet_sumPt");
     *h;
+    #ifndef NDEBUG
+        h->SaveAs("benchmark7_compiled.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark7_compiled(benchmark::State &state)
@@ -390,8 +422,7 @@ static void BM_RDataFrame_OpenDataBenchmark7_compiled(benchmark::State &state)
       benchmark7_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 // Benchmark 8
 
@@ -450,6 +481,10 @@ void benchmark8_jitted(unsigned int nthreads) {
     auto h2 = df2.Histo1D({"", ";Lepton p_{T} (GeV);N_{Events}", 100, 15, 60}, "AdditionalLepton_pt");
     *h1;
     *h2;
+    #ifndef NDEBUG
+        h1->SaveAs("benchmark8_jitted_1.pdf");
+        h2->SaveAs("benchmark8_jitted_2.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark8_jitted(benchmark::State &state)
@@ -459,8 +494,7 @@ static void BM_RDataFrame_OpenDataBenchmark8_jitted(benchmark::State &state)
       benchmark8_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark8_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -486,6 +520,10 @@ void benchmark8_compiled(unsigned int nthreads) {
     auto h2 = df2.Histo1D<float>({"", ";Lepton p_{T} (GeV);N_{Events}", 100, 15, 60}, "AdditionalLepton_pt");
     *h1;
     *h2;
+    #ifndef NDEBUG
+        h1->SaveAs("benchmark8_compiled_1.pdf");
+        h2->SaveAs("benchmark8_compiled_2.pdf");
+    #endif
 }
 
 static void BM_RDataFrame_OpenDataBenchmark8_compiled(benchmark::State &state)
@@ -495,8 +533,7 @@ static void BM_RDataFrame_OpenDataBenchmark8_compiled(benchmark::State &state)
       benchmark8_compiled(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 
 BENCHMARK_MAIN();
