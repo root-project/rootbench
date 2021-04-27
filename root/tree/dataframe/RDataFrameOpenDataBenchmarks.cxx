@@ -21,6 +21,8 @@ void set_nthreads(unsigned int nthreads) {
    } else {
       ROOT::DisableImplicitMT();
    }
+#else
+   Warn("ROOT was built without IMT support, all tests will be run on a single thread.");
 #endif // R__USE_IMT
 }
 
@@ -40,8 +42,7 @@ static void BM_RDataFrame_OpenDataBenchmark1_jitted(benchmark::State &state)
       benchmark1_jitted(nthreads);
    }
 }
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
-BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
+BENCHMARK(BM_RDataFrame_OpenDataBenchmark1_jitted)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0)->Arg(8);
 
 void benchmark1_compiled(unsigned int nthreads) {
     set_nthreads(nthreads);
@@ -497,6 +498,5 @@ static void BM_RDataFrame_OpenDataBenchmark8_compiled(benchmark::State &state)
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(0);
 BENCHMARK(BM_RDataFrame_OpenDataBenchmark8_compiled)->Unit(benchmark::kMillisecond)->Repetitions(1)->Arg(8);
 
-// Main
 
 BENCHMARK_MAIN();
