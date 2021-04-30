@@ -51,7 +51,7 @@ RNode getACValues::run(RNode d){
     
     getAngCoeff(_h2Group[0]);
 
-    auto getACValues = [this](float y, float pt)mutable{
+    auto _getACValues = [this](float y, float pt)mutable{
 
         ROOT::VecOps::RVec<float> AngCoeff;
         
@@ -67,7 +67,7 @@ RNode getACValues::run(RNode d){
 
     };
 
-    auto d1 = d.Define("AngCoeffVec", getACValues, {"Wrap_preFSR_abs", "Wpt_preFSR"});
+    auto d1 = d.Define("AngCoeffVec", _getACValues, {"Wrap_preFSR_abs", "Wpt_preFSR"});
     
     return d1;
 
