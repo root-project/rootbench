@@ -31,7 +31,7 @@ int LoopSUSYFrame :: Execute()
 	}
 
 	auto c = dataFrame.Count();
-	c.OnPartialResult(100000, [](ULong64_t c) { std::cerr << "Processed " << c << " events" << std::endl; });
+	c.OnPartialResult(100000, [](ULong64_t _c) { std::cerr << "Processed " << _c << " events" << std::endl; });
 
 	//Check that at least one event passed the cuts for at least one of the systematic variations
 	int ret = 0;
