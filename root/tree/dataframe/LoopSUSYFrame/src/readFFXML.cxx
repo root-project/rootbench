@@ -36,7 +36,7 @@ readFFXML::readFFXML(const char* filename)
    delete xml;
 }
 
-void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std::vector<TString> &ele_systList, std::vector<TString> &muon_systList, std::map<TString,std::vector<TString>> &eleMap,  std::map<TString,std::vector<TString>> &_muonMap)
+void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std::vector<TString> &_ele_systList, std::vector<TString> &muon_systList, std::map<TString,std::vector<TString>> &_eleMap,  std::map<TString,std::vector<TString>> &_muonMap)
 
 {
    // this function display all accessible information about xml node and its children
@@ -72,7 +72,7 @@ void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std
       try{
         TString systs = content.ReplaceAll(" ","");         
         if (vAttrName[0].Contains("affects") ){
-           if ( vAttrVal[0].Contains("electron") ) ele_systList.push_back(systs); 
+           if ( vAttrVal[0].Contains("electron") ) _ele_systList.push_back(systs); 
            if ( vAttrVal[0].Contains("muon") ) muon_systList.push_back(systs); 
         }
 
@@ -87,8 +87,8 @@ void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std
         TString parentName = xml->GetNodeName(parent);
 
         if (parentName.Contains("electron")){
-           for(unsigned int i=0; i<vAttrName.size();i++) eleMap[vAttrName[i]].push_back(vAttrVal[i]);          
-           eleMap["FFval"].push_back(content);
+           for(unsigned int i=0; i<vAttrName.size();i++) _eleMap[vAttrName[i]].push_back(vAttrVal[i]);          
+           _eleMap["FFval"].push_back(content);
         } 
         if (parentName.Contains("muon")){
            for(unsigned int i=0; i<vAttrName.size();i++) _muonMap[vAttrName[i]].push_back(vAttrVal[i]);          
@@ -105,7 +105,7 @@ void readFFXML::GetNode(TXMLEngine* xml, XMLNodePointer_t node, Int_t level, std
    // display all child nodes
    XMLNodePointer_t child = xml->GetChild(node);
    while (child!=0) {
-      GetNode(xml, child, level+2, ele_systList, muon_systList, eleMap, _muonMap);
+      GetNode(xml, child, level+2, _ele_systList, muon_systList, _eleMap, _muonMap);
       child = xml->GetNext(child);
    }
 }
