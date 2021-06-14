@@ -13,10 +13,23 @@ set(CMAKE_MODULE_PATH
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules"
   )
 
-#Define ROOTbench source tree
+#---Define ROOTbench source tree
 set(ROOTBENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
+#---Include rootbench options
+include(RootBenchOptions)
+
 include(AddRootBench)
+
+#---ROOTbench dependencies
+find_program(TIME_EXECUTABLE time)
+# Testing valid output of /usr/bin/time -v
+exec_program(${TIME_EXECUTABLE} ARGS -v ${CMAKE_COMMAND} -E environment OUTPUT_VARIABLE TIME_OUTPUT RETURN_VALUE TIME_EXECUTABLE_VALID)
+if(NOT TIME_EXECUTABLE)
+    if(NOT TIME_EXECUTABLE_VALID)
+      message(FATAL_ERROR "/usr/bin/time is a requirement for rootbench.git")
+    endif()
+endif()
 
 # You need first to tell CMake where to find the ROOT installation. This can either be the
 # final ROOT installation or a local build directory. In both cases it is using
@@ -52,12 +65,21 @@ endif()
 include(GoogleBenchmark)
 include(PytestBenchmark)
 
+if(flamegraph)
+  # Check if perf is available in OS
+  find_program(PERF_EXECUTABLE perf)
+  if(NOT PERF_EXECUTABLE)
+    message(WARNING "Perf is not available in your system, please install it.")
+    set(flamegraph OFF CACHE BOOL "")
+  else()
+    include(FlameGraph)
+    message(STATUS "INFO: CPU & Mem FlameGraph generation option is enabled.")
+  endif()
+endif()
+
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
 add_definitions(${ROOT_CXX_FLAGS})
-
-#---Include rootbench options
-include(RootBenchOptions)
 
 #---Enable test coverage -----------------------------------------------------------------------
 if(coverage)
@@ -87,3 +109,4 @@ add_subdirectory(tools)
 
 #---Add the now all the benchmark sub-directories on this repository
 add_subdirectory(root)
+configure_file(${PROJECT_SOURCE_DIR}/tools/.rootrc ${PROJECT_BINARY_DIR} COPYONLY)
