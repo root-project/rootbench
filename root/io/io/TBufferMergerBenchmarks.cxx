@@ -12,7 +12,7 @@
 #include <thread>
 #include <sys/stat.h>
 
-using namespace ROOT::Experimental;
+using ROOT::TBufferMerger;
 
 int GetNumberHardwareThreads()
 {
@@ -32,7 +32,6 @@ TBufferMerger *Merger = nullptr;
 static void BM_TBufferFile_GetFile(benchmark::State &state)
 {
    ROOT::EnableThreadSafety();
-   using namespace ROOT::Experimental;
    if (state.thread_index == 0) {
       // Setup code here.
       // FIXME: We should have a way to pass an externally constructed file or stream to
@@ -88,7 +87,6 @@ inline void FillTreeWithRandomData(TBufferMerger &merger, size_t nEntriesPerWork
 static void BM_TBufferFile_FillTreeWithRandomData(benchmark::State &state)
 {
    ROOT::EnableThreadSafety();
-   using namespace ROOT::Experimental;
    if (state.thread_index == 0) {
       // Setup code here.
       Merger = new TBufferMerger(std::unique_ptr<TMemFile>(new TMemFile("virtual_file.root", "RECREATE")));
