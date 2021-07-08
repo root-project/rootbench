@@ -18,6 +18,10 @@ using namespace RooFit;
 using namespace RooStats;
 using namespace HistFactory;
 
+namespace {
+  constexpr bool verbose = false;
+} // namespace
+
 Sample addVariations(Sample asample, int nnps, bool channel_crosstalk, int channel)
 {
    for (int nuis = 0; nuis < nnps; ++nuis) {
@@ -25,8 +29,10 @@ Sample addVariations(Sample asample, int nnps, bool channel_crosstalk, int chann
       Double_t random = R->Rndm();
       double uncertainty_up = (1 + random) / sqrt(100);
       double uncertainty_down = (1 - random) / sqrt(100);
-      std::cout << "in channel " << channel << "nuisance +/- [" << uncertainty_up << "," << uncertainty_down << "]"
-                << std::endl;
+      if(verbose) {
+        std::cout << "in channel " << channel << "nuisance +/- [" << uncertainty_up << "," << uncertainty_down << "]"
+                  << std::endl;
+      }
       std::string nuis_name = "norm_uncertainty_" + std::to_string(nuis);
       if (!channel_crosstalk) {
          nuis_name = nuis_name + "_channel_" + std::to_string(channel);
@@ -40,6 +46,7 @@ Channel makeChannel(int channel, int nbins, int nnps)
 {
    std::string channel_name = "Region" + std::to_string(channel);
    Channel chan(channel_name);
+   gDirectory = nullptr;
    auto Signal_Hist = new TH1F("Signal", "Signal", nbins, 0, nbins);
    auto Background_Hist = new TH1F("Background", "Background", nbins, 0, nbins);
    auto Data_Hist = new TH1F("Data", "Data", nbins, 0, nbins);
@@ -75,7 +82,9 @@ Channel makeChannel(int channel, int nbins, int nnps)
 
 void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const char *name_rootfile = "")
 {
-   std::cout << "in build binned test with output" << name_rootfile << std::endl;
+   if(verbose) {
+     std::cout << "in build binned test with output" << name_rootfile << std::endl;
+   }
    Measurement meas("meas", "meas");
    meas.SetPOI("SignalStrength");
    meas.SetLumi(1.0);
@@ -98,7 +107,7 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
    while ((arg = iter.next())) {
       if (arg->IsA() == RooRealSumPdf::Class()) {
          arg->setAttribute("BinnedLikelihood");
-         std::cout << "component " << arg->GetName() << " is a binned likelihood" << std::endl;
+         if(verbose) std::cout << "component " << arg->GetName() << " is a binned likelihood" << std::endl;
       }
    }
    ws->SetName("BinnedWorkspace");
@@ -121,7 +130,7 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    TFile *infile = new TFile("workspace.root", "RECREATE");
    //   if (infile->IsZombie()) {
    buildBinnedTest(chan, 10, 2, "workspace.root");
-   std::cout << "Workspace for tests was created!" << std::endl;
+   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -157,7 +166,7 @@ static void BM_RooFit_BinnedTestHesse_NChannel(benchmark::State &state)
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
    buildBinnedTest(chan, 10, 2, "workspace.root");
-   std::cout << "Workspace for tests was created!" << std::endl;
+   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //   }
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -197,7 +206,7 @@ static void BM_RooFit_BinnedTestMinos_NChannel(benchmark::State &state)
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
    buildBinnedTest(chan, 10, 2, "workspace.root");
-   std::cout << "Workspace for tests was created!" << std::endl;
+   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -266,7 +275,7 @@ static void BM_RooFit_BinnedTestMigrad_NBin(benchmark::State &state)
    TFile *infile = new TFile("workspace.root", "RECREATE");
    //   if (infile->IsZombie()) {
    buildBinnedTest(1, bin, 2, "workspace.root");
-   std::cout << "Workspace for tests was created!" << std::endl;
+   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -301,7 +310,7 @@ static void BM_RooFit_BinnedTestHesse_NBin(benchmark::State &state)
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
    buildBinnedTest(1, bin, 2, "workspace.root");
-   std::cout << "Workspace for tests was created!" << std::endl;
+   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -341,7 +350,7 @@ static void BM_RooFit_BinnedTestMinos_NBin(benchmark::State &state)
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
    buildBinnedTest(1, bin, 2, "workspace.root");
-   std::cout << "Workspace for tests was created!" << std::endl;
+   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //   }
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -373,9 +382,11 @@ static void BM_RooFit_BinnedTestMinos_NBin(benchmark::State &state)
 
 static void BinArguments(benchmark::internal::Benchmark *b)
 {
-   for (int i = 1; i <= 4; ++i)
-      for (int j = 1; j <= 3; ++j)
+   for (int i = 1; i <= 4; ++i) {
+      for (int j = 1; j <= 3; ++j) {
          b->Args({i * 5, j});
+      }
+   }
 }
 
 BENCHMARK(BM_RooFit_BinnedTestMigrad_NBin)
