@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 std::vector<std::string> AddWeightBranches(std::vector<std::string> &inBranches);
 
