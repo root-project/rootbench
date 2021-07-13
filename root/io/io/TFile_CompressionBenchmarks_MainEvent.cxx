@@ -102,8 +102,6 @@ static void BM_MainEvent_Decompress_ZSTD(benchmark::State &state) {
    BM_MainEvent_Decompress(state, 5);
 }
 
-
-
 BENCHMARK(BM_MainEvent_Compress_ZLIB)
 ->Arg(1)->Arg(6)->Arg(9)
 ->Unit(benchmark::kMillisecond)->Iterations(5);
@@ -136,6 +134,7 @@ BENCHMARK(BM_MainEvent_Decompress_LZ4)
 BENCHMARK(BM_MainEvent_Decompress_ZSTD)
 ->Arg(1)->Arg(6)->Arg(9)
 ->Unit(benchmark::kMillisecond)->Iterations(5);
+
 
 
 BENCHMARK_MAIN();
