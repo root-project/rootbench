@@ -20,6 +20,25 @@ using namespace HistFactory;
 
 namespace {
   constexpr bool verbose = false;
+
+  // test matrix configuration
+  const std::vector<int> nChannelsVector = {1, 2, 3};
+  const std::vector<int> nBinsVector {5, 10, 15};
+  const int nBinsForChannelScan = 10;
+  const int nChannelsForBinScan = 1;
+  const std::vector<int> nCPUVector {1, 2, 3};
+
+  constexpr bool batchMode = true;
+
+  auto const timeUnit = benchmark::kMillisecond;
+
+  void setupRooMsgService() {
+     RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+     RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+     RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+     RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+  }
+
 } // namespace
 
 Sample addVariations(Sample asample, int nnps, bool channel_crosstalk, int channel)
@@ -116,28 +135,26 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
 
 //############## End of Base Algorithms ##############################
 //####################################################################
-//############## Start Of #Channel tests #############################
+//############## Start Of # Tests #############################
 
-static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
+static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
 {
    gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+   setupRooMsgService();
    int chan = state.range(0);
-   int cpu = state.range(1);
-   TFile *infile = new TFile("workspace.root", "RECREATE");
+   int nbins = state.range(1);
+   int cpu = state.range(2);
+   auto infile = std::make_unique<TFile>("workspace.root", "RECREATE");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(chan, 10, 2, "workspace.root");
+   buildBinnedTest(chan, nbins, 2, "workspace.root");
    if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //}
-   infile = TFile::Open("workspace.root");
+   infile.reset(TFile::Open("workspace.root"));
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
-   RooAbsData *data = w->data("obsData");
-   ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
-   RooAbsPdf *pdf = w->pdf(mc->GetPdf()->GetName());
-   RooAbsReal *nll = pdf->createNLL(*data, NumCPU(cpu, 0));
+   std::unique_ptr<RooAbsData> data{w->data("obsData")};
+   std::unique_ptr<ModelConfig> mc{static_cast<ModelConfig *>(w->genobj("ModelConfig"))};
+   std::unique_ptr<RooAbsPdf> pdf{w->pdf(mc->GetPdf()->GetName())};
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), BatchMode(batchMode))};
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -146,36 +163,30 @@ static void BM_RooFit_BinnedTestMigrad_NChannel(benchmark::State &state)
    for (auto _ : state) {
       m.migrad();
    }
-   delete data;
-   delete infile;
-   delete mc;
-   delete pdf;
-   delete nll;
 }
 
-static void BM_RooFit_BinnedTestHesse_NChannel(benchmark::State &state)
+static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
 {
 
    gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+   setupRooMsgService();
    int chan = state.range(0);
-   int cpu = state.range(1);
+   int nbins = state.range(1);
+   int cpu = state.range(2);
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(chan, 10, 2, "workspace.root");
+   buildBinnedTest(chan, nbins, 2, "workspace.root");
    if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //   }
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
    RooAbsData *data = w->data("obsData");
    ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
-   RooAbsPdf *pdf = w->pdf(mc->GetPdf()->GetName());
-   RooAbsReal *nll = pdf->createNLL(*data, NumCPU(cpu, 0));
-   RooArgSet *params = (RooArgSet *)pdf->getParameters(data);
-   w->saveSnapshot("no_fit", *params, kTRUE);
+   std::unique_ptr<RooAbsPdf> pdf{w->pdf(mc->GetPdf()->GetName())};
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), BatchMode(batchMode))};
+   RooArgSet params;
+   pdf->getParameters(data->get(), params);
+   w->saveSnapshot("no_fit", params, true);
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -189,33 +200,30 @@ static void BM_RooFit_BinnedTestHesse_NChannel(benchmark::State &state)
    delete data;
    delete infile;
    delete mc;
-   delete pdf;
-   delete nll;
 }
 
-static void BM_RooFit_BinnedTestMinos_NChannel(benchmark::State &state)
+static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
 {
 
    gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+   setupRooMsgService();
    int chan = state.range(0);
-   int cpu = state.range(1);
-   TFile *infile = new TFile("workspace.root");
+   int nbins = state.range(1);
+   int cpu = state.range(2);
+   auto infile = std::make_unique<TFile>("workspace.root");
    //   if (infile->IsZombie()) {
-   buildBinnedTest(chan, 10, 2, "workspace.root");
+   buildBinnedTest(chan, nbins, 2, "workspace.root");
    if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
    //}
-   infile = TFile::Open("workspace.root");
+   infile.reset(TFile::Open("workspace.root"));
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
-   RooAbsData *data = w->data("obsData");
-   ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
-   RooAbsPdf *pdf = w->pdf(mc->GetPdf()->GetName());
-   RooAbsReal *nll = pdf->createNLL(*data, NumCPU(cpu, 0));
-   RooArgSet *params = (RooArgSet *)pdf->getParameters(data);
-   w->saveSnapshot("no_fit", *params, kTRUE);
+   std::unique_ptr<RooAbsData> data{w->data("obsData")};
+   std::unique_ptr<ModelConfig> mc{static_cast<ModelConfig *>(w->genobj("ModelConfig"))};
+   std::unique_ptr<RooAbsPdf> pdf{w->pdf(mc->GetPdf()->GetName())};
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), BatchMode(batchMode))};
+   RooArgSet params;
+   pdf->getParameters(data->get(), params);
+   w->saveSnapshot("no_fit", params, true);
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -227,182 +235,41 @@ static void BM_RooFit_BinnedTestMinos_NChannel(benchmark::State &state)
    for (auto _ : state) {
       m.minos();
    }
-   delete data;
-   delete infile;
-   delete mc;
-   delete pdf;
-   delete nll;
 }
 
-//############## Run # Channel Tests ###############################
+//############## Run # Tests ###############################
 
 static void ChanArguments(benchmark::internal::Benchmark *b)
 {
-   for (int i = 1; i <= 4; ++i)
-      for (int j = 1; j <= 3; ++j)
-         b->Args({i, j});
-}
-
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NChannel)
-   ->Apply(ChanArguments)
-   ->UseRealTime()
-   ->Unit(benchmark::kMicrosecond)
-   ->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestHesse_NChannel)
-   ->Apply(ChanArguments)
-   ->UseRealTime()
-   ->Unit(benchmark::kMicrosecond)
-   ->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestMinos_NChannel)
-   ->Apply(ChanArguments)
-   ->UseRealTime()
-   ->Unit(benchmark::kMicrosecond)
-   ->Iterations(1);
-
-//############## End Of #ChannelTtests ###############################
-//####################################################################
-//############## Start Of #Bin Tests #################################
-
-static void BM_RooFit_BinnedTestMigrad_NBin(benchmark::State &state)
-{
-   gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
-   int bin = state.range(0);
-   int cpu = state.range(1);
-   TFile *infile = new TFile("workspace.root", "RECREATE");
-   //   if (infile->IsZombie()) {
-   buildBinnedTest(1, bin, 2, "workspace.root");
-   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
-   //}
-   infile = TFile::Open("workspace.root");
-   RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
-   RooAbsData *data = w->data("obsData");
-   ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
-   RooAbsPdf *pdf = w->pdf(mc->GetPdf()->GetName());
-   RooAbsReal *nll = pdf->createNLL(*data, NumCPU(cpu, 0));
-   RooMinimizer m(*nll);
-   m.setPrintLevel(-1);
-   m.setStrategy(0);
-   m.setProfile(0);
-   m.setLogFile("benchmigradnbinlog");
-   for (auto _ : state) {
-      m.migrad();
+      // channel scan
+   for (int nChannels : nChannelsVector) {
+      for (int nCPU : nCPUVector) {
+         b->Args({nChannels, nBinsForChannelScan, nCPU});
+      }
    }
-   delete data;
-   delete infile;
-   delete mc;
-   delete pdf;
-   delete nll;
-}
 
-static void BM_RooFit_BinnedTestHesse_NBin(benchmark::State &state)
-{
-   gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
-   int bin = state.range(0);
-   int cpu = state.range(1);
-   TFile *infile = new TFile("workspace.root");
-   //   if (infile->IsZombie()) {
-   buildBinnedTest(1, bin, 2, "workspace.root");
-   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
-   //}
-   infile = TFile::Open("workspace.root");
-   RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
-   RooAbsData *data = w->data("obsData");
-   ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
-   RooAbsPdf *pdf = w->pdf(mc->GetPdf()->GetName());
-   RooAbsReal *nll = pdf->createNLL(*data, NumCPU(cpu, 0));
-   RooArgSet *params = (RooArgSet *)pdf->getParameters(data);
-   w->saveSnapshot("no_fit", *params, kTRUE);
-   RooMinimizer m(*nll);
-   m.setPrintLevel(-1);
-   m.setStrategy(0);
-   m.setProfile(0);
-   m.setLogFile("benchhessenbinlog");
-   m.migrad();
-   w->loadSnapshot("no_fit");
-   for (auto _ : state) {
-      m.hesse();
-   }
-   delete data;
-   delete infile;
-   delete mc;
-   delete pdf;
-   delete nll;
-}
-
-static void BM_RooFit_BinnedTestMinos_NBin(benchmark::State &state)
-{
-
-   gErrorIgnoreLevel = kInfo;
-   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
-   int bin = state.range(0);
-   int cpu = state.range(1);
-   TFile *infile = new TFile("workspace.root");
-   //   if (infile->IsZombie()) {
-   buildBinnedTest(1, bin, 2, "workspace.root");
-   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
-   //   }
-   infile = TFile::Open("workspace.root");
-   RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
-   RooAbsData *data = w->data("obsData");
-   ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
-   RooAbsPdf *pdf = w->pdf(mc->GetPdf()->GetName());
-   RooAbsReal *nll = pdf->createNLL(*data, NumCPU(cpu, 0));
-   RooArgSet *params = (RooArgSet *)pdf->getParameters(data);
-   w->saveSnapshot("no_fit", *params, kTRUE);
-   RooMinimizer m(*nll);
-   m.setPrintLevel(-1);
-   m.setStrategy(0);
-   m.setProfile(0);
-   m.setLogFile("benchhessenbinlog");
-   m.migrad();
-   m.hesse();
-   w->loadSnapshot("no_fit");
-   for (auto _ : state) {
-      m.minos();
-   }
-   delete data;
-   delete infile;
-   delete mc;
-   delete pdf;
-   delete nll;
-}
-
-//############## Run # Bin Tests ####################################
-
-static void BinArguments(benchmark::internal::Benchmark *b)
-{
-   for (int i = 1; i <= 4; ++i) {
-      for (int j = 1; j <= 3; ++j) {
-         b->Args({i * 5, j});
+   // bin scan
+   for (int nBins : nBinsVector) {
+      for (int nCPU : nCPUVector) {
+         b->Args({nChannelsForBinScan, nBins, nCPU});
       }
    }
 }
 
-BENCHMARK(BM_RooFit_BinnedTestMigrad_NBin)
-   ->Apply(BinArguments)
+BENCHMARK(BM_RooFit_BinnedTestMigrad)
+   ->Apply(ChanArguments)
    ->UseRealTime()
-   ->Unit(benchmark::kMicrosecond)
+   ->Unit(timeUnit)
    ->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestHesse_NBin)
-   ->Apply(BinArguments)
+BENCHMARK(BM_RooFit_BinnedTestHesse)
+   ->Apply(ChanArguments)
    ->UseRealTime()
-   ->Unit(benchmark::kMicrosecond)
+   ->Unit(timeUnit)
    ->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestMinos_NBin)
-   ->Apply(BinArguments)
+BENCHMARK(BM_RooFit_BinnedTestMinos)
+   ->Apply(ChanArguments)
    ->UseRealTime()
-   ->Unit(benchmark::kMicrosecond)
+   ->Unit(timeUnit)
    ->Iterations(1);
 
 //############## End Of Tests ########################################
