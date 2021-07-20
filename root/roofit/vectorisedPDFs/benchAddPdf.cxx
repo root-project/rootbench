@@ -19,8 +19,8 @@
  * Benchmark a simple mock fit model
  *    sum(x) = frac * Gauss(x) + (1-frac) * Exponential(x)
  *
- * Run 6 different workflows:
- * 0. Evaluate fit model for 2 M data events with batch data loading and SIMD (if compiler flags activated).
+ * We can run 6 different workflows:
+ * 0. Evaluate fit model for 1 M data events with batch data loading and SIMD (if compiler flags activated).
  * 1. As above, but use old RooFit strategy of single-value data loading.
  * 2. Compute probabilities for each data event. That is, run step 0 and normalise values.
  * 3. As above, but use old RooFit strategy.
@@ -38,8 +38,10 @@
 #include "RooExponential.h"
 #include "RooDataSet.h"
 #include "RunContext.h"
-
 #include "RooRandom.h"
+
+#include "SlowRooExponential.h"
+
 void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
   auto random = RooRandom::randomGenerator();
   if (seed != 0)
@@ -61,9 +63,10 @@ enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
 
 
 static void benchAddPdfGaussExp(benchmark::State& state) {
-  RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-  constexpr std::size_t nParamSets = 30;
-  constexpr std::size_t nEvents = 2000000;
+  const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
+  const bool useSlowRooExponential = state.range(1);
+  constexpr std::size_t nParamSets = 3;
+  constexpr std::size_t nEvents = 1000000;
 
   // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
   RooRealVar x("x", "x", -1.5, 40.5);
@@ -75,10 +78,15 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
   RooGaussian gauss("gauss", "gaussian PDF", x, mean, sigma);
 
   RooRealVar c1("c1", "Decay constant", -0.5, -10, -0.001);
-  RooExponential ex("Pois", "Poisson PDF", x, c1);
+  std::unique_ptr<RooAbsPdf> ex;
+  if (useSlowRooExponential) {
+    ex = std::make_unique<SlowRooExponential>("Pois", "Poisson PDF", x, c1);
+  } else {
+    ex = std::make_unique<RooExponential>("Pois", "Poisson PDF", x, c1);
+  }
 
   RooRealVar fractionGaus("fractionGaus", "Fraction of Gauss component", 0.5, 0., 1.);
-  RooAddPdf pdf("SumGausPois", "Sum of Gaus and Poisson", RooArgSet(gauss, ex), fractionGaus);
+  RooAddPdf pdf("SumGausPois", "Sum of Gaus and Poisson", RooArgSet(gauss, *ex), fractionGaus);
   // to avoid a warning when computing the   unnormalized RooAddPdf values
   pdf.fixCoefNormalization(x);
 
@@ -92,15 +100,19 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
   RooBatchCompute::RunContext evalData;
   std::vector<double> results(nEvents);
 
+  std::array<RooArgSet, nParamSets> paramSets;
+  unsigned int seed = 1337;
+  for (auto& paramSet : paramSets) {
+    randomiseParameters(parameters, seed++);
+    parameters.snapshot(paramSet);
+  }
+
   for (auto _ : state) {
-    for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
-      state.PauseTiming();
-      randomiseParameters(parameters, 1337+paramSetIndex);
-      state.ResumeTiming();
+    for (const auto& paramSet : paramSets) {
+      parameters = paramSet;
 
       evalData.clear();
       data->getBatches(evalData, 0, data->numEntries());
-      runConfig = static_cast<RunConfig_t>(runConfig % 6);
 
       if (runConfig == runBatchUnnorm) {
         auto batchResult = pdf.getValues(evalData, nullptr);
@@ -134,14 +146,17 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
   }
 };
 
-BENCHMARK(benchAddPdfGaussExp)->Unit(benchmark::kMillisecond)
-        ->Args({runBatchUnnorm})
-        ->Args({runSingleUnnorm})
-        ->Args({runBatchNorm})
-        ->Args({runSingleNorm})
-        ->Args({runBatchNormLogs})
-        ->Args({runSingleNormLogs})
-    ;
+BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp")->Unit(benchmark::kMillisecond)
+        ->Args({runBatchNorm, false})
+        ->Args({runSingleNorm, false})
+        ->Args({runBatchNormLogs, false})
+        ->Args({runSingleNormLogs, false});
+BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp(evaluateSpan fallback)")->Unit(benchmark::kMillisecond)
+        ->Args({runBatchNorm, true})
+        ->Args({runSingleNorm, true})
+        ->Args({runBatchNormLogs, true})
+        ->Args({runSingleNormLogs, true});
+
 
 
 BENCHMARK_MAIN();
