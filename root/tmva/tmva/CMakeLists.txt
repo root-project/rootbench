@@ -3,6 +3,11 @@ if(ROOT_tmva_FOUND)
       CrossValidationBenchmarks.cxx
       LABEL short
       LIBRARIES Core Tree MathCore TMVA)
+
+   RB_ADD_GBENCHMARK(BoostedDTBenchmarks
+      BoostedDTBenchmarks.cxx
+      LABEL short
+      LIBRARIES Core Tree MathCore TMVA)
 endif()
 
 if(ROOT_tmva_FOUND AND ROOT_tmva-cpu_FOUND AND ROOT_imt_FOUND)
