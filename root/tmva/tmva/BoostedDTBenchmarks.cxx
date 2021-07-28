@@ -33,15 +33,19 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
                                                                                                             nEvents, nEvents));
 
    // Benchmarking
-   for(auto& s: state){
+   for(auto _: state){
       // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
       TString outfileName( "bdt_bench_output.root" );
       TFile* outputFile = TFile::Open(outfileName, "RECREATE");
       auto factory = new TMVA::Factory("bdt-bench", outputFile,
                                        "!V:!DrawProgressBar:AnalysisType=Classification");
 
+      // Construct training options string
+      std::string opts = "!V:!H:NTrees=" + std::to_string(state.range(0)) +
+                         ":MaxDepth=" + std::to_string(state.range(1));
+
       // Train a TMVA method
-      factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT", "!V:!H:NTrees=300:MaxDepth=2");
+      factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT", opts);
       factory->TrainAllMethods();
    }
 
@@ -49,6 +53,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    delete sigTree;
    delete bkgTree;
 }
-BENCHMARK(BM_TMVA_BDTTraining);
+BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
 
 BENCHMARK_MAIN();
