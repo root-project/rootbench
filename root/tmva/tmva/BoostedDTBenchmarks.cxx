@@ -29,14 +29,15 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       dataloader->AddVariable(var_name.c_str(), 'D');
    }
 
-   dataloader->PrepareTrainingAndTestTree("", Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:!V",
-                                                                                                            nEvents, nEvents));
+   dataloader->PrepareTrainingAndTestTree("",
+                     Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:nTest_Signal=%i:nTest_Background=%i:!V",
+                                                                                                   nEvents-1, nEvents-1, 1, 1));
 
    // Benchmarking
    for(auto _: state){
       // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
       TString outfileName( "bdt_bench_output.root" );
-      TFile* outputFile = TFile::Open(outfileName, "RECREATE");
+      auto outputFile = TFile::Open(outfileName, "RECREATE");
       auto factory = new TMVA::Factory("bdt-bench", outputFile,
                                        "!V:!DrawProgressBar:AnalysisType=Classification");
 
@@ -47,6 +48,10 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       // Train a TMVA method
       factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT", opts);
       factory->TrainAllMethods();
+
+      outputFile->Close();
+      delete factory;
+      delete outputFile;
    }
 
    // Teardown
