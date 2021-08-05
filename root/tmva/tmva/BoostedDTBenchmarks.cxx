@@ -5,6 +5,8 @@
 #include "TRandom3.h"
 #include "TTree.h"
 
+#include "TMVA/RReader.hxx"
+#include "TMVA/RTensorUtils.hxx"
 #include "TMVA/DataLoader.h"
 #include "TMVA/Factory.h"
 #include "TMVA/MethodBase.h"
@@ -14,6 +16,8 @@
 #include "benchmark/benchmark.h"
 
 #include "MakeRandomTTree.h"
+
+using namespace TMVA::Experimental;
 
 static void BM_TMVA_BDTTraining(benchmark::State &state){
    UInt_t nVars = 4;
@@ -57,7 +61,8 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
                          ":MaxDepth=" + std::to_string(state.range(1));
 
       // Train a TMVA method
-      auto method = factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT", opts);
+      std::string methodTitle = "BDT_" + std::to_string(state.range(0)) + "_" + std::to_string(state.range(1));
+      auto method = factory->BookMethod(dataloader, TMVA::Types::kBDT, methodTitle, opts);
       TMVA::Event::SetIsTraining(kTRUE);
       method->TrainMethod();
       TMVA::Event::SetIsTraining(kFALSE);
@@ -75,5 +80,27 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    delete bkgTree;
 }
 BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
+
+static void BM_TMVA_BDTTesting(benchmark::State &state){
+   UInt_t nVars = 4;
+   UInt_t nEvents = 500;
+
+   // Set up
+   TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102);
+   ROOT::RDataFrame testDF(*testTree);
+   auto testTensor = AsTensor<Float_t>(testDF);
+
+   // Benchmarking
+   for(auto _: state){
+      // Test a TMVA method via RReader
+      std::string methodTitle = std::to_string(state.range(0)) + "_" + std::to_string(state.range(1));
+      RReader model("bdt-bench_BDT_" + methodTitle + ".weights.xml");
+      model.Compute(testTensor);
+   }
+
+   // Teardown
+   delete testTree;
+}
+BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
 
 BENCHMARK_MAIN();
