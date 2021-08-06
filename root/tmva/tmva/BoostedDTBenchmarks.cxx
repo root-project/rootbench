@@ -86,7 +86,7 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    UInt_t nEvents = 500;
 
    // Set up
-   TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102);
+   TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102, false);
    ROOT::RDataFrame testDF(*testTree);
    auto testTensor = AsTensor<Float_t>(testDF);
 

@@ -2,7 +2,8 @@
 #include "TTree.h"
 
 // Utility function for generating a random TTree with Gaussian float data, for the specified number of points and vars
-TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t scale = 0.3, UInt_t seed = 100){
+TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t scale = 0.3, UInt_t seed = 100,
+               bool evtCol = true){
    // Initialisation
    TRandom3 rng(seed);
    Float_t vars[nVars]; for(auto& var: vars){ var = 0.0;}
@@ -20,7 +21,9 @@ TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t sca
    }
 
    // And add a branch for the (unique) Event identifier
-   data->Branch("EventNumber", &id, "EventNumber/I");
+   if(evtCol){
+      data->Branch("EventNumber", &id, "EventNumber/I");
+   }
 
    // Populate TTree instance with Gaussian data
    for(UInt_t j = 0; j < nPoints; j++){
@@ -32,7 +35,7 @@ TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t sca
       id++;
    }
 
-   // Important: Disconnects the tree from the memory locations of x and y.
+   // Important: Disconnects the tree from the memory locations of vars[i]
    data->ResetBranchAddresses();
    return data;
 }
