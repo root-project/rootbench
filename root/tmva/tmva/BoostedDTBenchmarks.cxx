@@ -94,7 +94,7 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    for(auto _: state){
       // Test a TMVA method via RReader
       std::string methodTitle = std::to_string(state.range(0)) + "_" + std::to_string(state.range(1));
-      RReader model("bdt-bench_BDT_" + methodTitle + ".weights.xml");
+      RReader model("./bdr-bench/weights/bdt-bench_BDT_" + methodTitle + ".weights.xml");
       model.Compute(testTensor);
    }
 
