@@ -117,12 +117,12 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    for(auto _: state){
       // Test a TMVA method via RReader
       string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
-      RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
 
       // Get current memory usage statistics after setup
       gSystem->GetProcInfo(&pinfo);
       init_mem_res = pinfo.fMemResident;
 
+      RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
       model.Compute(testTensor);
 
       // Maintain Memory statistics (independent from Google Benchmark)
