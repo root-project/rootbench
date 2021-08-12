@@ -135,7 +135,6 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
 
    // Teardown
    delete testTree;
-   delete &testTensor;
 }
 BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
 
