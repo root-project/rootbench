@@ -27,18 +27,15 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    auto mem_benchmarks = new multimap<string, pair<Long_t, Long_t>>;
    ProcInfo_t pinfo;
    Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
-   Long_t init_mem_vir, term_mem_vir; init_mem_vir = term_mem_vir = 0;
-   double mem_res, mem_vir; mem_res = mem_vir = 0.0;
+   double mem_res = 0.0;
 
    // Set up (generate one extra event for testing)
    TTree *sigTree = genTree(nEvents+1, nVars,0.3, 0.5, 100);
    TTree *bkgTree = genTree(nEvents+1, nVars,-0.3, 0.5, 101);
 
-   // one could maybe avoid TMVA to create output file by passing a nullptr to the Factory constructor
+   // Open output file
    TString outfileName( "bdt_bench_output.root" );
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
-   auto factory = new TMVA::Factory("bdt-bench", outputFile,
-                                    "Silent:!DrawProgressBar:AnalysisType=Classification");
 
    // Prepare a DataLoader instance, registering the signal and background TTrees
    auto *dataloader = new TMVA::DataLoader("bdt-bench");
@@ -53,18 +50,19 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       dataloader->AddVariable(var_name.c_str(), 'D');
    }
 
-   // We add the single test event to avoid the printing of any errors from TMVA.
    // For each benchmark we specifically ignore this test event such that we exclusively benchmark training.
    dataloader->PrepareTrainingAndTestTree("",
-                  Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:nTest_Signal=%i:nTest_Background=%i:!V",
-                                                                                                nEvents, nEvents, 1, 1));
+                  Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:!V", nEvents, nEvents));
 
    // Benchmarking
    for(auto _: state){
+      // Create factory instance
+      auto factory = new TMVA::Factory("bdt-bench", outputFile,
+                                    "Silent:!DrawProgressBar:AnalysisType=Classification");
+
       // Get current memory usage statistics after setup
       gSystem->GetProcInfo(&pinfo);
       init_mem_res = pinfo.fMemResident;
-      init_mem_vir = pinfo.fMemVirtual;
       
       // Construct training options string
       string opts = "!V:!H:NTrees=" + to_string(state.range(0)) + ":MaxDepth=" + to_string(state.range(1));
@@ -78,50 +76,21 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       // Maintain Memory statistics (independent from Google Benchmark)
       gSystem->GetProcInfo(&pinfo);
       term_mem_res = pinfo.fMemResident;
-      term_mem_vir = pinfo.fMemVirtual;
       mem_res += (double) (term_mem_res - init_mem_res);
-      mem_vir += (double) (term_mem_vir - init_mem_vir);
-//      mem_benchmarks->insert(make_pair(key,
-//                                       pair<Long_t, Long_t>(term_mem_res - init_mem_res, term_mem_vir - init_mem_vir)));
 
       TMVA::Event::SetIsTraining(kFALSE);
       method->Data()->DeleteAllResults(TMVA::Types::kTraining, method->GetAnalysisType());
 
+      // Destroy factory entirely
       factory->DeleteAllMethods();
       factory->fMethodsMap.clear();
+      delete factory;
    }
 
    state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
-   state.counters["Virtual Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
-
-   // Print memory benchmark statistics
-//   std::cout << "----------------------------------------------------------------------" << std::endl;
-//   std::cout << "Benchmark\t\tRes. Memory\tVir. Memory\tIterations" << std::endl;
-//   std::cout << "----------------------------------------------------------------------" << std::endl;
-//   for(auto kv = mem_benchmarks->begin(), end = mem_benchmarks->end(); kv != end;
-//        kv = mem_benchmarks->upper_bound(kv->first)){
-//
-//      if(auto stats = mem_benchmarks->equal_range(kv->first); stats.first != stats.second){
-//
-//         Int_t n_iter = mem_benchmarks->count(kv->first);
-//         Float_t avg_mem_res = 0.0;
-//         Float_t avg_mem_vir = 0.0;
-//
-//         for(auto bm = stats.first; bm != stats.second; bm++){
-//            avg_mem_res += (bm->second).first;
-//            avg_mem_vir += (bm->second).second;
-//         }
-//
-//         avg_mem_res /= n_iter;
-//         avg_mem_vir /= n_iter;
-//
-//         std::cout << "BM_TMVA_BDTTesting_" << kv->first << "\t\t" << avg_mem_res << "\t" << avg_mem_vir << "\t" << n_iter << std::endl;
-//      }
-//   }
 
    // Teardown
    outputFile->Close();
-   delete factory;
    delete sigTree;
    delete bkgTree;
    delete outputFile;
