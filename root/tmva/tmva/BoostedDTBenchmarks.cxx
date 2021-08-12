@@ -85,6 +85,9 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       factory->DeleteAllMethods();
       factory->fMethodsMap.clear();
       delete factory;
+
+      // DEBUG
+      cout << "[DEBUG] " << key << ": res_mem_init = " << (double) init_mem_res << ", res_mem_term = " << (double) term_mem_res << endl;
    }
 
    state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
