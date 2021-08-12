@@ -24,7 +24,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    UInt_t nEvents = 500;
 
    // Memory benchmark data placeholder
-   auto mem_benchmarks = new multimap<string, pair<Long_t, Long_t>>;
    ProcInfo_t pinfo;
    Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
    double mem_res = 0.0;
@@ -87,7 +86,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       delete factory;
 
       // DEBUG
-      cout << "[DEBUG] " << key << ": res_mem_init = " << (double) init_mem_res << ", res_mem_term = " << (double) term_mem_res << endl;
+      // cout << "[DEBUG] " << key << ": res_mem_init = " << (double) init_mem_res << ", res_mem_term = " << (double) term_mem_res << endl;
    }
 
    state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
@@ -97,13 +96,17 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    delete sigTree;
    delete bkgTree;
    delete outputFile;
-   delete mem_benchmarks;
 }
 BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
 
 static void BM_TMVA_BDTTesting(benchmark::State &state){
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
+
+   // Memory benchmark data placeholder
+   ProcInfo_t pinfo;
+   Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
+   double mem_res = 0.0;
 
    // Set up
    TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102, false);
@@ -115,11 +118,24 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
       // Test a TMVA method via RReader
       string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
       RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
+
+      // Get current memory usage statistics after setup
+      gSystem->GetProcInfo(&pinfo);
+      init_mem_res = pinfo.fMemResident;
+
       model.Compute(testTensor);
+
+      // Maintain Memory statistics (independent from Google Benchmark)
+      gSystem->GetProcInfo(&pinfo);
+      term_mem_res = pinfo.fMemResident;
+      mem_res += (double) (term_mem_res - init_mem_res);
    }
+
+   state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
 
    // Teardown
    delete testTree;
+   delete &testTensor;
 }
 BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
 
