@@ -28,13 +28,13 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
    double mem_res = 0.0;
 
-   // Set up (generate one extra event for testing)
-   TTree *sigTree = genTree(nEvents+1, nVars,0.3, 0.5, 100);
-   TTree *bkgTree = genTree(nEvents+1, nVars,-0.3, 0.5, 101);
-
    // Open output file
-   TString outfileName( "bdt_bench_output.root" );
+   TString outfileName( "bdt_bench_train_output.root" );
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
+
+   // Set up (generate one extra event for testing)
+   TTree *sigTree = genTree(nEvents, nVars,0.3, 0.5, 100);
+   TTree *bkgTree = genTree(nEvents, nVars,-0.3, 0.5, 101);
 
    // Prepare a DataLoader instance, registering the signal and background TTrees
    auto *dataloader = new TMVA::DataLoader("bdt-bench");
@@ -110,6 +110,10 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
    double mem_res = 0.0;
 
+   // Open output file
+   TString outfileName( "bdt_bench_train_output.root" );
+   TFile* outputFile = TFile::Open(outfileName, "RECREATE");
+
    // Set up
    TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102, false);
    ROOT::RDataFrame testDF(*testTree);
@@ -138,6 +142,7 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
 
    // Teardown
+   outputFile->Close();
    delete testTree;
 }
 BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
