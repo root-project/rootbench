@@ -117,8 +117,10 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
 
    // Benchmarking
    for(auto _: state){
+      ROOT::EnableImplicitMT(state.range(2));
+
       // Test a TMVA method via RReader
-      string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
+      string key = to_string(state.range(0)) + "_" + to_string(state.range(1)) + "_" + to_string(state.range(2));
 
       // Get current memory usage statistics after setup
       gSystem->GetProcInfo(&pinfo);
@@ -138,6 +140,6 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Teardown
    delete testTree;
 }
-BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
+BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
 
 BENCHMARK_MAIN();
