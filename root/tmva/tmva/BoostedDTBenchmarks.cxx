@@ -55,6 +55,8 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
 
    // Benchmarking
    for(auto _: state){
+      ROOT::EnableImplicitMT(state.range(2));
+
       // Create factory instance
       auto factory = new TMVA::Factory("bdt-bench", outputFile,
                                     "Silent:!DrawProgressBar:AnalysisType=Classification");
@@ -67,7 +69,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       string opts = "!V:!H:NTrees=" + to_string(state.range(0)) + ":MaxDepth=" + to_string(state.range(1));
 
       // Train a TMVA method
-      string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
+      string key = to_string(state.range(0)) + "_" + to_string(state.range(1)) + "_" + to_string(state.range(2));
       auto method = factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT_" + key, opts);
       TMVA::Event::SetIsTraining(kTRUE);
       method->TrainMethod();
@@ -97,7 +99,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    delete bkgTree;
    delete outputFile;
 }
-BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10}});
+BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
 
 static void BM_TMVA_BDTTesting(benchmark::State &state){
    UInt_t nVars = 4;
