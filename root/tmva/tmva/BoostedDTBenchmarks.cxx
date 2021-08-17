@@ -115,8 +115,13 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
 
    // Set up
+   auto inputFile = new TFile("bdt_bench_train_input.root","RECREATE");
    TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102, false);
-   ROOT::RDataFrame testDF(*testTree);
+   testTree->Write();
+   inputFile->Close();
+   delete inputFile;
+
+   ROOT::RDataFrame testDF("tree","bdt_bench_train_input.root");
    auto testTensor = AsTensor<Float_t>(testDF);
 
    // Benchmarking

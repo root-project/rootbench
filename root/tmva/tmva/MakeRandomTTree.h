@@ -10,7 +10,7 @@ TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t sca
    UInt_t id = 0;
 
    // Create new TTree instance
-   auto data = new TTree();
+   auto data = new TTree("tree","tree");
 
    // Add a branch corresponding to each variable
    for(UInt_t i = 0; i < nVars; i++){
