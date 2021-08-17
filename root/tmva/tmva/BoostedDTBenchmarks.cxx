@@ -33,8 +33,8 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
 
    // Set up (generate one extra event for testing)
-   TTree *sigTree = genTree(nEvents, nVars,0.3, 0.5, 100);
-   TTree *bkgTree = genTree(nEvents, nVars,-0.3, 0.5, 101);
+   TTree *sigTree = genTree("sigTree", nEvents, nVars,0.3, 0.5, 100);
+   TTree *bkgTree = genTree("bkgTree", nEvents, nVars,-0.3, 0.5, 101);
 
    // Prepare a DataLoader instance, registering the signal and background TTrees
    auto *dataloader = new TMVA::DataLoader("bdt-bench");
@@ -111,17 +111,17 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    double mem_res = 0.0;
 
    // Open output file
-   TString outfileName( "bdt_bench_train_output.root" );
+   TString outfileName( "bdt_bench_test_output.root" );
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
 
    // Set up
-   auto inputFile = new TFile("bdt_bench_train_input.root","RECREATE");
-   TTree *testTree = genTree(nEvents, nVars,0.3, 0.5, 102, false);
+   auto inputFile = new TFile("bdt_bench_test_input.root","RECREATE");
+   TTree *testTree = genTree("testTree", nEvents, nVars,0.3, 0.5, 102, false);
    testTree->Write();
    inputFile->Close();
    delete inputFile;
 
-   ROOT::RDataFrame testDF("tree","bdt_bench_train_input.root");
+   ROOT::RDataFrame testDF("tree","bdt_bench_test_input.root");
    auto testTensor = AsTensor<Float_t>(testDF);
 
    // Benchmarking

@@ -2,7 +2,7 @@
 #include "TTree.h"
 
 // Utility function for generating a random TTree with Gaussian float data, for the specified number of points and vars
-TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t scale = 0.3, UInt_t seed = 100,
+TTree* genTree(std::string name, UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t scale = 0.3, UInt_t seed = 100,
                bool evtCol = true){
    // Initialisation
    TRandom3 rng(seed);
@@ -10,7 +10,7 @@ TTree* genTree(UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t sca
    UInt_t id = 0;
 
    // Create new TTree instance
-   auto data = new TTree("tree","tree");
+   auto data = new TTree(name.c_str(),name.c_str());
 
    // Add a branch corresponding to each variable
    for(UInt_t i = 0; i < nVars; i++){
