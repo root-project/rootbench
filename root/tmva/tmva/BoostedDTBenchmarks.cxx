@@ -22,6 +22,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
+   Bool_t mem_stats = false;
 
    // Memory benchmark data placeholder
    ProcInfo_t pinfo;
@@ -62,8 +63,10 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
                                     "Silent:!DrawProgressBar:AnalysisType=Classification");
 
       // Get current memory usage statistics after setup
-      gSystem->GetProcInfo(&pinfo);
-      init_mem_res = pinfo.fMemResident;
+      if(mem_stats){
+         gSystem->GetProcInfo(&pinfo);
+         init_mem_res = pinfo.fMemResident;
+      }
       
       // Construct training options string
       string opts = "!V:!H:NTrees=" + to_string(state.range(0)) + ":MaxDepth=" + to_string(state.range(1));
@@ -75,9 +78,11 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       method->TrainMethod();
 
       // Maintain Memory statistics (independent from Google Benchmark)
-      gSystem->GetProcInfo(&pinfo);
-      term_mem_res = pinfo.fMemResident;
-      mem_res += (double) (term_mem_res - init_mem_res);
+      if(mem_stats){
+         gSystem->GetProcInfo(&pinfo);
+         term_mem_res = pinfo.fMemResident;
+         mem_res += (double) (term_mem_res - init_mem_res);
+      }
 
       TMVA::Event::SetIsTraining(kFALSE);
       method->Data()->DeleteAllResults(TMVA::Types::kTraining, method->GetAnalysisType());
@@ -91,19 +96,24 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       // cout << "[DEBUG] " << key << ": res_mem_init = " << (double) init_mem_res << ", res_mem_term = " << (double) term_mem_res << endl;
    }
 
-   state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
+   if(mem_stats){
+      state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
+   }
 
    // Teardown
-   outputFile->Close();
    delete sigTree;
    delete bkgTree;
+
+   outputFile->Close();
    delete outputFile;
 }
 BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
 
 static void BM_TMVA_BDTTesting(benchmark::State &state){
+   // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
+   Bool_t mem_stats = true;
 
    // Memory benchmark data placeholder
    ProcInfo_t pinfo;
@@ -118,10 +128,11 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    auto inputFile = new TFile("bdt_bench_test_input.root","RECREATE");
    TTree *testTree = genTree("testTree", nEvents, nVars,0.3, 0.5, 102, false);
    testTree->Write();
+   delete testTree;
    inputFile->Close();
    delete inputFile;
 
-   ROOT::RDataFrame testDF("tree","bdt_bench_test_input.root");
+   ROOT::RDataFrame testDF("testTree","bdt_bench_test_input.root");
    auto testTensor = AsTensor<Float_t>(testDF);
 
    // Benchmarking
@@ -132,23 +143,28 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
       string key = to_string(state.range(0)) + "_" + to_string(state.range(1)) + "_" + to_string(state.range(2));
 
       // Get current memory usage statistics after setup
-      gSystem->GetProcInfo(&pinfo);
-      init_mem_res = pinfo.fMemResident;
+      if(mem_stats){
+         gSystem->GetProcInfo(&pinfo);
+         init_mem_res = pinfo.fMemResident;
+      }
 
       RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
       model.Compute(testTensor);
 
       // Maintain Memory statistics (independent from Google Benchmark)
-      gSystem->GetProcInfo(&pinfo);
-      term_mem_res = pinfo.fMemResident;
-      mem_res += (double) (term_mem_res - init_mem_res);
+      if(mem_stats){
+         gSystem->GetProcInfo(&pinfo);
+         term_mem_res = pinfo.fMemResident;
+         mem_res += (double) (term_mem_res - init_mem_res);
+      }
    }
 
-   state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
+   if(mem_stats){
+      state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
+   }
 
    // Teardown
    outputFile->Close();
-   delete testTree;
 }
 BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
 
