@@ -31,10 +31,11 @@ jobs:
       shell: bash -l {0}
       run: conda info
 
-    - name: "Init conda"
+    - name: "Init/upgrade conda"
       shell: bash -l {0}
       run: |
           conda init bash
+          conda upgrade -c conda-forge --all
 
     - name: Conda install dependencies
       shell: bash -l {0}
