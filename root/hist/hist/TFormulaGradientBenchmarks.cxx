@@ -27,7 +27,7 @@ static void BM_TFormulaPerf(benchmark::State &state, const char* formula, F&& ev
   int Ndim = h->GetNdim();
   double* x = new double[Ndim]{};
   for (int i = 0; i < Ndim; i++) x[i] = std::rand() % 100;
-  TFormula::GradientStorage result(Npar);
+  TFormula::CladStorage result(Npar);
   TFormula *f = nullptr;
   if (useClad) {
      f = h->GetFormula();
