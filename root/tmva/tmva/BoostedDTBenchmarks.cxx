@@ -22,7 +22,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
-   Bool_t mem_stats = true;
+   Bool_t mem_stats = (state.range(0) == 2000) && (state.range(1) == 10) && (state.range(2) == 1);
 
    // Memory benchmark data placeholder
    ProcInfo_t pinfo;
@@ -111,13 +111,13 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    outputFile->Close();
    delete outputFile;
 }
-BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
+BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}, {1, 4, 8, 16}});
 
 static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
-   Bool_t mem_stats = true;
+   Bool_t mem_stats = (state.range(0) == 2000) && (state.range(1) == 10) && (state.range(2) == 1);
 
    // Memory benchmark data placeholder
    ProcInfo_t pinfo;
@@ -174,6 +174,6 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Teardown
    outputFile->Close();
 }
-BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{100, 400, 1000, 2000},{2, 4, 6, 8, 10},{1,4,8,16}});
+BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}, {1, 4, 8, 16}});
 
 BENCHMARK_MAIN();
