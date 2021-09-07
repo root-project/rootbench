@@ -35,7 +35,6 @@ The module will also define two cache variables::
 
 #]============================================================================]
 
-set(ONNXRuntime_SRC /home/fsossai/repo/onnxruntime)         # debug
 
 if(NOT ONNXRuntime_SRC)
   message(FATAL_ERROR "ONNXRuntime: please set ONNXRuntime_SRC")
