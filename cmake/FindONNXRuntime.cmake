@@ -22,7 +22,7 @@ This module defines the following variables::
   ONNXRuntime_VERSION_STRING  - Full version of ONNXRuntime (e.g. 1.8.0)
   ONNXRuntime_VERSION_MAJOR   - The major version of the ONNXRuntime implementation
   ONNXRuntime_VERSION_MINOR   - The minor version of the ONNXRuntime implementation
-  ONNXRuntime_VERSION_MINOR   - The patch version of the ONNXRuntime implementation
+  ONNXRuntime_VERSION_PATCH   - The patch version of the ONNXRuntime implementation
   ONNXRuntime_BUILD_TYPE      - Describes whether the current build is
                               - Debug, MinSizeRel Release or RelWithDebInfo
   
