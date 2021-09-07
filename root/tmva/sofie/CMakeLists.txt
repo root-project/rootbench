@@ -1,51 +1,53 @@
+# @author Federico Sossai (fsossai)
+
 if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
 
-  # Looking for ONNXRuntime
-  find_package(ONNXRuntime REQUIRED)
-  if(ONNXRuntime_FOUND)
-    message(STATUS "Found ONNXRuntime (build type: ${ONNXRuntime_BUILD_TYPE}, version: ${ONNXRuntime_VERSION_STRING})")
-  endif()
-
-  #[======================================================================[
-  
-    REQUIRED MODELS
-  
-    The following models are required because are loaded by at least
-    one or more benchmarks.
-    The abscence of at least one of the following models from the
-    ${ONNX_MODELS_DIR} will cause CMake to throw a fatal error message.
-
-  #]======================================================================]
-  set(REQUIRED_MODELS
-    "Linear_64.onnx"
-  )
-  
   # Checking that all required model exist
   if (NOT ONNX_MODELS_DIR)
     set(ONNX_MODELS_DIR input_models)
   endif()
-  foreach(model ${REQUIRED_MODELS})
-    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${ONNX_MODELS_DIR}/${model})
-      message(FATAL_ERROR "Missing a required ONNX input model. "
-        "\"${model}\" is missing from ${CMAKE_CURRENT_SOURCE_DIR}/${ONNX_MODELS_DIR}")
-    endif()
-  endforeach()
+  file(GLOB ONNX_MODELS "${ONNX_MODELS_DIR}/*.onnx")
 
   # Copying every ONNX model in the input directory to the build directory.
   set(out_dir ${CMAKE_CURRENT_BINARY_DIR}/${ONNX_MODELS_DIR})
   file(MAKE_DIRECTORY ${out_dir})
-  foreach(model ${REQUIRED_MODELS})
-    configure_file(${ONNX_MODELS_DIR}/${model} ${out_dir}/${model} COPYONLY)
+  foreach(model ${ONNX_MODELS})
+    get_filename_component(fname ${model} NAME)
+    configure_file(${model} ${out_dir}/${fname} COPYONLY)
   endforeach()
   
-  # Creating an inference benchmark
-  RB_ADD_GBENCHMARK(ONNXRuntimeInference
-    ONNXRuntimeInference.cxx
+  # Looking for ONNXRuntime
+  find_package(ONNXRuntime QUIET)
+  if(ONNXRuntime_FOUND)
+    message(STATUS "Found ONNXRuntime (build type: ${ONNXRuntime_BUILD_TYPE}, version: ${ONNXRuntime_VERSION_STRING})")
+    
+    # Creating an ONNXRuntime inference benchmark for every model
+    foreach(fname ${ONNX_MODELS})
+      get_filename_component(fname ${fname} NAME_WE)
+      set(target_name ONNXRuntime_${fname})
+      configure_file(ONNXRuntimeInference.cxx.in ${target_name}.cxx)
+
+      RB_ADD_GBENCHMARK(${target_name}
+        ${target_name}.cxx
+        LABEL short
+        LIBRARIES TMVA onnxruntime
+      )
+      target_link_directories(${target_name} PRIVATE ${ONNXRuntime_LIBRARIES})
+      target_include_directories(${target_name} PRIVATE ${ONNXRuntime_INCLUDE_DIR})
+    endforeach()
+  endif()
+    
+  # Checking the SOFIE compiler
+  if(NOT EXISTS ${ROOTSYS}/tmva/sofie/test/emitFromONNX)
+    message(FATAL_ERROR "SOFIE compiler not found")
+  endif()
+
+  # Creating an inference benchmark for SOFIE
+  RB_ADD_GBENCHMARK(SOFIEInference
+    SOFIEInference.cxx
     LABEL short
-    LIBRARIES TMVA onnxruntime
+    LIBRARIES TMVA blas
   )
-  target_link_directories(ONNXRuntimeInference PRIVATE ${ONNXRuntime_LIBRARIES})
-  target_include_directories(ONNXRuntimeInference PRIVATE ${ONNXRuntime_INCLUDE_DIR})
   
 endif()
 
