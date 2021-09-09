@@ -21,20 +21,31 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   if(ONNXRuntime_FOUND)
     message(STATUS "Found ONNXRuntime (build type: ${ONNXRuntime_BUILD_TYPE}, version: ${ONNXRuntime_VERSION_STRING})")
     
-    # Creating an ONNXRuntime inference benchmark for every model
-    foreach(fname ${ONNX_MODELS})
-      get_filename_component(fname ${fname} NAME_WE)
-      set(target_name ONNXRuntime_${fname})
-      configure_file(ONNXRuntimeInference.cxx.in ${target_name}.cxx)
-
-      RB_ADD_GBENCHMARK(${target_name}
-        ${target_name}.cxx
-        LABEL short
-        LIBRARIES TMVA onnxruntime
-      )
-      target_link_directories(${target_name} PRIVATE ${ONNXRuntime_LIBRARIES})
-      target_include_directories(${target_name} PRIVATE ${ONNXRuntime_INCLUDE_DIR})
+    # Configuring ONNXRuntimeInference_Template.cxx.in
+    set(FUNC_NAME "BM_ONNXRuntime_Inference")
+    set(CAPTURE_STR "BENCHMARK_CAPTURE(${FUNC_NAME}, @1,\t@2)@3")
+    set(HEAD_COMMENT "Automatically configured by CMake")
+    set(ALL_CAPTURES "")
+    set(ONNX_MODEL_NAMES "")
+    foreach(model ${ONNX_MODELS})
+      get_filename_component(fname ${model} NAME)
+      get_filename_component(fname_we ${model} NAME_WE)
+      string(REPLACE "@1" ${fname_we} cap ${CAPTURE_STR})
+      string(REPLACE "@2" "\"${ONNX_MODELS_DIR}/${fname}\"" cap ${cap})
+      list(APPEND ALL_CAPTURES ${cap})
     endforeach()
+    string(REPLACE ";" "\n" BENCHMARK_CAPTURES "${ALL_CAPTURES}")         # String[] -> String
+    string(REPLACE "@3" ";" BENCHMARK_CAPTURES "${BENCHMARK_CAPTURES}")   # Adding semicolon
+    configure_file(ONNXRuntimeInference_Template.cxx.in ONNXRuntimeInference.cxx @ONLY)
+
+    RB_ADD_GBENCHMARK(ONNXRuntimeInference
+      ONNXRuntimeInference.cxx
+      LABEL short
+      LIBRARIES TMVA onnxruntime
+    )
+    target_link_directories(ONNXRuntimeInference PRIVATE ${ONNXRuntime_LIBRARIES})
+    target_include_directories(ONNXRuntimeInference PRIVATE ${ONNXRuntime_INCLUDE_DIR})
+
   endif()
     
   # Checking the SOFIE compiler
@@ -42,9 +53,17 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
     message(FATAL_ERROR "SOFIE compiler not found")
   endif()
 
-  # Creating an inference benchmark for SOFIE
+  # Benchmark for models emitted by SOFIE
   RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
+    LABEL short
+    LIBRARIES TMVA blas
+  )
+
+  # Benchmark for models emitted by SOFIE (with RModelProfiler)
+  # This should be useful in measuring profiler's overhead
+  RB_ADD_GBENCHMARK(SOFIEInferenceProfiler
+    SOFIEInferenceProfiler.cxx
     LABEL short
     LIBRARIES TMVA blas
   )

@@ -10,9 +10,9 @@
 #include <memory>
 #include <functional>
 
-#include "input_models/compiled/Linear_16.hxx"
-#include "input_models/compiled/Linear_32.hxx"
-#include "input_models/compiled/Linear_64.hxx"
+#include "input_models/compiled/Linear_16_prof.hxx"
+#include "input_models/compiled/Linear_32_prof.hxx"
+#include "input_models/compiled/Linear_64_prof.hxx"
 
 using namespace std;
 
@@ -36,6 +36,9 @@ static void BM_SOFIE_Inference(benchmark::State& state, std::string model_name)
     for (auto _ : state) {
         infer_func(input_ptr);
     }
+    cout << TMVA_SOFIE_Linear_16::profiler_results.size() << endl;
+    cout << TMVA_SOFIE_Linear_32::profiler_results.size() << endl;
+    cout << TMVA_SOFIE_Linear_64::profiler_results.size() << endl;
 }
 BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_16, "Linear_16");
 BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_32, "Linear_32");
