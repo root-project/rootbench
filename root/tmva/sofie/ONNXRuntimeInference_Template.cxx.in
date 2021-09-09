@@ -1,3 +1,4 @@
+// @HEAD_COMMENT@
 // Author: Federico Sossai (fsossai), 2021
 
 #include <benchmark/benchmark.h>
@@ -9,10 +10,8 @@
 
 using namespace std;
 
-static void BM_ONNXRuntime_${fname}(benchmark::State& state)
+static void @FUNC_NAME@(benchmark::State& state, string model_path)
 {
-   const string model_path = "${ONNX_MODELS_DIR}/${fname}.onnx";
-
    Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "benchmark");
    
    Ort::SessionOptions session_options;
@@ -34,20 +33,6 @@ static void BM_ONNXRuntime_${fname}(benchmark::State& state)
       .GetInputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
    vector<int64_t> output_node_dims = session
       .GetOutputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
-   
-   // Displaying input tensor shape
-
-   cout << "Input shape: [ ";
-   for (auto& i: input_node_dims)
-      cout << i << " ";
-   cout << "]" << endl;
-
-   // Displaying output tensor shape
-
-   cout << "Output shape: [ ";
-   for (auto& i: output_node_dims)
-      cout << i << " ";
-   cout << "]" << endl;
 
    // Calculating the dimension of the input tensor
 
@@ -70,6 +55,6 @@ static void BM_ONNXRuntime_${fname}(benchmark::State& state)
          &input_tensor, 1, output_node_names.data(), 1);
    }
 }
-BENCHMARK(BM_ONNXRuntime_${fname});
+@BENCHMARK_CAPTURES@
 
 BENCHMARK_MAIN();
