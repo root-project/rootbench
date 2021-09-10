@@ -9,7 +9,7 @@ set(GBENCHMARK_LIBRARY_NAME ${CMAKE_STATIC_LIBRARY_PREFIX}benchmark${CMAKE_STATI
 ExternalProject_Add(
   googlebenchmark
   GIT_REPOSITORY https://github.com/google/benchmark.git
-  GIT_TAG v1.5.5
+  GIT_TAG v1.6.0
   UPDATE_COMMAND ""
   # TIMEOUT 10
   # # Force separate output paths for debug and release builds to allow easy
