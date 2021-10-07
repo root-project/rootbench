@@ -131,5 +131,3 @@ BENCHMARK(benchJohnsonPlusExp)->Unit(benchmark::kMillisecond)
 
 
 BENCHMARK_MAIN();
-
-
