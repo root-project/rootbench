@@ -97,7 +97,7 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
   if (runConfig % 2 == 0)
     data->attachBuffers(observables);
 
-  RooBatchCompute::RunContext evalData;
+  rbc::RunContext evalData;
   std::vector<double> results(nEvents);
 
   std::array<RooArgSet, nParamSets> paramSets;

@@ -60,7 +60,7 @@ enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
   runBatchNorm, runSingleNorm,
   runBatchNormLogs, runSingleNormLogs,
   runBatchUnnormDataInXAndSigma, runSingleUnnormDataInXAndSigma,
-  runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma};
+  runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma, runCpu, runCuda};
 
 static void benchGauss(benchmark::State& state) {
   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
@@ -81,10 +81,10 @@ static void benchGauss(benchmark::State& state) {
 
   RooAbsPdf& pdf = gauss;
   RooDataSet* data;
-  if (runConfig < runBatchUnnormDataInXAndSigma) {
-    data = pdf.generate(RooArgSet(x), nEvents);
+  if (runConfig < runBatchUnnormDataInXAndSigma || runConfig > runSingleNormDataInXAndSigma) {
+     data = pdf.generate(RooArgSet(x), nEvents);
   } else {
-    data = pdf.generate(RooArgSet(x, sigma), nEvents);
+     data = pdf.generate(RooArgSet(x, sigma), nEvents);
   }
 
   RooArgSet& observables = *pdf.getObservables(data);
@@ -92,50 +92,54 @@ static void benchGauss(benchmark::State& state) {
   if (runConfig % 2 == 0)
     data->attachBuffers(observables);
 
-  RooBatchCompute::RunContext evalData;
+  rbc::RunContext evalData;
   std::vector<double> results(nEvents);
 
+  runConfig = static_cast<RunConfig_t>(runConfig % 6);
+  
   for (auto _ : state) {
-    for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
-      state.PauseTiming();
-      randomiseParameters(parameters, 1337+paramSetIndex);
-      state.ResumeTiming();
+     for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
+        state.PauseTiming();
+        randomiseParameters(parameters, 1337 + paramSetIndex);
+        state.ResumeTiming();
 
-      runConfig = static_cast<RunConfig_t>(runConfig % 6);
-      evalData.clear();
-      data->getBatches(evalData, 0, data->numEntries());
+        evalData.clear();
+        data->getBatches(evalData, 0, data->numEntries());
 
-      if (runConfig == runBatchUnnorm) {
-        auto batchResult = pdf.getValues(evalData, nullptr);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runBatchNorm) {
-        auto batchResult = pdf.getValues(evalData, &observables);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runBatchNormLogs) {
-        auto batchResult = pdf.getLogProbabilities(evalData, &observables);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runSingleUnnorm) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getVal();
+        if (runConfig == runBatchUnnorm) {
+           auto batchResult = pdf.getValues(evalData, nullptr);
+           if (batchResult.size() != (std::size_t)data->numEntries())
+              throw std::runtime_error("Batch computation failed.");
+        } else if (runConfig == runBatchNorm) {
+           auto batchResult = pdf.getValues(evalData, &observables);
+           if (batchResult.size() != (std::size_t)data->numEntries())
+              throw std::runtime_error("Batch computation failed.");
+        } else if (runConfig == runBatchNormLogs) {
+           auto batchResult = pdf.getLogProbabilities(evalData, &observables);
+           if (batchResult.size() != (std::size_t)data->numEntries())
+              throw std::runtime_error("Batch computation failed.");
+        } else if (runConfig == runSingleUnnorm) {
+           for (unsigned int i = 0; i < data->sumEntries(); ++i) {
+              observables = *data->get(i);
+              results[i] = pdf.getVal();
+           }
+        } else if (runConfig == runSingleNorm) {
+           for (unsigned int i = 0; i < data->sumEntries(); ++i) {
+              observables = *data->get(i);
+              results[i] = pdf.getVal(&observables);
+           }
+        } else if (runConfig == runSingleNormLogs) {
+           for (unsigned int i = 0; i < data->sumEntries(); ++i) {
+              observables = *data->get(i);
+              results[i] = pdf.getLogVal(&observables);
+           }
+        } else if (runConfig == runCpu) {
+           auto r = pdf.getValues(*data, rbc::Cpu);
+        } else if (runConfig == runCuda) {
+           auto r = pdf.getValues(*data, rbc::Cuda);
         }
-      } else if (runConfig == runSingleNorm) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getVal(&observables);
-        }
-      } else if (runConfig == runSingleNormLogs) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getLogVal(&observables);
-        }
-      }
-    }
+     }
   }
-
 
 //  for (unsigned int i=0; i<10; ++i) {
 //    std::cout << std::setw(9) << results[i] << "   ";
@@ -144,19 +148,18 @@ static void benchGauss(benchmark::State& state) {
 };
 
 BENCHMARK(benchGauss)->Unit(benchmark::kMillisecond)
-    ->Args({runBatchUnnorm})
-    ->Args({runSingleUnnorm})
-    ->Args({runBatchNorm})
-    ->Args({runSingleNorm})
-    ->Args({runBatchNormLogs})
-    ->Args({runSingleNormLogs})
-    ->Args({runBatchUnnormDataInXAndSigma})
-    ->Args({runSingleUnnormDataInXAndSigma})
-    ->Args({runBatchNormDataInXAndSigma})
-    ->Args({runSingleNormDataInXAndSigma})
-    ;
+   ->Args({runBatchUnnorm})
+   ->Args({runSingleUnnorm})
+   ->Args({runBatchNorm})
+   ->Args({runSingleNorm})
+   ->Args({runBatchNormLogs})
+   ->Args({runSingleNormLogs})
+   ->Args({runBatchUnnormDataInXAndSigma})
+   ->Args({runSingleUnnormDataInXAndSigma})
+   ->Args({runBatchNormDataInXAndSigma})
+   ->Args({runSingleNormDataInXAndSigma});
 
+    BENCHMARK(benchGauss)->Name("benchGaus_CPU")->Unit(benchmark::kMillisecond)->Args({runCpu});
+    BENCHMARK(benchGauss)->Name("benchGaus_Cuda")->Unit(benchmark::kMillisecond)->Args({runCuda});
 
-BENCHMARK_MAIN();
-
-
+    BENCHMARK_MAIN();

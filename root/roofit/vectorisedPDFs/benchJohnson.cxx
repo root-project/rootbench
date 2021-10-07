@@ -90,7 +90,7 @@ static void benchJohnsonPlusExp(benchmark::State& state) {
     data->attachBuffers(observables);
 
   std::vector<double> results(nEvents);
-  RooBatchCompute::RunContext evalData;
+  rbc::RunContext evalData;
 
   for (auto _ : state) {
     for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
@@ -145,5 +145,3 @@ BENCHMARK(benchJohnsonPlusExp)->Unit(benchmark::kMillisecond)
 
 
 BENCHMARK_MAIN();
-
-
