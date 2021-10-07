@@ -91,9 +91,9 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
     LABEL short
-    LIBRARIES TMVA openblas
+    LIBRARIES TMVA   openblas
+    #LIBRARIES TMVA   /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread
   )
   target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 endif()
-
