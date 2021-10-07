@@ -1,5 +1,8 @@
-#include "RooAbsPdf.h"
-#include "RooRealProxy.h"
+#include <RooAbsPdf.h>
+#include <RooRealProxy.h>
+#include <RooRealVar.h>
+
+#include <cmath>
 
 class RooRealVar;
 class RooAbsReal;
@@ -29,10 +32,6 @@ protected:
   Double_t evaluate() const override;
 };
 
-#include "RooRealVar.h"
-#include "RooBatchCompute.h"
-
-#include <cmath>
 using namespace std;
 
 Double_t SlowRooExponential::evaluate() const{

@@ -56,8 +56,8 @@ void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
 }
 
 enum RunConfig_t {runSingleUnnorm = 0,
-  runBatchNorm = 1, runSingleNorm,
-  runSingleNormLogs,
+  runBatchNorm, runSingleNorm,
+  runSingleNormLogs, runCpu, runCuda,
   runSingleUnnormDataInXAndSigma,
   runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma};
 
@@ -81,9 +81,9 @@ static void benchGauss(benchmark::State& state) {
   RooAbsPdf& pdf = gauss;
   RooDataSet* data;
   if (runConfig < runSingleUnnormDataInXAndSigma) {
-    data = pdf.generate(RooArgSet(x), nEvents);
+     data = pdf.generate(RooArgSet(x), nEvents);
   } else {
-    data = pdf.generate(RooArgSet(x, sigma), nEvents);
+     data = pdf.generate(RooArgSet(x, sigma), nEvents);
   }
 
   RooArgSet& observables = *pdf.getObservables(data);
@@ -93,11 +93,13 @@ static void benchGauss(benchmark::State& state) {
 
   std::vector<double> results(nEvents);
 
+  runConfig = static_cast<RunConfig_t>(runConfig % 6);
+
   for (auto _ : state) {
-    for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
-      state.PauseTiming();
-      randomiseParameters(parameters, 1337+paramSetIndex);
-      state.ResumeTiming();
+     for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
+        state.PauseTiming();
+        randomiseParameters(parameters, 1337 + paramSetIndex);
+        state.ResumeTiming();
 
       runConfig = static_cast<RunConfig_t>(runConfig % 6);
 
@@ -120,6 +122,10 @@ static void benchGauss(benchmark::State& state) {
           observables = *data->get(i);
           results[i] = pdf.getLogVal(&observables);
         }
+      } else if (runConfig == runCpu) {
+        auto r = pdf.getValues(*data, RooFit::BatchModeOption::Cpu);
+      } else if (runConfig == runCuda) {
+         auto r = pdf.getValues(*data, RooFit::BatchModeOption::Cuda);
       }
     }
   }
@@ -132,10 +138,10 @@ BENCHMARK(benchGauss)->Unit(benchmark::kMillisecond)
     ->Args({runSingleNormLogs})
     ->Args({runSingleUnnormDataInXAndSigma})
     ->Args({runBatchNormDataInXAndSigma})
-    ->Args({runSingleNormDataInXAndSigma})
-    ;
+    ->Args({runSingleNormDataInXAndSigma});
 
+
+BENCHMARK(benchGauss)->Name("benchGaus_CPU")->Unit(benchmark::kMillisecond)->Args({runCpu});
+BENCHMARK(benchGauss)->Name("benchGaus_Cuda")->Unit(benchmark::kMillisecond)->Args({runCuda});
 
 BENCHMARK_MAIN();
-
-
