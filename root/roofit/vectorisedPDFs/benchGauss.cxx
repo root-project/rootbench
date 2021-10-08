@@ -59,11 +59,12 @@ enum RunConfig_t {runSingleUnnorm = 0,
   runBatchNorm, runSingleNorm,
   runSingleNormLogs, runCpu, runCuda,
   runSingleUnnormDataInXAndSigma,
-  runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma};
+  runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma,
+  fitScalar, fitCpu, fitCuda};
 
 static void benchGauss(benchmark::State& state) {
   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-  constexpr std::size_t nParamSets = 30;
+  std::size_t nParamSets = 30;
   constexpr std::size_t nEvents = 500000;
 
   RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
@@ -84,16 +85,21 @@ static void benchGauss(benchmark::State& state) {
      data = pdf.generate(RooArgSet(x), nEvents);
   } else {
      data = pdf.generate(RooArgSet(x, sigma), nEvents);
+     // to use later in the swicth statement
+     runConfig = static_cast<RunConfig_t>(runConfig % 6);
+  }
+
+  if (runConfig >= fitScalar) {
+     nParamSets = 1;
   }
 
   RooArgSet& observables = *pdf.getObservables(data);
   RooArgSet& parameters = *pdf.getParameters(data);
-  if (runConfig % 2 == 0)
-    data->attachBuffers(observables);
+//   if (runConfig % 2 == 0)
+//     data->attachBuffers(observables);
 
   std::vector<double> results(nEvents);
 
-  runConfig = static_cast<RunConfig_t>(runConfig % 6);
 
   for (auto _ : state) {
      for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
@@ -126,6 +132,14 @@ static void benchGauss(benchmark::State& state) {
         auto r = pdf.getValues(*data, RooFit::BatchModeOption::Cpu);
       } else if (runConfig == runCuda) {
          auto r = pdf.getValues(*data, RooFit::BatchModeOption::Cuda);
+      } else if (runConfig == fitScalar) {
+         auto r = pdf.fitTo(*data, RooFit::Save(1),RooFit::Minimizer("Minuit2"),RooFit::PrintLevel(-1));
+      } else if (runConfig == fitCpu) {
+         auto r = pdf.fitTo(*data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                            RooFit::PrintLevel(-1));
+      } else if (runConfig == fitCuda) {
+         auto r = pdf.fitTo(*data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                            RooFit::PrintLevel(-1));
       }
     }
   }
@@ -140,8 +154,8 @@ BENCHMARK(benchGauss)->Unit(benchmark::kMillisecond)
     ->Args({runBatchNormDataInXAndSigma})
     ->Args({runSingleNormDataInXAndSigma});
 
-
-BENCHMARK(benchGauss)->Name("benchGaus_CPU")->Unit(benchmark::kMillisecond)->Args({runCpu});
-BENCHMARK(benchGauss)->Name("benchGaus_Cuda")->Unit(benchmark::kMillisecond)->Args({runCuda});
+BENCHMARK(benchGauss)->Name("fitGaus_Scalar")->Unit(benchmark::kMillisecond)->Args({fitScalar});
+BENCHMARK(benchGauss)->Name("fitGaus_CPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
+BENCHMARK(benchGauss)->Name("fitGaus_Cuda")->Unit(benchmark::kMillisecond)->Args({fitCuda});
 
 BENCHMARK_MAIN();
