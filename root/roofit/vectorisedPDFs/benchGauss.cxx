@@ -60,11 +60,12 @@ enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
   runBatchNorm, runSingleNorm,
   runBatchNormLogs, runSingleNormLogs,
   runBatchUnnormDataInXAndSigma, runSingleUnnormDataInXAndSigma,
-  runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma, runCpu, runCuda};
+  runBatchNormDataInXAndSigma, runSingleNormDataInXAndSigma, runCpu, runCuda, 
+  fitScalar, fitCpu, fitCuda};
 
 static void benchGauss(benchmark::State& state) {
   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-  constexpr std::size_t nParamSets = 30;
+  std::size_t nParamSets = 30;
   constexpr std::size_t nEvents = 500000;
 
   RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
@@ -85,17 +86,22 @@ static void benchGauss(benchmark::State& state) {
      data = pdf.generate(RooArgSet(x), nEvents);
   } else {
      data = pdf.generate(RooArgSet(x, sigma), nEvents);
+     // to use later in the swicth statement
+     runConfig = static_cast<RunConfig_t>(runConfig % 6);
+  } 
+
+  if (runConfig >= fitScalar) {
+     nParamSets = 1;
   }
 
   RooArgSet& observables = *pdf.getObservables(data);
   RooArgSet& parameters = *pdf.getParameters(data);
-  if (runConfig % 2 == 0)
-    data->attachBuffers(observables);
+//   if (runConfig % 2 == 0)
+//     data->attachBuffers(observables);
 
   rbc::RunContext evalData;
   std::vector<double> results(nEvents);
 
-  runConfig = static_cast<RunConfig_t>(runConfig % 6);
   
   for (auto _ : state) {
      for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
@@ -107,14 +113,20 @@ static void benchGauss(benchmark::State& state) {
         data->getBatches(evalData, 0, data->numEntries());
 
         if (runConfig == runBatchUnnorm) {
+           evalData.clear();
+           data->getBatches(evalData, 0, data->numEntries());
            auto batchResult = pdf.getValues(evalData, nullptr);
            if (batchResult.size() != (std::size_t)data->numEntries())
               throw std::runtime_error("Batch computation failed.");
         } else if (runConfig == runBatchNorm) {
+           evalData.clear();
+           data->getBatches(evalData, 0, data->numEntries());
            auto batchResult = pdf.getValues(evalData, &observables);
            if (batchResult.size() != (std::size_t)data->numEntries())
               throw std::runtime_error("Batch computation failed.");
         } else if (runConfig == runBatchNormLogs) {
+           evalData.clear();
+           data->getBatches(evalData, 0, data->numEntries());
            auto batchResult = pdf.getLogProbabilities(evalData, &observables);
            if (batchResult.size() != (std::size_t)data->numEntries())
               throw std::runtime_error("Batch computation failed.");
@@ -137,6 +149,14 @@ static void benchGauss(benchmark::State& state) {
            auto r = pdf.getValues(*data, rbc::Cpu);
         } else if (runConfig == runCuda) {
            auto r = pdf.getValues(*data, rbc::Cuda);
+        } else if (runConfig == fitScalar) {
+           auto r = pdf.fitTo(*data, RooFit::Save(1),RooFit::Minimizer("Minuit2"),RooFit::PrintLevel(-1));
+        } else if (runConfig == fitCpu) {
+           auto r = pdf.fitTo(*data, RooFit::BatchMode(rbc::Cpu), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                              RooFit::PrintLevel(-1));
+        } else if (runConfig == fitCuda) {
+           auto r = pdf.fitTo(*data, RooFit::BatchMode(rbc::Cuda), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                              RooFit::PrintLevel(-1));
         }
      }
   }
@@ -161,5 +181,9 @@ BENCHMARK(benchGauss)->Unit(benchmark::kMillisecond)
 
     BENCHMARK(benchGauss)->Name("benchGaus_CPU")->Unit(benchmark::kMillisecond)->Args({runCpu});
     BENCHMARK(benchGauss)->Name("benchGaus_Cuda")->Unit(benchmark::kMillisecond)->Args({runCuda});
+
+    BENCHMARK(benchGauss)->Name("fitGaus_Scalar")->Unit(benchmark::kMillisecond)->Args({fitScalar});
+    BENCHMARK(benchGauss)->Name("fitGaus_CPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
+    BENCHMARK(benchGauss)->Name("fitGaus_Cuda")->Unit(benchmark::kMillisecond)->Args({fitCuda});
 
     BENCHMARK_MAIN();

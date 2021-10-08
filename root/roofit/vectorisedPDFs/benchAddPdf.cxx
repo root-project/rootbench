@@ -58,14 +58,15 @@ void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
 
 enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
   runBatchNorm, runSingleNorm,
-  runBatchNormLogs, runSingleNormLogs};
+  runBatchNormLogs, runSingleNormLogs, 
+   fitScalar, fitCpu, fitCuda};
 
 
 
 static void benchAddPdfGaussExp(benchmark::State& state) {
   const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
   const bool useSlowRooExponential = state.range(1);
-  constexpr std::size_t nParamSets = 3;
+  constexpr std::size_t nParamSets = 1;
   constexpr std::size_t nEvents = 1000000;
 
   // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
@@ -141,6 +142,14 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
           observables = *data->get(i);
           results[i] = pdf.getLogVal(&observables);
         }
+      } else if (runConfig == fitScalar) {
+           auto r = pdf.fitTo(*data, RooFit::Save(1),RooFit::Minimizer("Minuit2"),RooFit::PrintLevel(-1));
+      } else if (runConfig == fitCpu) {
+           auto r = pdf.fitTo(*data, RooFit::BatchMode(rbc::Cpu), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                              RooFit::PrintLevel(-1));
+      } else if (runConfig == fitCuda) {
+           auto r = pdf.fitTo(*data, RooFit::BatchMode(rbc::Cuda), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                              RooFit::PrintLevel(1));
       }
     }
   }
@@ -157,6 +166,8 @@ BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp(evaluateSpan fallback)")->Unit(b
         ->Args({runBatchNormLogs, true})
         ->Args({runSingleNormLogs, true});
 
-
+BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_Scalar")->Unit(benchmark::kMillisecond)->Args({fitScalar, false});
+BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_CPU")->Unit(benchmark::kMillisecond)->Args({fitCpu, false});
+BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_Cuda")->Unit(benchmark::kMillisecond)->Args({fitCuda, false});
 
 BENCHMARK_MAIN();
