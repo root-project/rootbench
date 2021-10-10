@@ -3,7 +3,7 @@ RB_ADD_GBENCHMARK(IOBenchmarks
   LABEL short
   LIBRARIES Core RIO Tree TreePlayer)
 
-if(ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
+if(ROOT_dataframe_FOUND AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
   RB_ADD_GBENCHMARK(TFile_RDFSnapshot
     TFile_RDFSnapshot.cxx
     LABEL short

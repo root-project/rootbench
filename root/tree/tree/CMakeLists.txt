@@ -1,12 +1,12 @@
-include_directories(${PROJECT_SOURCE_DIR}/root/tree/dataframe)
+if(ROOT_dataframe_FOUND)
+  RB_ADD_GBENCHMARK(TTreeBenchmarks
+    TTreeBenchmarks.cxx
+    TTreeSumBenchmarks.cxx
+    LABEL short
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
+endif(ROOT_dataframe_FOUND)
 
-RB_ADD_GBENCHMARK(TTreeBenchmarks
-  TTreeBenchmarks.cxx
-  TTreeSumBenchmarks.cxx
-  LABEL short
-  LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps)
-
-if(ROOT_root7_FOUND)
+if(ROOT_root7_FOUND AND rootbench-datafiles AND ROOT_dataframe_FOUND)
   RB_GENERATE_DICTIONARY(h1event ${CMAKE_CURRENT_SOURCE_DIR}/include/h1event.h
                             LINKDEF h1linkdef.h)
 
@@ -15,9 +15,7 @@ if(ROOT_root7_FOUND)
             ROOTDataFrame ROOTVecOps ROOTNTuple
             DEPENDS libh1event
   )
-endif()
 
-if(ROOT_root7_FOUND AND rootbench-datafiles)
   RB_ADD_GBENCHMARK(RNTupleAnalysisBenchmarks
     RNTupleH1Benchmarks.cxx
     LABEL short
@@ -32,10 +30,12 @@ if(ROOT_root7_FOUND AND rootbench-datafiles)
     SETUP "hadd -f404 ${RB_DATASETDIR}/h1dst-lz4.root ${RB_DATASETDIR}/h1dst-lzma.root"
     SETUP "hadd -f506 ${RB_DATASETDIR}/h1dst-zstd.root ${RB_DATASETDIR}/h1dst-lzma.root"
     SETUP "hadd -f0 ${RB_DATASETDIR}/h1dst-none.root ${RB_DATASETDIR}/h1dst-lzma.root")
+endif(ROOT_root7_FOUND AND rootbench-datafiles AND ROOT_dataframe_FOUND)
 
+if(ROOT_root7_FOUND AND rootbench-datafiles)
   RB_ADD_GBENCHMARK(RNTupleLHCBBenchmarks
    RNTupleLHCBBenchmarks.cxx
    LABEL short
    LIBRARIES Core Hist MathCore RIO Tree ROOTNTuple
    DOWNLOAD_DATAFILES B2HHH~none.ntuple)
-endif()
+endif(ROOT_root7_FOUND AND rootbench-datafiles)
