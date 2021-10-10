@@ -1,3 +1,5 @@
-add_subdirectory(dataframe)
+if(ROOT_dataframe_FOUND)
+  add_subdirectory(dataframe)
+endif(ROOT_dataframe_FOUND)
 add_subdirectory(tree)
 add_subdirectory(treeplayer)
