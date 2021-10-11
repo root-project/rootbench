@@ -66,7 +66,7 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
   const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
   const bool useSlowRooExponential = state.range(1);
   constexpr std::size_t nParamSets = 1;
-  constexpr std::size_t nEvents = 1000000;
+  constexpr std::size_t nEvents = 10000000;
 
   // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
   RooRealVar x("x", "x", -1.5, 40.5);
@@ -94,8 +94,10 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
 
   RooArgSet& observables = *pdf.getObservables(data);
   RooArgSet& parameters = *pdf.getParameters(data);
-  if (runConfig % 2 == 0)
-    data->attachBuffers(observables);
+  
+  // if (runConfig % 2 == 0)
+  //   data->attachBuffers(observables);
+  std::cout << "remove attach buffer..\n";
 
   std::vector<double> results(nEvents);
 
@@ -136,12 +138,13 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
                               RooFit::PrintLevel(-1));
       } else if (runConfig == fitCuda) {
            auto r = pdf.fitTo(*data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
-                              RooFit::PrintLevel(1));
+                              RooFit::PrintLevel(-1));
       }
     }
   }
 };
 
+/*
 BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp")->Unit(benchmark::kMillisecond)
         ->Args({runBatchNorm, false})
         ->Args({runSingleNorm, false})
@@ -152,7 +155,9 @@ BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp(evaluateSpan fallback)")->Unit(b
         ->Args({runSingleNormLogs, true});
 
 BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_Scalar")->Unit(benchmark::kMillisecond)->Args({fitScalar, false});
+*/
 BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_CPU")->Unit(benchmark::kMillisecond)->Args({fitCpu, false});
+
 BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_Cuda")->Unit(benchmark::kMillisecond)->Args({fitCuda, false});
 
 BENCHMARK_MAIN();
