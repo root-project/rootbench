@@ -1,4 +1,4 @@
-// Author: Stephan Hageboeck, CERN  10 Jul 2019
+// Author: Stephan Hageboeck, CERN  12 Jul 2019
 
 /*****************************************************************************
  * RooFit
@@ -16,148 +16,268 @@
 
 /**
  * \file
- * Benchmark a simple mock fit model
- *    sum(x) = frac * Gauss(x) + (1-frac) * Exponential(x)
+ * Benchmark ia simple mock fit model
+ *    model(x) = Gauss( x | mean, sigma )
  *
- * We can run 6 different workflows:
- * 0. Evaluate fit model for 1 M data events with batch data loading and SIMD (if compiler flags activated).
+ * Run the following workflows:
+ * 0. Evaluate fit model for 500k data events with batch data loading and SIMD (if compiler flags activated).
  * 1. As above, but use old RooFit strategy of single-value data loading.
  * 2. Compute probabilities for each data event. That is, run step 0 and normalise values.
  * 3. As above, but use old RooFit strategy.
  * 4. Compute log-likelihoods, i.e. run step 2 and apply -log(LH).
  * 5. As above, but use old RooFit strategy.
  *
+ * 6. Similar to step 0, but dataset contains entries for both x and sigma. This invokes
+ *    a less-optimised implementation of the Gaussian distribution, as it's a rare use case.
+ * 7. as 1., but for less optimised implementation.
+ * 8. as 2., but ...
+ * 9. as 3., but ...
  */
 
 #include "benchmark/benchmark.h"
 
 #include "RooRealVar.h"
+#include "RooGaussian.h"
+#include "RooDataSet.h"
 #include "RooAddPdf.h"
 #include "RooGaussian.h"
-#include "RooPoisson.h"
 #include "RooExponential.h"
-#include "RooDataSet.h"
+#include "RooWorkspace.h"
 #include "RooRandom.h"
 
 #include "SlowRooExponential.h"
 
-void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
-  auto random = RooRandom::randomGenerator();
-  if (seed != 0)
-    random->SetSeed(seed);
+enum RunConfig_t { runScalar, runCpu, runCuda, fitScalar, fitCpu, fitCuda };
 
-  for (auto param : parameters) {
-    auto par = static_cast<RooAbsRealLValue*>(param);
-    const double uni = random->Uniform();
-    const double min = par->getMin();
-    const double max = par->getMax();
-    par->setVal(min + uni*(max-min));
-  }
-}
+size_t nEvents = 100000;
+const size_t nParamSets = 30;
 
-enum RunConfig_t {runSingleUnnorm = 0,
-  runBatchNorm, runSingleNorm,
-  runSingleNormLogs,
-   fitScalar, fitCpu, fitCuda};
+int printLevel = 0;
 
+class TestModelPdf {
 
+public:
+private:
+   std::unique_ptr<RooWorkspace> w;
+   std::unique_ptr<RooAbsData> data;
+   RooAbsPdf *pdf;
+   std::string obsName;
+   std::vector<double> results;
 
-static void benchAddPdfGaussExp(benchmark::State& state) {
-  const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-  const bool useSlowRooExponential = state.range(1);
-  constexpr std::size_t nParamSets = 1;
-  constexpr std::size_t nEvents = 10000000;
+public:
+   TestModelPdf(bool useUserExponential, size_t nEvts)
+   {
 
-  // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
-  RooRealVar x("x", "x", -1.5, 40.5);
+      if (printLevel == 0) RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
 
-  RooRealVar mean("mean", "mean of gaussian", 20., -10, 30);
-  RooRealVar sigma("sigma", "width of gaussian", 4., 0.5, 10);
+      w = std::make_unique<RooWorkspace>("w");
 
-  // Build gaussian p.d.f in terms of x,mean and sigma
-  RooGaussian gauss("gauss", "gaussian PDF", x, mean, sigma);
+      // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
+      RooRealVar x("x", "x", -1.5, 40.5);
 
-  RooRealVar c1("c1", "Decay constant", -0.5, -10, -0.001);
-  std::unique_ptr<RooAbsPdf> ex;
-  if (useSlowRooExponential) {
-    ex = std::make_unique<SlowRooExponential>("Pois", "Poisson PDF", x, c1);
-  } else {
-    ex = std::make_unique<RooExponential>("Pois", "Poisson PDF", x, c1);
-  }
+      RooRealVar mean("mean", "mean of gaussian", 20., -10, 30);
+      RooRealVar sigma("sigma", "width of gaussian", 4., 0.5, 10);
 
-  RooRealVar fractionGaus("fractionGaus", "Fraction of Gauss component", 0.5, 0., 1.);
-  RooAddPdf pdf("SumGausPois", "Sum of Gaus and Poisson", RooArgSet(gauss, *ex), fractionGaus);
-  // to avoid a warning when computing the   unnormalized RooAddPdf values
-  pdf.fixCoefNormalization(x);
+      // Build gaussian p.d.f in terms of x,mean and sigma
+      RooGaussian gauss("gauss", "gaussian PDF", x, mean, sigma);
 
-  auto data = pdf.generate(RooArgSet(x), nEvents);
-
-  RooArgSet& observables = *pdf.getObservables(data);
-  RooArgSet& parameters = *pdf.getParameters(data);
-  
-  // if (runConfig % 2 == 0)
-  //   data->attachBuffers(observables);
-  std::cout << "remove attach buffer..\n";
-
-  std::vector<double> results(nEvents);
-
-  std::array<RooArgSet, nParamSets> paramSets;
-  unsigned int seed = 1337;
-  for (auto& paramSet : paramSets) {
-    randomiseParameters(parameters, seed++);
-    parameters.snapshot(paramSet);
-  }
-
-  for (auto _ : state) {
-    for (const auto& paramSet : paramSets) {
-      parameters = paramSet;
-
-      if (runConfig == runBatchNorm) {
-        auto batchResult = pdf.getValues(*data);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runSingleUnnorm) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getVal();
-        }
-      } else if (runConfig == runSingleNorm) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getVal(&observables);
-        }
-      } else if (runConfig == runSingleNormLogs) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getLogVal(&observables);
-        }
-      } else if (runConfig == fitScalar) {
-           auto r = pdf.fitTo(*data, RooFit::Save(1),RooFit::Minimizer("Minuit2"),RooFit::PrintLevel(-1));
-      } else if (runConfig == fitCpu) {
-           auto r = pdf.fitTo(*data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
-                              RooFit::PrintLevel(-1));
-      } else if (runConfig == fitCuda) {
-           auto r = pdf.fitTo(*data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
-                              RooFit::PrintLevel(-1));
+      RooRealVar c1("c1", "Decay constant", -0.5, -10, -0.001);
+      std::unique_ptr<RooAbsPdf> ex;
+      // test with a user exponential to test case of user pdf evaluations
+      if (useUserExponential) {
+         ex = std::make_unique<SlowRooExponential>("Expo", "Exponential PDF", x, c1);
+      } else {
+         ex = std::make_unique<RooExponential>("Expo", "Exponential PDF", x, c1);
       }
-    }
-  }
+
+      RooRealVar fractionGaus("fractionGaus", "Fraction of Gauss component", 0.5, 0., 1.);
+      RooAddPdf addPdf("SumGausExpo", "Sum of Gaus and Exponential", RooArgSet(gauss, *ex), fractionGaus);
+      // to avoid a warning when computing the   unnormalized RooAddPdf values
+      addPdf.fixCoefNormalization(x);
+
+      w->import(addPdf);
+
+      w->defineSet("obs", "x");
+
+      pdf = w->pdf("SumGausExpo");
+      if (printLevel > 1) w->Print();
+      generateData(nEvents);
+
+      if (printLevel > 1) data->Print();
+   }
+   RooAbsPdf &GetPdf() { return *pdf; }
+   RooAbsData &GetData() { return *data; }
+
+   void randomiseParameters(ULong_t seed = -1)
+   {
+      auto parameters = pdf->getParameters(data.get());
+      auto random = RooRandom::randomGenerator();
+      if (seed != -1)
+         random->SetSeed(seed);
+
+      for (auto param : *parameters) {
+         auto par = static_cast<RooAbsRealLValue *>(param);
+         const double uni = random->Uniform();
+         const double min = par->getMin();
+         const double max = par->getMax();
+         par->setVal(min + uni * (max - min));
+      }
+      delete parameters;
+   }
+
+   void generateData(size_t nEvts)
+   {
+      data = std::unique_ptr<RooAbsData>(pdf->generate(*w->set("obs"), nEvts) );
+      // allocate here output vector
+      results = std::vector<double>(nEvts);
+   }
+   void EvalScalar()
+   {
+      for (unsigned int i = 0; i < data->sumEntries(); ++i) {
+         auto observables = data->get(i);
+         results[i] = pdf->getLogVal(observables);
+      }
+   }
+   void EvalBatchCpu()
+   {
+      results = pdf->getValues(*data, RooFit::BatchModeOption::Cpu);
+   }
+   void EvalBatchCuda()
+   {
+      results = pdf->getValues(*data, RooFit::BatchModeOption::Cuda);
+   }
 };
 
-/*
-BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp")->Unit(benchmark::kMillisecond)
-        ->Args({runBatchNorm, false})
-        ->Args({runSingleNorm, false})
-        ->Args({runSingleNormLogs, false});
-BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp(evaluateSpan fallback)")->Unit(benchmark::kMillisecond)
-        ->Args({runBatchNorm, true})
-        ->Args({runSingleNorm, true})
-        ->Args({runSingleNormLogs, true});
+static void benchEval(benchmark::State &state)
+{
+   //std::cout << state.range(0) << " " << state.range(1) << "  " << state.range(2) << std::endl;
+   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
 
-BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_Scalar")->Unit(benchmark::kMillisecond)->Args({fitScalar, false});
-*/
-BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_CPU")->Unit(benchmark::kMillisecond)->Args({fitCpu, false});
+   TestModelPdf model(false,nEvents);
 
-BENCHMARK(benchAddPdfGaussExp)->Name("fitGausExp_Cuda")->Unit(benchmark::kMillisecond)->Args({fitCuda, false});
+   for (auto _ : state) {
+      for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
 
-BENCHMARK_MAIN();
+         state.PauseTiming();
+         model.randomiseParameters();
+         state.ResumeTiming();
+
+         if (runConfig == runScalar) {
+            model.EvalScalar();
+         } else if (runConfig == runCpu) {
+            model.EvalBatchCpu();
+         } else if (runConfig == runCuda) {
+            model.EvalBatchCuda();
+         }
+      }
+   }
+}
+
+// test using user function
+static void benchEvalUser(benchmark::State &state)
+{
+   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
+
+   TestModelPdf model(true, nEvents);
+
+   for (auto _ : state) {
+      for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
+
+         state.PauseTiming();
+         model.randomiseParameters();
+         state.ResumeTiming();
+
+         if (runConfig == runScalar) {
+            model.EvalScalar();
+         } else if (runConfig == runCpu) {
+            model.EvalBatchCpu();
+         } else if (runConfig == runCuda) {
+            model.EvalBatchCuda();
+         }
+      }
+   }
+}
+
+static void benchFit(benchmark::State &state)
+{
+   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
+
+   TestModelPdf model(false, nEvents);
+   auto &pdf = model.GetPdf();
+   auto &data = model.GetData();
+
+   for (auto _ : state) {
+      if (runConfig == fitScalar) {
+         auto r = pdf.fitTo(data, RooFit::Save(1), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
+      } else if (runConfig == fitCpu) {
+         auto r = pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                            RooFit::PrintLevel(printLevel-1));
+      } else if (runConfig == fitCuda) {
+         auto r = pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                            RooFit::PrintLevel(printLevel-1));
+      }
+   }
+}
+
+static void benchFitUser(benchmark::State &state)
+{
+   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
+
+   TestModelPdf model(true, nEvents);
+   auto &pdf = model.GetPdf();
+   auto &data = model.GetData();
+
+   for (auto _ : state) {
+      if (runConfig == fitScalar) {
+         auto r = pdf.fitTo(data, RooFit::Save(1), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
+      } else if (runConfig == fitCpu) {
+         auto r = pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                            RooFit::PrintLevel(printLevel-1));
+      } else if (runConfig == fitCuda) {
+         auto r = pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+                            RooFit::PrintLevel(printLevel-1));
+      }
+   }
+}
+
+BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalScalar")->Args({runScalar});
+BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCPU")->Args({runCpu});
+//BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCUDA")->Args({runCuda});
+
+BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalScalar")->Args({runScalar});
+BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPddWithUserExp_EvalBatchCPU")->Args({runCpu});
+//BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalBatchCUDA")->Args({runCuda});
+
+BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitScalar")->Args({fitScalar});
+BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCPU")->Args({fitCpu});
+//BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCUDA")->Args({fitCuda});
+
+BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitScalar")->Args({fitScalar});
+BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCPU")->Args({fitCpu});
+//BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCUDA")->Args({fitCuda});
+
+//BENCHMARK_MAIN();
+
+int main(int argc, char **argv)
+{
+
+   // Parse command line arguments
+   for (Int_t i = 1; i < argc; i++) {
+      std::string arg = argv[i];
+      if (arg == "-v") {
+         std::cout << "---running in verbose mode" << std::endl;
+         printLevel = 1;
+      } else if (arg == "-vv") {
+         std::cout << "---running in very verbose mode" << std::endl;
+         printLevel = 2;
+      }
+      if (arg == "-n") {
+         nEvents = atoi(argv[++i]);
+      }
+   }
+
+   std::cout << "Using nEvents = " << nEvents << std::endl;
+
+   benchmark::Initialize(&argc, argv);
+   benchmark::RunSpecifiedBenchmarks();
+}
