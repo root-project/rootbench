@@ -1,4 +1,4 @@
-if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
+if(rootbench-datafiles)
    ROOT_GENERATE_DICTIONARY(G__SignalAnalysis inc/classes.h LINKDEF LinkDef.h)
 
    file(COPY RDFprocessor/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR} FILES_MATCHING PATTERN "*.py")
@@ -27,4 +27,4 @@ if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy
       runSignalAnalysis.py
       LABEL long
       DOWNLOAD_DATAFILES wmass_repeated_10k_events_800kevents.root)
-endif()
+endif(rootbench-datafiles)
