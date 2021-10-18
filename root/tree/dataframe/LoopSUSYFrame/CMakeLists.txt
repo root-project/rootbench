@@ -1,4 +1,4 @@
-if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy for "c++ standard >= 14"
+if(rootbench-datafiles)
    RB_ADD_GBENCHMARK(LoopSUSYFrameBench
                      src/main.cxx
                      src/cppnn.cxx
@@ -15,4 +15,4 @@ if(rootbench-datafiles AND ROOT_root7_FOUND) # using ROOT_root7_FOUND as a proxy
    foreach(fname biases.txt  fake_factor3D.xml  fake_factors_Stop2L.root  FNPFF.xml  norm.txt  weights.txt)
      configure_file(data/${fname} . COPYONLY)
    endforeach()
-endif()
+endif(rootbench-datafiles)
