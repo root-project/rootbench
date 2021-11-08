@@ -33,7 +33,7 @@ TBufferMerger *Merger = nullptr;
 static void BM_TBufferFile_GetFile(benchmark::State &state)
 {
    ROOT::EnableThreadSafety();
-   if (state.thread_index() == 0) {
+   if (state.thread_index == 0) {
       // Setup code here.
       // FIXME: We should have a way to pass an externally constructed file or stream to
       // TFile*, this would allow us to create in-memory files and avoid killing disks
@@ -44,7 +44,7 @@ static void BM_TBufferFile_GetFile(benchmark::State &state)
       // Run the test as normal.
       auto myFile = Merger->GetFile();
    }
-   if (state.thread_index() == 0) {
+   if (state.thread_index == 0) {
       // Teardown code here.
       delete Merger;
    }
@@ -88,7 +88,7 @@ inline void FillTreeWithRandomData(TBufferMerger &merger, size_t nEntriesPerWork
 static void BM_TBufferFile_FillTreeWithRandomData(benchmark::State &state)
 {
    ROOT::EnableThreadSafety();
-   if (state.thread_index() == 0) {
+   if (state.thread_index == 0) {
       // Setup code here.
       Merger = new TBufferMerger(std::make_unique<TMemFile>("virtual_file.root", "RECREATE"));
    }
@@ -101,7 +101,7 @@ static void BM_TBufferFile_FillTreeWithRandomData(benchmark::State &state)
    std::stringstream ss;
    ss << size;
    state.SetLabel(ss.str());
-   if (state.thread_index() == 0) {
+   if (state.thread_index == 0) {
       // Teardown code here.
       delete Merger;
    }
