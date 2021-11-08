@@ -20,7 +20,7 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
    session_options.SetIntraOpNumThreads(1);
    session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);
 
-   std::cout << "benchmarking model " << model_path << std::endl;
+   //std::cout << "benchmarking model " << model_path << std::endl;
    Ort::Session session(env, model_path.c_str(), session_options);
 
    vector<const char*> input_node_names(1);

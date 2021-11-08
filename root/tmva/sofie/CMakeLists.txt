@@ -17,6 +17,8 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   endforeach()
   
   # Looking for ONNXRuntime
+  ## to find OONX run time configure cmake with
+  ## -DONNXRuntime_INCLUDE_DIR=..onxruntime_location.../include -DONNXRuntime_LIBRARIES=.../lib
   find_package(ONNXRuntime QUIET)
   if(ONNXRuntime_FOUND)
     message(STATUS "Found ONNXRuntime (build type: ${ONNXRuntime_BUILD_TYPE}, version: ${ONNXRuntime_VERSION_STRING})")
@@ -48,6 +50,8 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   else()
     message(WARNING "ONNXRuntime not found")
   endif()
+
+  if (Use_SOFIE_TEMPLATE)
     
   # Configuring SOFIEInference_Template.cxx.in
   set(FUNC_NAME "BM_SOFIE_Inference")
@@ -87,11 +91,23 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   string(REPLACE ";" ",\n" FUNC_TUPLES "${ALL_FUNCS}")            # String[] -> String
   configure_file(SOFIEInference_Template.cxx.in SOFIEInference.cxx @ONLY)
   
+  else()
+  
+  endif()
+
+  
+  configure_file(input_models/compiled/Conv_d100_L1_B1.hxx Conv_d100_L1_B1.hxx COPYONLY)
+  configure_file(input_models/compiled/Conv_d100_L1_B1.dat Conv_d100_L1_B1.dat COPYONLY)
+  
+  configure_file(input_models/compiled/Conv_d100_L14_B1.hxx Conv_d100_L14_B1.hxx COPYONLY)
+  configure_file(input_models/compiled/Conv_d100_L14_B1.dat Conv_d100_L14_B1.dat COPYONLY)
+
   # Benchmark for models emitted by SOFIE
   RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
     LABEL short
-    LIBRARIES TMVA   openblas
+    #LIBRARIES TMVA   openblas
+    LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
     #LIBRARIES TMVA   /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread
   )
   target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

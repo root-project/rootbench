@@ -17,6 +17,7 @@ static void @FUNC_NAME@(benchmark::State& state, std::string model_name)
     vector<float> input;
 
     typedef function<vector<float>(float*)> infer_t;
+    typedef 
     unordered_map<string, pair<infer_t, size_t>> all_infer_funcs{
 @FUNC_TUPLES@
     };
@@ -26,6 +27,7 @@ static void @FUNC_NAME@(benchmark::State& state, std::string model_name)
     tie(infer_func, input_size) = all_infer_funcs[model_name];
     //input.resize(input_size);
     input.resize(10'000); // temporary remedy
+
 
     for (auto _ : state) {
         infer_func(input.data());
