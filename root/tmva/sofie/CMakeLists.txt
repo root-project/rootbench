@@ -18,7 +18,7 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   
   # Looking for ONNXRuntime
   ## to find OONX run time configure cmake with
-  ## -DONNXRuntime_INCLUDE_DIR=..onxruntime_location.../include -DONNXRuntime_LIBRARIES=.../lib
+  ## -DONNXRuntime_INCLUDE_DIRS=..onxruntime_location.../include -DONNXRuntime_LIBRARIES=.../lib
   find_package(ONNXRuntime QUIET)
   if(ONNXRuntime_FOUND)
     message(STATUS "Found ONNXRuntime (build type: ${ONNXRuntime_BUILD_TYPE}, version: ${ONNXRuntime_VERSION_STRING})")
@@ -36,7 +36,7 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
       list(APPEND ALL_CAPTURES ${cap})
     endforeach()
     string(REPLACE ";" "\n" BENCHMARK_CAPTURES "${ALL_CAPTURES}")         # String[] -> String
-    string(REPLACE "@3" ";" BENCHMARK_CAPTURES "${BENCHMARK_CAPTURES}")   # Adding semicolon
+    string(REPLACE "@3" "->Unit(benchmark::kMillisecond);" BENCHMARK_CAPTURES "${BENCHMARK_CAPTURES}")   # Adding semicolon
     configure_file(ONNXRuntimeInference_Template.cxx.in ONNXRuntimeInference.cxx @ONLY)
 
     RB_ADD_GBENCHMARK(ONNXRuntimeInference
@@ -95,20 +95,35 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   
   endif()
 
+  configure_file(input_models/compiled/Linear_event.hxx Linear_event.hxx COPYONLY)
+  configure_file(input_models/compiled/Linear_event.dat Linear_event.dat COPYONLY)
+
+  configure_file(input_models/compiled/Linear_16.hxx Linear_16.hxx COPYONLY)
+  configure_file(input_models/compiled/Linear_16.dat Linear_16.dat COPYONLY)
+  
+  configure_file(input_models/compiled/Linear_32.hxx Linear_32.hxx COPYONLY)
+  configure_file(input_models/compiled/Linear_32.dat Linear_32.dat COPYONLY)
+  
+  configure_file(input_models/compiled/Linear_64.hxx Linear_64.hxx COPYONLY)
+  configure_file(input_models/compiled/Linear_64.dat Linear_64.dat COPYONLY)
+  
   
   configure_file(input_models/compiled/Conv_d100_L1_B1.hxx Conv_d100_L1_B1.hxx COPYONLY)
   configure_file(input_models/compiled/Conv_d100_L1_B1.dat Conv_d100_L1_B1.dat COPYONLY)
   
   configure_file(input_models/compiled/Conv_d100_L14_B1.hxx Conv_d100_L14_B1.hxx COPYONLY)
   configure_file(input_models/compiled/Conv_d100_L14_B1.dat Conv_d100_L14_B1.dat COPYONLY)
+  configure_file(input_models/compiled/Conv_d100_L14_B32.hxx Conv_d100_L14_B32.hxx COPYONLY)
+  #use file B1 as B32 for weights : it is the same
+  configure_file(input_models/compiled/Conv_d100_L14_B32.dat Conv_d100_L14_B32.dat COPYONLY)
 
   # Benchmark for models emitted by SOFIE
   RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
     LABEL short
-    #LIBRARIES TMVA   openblas
-    LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
-    #LIBRARIES TMVA   /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread
+    #LIBRARIES TMVA   ROOTTMVASofie  openblas
+    #LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
+    LIBRARIES TMVA  ROOTTMVASofie  /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread
   )
   target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

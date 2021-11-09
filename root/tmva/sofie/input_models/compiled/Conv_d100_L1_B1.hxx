@@ -100,16 +100,22 @@ std::vector<float> infer(float* tensor_input){
 	float * op_0_xcol = fVec_op_0_xcol.data();
 	for (size_t n = 0; n < 1; n++) {
 		size_t op_0_index = 0;
+                size_t offseth = 0;
 		for (size_t h = 0; h < 100; h += 1) {
 			for (size_t w = 0; w < 100;w += 1) {
+                                size_t offsetc = 0; 
 				for (size_t c = 0; c < 1; c++) {
+                                   size_t offsetx = 0;
 					for (size_t x = 0; x < 5; x++) {
-					size_t offset =  c * 10816 + (h + x) * 104 + w;
+					size_t offset = offsetc + offseth + offsetx  + w;
 					std::copy(op_0_xpad + offset, op_0_xpad + offset + 5, op_0_xcol + op_0_index);
 					op_0_index += 5;
+                                        offsetx += 104;
 					}
+                                        offsetc += 10816;
 				}
 			}
+                        offseth += 104;
 		}
 		BLAS::sgemm_(&op_0_transA, &op_0_transB, &op_0_m, &op_0_n, &op_0_k, &op_0_alpha, op_0_xcol, &op_0_k,
 			op_0_f, &op_0_k, &op_0_beta, tensor_3, &op_0_m);
