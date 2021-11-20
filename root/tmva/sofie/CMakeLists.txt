@@ -117,6 +117,9 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   #use file B1 as B32 for weights : it is the same
   configure_file(input_models/compiled/Conv_d100_L14_B32.dat Conv_d100_L14_B32.dat COPYONLY)
 
+  configure_file(input_models/compiled/resnet18v1.hxx resnet18v1.hxx COPYONLY)
+  configure_file(input_models/compiled/resnet18v1.dat resnet18v1.dat COPYONLY)
+
   # Benchmark for models emitted by SOFIE
   RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
