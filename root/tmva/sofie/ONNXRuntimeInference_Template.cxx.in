@@ -38,10 +38,14 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
       .GetOutputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
 
    // Calculating the dimension of the input tensor
+   int nevt = 64;
+   int bsize = input_node_dims[0];
+   //std::cout << "Using bsize = " << bsize << std::endl;
+   int nbatches = nevt / bsize;
 
    size_t input_tensor_size = accumulate(input_node_dims.begin(),
       input_node_dims.end(), 1, multiplies<int>());
-   vector<float> input_tensor_values(input_tensor_size);
+   vector<float> input_tensor_values(input_tensor_size*nbatches);
 
    // Input tensor initialization   
    static std::uniform_real_distribution<float> distribution(-1,1);
@@ -56,10 +60,15 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
 
    // Running the model
    float * floatarr = nullptr;
+
+  
+   
    for (auto _ : state) {
-      auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(),
-         &input_tensor, 1, output_node_names.data(), 1);
+      for (int i = 0; i < nevt; i+= bsize) {
+         auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(), &input_tensor, 1,
+                                           output_node_names.data(), 1);
          floatarr = output_tensors.front().GetTensorMutableData<float>();
+      }
    }
    //for (int i = 0; i < 10; i++)
    //  printf("%f\t", i, floatarr[i]);
