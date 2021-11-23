@@ -128,6 +128,38 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
     #LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
     LIBRARIES TMVA  ROOTTMVASofie  /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread
   )
-  target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+ # target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
+set(SOFIE_BLAS_LIBS /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread)
+
+configure_file(input_models/compiled/higgs_model_dense.hxx higgs_model_dense.hxx COPYONLY)
+configure_file(input_models/compiled/higgs_model_dense.dat higgs_model_dense.dat COPYONLY)
+RB_ADD_GBENCHMARK(RDF_SOFIE_Inference
+    RDF_SOFIE_Inference.cxx
+    LABEL short
+    #LIBRARIES TMVA   ROOTTMVASofie  openblas
+    #LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${SOFIE_BLAS_LIBS}
+)
+  
 endif()
+
+configure_file(input_models/higgs_model_dense.json higgs_model_dense.json COPYONLY)
+set(LWTNN_INCLUDE_DIR /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/include)
+set(LWTNN_LIBS /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/lib/liblwtnn.so)
+RB_ADD_GBENCHMARK(RDF_lwtnn_Inference
+    RDF_lwtnn_Inference.cxx
+    LABEL short
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${LWTNN_LIBS}
+)
+target_include_directories(RDF_lwtnn_Inference PRIVATE ${LWTNN_INCLUDE_DIR})
+
+
+configure_file(input_models/higgs_model_dense.onnx higgs_model_dense.onnx COPYONLY)
+RB_ADD_GBENCHMARK(RDF_ONNXRuntime_Inference
+    RDF_ONNXRuntime_Inference.cxx
+    LABEL short
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie onnxruntime
+)
+target_link_directories(RDF_ONNXRuntime_Inference PRIVATE ${ONNXRuntime_LIBRARIES})
+target_include_directories(RDF_ONNXRuntime_Inference PRIVATE ${ONNXRuntime_INCLUDE_DIR})

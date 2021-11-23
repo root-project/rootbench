@@ -20,7 +20,7 @@
 #include "Conv_d100_L14_B32.hxx"
 
 #include "resnet18v1.hxx"
-
+#include "TMath.h"
 
 
 using namespace std;
@@ -42,10 +42,16 @@ void BM_SOFIE_Inference(benchmark::State &state)
    float *input_ptr = input.data();
    S s("");
 
+
    for (auto _ : state) {
-      for (int i = 0; i < nevts; i+= bsize)
-         s.infer(input.data()+ inputSize*i);
-    }
+      input[0] = -111;
+      for (int i = 0; i < nevts; i += bsize)
+         auto y = s.infer(input.data()+ inputSize*i);
+   }
+
+   input[0] = -999;
+   s.infer(input.data());
+
     //if (verbose) std::cout << "output : " << output.size() << " : " << output.front() << " ......" << output.back() << std::endl;
 }
 //typedef TMVA_SOFIE_Conv_d100_L1_B1::Session S1;
