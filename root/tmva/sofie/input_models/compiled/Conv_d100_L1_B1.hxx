@@ -1,4 +1,4 @@
-//Code generated automatically by TMVA for Inference of Model file [Conv_d100_L1_B1.onnx] at [Sat Nov 20 10:46:47 2021] 
+//Code generated automatically by TMVA for Inference of Model file [Conv_d100_L1_B1.onnx] at [Sun Nov 21 22:14:25 2021] 
 #include<vector>
 #include "TMVA/SOFIE_common.hxx"
 #include <fstream>
@@ -84,7 +84,7 @@ std::vector<float> infer(float* tensor_input){
          }
       }
    }
-   char op_0_transA = 'T';
+   char op_0_transA = 'N';
    char op_0_transB = 'N';
    int op_0_m = 10000;
    int op_0_n = 2;
@@ -95,26 +95,10 @@ std::vector<float> infer(float* tensor_input){
    float * op_0_xcol = fVec_op_0_xcol.data();
    size_t offset_tensor_3 = 0;
    for (size_t n = 0; n < 1; n++) {
-      for (size_t c = 0; c < 1; c++) {
-         for (size_t h = 0; h < 100; h++) {
-            size_t xpad_offset = c * 10816 + (h + 2) * 104 + 2;
-            size_t x_offset = c * 10000 + h * 100;
-            std::copy(tensor_input + x_offset, tensor_input + x_offset + 100, op_0_xpad + xpad_offset);
-         }
-      }
-      size_t op_0_index = 0;
-      for (size_t h = 0; h < 100; h += 1) {
-         for (size_t w = 0; w < 100;w += 1) {
-            for (size_t c = 0; c < 1; c++) {
-               for (size_t x = 0; x < 5; x++) {
-               size_t offset =  c * 10816 + (h + x) * 104 + w;
-               std::copy(op_0_xpad + offset, op_0_xpad + offset + 5, op_0_xcol + op_0_index);
-               op_0_index += 5;
-               }
-            }
-         }
-      }
-      BLAS::sgemm_(&op_0_transA, &op_0_transB, &op_0_m, &op_0_n, &op_0_k, &op_0_alpha, op_0_xcol, &op_0_k,
+      size_t x_offset = n * 10000;
+      TMVA::Experimental::SOFIE::UTILITY::Im2col<float>(tensor_input + x_offset,1,100,100,5,5,2,2,1,1,1,1,op_0_xcol);
+
+       BLAS::sgemm_(&op_0_transA, &op_0_transB, &op_0_m, &op_0_n, &op_0_k, &op_0_alpha, op_0_xcol, &op_0_m,
          op_0_f, &op_0_k, &op_0_beta, tensor_3 + offset_tensor_3, &op_0_m);
       offset_tensor_3 += 20000;
    }
