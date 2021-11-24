@@ -34,7 +34,7 @@ struct LWTNNFunctor {
       model = std::make_shared<lwt::LightweightNeuralNetwork>(config.inputs, config.layers, config.outputs);
 
       // Load inputs from argv
-      std::cout << "input size is " << config.inputs.size() << std::endl;
+      //std::cout << "input size is " << config.inputs.size() << std::endl;
       for (size_t n = 0; n < config.inputs.size(); n++) {
          inputs[config.inputs.at(n).name] = 0.0;
          names.push_back(config.inputs.at(n).name);
@@ -77,6 +77,9 @@ void BM_RDF_LWTNN_Inference(benchmark::State &state)
 
    LWTNNFunctor functor(nslot);
 
+   std::vector<double> durations;
+   double ntot = 0;
+
    for (auto _ : state) {
 
       auto h1 = df.DefineSlot("DNN_Value", functor, {"m_jj", "m_jjj", "m_lv", "m_jlv", "m_bb", "m_wbb", "m_wwbb"})
@@ -88,12 +91,19 @@ void BM_RDF_LWTNN_Inference(benchmark::State &state)
       auto t2 = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
 
-      std::cout << " Processed " << n << " entries "
-                << " time = " << duration / 1.E6 << " (sec)  time/event = " << duration / double(n) << " musec"
-                << std::endl;
+      durations.push_back(duration / 1.E6);
+      ntot += n;
+
+      // std::cout << " Processed " << n << " entries "
+      //           << " time = " << duration / 1.E6 << " (sec)  time/event = " << duration / double(n) << " musec"
+      //           << std::endl;
 
       // h1->DrawClone();
    }
+   // report my statistics
+   double avgDuration = TMath::Mean(durations.begin(), durations.end());
+   state.counters["avg-time(s)"] = avgDuration;
+   state.counters["time/evt(s)"] = avgDuration * double(durations.size()) / ntot;
 }
 
 
