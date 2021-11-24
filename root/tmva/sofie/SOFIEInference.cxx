@@ -42,12 +42,20 @@ void BM_SOFIE_Inference(benchmark::State &state)
    float *input_ptr = input.data();
    S s("");
 
-
+   double totDuration = 0;
+   int ntimes = 0;
    for (auto _ : state) {
+      auto t1 = std::chrono::high_resolution_clock::now();
       for (int i = 0; i < nevts; i += bsize)
          auto y = s.infer(input.data()+ inputSize*i);
+
+      auto t2 = std::chrono::high_resolution_clock::now();
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+      totDuration += duration / 1.E3;  // in milliseconds
+      ntimes++;
    }
 
+   state.counters["time/evt(ms)"] = totDuration / double(ntimes * nevts);
    // input[0] = -999;
    // s.inf
    // std::cout << "number of times " << s.itime << std::endl;
