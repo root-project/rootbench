@@ -3,6 +3,7 @@
 #include "TROOT.h"
 #include "TSystem.h"
 #include "ROOT/RDataFrame.hxx"
+#include "TMath.h"
 
 #include <onnxruntime_cxx_api.h>
 
@@ -19,16 +20,13 @@ struct ONNXFunctor {
    // std::vector<float> input;
    // std::vector<std::shared_ptr<Func>> sessions;
 
-   std::map<std::string, double> inputs;
-   std::vector<std::string> names;
-
    std::shared_ptr<Ort::Session> session;
 
    //td::vector<Ort::Value>  input_tensors;
 
    //Ort::Value  * ort_input = nullptr;
 
-   //float *input_arr = nullptr;
+   //float *inputArray = nullptr;
 
    std::vector<const char *> input_node_names;
    std::vector<const char *> output_node_names;
@@ -37,6 +35,10 @@ struct ONNXFunctor {
 
    std::vector<int64_t> input_node_dims;
    std::vector<int64_t> output_node_dims;
+
+   Ort::Value inputTensor{nullptr};
+
+   float *inputArray = nullptr;
 
    ONNXFunctor(unsigned nslots)
    {
@@ -65,9 +67,6 @@ struct ONNXFunctor {
 
       // Calculating the dimension of the input tensor
      
-      //int bsize = input_node_dims[0];
-      // std::cout << "Using bsize = " << bsize << std::endl;
-      //int nbatches = nevt / bsize;
 
       size_t input_tensor_size = std::accumulate(input_node_dims.begin(), input_node_dims.end(), 1, std::multiplies<int>());
       //std::vector<float> input_tensor_values(input_tensor_size );
@@ -76,56 +75,49 @@ struct ONNXFunctor {
 
       auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
 
-      //input_tensors.push_back(Ort::Value::CreateTensor<float>(
-      //   memory_info, input_tensor_values.data(), input_tensor_size, input_node_dims.data(), input_node_dims.size()) );
+      inputTensor =
+         Ort::Value::CreateTensor<float>(memory_info, input_tensor_values.data(), input_tensor_values.size(),
+                                         input_node_dims.data(), input_node_dims.size());
 
-      
-      // Ort::Value
-      // Ort::Value *ort_input = new Ort::Value(nullptr);
-      // // input_tensor =
-      // *ort_input = Ort::Value::CreateTensor<float>(memory_info, input_tensor_values.data(), input_tensor_values.size(),
-      //                                 input_node_dims.data(), input_node_dims.size());
-
-      //input_arr = input_tensor.GetTensorMutableData<float>();
-
-      // Running the model
-      //input_arr = input_tensors[0].GetTensorMutableData<float>();
-     
-      ///////
-
-
-      // // Load inputs from argv
-      // std::cout << "input size is " << config.inputs.size() << std::endl;
-      // for (size_t n = 0; n < config.inputs.size(); n++) {
-      //    inputs[config.inputs.at(n).name] = 0.0;
-      //    names.push_back(config.inputs.at(n).name);
-      // }
+      inputArray = inputTensor.GetTensorMutableData<float>();
    }
 
    double operator()(unsigned nslots, float x0, float x1, float x2, float x3, float x4, float x5, float x6)
    {
 
-      // not sure how to cache input ort tensor
-      auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
-      Ort::Value 
-      input_tensor = Ort::Value::CreateTensor<float>(
-         memory_info, input_tensor_values.data(), input_tensor_values.size(), input_node_dims.data(), input_node_dims.size());
-      float * input_arr = input_tensor.GetTensorMutableData<float>();
 
       int off = 0;
-      input_arr[off] = x0;
-      input_arr[off + 1] = x1;
-      input_arr[off + 2] = x2;
-      input_arr[off + 3] = x3;
-      input_arr[off + 4] = x4;
-      input_arr[off + 5] = x5;
-      input_arr[off + 6] = x6;
+      inputArray[off] = x0;
+      inputArray[off + 1] = x1;
+      inputArray[off + 2] = x2;
+      inputArray[off + 3] = x3;
+      inputArray[off + 4] = x4;
+      inputArray[off + 5] = x5;
+      inputArray[off + 6] = x6;
 
       
 
-      auto output_tensors = session->Run(Ort::RunOptions{nullptr}, input_node_names.data(), &input_tensor, 1, output_node_names.data(), 1);
+      auto output_tensors = session->Run(Ort::RunOptions{nullptr}, input_node_names.data(), &inputTensor, 1, output_node_names.data(), 1);
       float * floatarr = output_tensors.front().GetTensorMutableData<float>();
       return floatarr[0];
+   }
+
+   // need copy ctor for ONNXruntime
+   // because I cannot copy Ort::Value
+   ONNXFunctor(const ONNXFunctor & rhs) {
+      session = rhs.session;
+      input_node_names = rhs.input_node_names;
+      output_node_names = rhs.output_node_names;
+
+      input_tensor_values = rhs.input_tensor_values;
+
+      input_node_dims = rhs.input_node_dims;
+      output_node_dims = rhs.output_node_dims;
+
+      auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
+      inputTensor = Ort::Value::CreateTensor<float>(memory_info, input_tensor_values.data(), input_tensor_values.size(),
+                                                    input_node_dims.data(), input_node_dims.size());
+      inputArray = inputTensor.GetTensorMutableData<float>();
    }
 };
 
@@ -149,6 +141,9 @@ void BM_RDF_ONNX_Inference(benchmark::State &state)
 
    ONNXFunctor functor(nslot);
 
+   std::vector<double> durations;
+   double ntot = 0;
+
    for (auto _ : state) {
 
       auto h1 = df.DefineSlot("DNN_Value", functor, {"m_jj", "m_jjj", "m_lv", "m_jlv", "m_bb", "m_wbb", "m_wwbb"})
@@ -160,14 +155,17 @@ void BM_RDF_ONNX_Inference(benchmark::State &state)
       auto t2 = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
 
-      std::cout << " Processed " << n << " entries "
-                << " time = " << duration / 1.E6 << " (sec)  time/event = " << duration / double(n) << " musec"
-                << std::endl;
-
-      // h1->DrawClone();
+      durations.push_back(duration/1.E6);
+      ntot += n;
+      // std::cout << " Processed " << n << " entries "
+      //           << " time = " << duration / 1.E6 << " (sec)  time/event = " << duration / double(n) << " musec"
+      //           << std::endl;
    }
+   double avgDuration = TMath::Mean(durations.begin(), durations.end());
+   state.counters["avg-time(s)"] = avgDuration;
+   state.counters["time/evt(s)"] = avgDuration * double(durations.size()) / ntot;
 }
 
-
 BENCHMARK(BM_RDF_ONNX_Inference)->Unit(benchmark::kMillisecond);
+
 BENCHMARK_MAIN();

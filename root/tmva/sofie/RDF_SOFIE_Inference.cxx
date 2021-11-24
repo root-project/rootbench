@@ -34,11 +34,13 @@ struct SofieFunctor {
    
 };
 
+int NEVTS = -1;
 void BM_RDF_SOFIE_Inference(benchmark::State &state)
 {
-   int nslot = 1;
+   int nslot = state.range(0);
 
-   if (nslot > 1) ROOT::EnableImplicitMT(nslot);
+   if (nslot > 1)
+      ROOT::EnableImplicitMT(nslot);
    auto fileName = "Higgs_data_full.root";
    //file is available at "https://cernbox.cern.ch/index.php/s/YuSHwTXBa0UBEhD/download";
    // do curl https://cernbox.cern.ch/index.php/s/XaPBtaGrnN38wU0 -o Higgs_data_full.root
@@ -53,6 +55,10 @@ void BM_RDF_SOFIE_Inference(benchmark::State &state)
 
    SofieFunctor<TMVA_SOFIE_higgs_model_dense::Session> functor(nslot);
 
+   std::vector<double> durations;
+
+   double ntot = 0;
+
    for (auto _ : state) {
 
       auto h1 = df.DefineSlot("DNN_Value", functor, {"m_jj", "m_jjj", "m_lv", "m_jlv", "m_bb", "m_wbb", "m_wwbb"})
@@ -63,14 +69,31 @@ void BM_RDF_SOFIE_Inference(benchmark::State &state)
       auto n = h1->GetEntries();
       auto t2 = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-
-      std::cout << " Processed " << n << " entries "
-                << " time = " << duration / 1.E6 << " (sec)  time/event = " << duration / double(n) << " musec"
-                << std::endl;
+   
+      durations.push_back(duration / 1.E6);
+      NEVTS = n;
+      ntot += n;
+      // std::cout << " Processed " << n << " entries "
+      //           << " time = " << duration / 1.E6 << " (sec)  time/event = " << duration / double(n) << " musec"
+      //           << std::endl;
    }
+
+   double avgDuration = TMath::Mean(durations.begin(), durations.end());
+   state.counters["avg-time(s)"] = avgDuration;
+   if (durations.size() > 1)
+      state.counters["+/-"] = TMath::StdDev(durations.begin(), durations.end()) / sqrt(durations.size() - 1);
+   state.counters["time/evt(s)"] = avgDuration *double(durations.size()) / ntot;
    // h1->DrawClone();
 }
 
+BENCHMARK(BM_RDF_SOFIE_Inference)
+   ->Unit(benchmark::kMillisecond)
+   // ->ComputeStatistics("Time/evt",
+   //                     [](const std::vector<double> &v) -> double {
+   //                        return std::accumulate(v.begin(), v.end(), 0.) / (v.size() * NEVTS);}
+   //                     , benchmark::StatisticUnit::kTime)
+   ->Arg(1)
+   ->Arg(2)
+   ->Arg(4);
 
-BENCHMARK(BM_RDF_SOFIE_Inference)->Unit(benchmark::kMillisecond);
 BENCHMARK_MAIN();
