@@ -44,14 +44,19 @@ void BM_SOFIE_Inference(benchmark::State &state)
 
 
    for (auto _ : state) {
-      input[0] = -111;
       for (int i = 0; i < nevts; i += bsize)
          auto y = s.infer(input.data()+ inputSize*i);
    }
 
-   input[0] = -999;
-   s.infer(input.data());
-
+   // input[0] = -999;
+   // s.inf
+   // std::cout << "number of times " << s.itime << std::endl;
+   // int n = s.itime - 1;
+   // for (size_t i = 0; i < 5; ++i) {
+   //    double mean = TMath::Mean(n, resTimes[i].data());
+   //    double rms = TMath::RMS(n, resfTimes[i].data());
+   //    std::cout << "elapsed time for " << i << " : " << mean << " +/- " << rms / sqrt(n) << std::endl;
+   //  }
     //if (verbose) std::cout << "output : " << output.size() << " : " << output.front() << " ......" << output.back() << std::endl;
 }
 //typedef TMVA_SOFIE_Conv_d100_L1_B1::Session S1;

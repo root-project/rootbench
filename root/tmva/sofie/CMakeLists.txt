@@ -19,9 +19,9 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   # Looking for ONNXRuntime
   ## to find OONX run time configure cmake with
   ## -DONNXRuntime_INCLUDE_DIRS=..onxruntime_location.../include -DONNXRuntime_LIBRARIES=.../lib
-  find_package(ONNXRuntime QUIET)
+  find_package(ONNXRuntime)
   if(ONNXRuntime_FOUND)
-    message(STATUS "Found ONNXRuntime (build type: ${ONNXRuntime_BUILD_TYPE}, version: ${ONNXRuntime_VERSION_STRING})")
+    message(STATUS "Found ONNXRuntime (library is  ${ONNXRuntime_LIBRARY}, libraries ${ONNXRuntime_LIBRARIES})")
     
     # Configuring ONNXRuntimeInference_Template.cxx.in
     set(FUNC_NAME "BM_ONNXRuntime_Inference")
@@ -42,13 +42,13 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
     RB_ADD_GBENCHMARK(ONNXRuntimeInference
       ONNXRuntimeInference.cxx
       LABEL short
-      LIBRARIES TMVA onnxruntime
+      LIBRARIES TMVA ${ONNXRuntime_LIBRARIES}
     )
     target_link_directories(ONNXRuntimeInference PRIVATE ${ONNXRuntime_LIBRARIES})
     target_include_directories(ONNXRuntimeInference PRIVATE ${ONNXRuntime_INCLUDE_DIR})
 
   else()
-    message(WARNING "ONNXRuntime not found")
+    message(STATUS "ONNXRuntime not found")
   endif()
 
   if (Use_SOFIE_TEMPLATE)
@@ -95,71 +95,115 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   
   endif()
 
-  configure_file(input_models/compiled/Linear_event.hxx Linear_event.hxx COPYONLY)
-  configure_file(input_models/compiled/Linear_event.dat Linear_event.dat COPYONLY)
 
-  configure_file(input_models/compiled/Linear_16.hxx Linear_16.hxx COPYONLY)
-  configure_file(input_models/compiled/Linear_16.dat Linear_16.dat COPYONLY)
-  
-  configure_file(input_models/compiled/Linear_32.hxx Linear_32.hxx COPYONLY)
-  configure_file(input_models/compiled/Linear_32.dat Linear_32.dat COPYONLY)
-  
-  configure_file(input_models/compiled/Linear_64.hxx Linear_64.hxx COPYONLY)
-  configure_file(input_models/compiled/Linear_64.dat Linear_64.dat COPYONLY)
-  
-  
-  configure_file(input_models/compiled/Conv_d100_L1_B1.hxx Conv_d100_L1_B1.hxx COPYONLY)
-  configure_file(input_models/compiled/Conv_d100_L1_B1.dat Conv_d100_L1_B1.dat COPYONLY)
-  
-  configure_file(input_models/compiled/Conv_d100_L14_B1.hxx Conv_d100_L14_B1.hxx COPYONLY)
-  configure_file(input_models/compiled/Conv_d100_L14_B1.dat Conv_d100_L14_B1.dat COPYONLY)
-  configure_file(input_models/compiled/Conv_d100_L14_B32.hxx Conv_d100_L14_B32.hxx COPYONLY)
-  #use file B1 as B32 for weights : it is the same
-  configure_file(input_models/compiled/Conv_d100_L14_B32.dat Conv_d100_L14_B32.dat COPYONLY)
+#   configure_file(input_models/compiled/Linear_event.hxx Linear_event.hxx COPYONLY)
+#   configure_file(input_models/compiled/Linear_event.dat Linear_event.dat COPYONLY)
 
-  configure_file(input_models/compiled/resnet18v1.hxx resnet18v1.hxx COPYONLY)
-  configure_file(input_models/compiled/resnet18v1.dat resnet18v1.dat COPYONLY)
+#   configure_file(input_models/compiled/Linear_16.hxx Linear_16.hxx COPYONLY)
+#   configure_file(input_models/compiled/Linear_16.dat Linear_16.dat COPYONLY)
+  
+#   configure_file(input_models/compiled/Linear_32.hxx Linear_32.hxx COPYONLY)
+#   configure_file(input_models/compiled/Linear_32.dat Linear_32.dat COPYONLY)
+  
+#   configure_file(input_models/compiled/Linear_64.hxx Linear_64.hxx COPYONLY)
+#   configure_file(input_models/compiled/Linear_64.dat Linear_64.dat COPYONLY)
+  
+  
+#   configure_file(input_models/compiled/Conv_d100_L1_B1.hxx Conv_d100_L1_B1.hxx COPYONLY)
+#   configure_file(input_models/compiled/Conv_d100_L1_B1.dat Conv_d100_L1_B1.dat COPYONLY)
+  
+#   configure_file(input_models/compiled/Conv_d100_L14_B1.hxx Conv_d100_L14_B1.hxx COPYONLY)
+#   configure_file(input_models/compiled/Conv_d100_L14_B1.dat Conv_d100_L14_B1.dat COPYONLY)
+#   configure_file(input_models/compiled/Conv_d100_L14_B32.hxx Conv_d100_L14_B32.hxx COPYONLY)
+#   #use file B1 as B32 for weights : it is the same
+#   configure_file(input_models/compiled/Conv_d100_L14_B32.dat Conv_d100_L14_B32.dat COPYONLY)
 
-  # Benchmark for models emitted by SOFIE
-  RB_ADD_GBENCHMARK(SOFIEInference
+#   configure_file(input_models/compiled/resnet18v1.hxx resnet18v1.hxx COPYONLY)
+#   configure_file(input_models/compiled/resnet18v1.dat resnet18v1.dat COPYONLY)
+
+
+add_executable(emitFromONNX
+   EmitFromONNX.cxx
+)
+#target_include_directories(emitFromONNX PRIVATE )
+target_link_libraries(emitFromONNX ${Protobuf_LIBRARIES} Core ROOTTMVASofie ROOTTMVASofieParser)
+set_target_properties(emitFromONNX PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+
+if (NOT ONNX_MODELS_DIR)
+  set(ONNX_MODELS_DIR input_models)
+endif()
+
+add_custom_target(SofieCompileModels)
+add_dependencies(SofieCompileModels emitFromONNX)
+
+
+file(GLOB ONNX_FILES "${ONNX_MODELS_DIR}/*.onnx")
+foreach(onnx_file ${ONNX_FILES})
+	#get_filename_component(fname ${onnx_file} NAME_WE)
+	#get_filename_component(fdir ${onnx_file} DIRECTORY)
+	add_custom_command(TARGET SofieCompileModels POST_BUILD
+		COMMAND ./emitFromONNX ${onnx_file} 
+		USES_TERMINAL
+	)
+endforeach()
+
+find_package(BLAS)
+if(BLAS_FOUND)
+    message(STATUS "Found BLAS ( libraries ${BLAS_LIBRARIES})")
+
+#set(SOFIE_BLAS_LIBS /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread)
+#set(SOFIE_BLAS_LIBS /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework)
+
+# Benchmark for models emitted by SOFIE
+RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
     LABEL short
-    #LIBRARIES TMVA   ROOTTMVASofie  openblas
-    #LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
-    LIBRARIES TMVA  ROOTTMVASofie  /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread
-  )
+    LIBRARIES TMVA  ROOTTMVASofie  ${BLAS_LIBRARIES}
+)
+
  # target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-set(SOFIE_BLAS_LIBS /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread)
+#add_dependencies(SOFIEInference SofieCompileModels)
 
-configure_file(input_models/compiled/higgs_model_dense.hxx higgs_model_dense.hxx COPYONLY)
-configure_file(input_models/compiled/higgs_model_dense.dat higgs_model_dense.dat COPYONLY)
+
+#configure_file(input_models/compiled/higgs_model_dense.hxx higgs_model_dense.hxx COPYONLY)
+#configure_file(input_models/compiled/higgs_model_dense.dat higgs_model_dense.dat COPYONLY)
 RB_ADD_GBENCHMARK(RDF_SOFIE_Inference
     RDF_SOFIE_Inference.cxx
     LABEL short
     #LIBRARIES TMVA   ROOTTMVASofie  openblas
-    #LIBRARIES TMVA ROOTTMVASofie /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework
-    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${SOFIE_BLAS_LIBS}
+    #LIBRARIES TMVA ROOTTMVASofie
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${BLAS_LIBRARIES}
 )
   
+add_dependencies(RDF_SOFIE_Inference SofieCompileModels)
+
+endif()
 endif()
 
-configure_file(input_models/higgs_model_dense.json higgs_model_dense.json COPYONLY)
-set(LWTNN_INCLUDE_DIR /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/include)
-set(LWTNN_LIBS /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/lib/liblwtnn.so)
-RB_ADD_GBENCHMARK(RDF_lwtnn_Inference
-    RDF_lwtnn_Inference.cxx
-    LABEL short
-    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${LWTNN_LIBS}
-)
-target_include_directories(RDF_lwtnn_Inference PRIVATE ${LWTNN_INCLUDE_DIR})
+find_package(LWTNN QUIET)
+if (LWTNN_FOUND)
+  
+   message(STATUS "Found LWTNN (library is  ${LWTNN_LIBRARY}, libraries ${LWTNN_LIBRARIES})")
+   configure_file(input_models/higgs_model_dense.json higgs_model_dense.json COPYONLY)
+#   set(LWTNN_INCLUDE_DIR /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/include)
+#   set(LWTNN_LIBS /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/lib/liblwtnn.so)
+   RB_ADD_GBENCHMARK(RDF_lwtnn_Inference
+       RDF_lwtnn_Inference.cxx
+      LABEL short
+      LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${LWTNN_LIBRARY})
+   target_include_directories(RDF_lwtnn_Inference PRIVATE ${LWTNN_INCLUDE_DIR})
+else()
+   message(STATUS "LWTNN not found")
+endif()
 
-
-configure_file(input_models/higgs_model_dense.onnx higgs_model_dense.onnx COPYONLY)
-RB_ADD_GBENCHMARK(RDF_ONNXRuntime_Inference
-    RDF_ONNXRuntime_Inference.cxx
-    LABEL short
-    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie onnxruntime
-)
-target_link_directories(RDF_ONNXRuntime_Inference PRIVATE ${ONNXRuntime_LIBRARIES})
-target_include_directories(RDF_ONNXRuntime_Inference PRIVATE ${ONNXRuntime_INCLUDE_DIR})
+if (ONNXRuntime_FOUND)
+   configure_file(input_models/higgs_model_dense.onnx higgs_model_dense.onnx COPYONLY)
+   RB_ADD_GBENCHMARK(RDF_ONNXRuntime_Inference
+       RDF_ONNXRuntime_Inference.cxx
+      LABEL short
+      LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie ${ONNXRuntime_LIBRARIES}
+   )
+   target_link_directories(RDF_ONNXRuntime_Inference PRIVATE ${ONNXRuntime_LIBRARIES})
+   target_include_directories(RDF_ONNXRuntime_Inference PRIVATE ${ONNXRuntime_INCLUDE_DIR})
+endif()
