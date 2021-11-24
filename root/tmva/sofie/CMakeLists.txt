@@ -1,6 +1,5 @@
 # @author Federico Sossai (fsossai)
 
-if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
 
   # Checking that all required model exist
   if (NOT ONNX_MODELS_DIR)
@@ -51,7 +50,14 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
     message(STATUS "ONNXRuntime not found")
   endif()
 
-  if (Use_SOFIE_TEMPLATE)
+
+
+#---TMVA-/SOFIE
+if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
+
+
+### this is not used 
+if (Use_SOFIE_TEMPLATE)
     
   # Configuring SOFIEInference_Template.cxx.in
   set(FUNC_NAME "BM_SOFIE_Inference")
@@ -91,9 +97,8 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
   string(REPLACE ";" ",\n" FUNC_TUPLES "${ALL_FUNCS}")            # String[] -> String
   configure_file(SOFIEInference_Template.cxx.in SOFIEInference.cxx @ONLY)
   
-  else()
   
-  endif()
+endif()
 
 
 #   configure_file(input_models/compiled/Linear_event.hxx Linear_event.hxx COPYONLY)
@@ -154,32 +159,43 @@ if(BLAS_FOUND)
 #set(SOFIE_BLAS_LIBS /home/moneta/intel/mkl/lib/intel64/libmkl_intel_lp64.so   /home/moneta/intel/mkl/lib/intel64/libmkl_sequential.so /home/moneta/intel/mkl/lib/intel64/libmkl_core.so -lpthread)
 #set(SOFIE_BLAS_LIBS /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Accelerate.framework)
 
+#
+# to set specific BLAS do : cmake -DBLA_Vendor=OpenBLAS, Intel10_64lp_seq or INtel64lp
+# for Intel MKL need to set also MKLROOT env variable (see documentation of cmake FindBlas)
+# need to source for example  . $dir/intel/mkl/bin/mklvars.sh intel64
+
+set(SOFIE_BLAS_LIBS ${BLAS_LIBRARIES})
+
+
 # Benchmark for models emitted by SOFIE
 RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
     LABEL short
-    LIBRARIES TMVA  ROOTTMVASofie  ${BLAS_LIBRARIES}
+    LIBRARIES TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS}  
 )
 
- # target_include_directories(SOFIEInference PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+add_dependencies(SOFIEInference SofieCompileModels)
 
-#add_dependencies(SOFIEInference SofieCompileModels)
-
-
-#configure_file(input_models/compiled/higgs_model_dense.hxx higgs_model_dense.hxx COPYONLY)
-#configure_file(input_models/compiled/higgs_model_dense.dat higgs_model_dense.dat COPYONLY)
 RB_ADD_GBENCHMARK(RDF_SOFIE_Inference
     RDF_SOFIE_Inference.cxx
     LABEL short
-    #LIBRARIES TMVA   ROOTTMVASofie  openblas
-    #LIBRARIES TMVA ROOTTMVASofie
-    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${BLAS_LIBRARIES}
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS} 
 )
   
 add_dependencies(RDF_SOFIE_Inference SofieCompileModels)
 
-endif()
-endif()
+#
+# add optimization flags for best performances (factor 3 on simple Conv1 test) 
+#
+#if (ROOT_PLATFORM MATCHES "linux|macosx" AND CMAKE_SYSTEM_PROCESSOR MATCHES x86_64 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+## assume we run only on linux/macos with gnu or gcc
+set(gnu-flags $<$<CXX_COMPILER_ID:GNU>:-fno-signaling-nans>)
+target_compile_options(SOFIEInference  PRIVATE -mavx2  ${gnu-flags} -fno-trapping-math -O3)
+target_compile_options(RDF_SOFIE_Inference  PRIVATE -mavx2 ${gnu-flags} -fno-trapping-math -O3)
+#endif()
+
+endif()  # endif blas 
+endif()  # endif TMVA/SOFIE
 
 find_package(LWTNN QUIET)
 if (LWTNN_FOUND)

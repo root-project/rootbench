@@ -9,6 +9,7 @@
 #include <vector>
 #include <numeric>
 #include <random>
+#include <chrono>
 
 using namespace std;
 
@@ -38,10 +39,10 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
       .GetOutputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
 
    // Calculating the dimension of the input tensor
-   int nevt = 64;
+   int nevts = 64;
    int bsize = input_node_dims[0];
    //std::cout << "Using bsize = " << bsize << std::endl;
-   int nbatches = nevt / bsize;
+   int nbatches = nevts / bsize;
 
    size_t input_tensor_size = accumulate(input_node_dims.begin(),
       input_node_dims.end(), 1, multiplies<int>());
@@ -61,18 +62,24 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
    // Running the model
    float * floatarr = nullptr;
 
-  
-   
+   double totDuration = 0;
+   int ntimes = 0;
    for (auto _ : state) {
-      for (int i = 0; i < nevt; i+= bsize) {
+      auto t1 = std::chrono::high_resolution_clock::now();
+      for (int i = 0; i < nevts; i+= bsize) {
          auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(), &input_tensor, 1,
                                            output_node_names.data(), 1);
          floatarr = output_tensors.front().GetTensorMutableData<float>();
       }
+
+      auto t2 = std::chrono::high_resolution_clock::now();
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+      totDuration += duration / 1.E3; // in milliseconds
+      ntimes++;
    }
    //for (int i = 0; i < 10; i++)
    //  printf("%f\t", i, floatarr[i]);
-
+   state.counters["time/evt(ms)"] = totDuration / double(ntimes * nevts);
 
 }
 @BENCHMARK_CAPTURES@
