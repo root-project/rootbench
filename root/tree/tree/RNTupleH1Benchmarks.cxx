@@ -41,11 +41,11 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
    auto ipisView = ntuple->GetView<std::int32_t>("event.ipis");
    auto md0_dView = ntuple->GetView<float>("event.md0_d");
    auto trackView = ntuple->GetViewCollection("event.tracks");
-   auto nhitrpView = ntuple->GetView<std::int32_t>("event.tracks.H1Event::Track.nhitrp");
-   auto rstartView = ntuple->GetView<float>("event.tracks.H1Event::Track.rstart");
-   auto rendView = ntuple->GetView<float>("event.tracks.H1Event::Track.rend");
-   auto nlhkView = ntuple->GetView<float>("event.tracks.H1Event::Track.nlhk");
-   auto nlhpiView = ntuple->GetView<float>("event.tracks.H1Event::Track.nlhpi");
+   auto nhitrpView = ntuple->GetView<std::int32_t>("event.tracks._0.nhitrp");
+   auto rstartView = ntuple->GetView<float>("event.tracks._0.rstart");
+   auto rendView = ntuple->GetView<float>("event.tracks._0.rend");
+   auto nlhkView = ntuple->GetView<float>("event.tracks._0.nlhk");
+   auto nlhpiView = ntuple->GetView<float>("event.tracks._0.nlhpi");
    auto njetsView = ntuple->GetViewCollection("event.jets");
    // Check print info (minitest)
    std::ostringstream os;
