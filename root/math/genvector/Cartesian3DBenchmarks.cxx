@@ -25,7 +25,7 @@ static void BM_Cartesian3D_Sanity(benchmark::State &state)
   }
 #endif
 }
-BENCHMARK(BM_Cartesian3D_Sanity);
+BENCHMARK(BM_Cartesian3D_Sanity)->Iterations(1);
 
 static void BM_Cartesian3D_CreateEmpty(benchmark::State &state)
 {
