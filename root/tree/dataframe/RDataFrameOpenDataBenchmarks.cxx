@@ -327,6 +327,9 @@ float benchmark6_trijet_pt(Vec<float> pt, Vec<float> eta, Vec<float> phi, Vec<fl
 
 void benchmark6_jitted(unsigned int nthreads)
 {
+   using ROOT::Math::PtEtaPhiMVector;
+   using ROOT::VecOps::Construct;
+
    set_nthreads(nthreads);
    ROOT::RDataFrame df("Events", filepath1M);
    auto df2 = df.Filter("nJet >= 3", "At least three jets")
@@ -362,6 +365,9 @@ BENCHMARK(BM_RDataFrame_OpenDataBenchmark6_jitted)->Unit(benchmark::kMillisecond
 
 void benchmark6_compiled(unsigned int nthreads)
 {
+   using ROOT::Math::PtEtaPhiMVector;
+   using ROOT::VecOps::Construct;
+
    set_nthreads(nthreads);
    ROOT::RDataFrame df("Events", filepath1M);
    auto df2 = df.Filter([](unsigned int n) { return n >= 3; }, {"nJet"}, "At least three jets")
@@ -523,7 +529,7 @@ float benchmark8_additional_lepton_idx(Vec<float> pt, Vec<float> eta, Vec<float>
    if (best_i1 == -1) return lep_idx;
 
    float max_pt = -999;
-   for (auto i = 0; int(i < pt.size()); i++) {
+   for (auto i = 0; i < int(pt.size()); i++) {
       if (i != best_i1 && i != best_i2 && pt[i] > max_pt) {
          max_pt = pt[i];
          lep_idx = i;
