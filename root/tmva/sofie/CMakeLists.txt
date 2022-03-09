@@ -202,9 +202,17 @@ if (LWTNN_FOUND)
   
    message(STATUS "Found LWTNN (library is  ${LWTNN_LIBRARY}, libraries ${LWTNN_LIBRARIES})")
    configure_file(input_models/higgs_model_dense.json higgs_model_dense.json COPYONLY)
+   configure_file(input_models/Generator.json.gz Generator.json.gz COPYONLY)
+   execute_process(COMMAND gunzip -f ${CMAKE_CURRENT_BINARY_DIR}/Generator.json.gz)
 #   set(LWTNN_INCLUDE_DIR /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/include)
 #   set(LWTNN_LIBS /home/moneta/cernbox/root/tests/tmva/sofie/lwtnn-build/lib/liblwtnn.so)
-   RB_ADD_GBENCHMARK(RDF_lwtnn_Inference
+   RB_ADD_GBENCHMARK(LWTNNInference
+       LWTNNInference.cxx
+      LABEL short
+      LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${LWTNN_LIBRARY})
+   target_include_directories(LWTNNInference PRIVATE ${LWTNN_INCLUDE_DIR})
+
+    RB_ADD_GBENCHMARK(RDF_lwtnn_Inference
        RDF_lwtnn_Inference.cxx
       LABEL short
       LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie  ${LWTNN_LIBRARY})

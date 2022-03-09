@@ -15,6 +15,8 @@
 #include "Linear_16.hxx"
 #include "Linear_32.hxx"
 #include "Linear_64.hxx"
+#include "Generator_B1.hxx"
+#include "Generator_B64.hxx"
 #include "Conv_d100_L1_B1.hxx"
 #include "Conv_d100_L14_B1.hxx"
 #include "Conv_d100_L14_B32.hxx"
@@ -22,6 +24,7 @@
 #include "RNN_d10_L20_h8_B1.hxx"
 #include "GRU_d10_L20_h8_B1.hxx"
 #include "LSTM_d10_L20_h8_B1.hxx"
+#include "higgs_model_dense.hxx"
 
 #include "resnet18v1.hxx"
 #include "TMath.h"
@@ -32,7 +35,7 @@ bool verbose = false;
 template <class S>
 void BM_SOFIE_Inference(benchmark::State &state)
 { 
-   size_t inputSize = state.range(0);
+   size_t inputSize = state.range(0);  // input size (without batch size)
    size_t bsize = (state.range(1) > 0) ? state.range(1) : 0;
    size_t nevts = 64;
    size_t nrep = nevts / bsize;
@@ -74,6 +77,16 @@ void BM_SOFIE_Inference(benchmark::State &state)
 //typedef TMVA_SOFIE_Conv_d100_L1_B1::Session S1;
 //BENCHMARK(BM_SOFIE_Inference<S1>);//->Name( "Conv_d100_L1_B1");
 
+//Gemm benchmarks
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_16::Session)->Name("Linear_16")->Args({100, 16})->Unit(benchmark::kMillisecond);
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_32::Session)->Name("Linear_32")->Args({100, 32})->Unit(benchmark::kMillisecond);
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_64::Session)->Name("Linear_64")->Args({100, 64})->Unit(benchmark::kMillisecond);
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_event::Session)->Name("Linear_event")->Args({100, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Generator_B1::Session)->Name("Generator_B1")->Args({14, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Generator_B64::Session)->Name("Generator_B64")->Args({14, 64})->Unit(benchmark::kMillisecond);
+
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_higgs_model_dense::Session)->Name("higgs_model_dense")->Args({7, 1})->Unit(benchmark::kMillisecond);
+
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Conv_d100_L14_B1::Session)->Name( "Conv_d100_L14_B1")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Conv_d100_L14_B32::Session)->Name("Conv_d100_L14_B32")->Args({100*100, 32})->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Conv_d100_L1_B1::Session)->Name( "Conv_d100_L1_B1")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
@@ -87,12 +100,5 @@ BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_RNN_d10_L20_h8_B1::Session)->N
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_GRU_d10_L20_h8_B1::Session)->Name("GRU_d10_L20_h8_B1")->Args({3 * 5, 1})->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_LSTM_d10_L20_h8_B1::Session)->Name("LSTM_d10_L20_h8_B1")->Args({1 * 1, 1})->Unit(benchmark::kMillisecond);
 
-//Gemm benchmarks
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_16::Session)->Name("Linear_16")->Args({100, 16})->Unit(benchmark::kMillisecond);
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_32::Session)->Name("Linear_32")->Args({100, 32})->Unit(benchmark::kMillisecond);
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_64::Session)->Name("Linear_64")->Args({100, 64})->Unit(benchmark::kMillisecond);
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_event::Session)->Name("Linear_event")->Args({100, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_event::Session)->Name("Linear_event")->Args({100, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_event::Session)->Name("Generator_B1")->Args({14, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_event::Session)->Name("Generator_B64")->Args({14, 64})->Unit(benchmark::kMillisecond);
+
 BENCHMARK_MAIN();

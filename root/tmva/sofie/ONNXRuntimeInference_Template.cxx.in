@@ -47,6 +47,7 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
    size_t input_tensor_size = accumulate(input_node_dims.begin(),
       input_node_dims.end(), 1, multiplies<int>());
    vector<float> input_tensor_values(input_tensor_size*nbatches);
+   //std::cout << "input tensor size " << input_tensor_size << "  " << input_tensor_values.size() << std::endl;
 
    // Input tensor initialization   
    static std::uniform_real_distribution<float> distribution(-1,1);
@@ -55,9 +56,9 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
    //fill_n(input_tensor_values.begin(), input_tensor_size, 1.0);
 
    auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
-   Ort::Value input_tensor = Ort::Value::CreateTensor<float>(memory_info,
-      input_tensor_values.data(), input_tensor_size,
-      input_node_dims.data(), input_node_dims.size());
+   // Ort::Value input_tensor = Ort::Value::CreateTensor<float>(memory_info,
+   //    input_tensor_values.data(), input_tensor_size,
+   //    input_node_dims.data(), input_node_dims.size());
 
    // Running the model
    float * floatarr = nullptr;
@@ -66,10 +67,18 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
    int ntimes = 0;
    for (auto _ : state) {
       auto t1 = std::chrono::high_resolution_clock::now();
-      for (int i = 0; i < nevts; i+= bsize) {
+      size_t input_offset = 0;
+      for (int i = 0; i < nevts; i += bsize) {
+         // if (input_offset > input_tensor_values.size()) {
+         //    std::cout << "Error in input size " << i << "  " << nevts << "  " << model_path << std::endl;
+         //    throw std::runtime_error("Bad input size ");
+         // }
+         Ort::Value input_tensor = Ort::Value::CreateTensor<float>(
+            memory_info, input_tensor_values.data()+input_offset, input_tensor_size, input_node_dims.data(), input_node_dims.size());
          auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(), &input_tensor, 1,
                                            output_node_names.data(), 1);
          floatarr = output_tensors.front().GetTensorMutableData<float>();
+         input_offset += input_tensor_size;
       }
 
       auto t2 = std::chrono::high_resolution_clock::now();
