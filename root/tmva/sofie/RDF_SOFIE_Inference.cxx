@@ -7,32 +7,45 @@
 
 #include <benchmark/benchmark.h>
 
-// Functor to wrap SOFIE session to RDF functor signature 
-template <typename Func>
-struct SofieFunctor {
-   std::vector<float> input;
-   std::vector<std::shared_ptr<Func>> sessions;
-   SofieFunctor(unsigned nslots) :
-      input(7*nslots,0) {
+// Functor to wrap SOFIE session to RDF functor signature
+
+template <typename I, typename F, typename T>
+class SofieFunctorHelper;
+
+template <std::size_t... N,  typename S, typename T>
+class SofieFunctorHelper<std::index_sequence<N...>, S, T> {
+   /// this is the magic to defined the operator () with N fixed parameter arguments
+   template <std::size_t Idx>
+   using AlwaysT = T;
+
+   std::vector<std::vector<T>> fInput;
+   std::vector<std::shared_ptr<S>> fSessions;
+
+public:
+
+   SofieFunctorHelper(int nslots) :
+      fInput(nslots)
+   {
       for (int i = 0; i < nslots; i++) {
-         sessions.push_back(std::make_shared<Func>());
+         fSessions.emplace_back(std::make_shared<S>());
       }
    }
 
-   double operator()(unsigned nslots, float x0, float x1, float x2, float x3, float x4, float x5, float x6) {
-      int off = nslots*7;
-      input[off] = x0;
-      input[off+1] = x1;
-      input[off+2] = x2;
-      input[off+3] = x3;
-      input[off+4] = x4;
-      input[off+5] = x5;
-      input[off+6] = x6;
-      auto y =  sessions[nslots]->infer(input.data()+nslots*7);
+   double operator()(unsigned slot, AlwaysT<N>... args) {
+      fInput[slot] = {args...};
+      auto y =  fSessions[slot]->infer(fInput[slot].data());
       return y[0];
    }
-   
+
+
 };
+
+template <std::size_t N, typename F>
+auto SofieFunctor(int nslot) -> SofieFunctorHelper<std::make_index_sequence<N>, F, float>
+{
+   return SofieFunctorHelper<std::make_index_sequence<N>, F, float>(nslot);
+}
+
 
 int NEVTS = -1;
 void BM_RDF_SOFIE_Inference(benchmark::State &state)
@@ -53,7 +66,15 @@ void BM_RDF_SOFIE_Inference(benchmark::State &state)
    ROOT::RDataFrame df(treeName, fileName);
 
 
-   SofieFunctor<TMVA_SOFIE_higgs_model_dense::Session> functor(nslot);
+   //auto functor = SofieFunctor<TMVA_SOFIE_higgs_model_dense::Session,7>(nslot);
+   // auto rdf_functor = [&](int slot, float x1, float x2, float x3, float x4, float x5, float x6, float x7){
+   //    return functor(slot, x1,x2,x3,x4,x5,x6,x7);
+   // };
+   SofieFunctorHelper<std::make_index_sequence<7>, TMVA_SOFIE_higgs_model_dense::Session, float> functor(nslot);
+
+   // test
+   auto y = functor(0,1.,2.,3.,4.,5.,6.,7.);
+   std::cout << y << std::endl;
 
    std::vector<double> durations;
 
@@ -61,15 +82,18 @@ void BM_RDF_SOFIE_Inference(benchmark::State &state)
 
    for (auto _ : state) {
 
-      auto h1 = df.DefineSlot("DNN_Value", functor, {"m_jj", "m_jjj", "m_lv", "m_jlv", "m_bb", "m_wbb", "m_wwbb"})
+      auto h1 = df.DefineSlot("DNN_Value", SofieFunctor<7,TMVA_SOFIE_higgs_model_dense::Session>(nslot), {"m_jj", "m_jjj", "m_lv", "m_jlv", "m_bb", "m_wbb", "m_wwbb"})
                    .Histo1D("DNN_Value");
+      // auto h1 = df.Define("DNN_Value", "functor(m_jj, m_jjj, m_lv,m_jlv, m_bb, m_wbb, m_wwbb)")
+      //              .Histo1D("DNN_Value");
 
       auto t1 = std::chrono::high_resolution_clock::now();
 
       auto n = h1->GetEntries();
+      //int n = 100;
       auto t2 = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-   
+
       durations.push_back(duration / 1.E6);
       NEVTS = n;
       ntot += n;
