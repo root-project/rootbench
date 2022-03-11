@@ -252,6 +252,8 @@ namespace h5hep {
     BufferedWriter(std::shared_ptr<h5hep::ReaderWriter> writer)
       : writer(writer), capacity(writer->GetWriteProperties().GetChunkSize()), buffer(new T[capacity]) {}
     ~BufferedWriter() { if (count) Flush(); }
+    size_t GetCapacity() const { return capacity; }
+    size_t GetCount() const { return count; }
 
     void Write(const T& val) {
       buffer[count++] = val;
