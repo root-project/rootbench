@@ -178,8 +178,8 @@ namespace h5hep {
       /// \brief A column used to identify elements in the collection
       std::unique_ptr<PrimitiveNode<ColumnModel::COLUMNAR_FNAL, IndexColumnValue_t>> indexColumn;
       /// \brief Sequential reader used in `LookupElements()`
-      SequentialColumnReader<IndexColumnValue_t> indexColumnReader{*indexColumn.get(),
-	/*chunkSize=*/(512 * 1024) / sizeof(IndexColumnValue_t)};
+      std::unique_ptr<SequentialColumnReader<IndexColumnValue_t>> indexColumnReader;
+      static constexpr size_t defaultChunkSize = (512 * 1024) / sizeof(IndexColumnValue_t);
 
       void ThrowIfNestedCollections(std::shared_ptr<NodeBase> inner) {
 	if (inner->kind == NodeKind::COLLECTION)
@@ -201,15 +201,15 @@ namespace h5hep {
 	  const auto entryIdx = E.offset + i;
 	  Span extent{(size_t)-1, 0};
 
-	  while (auto idx = *indexColumnReader) {
+	  while (auto idx = *(*indexColumnReader)) {
 	    if (extent.offset == (size_t)-1 && idx == entryIdx)
-	      extent.offset = indexColumnReader.offset;
+	      extent.offset = indexColumnReader->offset;
 	    if (idx > entryIdx)
 	      break;
-	    indexColumnReader++;
+	    (*indexColumnReader)++;
 	  }
 	  if (extent.offset != (size_t)-1)
-	    extent.len = (indexColumnReader.offset - extent.offset);
+	    extent.len = (indexColumnReader->offset - extent.offset);
 
 	  out.push_back(extent);
 	  count += extent.len;
@@ -227,6 +227,8 @@ namespace h5hep {
 
 	children = {std::static_pointer_cast<NodeBase>(inner)};
 	indexColumn = std::make_unique<typename decltype(indexColumn)::element_type>("Event ID", 0);
+	indexColumnReader = std::make_unique<SequentialColumnReader<IndexColumnValue_t>>
+	  (*indexColumn.get(), defaultChunkSize);
       }
       CollectionNode(const CollectionNode &) = default;
 
