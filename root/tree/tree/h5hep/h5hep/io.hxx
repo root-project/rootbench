@@ -235,6 +235,30 @@ namespace h5hep {
     { return WriteChunk(n, buf, props.GetChunkSize()); }
   };
 
+  /// \brief Copy instances of `T` to an internal buffer and automatically call
+  /// `ReaderWriter::WriteChunk()` if full. The capacity of the buffer matches
+  /// the underlying writer chunk size.
+  template <typename T>
+  class BufferedWriter {
+    std::shared_ptr<h5hep::ReaderWriter> writer;
+    size_t capacity, count = 0, chunkIdx = 0;
+    std::unique_ptr<T[]> buffer;
+
+    void Flush() {
+      writer->WriteChunk(chunkIdx++, buffer.get(), count);
+      count = 0;
+    }
+  public:
+    BufferedWriter(std::shared_ptr<h5hep::ReaderWriter> writer)
+      : writer(writer), capacity(writer->GetWriteProperties().GetChunkSize()), buffer(new T[capacity]) {}
+    ~BufferedWriter() { if (count) Flush(); }
+
+    void Write(const T& val) {
+      buffer[count++] = val;
+      if (count == capacity) Flush();
+    }
+  };
+
 } // namespace h5hep
 
 #endif // _H5HEP_IO_HXX
