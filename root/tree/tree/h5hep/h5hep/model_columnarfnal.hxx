@@ -168,7 +168,8 @@ namespace h5hep {
 	}
 
 	SequentialColumnReader &operator++(int) {
-	  if ((++offset % chunkSize) == 0)
+	  auto offsetInChunk = ++offset % chunkSize;
+	  if (offsetInChunk == 0 || offsetInChunk == nEltsInChunk)
 	    ReadNextChunk();
 	  return *this;
 	}
