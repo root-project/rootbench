@@ -257,6 +257,10 @@ namespace h5hep {
       buffer[count++] = val;
       if (count == capacity) Flush();
     }
+    void Write(T&& val) {
+      buffer[count++] = std::move(val);
+      if (count == capacity) Flush();
+    }
   };
 
 } // namespace h5hep
