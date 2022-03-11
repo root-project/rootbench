@@ -25,7 +25,7 @@ namespace h5hep {
       using MemberList_t = std::vector<NodePtr_t>;
 
       Node(NodeKind k, std::string_view name, size_t offset, size_t size, hid_t tid = H5I_INVALID_HID)
-	: NodeBase(k, name, offset, size, tid) {}
+        : NodeBase(k, name, offset, size, tid) {}
       Node(const Node &) = default;
 
       size_t ReadExtents(const std::vector<Span> &extents, void *buf) override { return 0; }
@@ -38,11 +38,11 @@ namespace h5hep {
       using Value_t = T;
 
       PrimitiveNode(std::string_view name, size_t offset)
-	: Node(NodeKind::PRIMITIVE, name, offset, sizeof(T), GetH5TypeId<T>()) {}
+        : Node(NodeKind::PRIMITIVE, name, offset, sizeof(T), GetH5TypeId<T>()) {}
       PrimitiveNode(const PrimitiveNode &) = default;
 
       std::shared_ptr<NodeBase> Clone() const override {
-	return std::make_shared<typename std::decay<decltype(*this)>::type>(*this);
+        return std::make_shared<typename std::decay<decltype(*this)>::type>(*this);
       }
     };
 
@@ -52,26 +52,26 @@ namespace h5hep {
       using Value_t = T;
 
       StructNode(std::string_view name, size_t offset, const MemberList_t &v)
-	: Node(NodeKind::STRUCT, name, offset, sizeof(T))
+        : Node(NodeKind::STRUCT, name, offset, sizeof(T))
       {
-	for (auto &I : v)
-	  children.push_back(std::static_pointer_cast<NodeBase>(I));
+        for (auto &I : v)
+          children.push_back(std::static_pointer_cast<NodeBase>(I));
       }
       StructNode(const StructNode &) = default;
       virtual ~StructNode() { if (typeId != H5I_INVALID_HID) H5Tclose(typeId); }
 
       void Realize(ReaderWriter &rw, void *privateData) override {
-	NodeBase::Realize(rw, privateData);
-	typeId = H5Tcreate(H5T_COMPOUND, size);
-	for (auto &I : children)
-	  H5Tinsert(typeId, I->name.c_str(), I->offset, I->typeId);
+        NodeBase::Realize(rw, privateData);
+        typeId = H5Tcreate(H5T_COMPOUND, size);
+        for (auto &I : children)
+          H5Tinsert(typeId, I->name.c_str(), I->offset, I->typeId);
       }
 
       std::shared_ptr<NodeBase> Clone() const override {
-	MemberList_t v;
-	for (auto &I : children)
-	  v.push_back(std::reinterpret_pointer_cast<NodePtr_t::element_type>(I->Clone()));
-	return std::make_shared<typename std::decay<decltype(*this)>::type>(name, offset, v);
+        MemberList_t v;
+        for (auto &I : children)
+          v.push_back(std::reinterpret_pointer_cast<NodePtr_t::element_type>(I->Clone()));
+        return std::make_shared<typename std::decay<decltype(*this)>::type>(name, offset, v);
       }
     };
 
@@ -81,30 +81,30 @@ namespace h5hep {
       using Value_t = T;
 
       CollectionNode(std::string_view name, size_t offset, NodePtr_t inner)
-	: Node(NodeKind::COLLECTION, name, offset, sizeof(hvl_t))
+        : Node(NodeKind::COLLECTION, name, offset, sizeof(hvl_t))
       {
-	children = {std::static_pointer_cast<NodeBase>(inner)};
+        children = {std::static_pointer_cast<NodeBase>(inner)};
       }
       CollectionNode(const CollectionNode &) = default;
       virtual ~CollectionNode() { if (typeId != H5I_INVALID_HID) H5Tclose(typeId); }
 
       void Realize(ReaderWriter &rw, void *privateData) override {
-	NodeBase::Realize(rw, privateData);
-	typeId = H5Tvlen_create(children.back()->typeId);
+        NodeBase::Realize(rw, privateData);
+        typeId = H5Tvlen_create(children.back()->typeId);
       }
 
       void InitializeValue(void *p) override {
-	reinterpret_cast<CollectionBase*>(p)->assign({},
-		   [](void *p, void *data) {
-		     const auto that = reinterpret_cast<const CollectionNode<ColumnModel::COMPOUND_TYPE, T>*>(data);
-		     H5Dvlen_reclaim(that->children.back()->typeId,
-				     that->readerWriter->GetSpaceId(), H5P_DEFAULT, p);
-		   }, this);
+        reinterpret_cast<CollectionBase*>(p)->assign({},
+                   [](void *p, void *data) {
+                     const auto that = reinterpret_cast<const CollectionNode<ColumnModel::COMPOUND_TYPE, T>*>(data);
+                     H5Dvlen_reclaim(that->children.back()->typeId,
+                                     that->readerWriter->GetSpaceId(), H5P_DEFAULT, p);
+                   }, this);
       }
 
       std::shared_ptr<NodeBase> Clone() const override {
-	auto inner = std::reinterpret_pointer_cast<NodePtr_t::element_type>(children.back()->Clone());
-	return std::make_shared<typename std::decay<decltype(*this)>::type>(name, offset, inner);
+        auto inner = std::reinterpret_pointer_cast<NodePtr_t::element_type>(children.back()->Clone());
+        return std::make_shared<typename std::decay<decltype(*this)>::type>(name, offset, inner);
       }
     };
   } //namespace schema
@@ -128,21 +128,21 @@ namespace h5hep {
     }
 
     ReaderWriterSpec(std::shared_ptr<H5Location> location, std::shared_ptr<schema::NodeBase> schemaRoot,
-		 const WriteProperties &props)
+                 const WriteProperties &props)
       : ReaderWriter(location, schemaRoot, props)
     {
       hsize_t chunkSize[] = {props.GetChunkSize()};
 
       dcpl = H5Pcreate(H5P_DATASET_CREATE);
       if (auto level = props.GetCompressionLevel())
-	H5Pset_deflate(dcpl, level);
+        H5Pset_deflate(dcpl, level);
       H5Pset_chunk(dcpl, 1, chunkSize);
 
       RealizeSchema();
 
       spaceId = H5Screate_simple(1, /*dims=*/internal::zero, /*maxdims=*/internal::unlimited);
       datasetId = H5Dcreate(location->GetHandle(), root->name.c_str(), root->typeId, spaceId,
-			    H5P_DEFAULT, dcpl, H5P_DEFAULT);
+                            H5P_DEFAULT, dcpl, H5P_DEFAULT);
     }
 
     virtual ~ReaderWriterSpec() {

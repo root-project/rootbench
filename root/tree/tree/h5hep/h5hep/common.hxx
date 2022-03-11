@@ -24,8 +24,8 @@
 #endif
 
 /// \brief Iterate over each row described by a `std::vector<Span>`
-#define for_each_row_in_extentlist(__Es, __E, __i)	\
-  for (auto &__E : (__Es))				\
+#define for_each_row_in_extentlist(__Es, __E, __i)        \
+  for (auto &__E : (__Es))                                \
     for (size_t __i = 0; i < __E.len; ++i)
 
 namespace h5hep {
@@ -111,7 +111,7 @@ namespace h5hep {
   constexpr hid_t GetH5TypeId() {
     using U = typename std::decay<T>::type;
     static_assert(!std::is_pointer<U>::value && !std::is_reference<U>::value,
-		  "Pointer/references currently not supported");
+                  "Pointer/references currently not supported");
 
     if constexpr (std::is_same<U, char>::value) return H5T_NATIVE_SCHAR;
     if constexpr (std::is_same<U, unsigned char>::value) return H5T_NATIVE_UCHAR;

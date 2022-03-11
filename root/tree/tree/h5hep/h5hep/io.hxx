@@ -26,7 +26,7 @@ namespace h5hep {
     /// \brief Given `extents`, determine the minimum dataset size required to satisfy a R/W operation
     static inline size_t GetMinimumDatasetSize(const std::vector<Span> &extents) {
       return std::accumulate(extents.begin(), extents.end(), 0,
-			     [] (size_t a, const Span &b) { return std::max(a, (b.offset + b.len)); });
+                             [] (size_t a, const Span &b) { return std::max(a, (b.offset + b.len)); });
     }
 
     static inline hsize_t GetDataspaceSize(hid_t spaceId) {
@@ -38,27 +38,27 @@ namespace h5hep {
     /// \brief Reference implementation of `ReadExtents()`. Column models may call this as part of
     /// `XxxNode::ReadExtents()`. Data for each entry in `extents` is copied contiguously in `buf`.
     static inline size_t SimpleReadExtents(const std::vector<Span> &extents, void *buf,
-					   hid_t datasetId, hid_t spaceId, hid_t typeId) {
+                                           hid_t datasetId, hid_t spaceId, hid_t typeId) {
       const size_t dataspaceSize = GetDataspaceSize(spaceId);
       auto p = reinterpret_cast<unsigned char*>(buf);
       size_t count = 0;
       size_t sz = H5Tget_size(typeId);
 
       for (const auto &E : extents) {
-	hsize_t start[] = {E.offset};
-	hsize_t block[] = {E.len};
-	if (E.offset >= dataspaceSize)
-	  continue;
-	if (E.offset + E.len > dataspaceSize)
-	  block[0] = dataspaceSize - E.offset;
+        hsize_t start[] = {E.offset};
+        hsize_t block[] = {E.len};
+        if (E.offset >= dataspaceSize)
+          continue;
+        if (E.offset + E.len > dataspaceSize)
+          block[0] = dataspaceSize - E.offset;
 
-	auto mspace = H5Screate_simple(1, block, NULL);
-	H5Sselect_hyperslab(spaceId, H5S_SELECT_SET, start, /*stride=*/internal::one,
-			    /*count=*/internal::one, block);
-	H5Dread(datasetId, typeId, mspace, spaceId, H5P_DEFAULT, p);
-	H5Sclose(mspace);
-	p += (block[0] * sz);
-	count += block[0];
+        auto mspace = H5Screate_simple(1, block, NULL);
+        H5Sselect_hyperslab(spaceId, H5S_SELECT_SET, start, /*stride=*/internal::one,
+                            /*count=*/internal::one, block);
+        H5Dread(datasetId, typeId, mspace, spaceId, H5P_DEFAULT, p);
+        H5Sclose(mspace);
+        p += (block[0] * sz);
+        count += block[0];
       }
       return count;
     }
@@ -66,30 +66,30 @@ namespace h5hep {
     /// \brief Reference implementation of `WriteExtents()`. Column models may call this as part of
     /// `XxxNode::WriteExtents()`.
     static inline size_t SimpleWriteExtents(const std::vector<Span> &extents, const void *buf,
-					    hid_t datasetId, hid_t &spaceId, hid_t typeId) {
+                                            hid_t datasetId, hid_t &spaceId, hid_t typeId) {
       const auto requiredSize = GetMinimumDatasetSize(extents);
       auto p = reinterpret_cast<const unsigned char*>(buf);
       size_t count = 0;
       size_t sz = H5Tget_size(typeId);
 
       if (requiredSize > GetDataspaceSize(spaceId)) {
-	hsize_t newSize[] = {requiredSize};
-	H5Sclose(spaceId);
-	H5Dset_extent(datasetId, newSize);
-	spaceId = H5Dget_space(datasetId);
+        hsize_t newSize[] = {requiredSize};
+        H5Sclose(spaceId);
+        H5Dset_extent(datasetId, newSize);
+        spaceId = H5Dget_space(datasetId);
       }
 
       for (const auto &E : extents) {
-	hsize_t start[] = {E.offset};
-	hsize_t block[] = {E.len};
+        hsize_t start[] = {E.offset};
+        hsize_t block[] = {E.len};
 
-	auto mspace = H5Screate_simple(1, block, NULL);
-	H5Sselect_hyperslab(spaceId, H5S_SELECT_SET, start, /*stride=*/internal::one,
-			    /*count=*/internal::one, block);
-	H5Dwrite(datasetId, typeId, mspace, spaceId, H5P_DEFAULT, p);
-	H5Sclose(mspace);
-	p += (block[0] * sz);
-	count += block[0];
+        auto mspace = H5Screate_simple(1, block, NULL);
+        H5Sselect_hyperslab(spaceId, H5S_SELECT_SET, start, /*stride=*/internal::one,
+                            /*count=*/internal::one, block);
+        H5Dwrite(datasetId, typeId, mspace, spaceId, H5P_DEFAULT, p);
+        H5Sclose(mspace);
+        p += (block[0] * sz);
+        count += block[0];
       }
       return count;
     }
@@ -98,13 +98,13 @@ namespace h5hep {
     /// elements in `dest` and `src` is given by `stride_dest` and `stride_src`, respectively.
     /// This function is mostly used to copy to/from column buffers.
     static inline void CopyElements(void *__restrict dest, const void *__restrict src, size_t n,
-				    size_t sz, size_t stride_dest, size_t stride_src) {
+                                    size_t sz, size_t stride_dest, size_t stride_src) {
       auto _dest = reinterpret_cast<unsigned char*>(dest);
       auto _src = reinterpret_cast<const unsigned char*>(src);
       for (size_t i = 0; i < n; ++i) {
-	memcpy(_dest, _src, sz);
-	_dest += stride_dest;
-	_src += stride_src;
+        memcpy(_dest, _src, sz);
+        _dest += stride_dest;
+        _src += stride_src;
       }
     }
   } // namespace internal
@@ -136,14 +136,14 @@ namespace h5hep {
     static std::shared_ptr<H5Location> Create(std::string_view path, unsigned flags = H5F_ACC_TRUNC) {
       auto fileId = H5Fcreate(path.data(), flags, H5P_DEFAULT, H5P_DEFAULT);
       if (fileId == H5I_INVALID_HID)
-	throw std::runtime_error("H5Fcreate error");
+        throw std::runtime_error("H5Fcreate error");
       return std::shared_ptr<H5Location>(new H5File(fileId));
     }
 
     static std::shared_ptr<H5Location> Open(std::string_view path, unsigned flags = H5F_ACC_RDONLY) {
       auto fileId = H5Fopen(path.data(), flags, H5P_DEFAULT);
       if (fileId == H5I_INVALID_HID)
-	throw std::runtime_error("H5Fopen error");
+        throw std::runtime_error("H5Fopen error");
       return std::shared_ptr<H5Location>(new H5File(fileId));
     }
   };
@@ -178,8 +178,8 @@ namespace h5hep {
 
     void RealizeSchema(void *privateData = nullptr) {
       for (size_t i = 0; i < root->children.size(); ++i) {
-	if (root->children[i]->kind == schema::NodeKind::COLLECTION)
-	  collectionIdxs.push_back(i);
+        if (root->children[i]->kind == schema::NodeKind::COLLECTION)
+          collectionIdxs.push_back(i);
       }
       root->Realize(*this, privateData);
     }
@@ -189,11 +189,11 @@ namespace h5hep {
     virtual void InitializeCollections(const std::vector<Span> &extents, void *buf) const {
       auto p = reinterpret_cast<unsigned char*>(buf);
       for_each_row_in_extentlist(extents, E, i) {
-	for (size_t j : collectionIdxs) {
-	  const auto &C = root->children[j];
-	  C->InitializeValue(p + C->offset);
-	}
-	p += root->size;
+        for (size_t j : collectionIdxs) {
+          const auto &C = root->children[j];
+          C->InitializeValue(p + C->offset);
+        }
+        p += root->size;
       }
     }
 
@@ -201,7 +201,7 @@ namespace h5hep {
     ReaderWriter(std::shared_ptr<H5Location> location, std::shared_ptr<schema::NodeBase> schemaRoot)
       : location(location), root(schemaRoot->Clone()) {}
     ReaderWriter(std::shared_ptr<H5Location> location, std::shared_ptr<schema::NodeBase> schemaRoot,
-		 const WriteProperties &props)
+                 const WriteProperties &props)
       : location(location), root(schemaRoot->Clone()), props(props) {}
     virtual ~ReaderWriter() {}
 

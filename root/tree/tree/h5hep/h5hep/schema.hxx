@@ -51,7 +51,7 @@ namespace h5hep {
 
       NodeBase(const NodeBase &) = default;
       NodeBase(NodeKind k, std::string_view name, size_t offset, size_t size, hid_t tid)
-	: kind(k), name(name), offset(offset), size(size), typeId(tid) {}
+        : kind(k), name(name), offset(offset), size(size), typeId(tid) {}
       virtual ~NodeBase() {}
 
       /// \brief Called by a ReaderWriter during construction to perform initialization that requires
@@ -60,9 +60,9 @@ namespace h5hep {
       /// \param rw The `ReaderWriter` instance realizing the schema
       /// \param privateData Reserved for private use of the column model implementation
       virtual void Realize(ReaderWriter &rw, void *privateData) {
-	readerWriter = &rw;
-	for (auto &I : children)
-	  I->Realize(rw, privateData);
+        readerWriter = &rw;
+        for (auto &I : children)
+          I->Realize(rw, privateData);
       }
 
       /// \brief Initialize the value pointed to by `p` of this type. This is typically a no-op for primitive
@@ -108,7 +108,7 @@ namespace h5hep {
 
       template <typename T>
       static std::shared_ptr<StructNode<M, T>> MakeStructNode(std::string_view name, size_t offset,
-							      typename StructNode<M, T>::MemberList_t &&v)
+                                                              typename StructNode<M, T>::MemberList_t &&v)
       { return std::make_shared<StructNode<M, T>>(name, offset, v); }
 
       template <typename T>
@@ -117,7 +117,7 @@ namespace h5hep {
 
       template <typename T>
       static std::shared_ptr<CollectionNode<M, typename T::Value_t>> MakeCollectionNode(std::string_view name, size_t offset,
-								      std::shared_ptr<T> inner)
+                                                                      std::shared_ptr<T> inner)
       { return std::make_shared<CollectionNode<M, typename T::Value_t>>(name, offset, inner); }
 
       template <typename... Ts>
