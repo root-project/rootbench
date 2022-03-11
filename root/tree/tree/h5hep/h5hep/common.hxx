@@ -63,10 +63,10 @@ namespace h5hep {
     Collection() : CollectionBase({}, nullptr) {}
     Collection(const Collection<T> &c) : CollectionBase(hvl_t{c.size(), c.data()}, nullptr) {}
     Collection(std::vector<T> &v) : CollectionBase(hvl_t{v.size(), v.data()}, nullptr) {}
+    Collection(const void *data, size_t size, Deleter_t d = nullptr) : CollectionBase(hvl_t{size, data}, d) {}
 
     Collection<T> &operator=(Collection<T> &&other) {
-      std::swap(hvl.len, other.size());
-      std::swap(hvl.p, other.data());
+      std::swap(hvl, other.hvl);
       std::swap(deleter, other.deleter);
       std::swap(privateData, other.privateData);
       return *this;
