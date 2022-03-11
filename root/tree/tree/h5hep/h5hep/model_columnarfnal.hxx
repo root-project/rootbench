@@ -128,7 +128,7 @@ namespace h5hep {
 	  // For collections, we pack an array of `hvl_t[]` into `columnBuffer`
 	  internal::CopyElements(columnBuffer.get(),
 				 reinterpret_cast<const unsigned char*>(buf) + I->offset,
-				 nElements, I->size, size, I->size);
+				 nElements, I->size, I->size, size);
 	  I->WriteExtents(extents, columnBuffer.get());
 	}
 	return nElements;
