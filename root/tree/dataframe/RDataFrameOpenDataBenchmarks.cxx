@@ -501,7 +501,7 @@ BENCHMARK(BM_RDataFrame_OpenDataBenchmark7_compiled)->Unit(benchmark::kMilliseco
 
 constexpr static unsigned int PLACEHOLDER_VALUE = 99999;
 
-float benchmark8_additional_lepton_idx(Vec<float> pt, Vec<float> eta, Vec<float> phi, Vec<float> mass, Vec<int> charge, Vec<int> flavour)
+unsigned int benchmark8_additional_lepton_idx(Vec<float> pt, Vec<float> eta, Vec<float> phi, Vec<float> mass, Vec<int> charge, Vec<int> flavour)
 {
    const auto c = Combinations(pt, 2);
    float best_mass = PLACEHOLDER_VALUE;
