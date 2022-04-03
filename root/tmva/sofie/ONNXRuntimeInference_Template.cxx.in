@@ -16,7 +16,7 @@ using namespace std;
 static void @FUNC_NAME@(benchmark::State& state, string model_path)
 {
    Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "benchmark");
-   
+
    Ort::SessionOptions session_options;
    session_options.SetIntraOpNumThreads(1);
    session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);
@@ -24,67 +24,100 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
    //std::cout << "benchmarking model " << model_path << std::endl;
    Ort::Session session(env, model_path.c_str(), session_options);
 
-   vector<const char*> input_node_names(1);
-   vector<const char*> output_node_names(1);
-   
+   int nin = session.GetInputCount();
+   int nout = 1;
+
+   vector<const char*> input_node_names(nin);
+   vector<const char*> output_node_names(nout);
+
    Ort::AllocatorWithDefaultOptions allocator;
-   input_node_names[0] = session.GetInputName(0, allocator);
-   output_node_names[0] = session.GetOutputName(0, allocator);
+   for (int i = 0; i < nin; i++)
+     input_node_names[i] = session.GetInputName(i, allocator);
+   for (int i = 0; i < nout; i++)
+     output_node_names[i] = session.GetOutputName(i, allocator);
 
    // Getting the shapes
+   vector<vector<int64_t>> input_node_dims(nin);
+   vector<vector<int64_t>> output_node_dims(nout);
 
-   vector<int64_t> input_node_dims = session
-      .GetInputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
-   vector<int64_t> output_node_dims = session
-      .GetOutputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
+   for (int i = 0; i < nin; i++)
+      input_node_dims[i] = session.GetInputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
+   for (int i = 0; i < nout; i++)
+      output_node_dims[i] = session.GetOutputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
+
+   for (int i = 0; i < nin; i++) {
+      std::cout << "input " << input_node_names[i] << " shape : ";
+      for (int j = 0; j < input_node_dims[i].size(); j++)
+         std::cout << "  " << input_node_dims[i][j];
+      std::cout << std::endl;
+   }
+   // fix negative shapes
+   for (int i = 0; i < nin; i++) {
+      for (int j = 0; j < input_node_dims[i].size(); j++) {
+         if (input_node_dims[i][j] < 0) input_node_dims[i][j] = - input_node_dims[i][j];
+      }
+   }
+
 
    // Calculating the dimension of the input tensor
    int nevts = 64;
-   int bsize = input_node_dims[0];
+   int bsize = input_node_dims[0][0]; // assume this
    //std::cout << "Using bsize = " << bsize << std::endl;
    int nbatches = nevts / bsize;
 
-   size_t input_tensor_size = accumulate(input_node_dims.begin(),
-      input_node_dims.end(), 1, multiplies<int>());
-   vector<float> input_tensor_values(input_tensor_size*nbatches);
-   //std::cout << "input tensor size " << input_tensor_size << "  " << input_tensor_values.size() << std::endl;
+   std::vector<std::vector<float>> inputData(nin);
+   std::vector<size_t> inputSizes(nin);
 
-   // Input tensor initialization   
-   static std::uniform_real_distribution<float> distribution(-1,1);
-   static std::default_random_engine generator;
-   std::generate(input_tensor_values.begin(), input_tensor_values.end(), []() { return distribution(generator); });
-   //fill_n(input_tensor_values.begin(), input_tensor_size, 1.0);
+   for (int i = 0; i < nin; i++) {
+      size_t input_tensor_size = accumulate(input_node_dims[i].begin(), input_node_dims[i].end(), 1, multiplies<int>());
+      inputSizes[i] = input_tensor_size;
+      auto &input_tensor_values = inputData[i];
+      input_tensor_values.resize(input_tensor_size * nbatches);
+      // std::cout << "input tensor size " << input_tensor_size << "  " << input_tensor_values.size() << std::endl;
 
-   auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
-   // Ort::Value input_tensor = Ort::Value::CreateTensor<float>(memory_info,
-   //    input_tensor_values.data(), input_tensor_size,
-   //    input_node_dims.data(), input_node_dims.size());
+      // Input tensor initialization
+      static std::uniform_real_distribution<float> distribution(-1, 1);
+      static std::default_random_engine generator;
+      std::generate(input_tensor_values.begin(), input_tensor_values.end(), []() { return distribution(generator); });
+      // fill_n(input_tensor_values.begin(), input_tensor_size, 1.0);
+   }
 
-   // Running the model
-   float * floatarr = nullptr;
+      auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
+      // Ort::Value input_tensor = Ort::Value::CreateTensor<float>(memory_info,
+      //    input_tensor_values.data(), input_tensor_size,
+      //    input_node_dims.data(), input_node_dims.size());
 
-   double totDuration = 0;
-   int ntimes = 0;
-   for (auto _ : state) {
-      auto t1 = std::chrono::high_resolution_clock::now();
-      size_t input_offset = 0;
-      for (int i = 0; i < nevts; i += bsize) {
-         // if (input_offset > input_tensor_values.size()) {
-         //    std::cout << "Error in input size " << i << "  " << nevts << "  " << model_path << std::endl;
-         //    throw std::runtime_error("Bad input size ");
-         // }
-         Ort::Value input_tensor = Ort::Value::CreateTensor<float>(
-            memory_info, input_tensor_values.data()+input_offset, input_tensor_size, input_node_dims.data(), input_node_dims.size());
-         auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(), &input_tensor, 1,
-                                           output_node_names.data(), 1);
-         floatarr = output_tensors.front().GetTensorMutableData<float>();
-         input_offset += input_tensor_size;
-      }
+      // Running the model
+      float *floatarr = nullptr;
 
-      auto t2 = std::chrono::high_resolution_clock::now();
-      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-      totDuration += duration / 1.E3; // in milliseconds
-      ntimes++;
+      std::vector<Ort::Value> input_tensors;
+
+      double totDuration = 0;
+      int ntimes = 0;
+      for (auto _ : state) {
+         auto t1 = std::chrono::high_resolution_clock::now();
+         std::vector<size_t> input_offset(nin);
+         for (int i = 0; i < nevts; i += bsize) {
+            // if (input_offset > input_tensor_values.size()) {
+            //    std::cout << "Error in input size " << i << "  " << nevts << "  " << model_path << std::endl;
+            //    throw std::runtime_error("Bad input size ");
+            // }
+            for (int k = 0; k < nin; k++) {
+               input_tensors.emplace_back(Ort::Value::CreateTensor<float>(memory_info, inputData[k].data() + input_offset[k],
+                                               inputSizes[k], input_node_dims[k].data(), input_node_dims[k].size()));
+            }
+            auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(), input_tensors.data(), nin,
+                                              output_node_names.data(), nout);
+            floatarr = output_tensors.front().GetTensorMutableData<float>();
+            for (int k = 0; k < nin; k++) {
+               input_offset[k] += inputSizes[k];
+            }
+         }
+
+         auto t2 = std::chrono::high_resolution_clock::now();
+         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+         totDuration += duration / 1.E3; // in milliseconds
+         ntimes++;
    }
    //for (int i = 0; i < 10; i++)
    //  printf("%f\t", i, floatarr[i]);

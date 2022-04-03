@@ -190,8 +190,8 @@ add_dependencies(RDF_SOFIE_Inference SofieCompileModels)
 #if (ROOT_PLATFORM MATCHES "linux|macosx" AND CMAKE_SYSTEM_PROCESSOR MATCHES x86_64 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 ## assume we run only on linux/macos with gnu or gcc
 set(gnu-flags $<$<CXX_COMPILER_ID:GNU>:-fno-signaling-nans>)
-target_compile_options(SOFIEInference  PRIVATE -mavx2  ${gnu-flags} -fno-trapping-math -O3)
-target_compile_options(RDF_SOFIE_Inference  PRIVATE -mavx2 ${gnu-flags} -fno-trapping-math -O3)
+target_compile_options(SOFIEInference  PRIVATE   ${gnu-flags} -fno-trapping-math -O3)
+target_compile_options(RDF_SOFIE_Inference  PRIVATE  ${gnu-flags} -fno-trapping-math -O3)
 #endif()
 
 endif()  # endif blas 
