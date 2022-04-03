@@ -1,4 +1,3 @@
-#include "higgs_model_dense.hxx"
 #include <iostream>
 #include "TROOT.h"
 #include "TSystem.h"
