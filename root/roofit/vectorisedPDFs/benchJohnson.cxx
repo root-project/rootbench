@@ -37,7 +37,6 @@
 #include "RooAddPdf.h"
 #include "RooExponential.h"
 #include "RooDataSet.h"
-#include "RunContext.h"
 
 #include "RooRandom.h"
 void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
@@ -54,9 +53,9 @@ void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
   }
 }
 
-enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
-  runBatchNorm, runSingleNorm,
-  runBatchNormLogs, runSingleNormLogs};
+enum RunConfig_t {runSingleUnnorm = 0,
+  runBatchNorm = 1, runSingleNorm,
+  runSingleNormLogs};
 
 static void benchJohnsonPlusExp(benchmark::State& state) {
   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
@@ -90,7 +89,6 @@ static void benchJohnsonPlusExp(benchmark::State& state) {
     data->attachBuffers(observables);
 
   std::vector<double> results(nEvents);
-  RooBatchCompute::RunContext evalData;
 
   for (auto _ : state) {
     for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
@@ -98,20 +96,10 @@ static void benchJohnsonPlusExp(benchmark::State& state) {
       randomiseParameters(parameters, 1337+paramSetIndex);
       state.ResumeTiming();
 
-      evalData.clear();
-      data->getBatches(evalData, 0, data->numEntries());
       runConfig = static_cast<RunConfig_t>(runConfig % 6);
 
-      if (runConfig == runBatchUnnorm) {
-        auto batchResult = pdf.getValues(evalData, nullptr);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runBatchNorm) {
-        auto batchResult = pdf.getValues(evalData, &observables);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runBatchNormLogs) {
-        auto batchResult = pdf.getLogProbabilities(evalData, &observables);
+      if (runConfig == runBatchNorm) {
+        auto batchResult = pdf.getValues(*data);
         if (batchResult.size() != (std::size_t) data->numEntries())
           throw std::runtime_error("Batch computation failed.");
       } else if (runConfig == runSingleUnnorm) {
@@ -135,11 +123,9 @@ static void benchJohnsonPlusExp(benchmark::State& state) {
 };
 
 BENCHMARK(benchJohnsonPlusExp)->Unit(benchmark::kMillisecond)
-        ->Args({runBatchUnnorm})
         ->Args({runSingleUnnorm})
         ->Args({runBatchNorm})
         ->Args({runSingleNorm})
-        ->Args({runBatchNormLogs})
         ->Args({runSingleNormLogs})
     ;
 
