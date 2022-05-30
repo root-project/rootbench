@@ -37,7 +37,6 @@
 #include "RooPoisson.h"
 #include "RooExponential.h"
 #include "RooDataSet.h"
-#include "RunContext.h"
 #include "RooRandom.h"
 
 #include "SlowRooExponential.h"
@@ -56,9 +55,9 @@ void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
   }
 }
 
-enum RunConfig_t {runBatchUnnorm = 0, runSingleUnnorm = 1,
-  runBatchNorm, runSingleNorm,
-  runBatchNormLogs, runSingleNormLogs};
+enum RunConfig_t {runSingleUnnorm = 0,
+  runBatchNorm = 1, runSingleNorm,
+  runSingleNormLogs};
 
 
 
@@ -97,7 +96,6 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
   if (runConfig % 2 == 0)
     data->attachBuffers(observables);
 
-  RooBatchCompute::RunContext evalData;
   std::vector<double> results(nEvents);
 
   std::array<RooArgSet, nParamSets> paramSets;
@@ -111,19 +109,8 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
     for (const auto& paramSet : paramSets) {
       parameters = paramSet;
 
-      evalData.clear();
-      data->getBatches(evalData, 0, data->numEntries());
-
-      if (runConfig == runBatchUnnorm) {
-        auto batchResult = pdf.getValues(evalData, nullptr);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runBatchNorm) {
-        auto batchResult = pdf.getValues(evalData, &observables);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runBatchNormLogs) {
-        auto batchResult = pdf.getLogProbabilities(evalData, &observables);
+      if (runConfig == runBatchNorm) {
+        auto batchResult = pdf.getValues(*data);
         if (batchResult.size() != (std::size_t) data->numEntries())
           throw std::runtime_error("Batch computation failed.");
       } else if (runConfig == runSingleUnnorm) {
@@ -149,12 +136,10 @@ static void benchAddPdfGaussExp(benchmark::State& state) {
 BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp")->Unit(benchmark::kMillisecond)
         ->Args({runBatchNorm, false})
         ->Args({runSingleNorm, false})
-        ->Args({runBatchNormLogs, false})
         ->Args({runSingleNormLogs, false});
 BENCHMARK(benchAddPdfGaussExp)->Name("Gauss+Exp(evaluateSpan fallback)")->Unit(benchmark::kMillisecond)
         ->Args({runBatchNorm, true})
         ->Args({runSingleNorm, true})
-        ->Args({runBatchNormLogs, true})
         ->Args({runSingleNormLogs, true});
 
 
