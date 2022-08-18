@@ -30,6 +30,19 @@ endfunction(RB_ADD_SETUP_FIXTURE)
 
 
 #----------------------------------------------------------------------------
+# function RB_ADD_FLAMEGRAPHCPU_FIXTURE(<benchmark>)
+#----------------------------------------------------------------------------
+function(RB_ADD_FLAMEGRAPH_FIXTURE benchmark)
+  cmake_parse_arguments(ARG "" "" "" ${ARGN})
+  add_test(NAME rootbench-fixture-flamegraph-${benchmark}
+  COMMAND ${PROJECT_BINARY_DIR}/tools/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -c -m)
+  set_tests_properties(rootbench-fixture-flamegraph-${benchmark} PROPERTIES
+                      ENVIRONMENT PATH=${PROJECT_BINARY_DIR}/FlameGraph-prefix/src/FlameGraph/:$ENV{PATH}
+                      FIXTURES_CLEANUP rootbench-${benchmark})
+endfunction(RB_ADD_FLAMEGRAPH_FIXTURE)
+
+
+#----------------------------------------------------------------------------
 # function RB_ADD_GBENCHMARK(<benchmark> source1 source2... LIBRARIES libs)
 #----------------------------------------------------------------------------
 function(RB_ADD_GBENCHMARK benchmark)
@@ -48,10 +61,13 @@ function(RB_ADD_GBENCHMARK benchmark)
     target_link_libraries(${benchmark} PUBLIC rt)
   endif()
   #ROOT_PATH_TO_STRING(mangled_name ${benchmark} PATH_SEPARATOR_REPLACEMENT "-")
-  #ROOT_ADD_TEST(gbench${mangled_name}
-  #  COMMAND ${benchmark}
-  #  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}
-  #  LABELS "benchmark")
+  if(ARG_POSTCMD)
+    set(postcmd POSTCMD ${ARG_POSTCMD})
+  endif()
+  if(flamegraph)
+      set(postcmd ${postcmd} "${PROJECT_SOURCE_DIR}/rootbench-scripts/flamegraph.sh -d ${PROJECT_BINARY_DIR} -b ${CMAKE_CURRENT_BINARY_DIR}/${benchmark} -c -m")
+      add_dependencies(${benchmark} FlameGraph)
+  endif()
   if(${ARG_LABEL} STREQUAL "long")
     set(${TIMEOUT_VALUE} 1200)
   elseif($ARG_LABEL STREQUAL "short")
@@ -68,6 +84,12 @@ function(RB_ADD_GBENCHMARK benchmark)
 
   if(ARG_SETUP)
      RB_ADD_SETUP_FIXTURE(${benchmark} SETUP ${ARG_SETUP})
+  endif()
+
+  # Flamegraphs (both mem and cpu)
+  if(flamegraph)
+    RB_ADD_FLAMEGRAPH_FIXTURE(${benchmark})
+    add_dependencies(${benchmark} flamegraph)
   endif()
 
   # Add benchmark as a CTest
