@@ -108,11 +108,11 @@ public:
    RooAbsPdf &GetPdf() { return *pdf; }
    RooAbsData &GetData() { return *data; }
 
-   void randomiseParameters(ULong_t seed = -1)
+   void randomiseParameters(ULong_t seed = 0)
    {
       auto parameters = pdf->getParameters(data.get());
       auto random = RooRandom::randomGenerator();
-      if (seed != -1)
+      if (seed != 0)
          random->SetSeed(seed);
 
       for (auto param : *parameters) {
@@ -208,12 +208,12 @@ static void benchFit(benchmark::State &state)
 
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         auto r = pdf.fitTo(data, RooFit::Save(1), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
       } else if (runConfig == fitCpu) {
-         auto r = pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"),
                             RooFit::PrintLevel(printLevel-1));
       } else if (runConfig == fitCuda) {
-         auto r = pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"),
                             RooFit::PrintLevel(printLevel-1));
       }
    }
@@ -229,12 +229,12 @@ static void benchFitUser(benchmark::State &state)
 
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         auto r = pdf.fitTo(data, RooFit::Save(1), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
       } else if (runConfig == fitCpu) {
-         auto r = pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"),
                             RooFit::PrintLevel(printLevel-1));
       } else if (runConfig == fitCuda) {
-         auto r = pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
+         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"),
                             RooFit::PrintLevel(printLevel-1));
       }
    }
