@@ -59,8 +59,8 @@ static void benchModel(benchmark::State &state)
    RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
 
    const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-   const int printLevel = state.range(1);
-   const int nParamSets = 1; // state.range(2) > 1 : state.range(2) ? 1;
+   //const int printLevel = state.range(1);
+   //const int nParamSets = 1; // state.range(2) > 1 : state.range(2) ? 1;
    const std::size_t nEvents = 100000;
 
    // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
@@ -87,7 +87,7 @@ static void benchModel(benchmark::State &state)
    auto &pdf = *(w.pdf("model"));
    auto &x = *(w.var("x"));
 
-   auto data = pdf.generate(RooArgSet(x), nEvents);
+   std::unique_ptr<RooDataSet> data{pdf.generate(RooArgSet(x), nEvents)};
 
    // RooArgSet& observables = *pdf.getObservables(data);
    // RooArgSet& parameters = *pdf.getParameters(data);
@@ -101,13 +101,11 @@ static void benchModel(benchmark::State &state)
 
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         auto r = pdf.fitTo(*data, RooFit::Save(1), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(-1));
+         pdf.fitTo(*data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(-1));
       } else if (runConfig == fitCpu) {
-         auto r = pdf.fitTo(*data, RooFit::BatchMode("cpu"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
-                            RooFit::PrintLevel(-1));
+         pdf.fitTo(*data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(-1));
       } else if (runConfig == fitCuda) {
-         auto r = pdf.fitTo(*data, RooFit::BatchMode("cuda"), RooFit::Save(1), RooFit::Minimizer("Minuit2"),
-                            RooFit::PrintLevel(-1));
+         pdf.fitTo(*data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(-1));
       }
    }
 }

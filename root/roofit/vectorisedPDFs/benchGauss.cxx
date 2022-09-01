@@ -53,19 +53,19 @@ class GausModel {
 
 public:
 private:
-   std::unique_ptr<RooWorkspace> w;
-   std::unique_ptr<RooAbsData> data;
-   RooAbsPdf *pdf;
-   std::string obsName;
-   std::vector<double> results;
+   std::unique_ptr<RooWorkspace> _w;
+   std::unique_ptr<RooAbsData> _data;
+   RooAbsPdf *_pdf;
+   std::string _obsName;
+   std::vector<double> _results;
 
 public:
-   GausModel(std::string obsName, size_t nEvts)
+   GausModel(std::string const& obsName, size_t nEvts)
    {
 
       RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
 
-      w = std::make_unique<RooWorkspace>("w");
+      _w = std::make_unique<RooWorkspace>("w");
 
       // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
       RooRealVar x("x", "x", -1.5, 40.5);
@@ -76,54 +76,54 @@ public:
       // Build gaussian p.d.f in terms of x,mean and sigma
       RooGaussian gauss("gauss", "gaussian PDF", x, mean, sigma);
 
-      w->import(gauss);
+      _w->import(gauss);
 
-      w->defineSet("obs", obsName.c_str());
+      _w->defineSet("obs", obsName.c_str());
 
-      pdf = w->pdf("gauss");
+      _pdf = _w->pdf("gauss");
       //w->Print();
       generateData(nEvents);
    }
-   RooAbsPdf &GetPdf() { return *pdf; }
-   RooAbsData &GetData() { return *data; }
+   RooAbsPdf &GetPdf() { return *_pdf; }
+   RooAbsData &GetData() { return *_data; }
 
-   void randomiseParameters(ULong_t seed = -1)
+   void randomiseParameters(ULong_t seed = 0)
    {
-      auto parameters = pdf->getParameters(data.get());
+      RooArgSet parameters;
+      _pdf->getParameters(_data->get(), parameters);
       auto random = RooRandom::randomGenerator();
-      if (seed != -1)
+      if (seed != 0)
          random->SetSeed(seed);
 
-      for (auto param : *parameters) {
+      for (auto param : parameters) {
          auto par = static_cast<RooAbsRealLValue *>(param);
          const double uni = random->Uniform();
          const double min = par->getMin();
          const double max = par->getMax();
          par->setVal(min + uni * (max - min));
       }
-      delete parameters;
    }
 
    void generateData(size_t nEvts)
    {
-      data = std::unique_ptr<RooAbsData>(pdf->generate(*w->set("obs"), nEvts) );
+      _data = std::unique_ptr<RooAbsData>(_pdf->generate(*_w->set("obs"), nEvts) );
       // allocate here output vector
-      results = std::vector<double>(nEvts);
+      _results = std::vector<double>(nEvts);
    }
    void EvalScalar()
    {
-      for (unsigned int i = 0; i < data->sumEntries(); ++i) {
-         auto observables = data->get(i);
-         results[i] = pdf->getLogVal(observables);
+      for (unsigned int i = 0; i < _data->sumEntries(); ++i) {
+         auto observables = _data->get(i);
+         _results[i] = _pdf->getLogVal(observables);
       }
    }
    void EvalBatchCpu()
    {
-      results = pdf->getValues(*data, RooFit::BatchModeOption::Cpu);
+      _results = _pdf->getValues(*_data, RooFit::BatchModeOption::Cpu);
    }
    void EvalBatchCuda()
    {
-      results = pdf->getValues(*data, RooFit::BatchModeOption::Cuda);
+      _results = _pdf->getValues(*_data, RooFit::BatchModeOption::Cuda);
    }
 };
 
