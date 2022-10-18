@@ -14,14 +14,14 @@
     get_filename_component(fname ${model} NAME)
     configure_file(${model} ${out_dir}/${fname} COPYONLY)
   endforeach()
-  
+
   # Looking for ONNXRuntime
   ## to find OONX run time configure cmake with
   ## -DONNXRuntime_INCLUDE_DIRS=..onxruntime_location.../include -DONNXRuntime_LIBRARIES=.../lib
   find_package(ONNXRuntime)
   if(ONNXRuntime_FOUND)
     message(STATUS "Found ONNXRuntime (library is  ${ONNXRuntime_LIBRARY}, libraries ${ONNXRuntime_LIBRARIES})")
-    
+
     # Configuring ONNXRuntimeInference_Template.cxx.in
     set(FUNC_NAME "BM_ONNXRuntime_Inference")
     set(CAPTURE_STR "BENCHMARK_CAPTURE(${FUNC_NAME}, @1,\t@2)@3")
@@ -56,9 +56,9 @@
 if(ROOT_tmva_FOUND AND ROOT_tmva-sofie_FOUND)
 
 
-### this is not used 
+### this is not used
 if (Use_SOFIE_TEMPLATE)
-    
+
   # Configuring SOFIEInference_Template.cxx.in
   set(FUNC_NAME "BM_SOFIE_Inference")
   set(CAPTURE_STR "BENCHMARK_CAPTURE(${FUNC_NAME}, @1,\t@2)@3")
@@ -96,8 +96,8 @@ if (Use_SOFIE_TEMPLATE)
   string(REPLACE ";" "\n" INCLUDE_HEADERS "${ALL_INCLUDES}")            # String[] -> String
   string(REPLACE ";" ",\n" FUNC_TUPLES "${ALL_FUNCS}")            # String[] -> String
   configure_file(SOFIEInference_Template.cxx.in SOFIEInference.cxx @ONLY)
-  
-  
+
+
 endif()
 
 
@@ -106,17 +106,17 @@ endif()
 
 #   configure_file(input_models/compiled/Linear_16.hxx Linear_16.hxx COPYONLY)
 #   configure_file(input_models/compiled/Linear_16.dat Linear_16.dat COPYONLY)
-  
+
 #   configure_file(input_models/compiled/Linear_32.hxx Linear_32.hxx COPYONLY)
 #   configure_file(input_models/compiled/Linear_32.dat Linear_32.dat COPYONLY)
-  
+
 #   configure_file(input_models/compiled/Linear_64.hxx Linear_64.hxx COPYONLY)
 #   configure_file(input_models/compiled/Linear_64.dat Linear_64.dat COPYONLY)
-  
-  
+
+
 #   configure_file(input_models/compiled/Conv_d100_L1_B1.hxx Conv_d100_L1_B1.hxx COPYONLY)
 #   configure_file(input_models/compiled/Conv_d100_L1_B1.dat Conv_d100_L1_B1.dat COPYONLY)
-  
+
 #   configure_file(input_models/compiled/Conv_d100_L14_B1.hxx Conv_d100_L14_B1.hxx COPYONLY)
 #   configure_file(input_models/compiled/Conv_d100_L14_B1.dat Conv_d100_L14_B1.dat COPYONLY)
 #   configure_file(input_models/compiled/Conv_d100_L14_B32.hxx Conv_d100_L14_B32.hxx COPYONLY)
@@ -147,7 +147,7 @@ foreach(onnx_file ${ONNX_FILES})
 	#get_filename_component(fname ${onnx_file} NAME_WE)
 	#get_filename_component(fdir ${onnx_file} DIRECTORY)
 	add_custom_command(TARGET SofieCompileModels POST_BUILD
-		COMMAND ./emitFromONNX ${onnx_file} 
+		COMMAND ./emitFromONNX ${onnx_file}
 		USES_TERMINAL
 	)
 endforeach()
@@ -171,7 +171,7 @@ set(SOFIE_BLAS_LIBS ${BLAS_LIBRARIES})
 RB_ADD_GBENCHMARK(SOFIEInference
     SOFIEInference.cxx
     LABEL short
-    LIBRARIES TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS}  
+    LIBRARIES TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS}
 )
 
 add_dependencies(SOFIEInference SofieCompileModels)
@@ -179,18 +179,18 @@ add_dependencies(SOFIEInference SofieCompileModels)
 RB_ADD_GBENCHMARK(RDF_SOFIE_Inference
     RDF_SOFIE_Inference.cxx
     LABEL short
-    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS} 
+    LIBRARIES Core Hist Imt RIO Tree TreePlayer ROOTDataFrame ROOTVecOps TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS}
 )
-  
+
 add_dependencies(RDF_SOFIE_Inference SofieCompileModels)
 
 #
-# add optimization flags for best performances (factor 3 on simple Conv1 test) 
+# add optimization flags for best performances (factor 3 on simple Conv1 test)
 #
 #if (ROOT_PLATFORM MATCHES "linux|macosx" AND CMAKE_SYSTEM_PROCESSOR MATCHES x86_64 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 ## assume we run only on linux/macos with gnu or gcc
 set(gnu-flags $<$<CXX_COMPILER_ID:GNU>:-fno-signaling-nans>)
-if ($APPLE)
+if (APPLE)
 target_compile_options(SOFIEInference  PRIVATE   ${gnu-flags} -ffast-math -fno-trapping-math -O3)
 target_compile_options(RDF_SOFIE_Inference  PRIVATE  ${gnu-flags} -ffast-math -fno-trapping-math -O3)
 else()
@@ -198,12 +198,12 @@ target_compile_options(SOFIEInference  PRIVATE   ${gnu-flags} -march=native -ffa
 target_compile_options(RDF_SOFIE_Inference  PRIVATE  ${gnu-flags} -march=native -ffast-math -fno-trapping-math -O3)
 endif()
 
-endif()  # endif blas 
+endif()  # endif blas
 endif()  # endif TMVA/SOFIE
 
 find_package(LWTNN QUIET)
 if (LWTNN_FOUND)
-  
+
    message(STATUS "Found LWTNN (library is  ${LWTNN_LIBRARY}, libraries ${LWTNN_LIBRARIES})")
    configure_file(input_models/higgs_model_dense.json higgs_model_dense.json COPYONLY)
    configure_file(input_models/Generator.json.gz Generator.json.gz COPYONLY)
