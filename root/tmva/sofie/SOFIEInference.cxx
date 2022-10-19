@@ -26,6 +26,7 @@
 #include "LSTM_d10_L20_h8_B1.hxx"
 #include "higgs_model_dense.hxx"
 #include "DDB_B1.hxx"   // CMS onnx model
+#include "Conv2DTranspose_Relu_Sigmoid.hxx"
 
 #include "resnet18v1.hxx"
 #include "TMath.h"
@@ -102,7 +103,7 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
 
    S s("");
 
-   std::cout << "initi done - do benchmark \n";
+   //std::cout << "init done - do benchmark \n";
 
    double totDuration = 0;
    int ntimes = 0;
@@ -125,6 +126,8 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
 
 // CMS benchmark (3 inputs)
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference_3, TMVA_SOFIE_DDB_B1::Session)->Name("DDB_B1")->Args({1, 1*27, 60*8, 5*2})->Unit(benchmark::kMillisecond);
+// Conv Transpose
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Conv2DTranspose_Relu_Sigmoid::Session)->Name("Cov2DTranspose_B1")->Args({1, 1*15})->Unit(benchmark::kMillisecond);
 
 //Gemm benchmarks
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_16::Session)->Name("Linear_16")->Args({100, 16})->Unit(benchmark::kMillisecond);
