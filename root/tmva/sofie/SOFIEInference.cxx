@@ -34,34 +34,62 @@
 
 using namespace std;
 bool verbose = false;
+bool testOutput = true;
+
+
 template <class S>
 void BM_SOFIE_Inference(benchmark::State &state)
 {
    size_t inputSize = state.range(0);  // input size (without batch size)
-   size_t bsize = (state.range(1) > 0) ? state.range(1) : 0;
+   size_t bsize = (state.range(1) > 0) ? state.range(1) : 1;
    size_t nevts = 64;
    size_t nrep = nevts / bsize;
 
    vector<float> input(inputSize*nevts);
 
-   static std::uniform_real_distribution<float> distribution(-1, 1);
-   static std::default_random_engine generator;
-   std::generate(input.begin(), input.end(), []() { return distribution(generator); });
-
+   if (testOutput) {
+      input = std::vector<float>(input.size(),1.);
+   }
+   else {
+      static std::uniform_real_distribution<float> distribution(-1, 1);
+      static std::default_random_engine generator;
+      std::generate(input.begin(), input.end(), []() { return distribution(generator); });
+   }
    float *input_ptr = input.data();
    S s("");
 
    double totDuration = 0;
    int ntimes = 0;
+   std::vector<float> yOut;
+   bool first = true;
+   bool doWrite = testOutput;
    for (auto _ : state) {
       auto t1 = std::chrono::high_resolution_clock::now();
-      for (int i = 0; i < nevts; i += bsize)
+      for (int i = 0; i < nevts; i += bsize) {
          auto y = s.infer(input.data()+ inputSize*i);
-
+         if (first) {
+            //std::cout << std::string(typeid(s).name()) << " :  " << y[0] << "  " << y[1] << std::endl;
+            yOut = y;
+            first = false;
+         }
+      }
       auto t2 = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
       totDuration += duration / 1.E3;  // in milliseconds
       ntimes++;
+      if (doWrite) {
+         // write output for test
+         //std::cout << "write output " << std::endl;
+         std::ofstream f;
+         std::string filename = std::string(typeid(s).name()) + ".out";
+         f.open(filename);
+         f << yOut.size() << std::endl;
+         for (size_t i = 0; i < yOut.size(); i++)
+            f << yOut[i] << "  ";
+         f << std::endl;
+         f.close();
+         doWrite = false;
+      }
    }
 
    state.counters["time/evt(ms)"] = totDuration / double(ntimes * nevts);
@@ -95,11 +123,19 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
    vector<float> input2(inputSize2*nevts);
    vector<float> input3(inputSize3*nevts);
 
+   if (!testOutput) {
    static std::uniform_real_distribution<float> distribution(-1, 1);
    static std::default_random_engine generator;
    std::generate(input1.begin(), input1.end(), []() { return distribution(generator); });
    std::generate(input2.begin(), input2.end(), []() { return distribution(generator); });
    std::generate(input3.begin(), input3.end(), []() { return distribution(generator); });
+   }
+   else {
+      // generate fixed data
+      input1 = vector<float>(input1.size(),1.);
+      input2 = vector<float>(input2.size(),2.);
+      input3 = vector<float>(input3.size(),3.);
+   }
 
    S s("");
 
@@ -125,9 +161,9 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
 }
 
 // CMS benchmark (3 inputs)
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference_3, TMVA_SOFIE_DDB_B1::Session)->Name("DDB_B1")->Args({1, 1*27, 60*8, 5*2})->Unit(benchmark::kMillisecond);
+//BENCHMARK_TEMPLATE(BM_SOFIE_Inference_3, TMVA_SOFIE_DDB_B1::Session)->Name("DDB_B1")->Args({1, 1*27, 60*8, 5*2})->Unit(benchmark::kMillisecond);
 // Conv Transpose
-BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Conv2DTranspose_Relu_Sigmoid::Session)->Name("Cov2DTranspose_B1")->Args({1, 1*15})->Unit(benchmark::kMillisecond);
+BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Conv2DTranspose_Relu_Sigmoid::Session)->Name("Cov2DTranspose_Relu_Sigmoid")->Args({15,1})->Unit(benchmark::kMillisecond);
 
 //Gemm benchmarks
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_Linear_16::Session)->Name("Linear_16")->Args({100, 16})->Unit(benchmark::kMillisecond);
