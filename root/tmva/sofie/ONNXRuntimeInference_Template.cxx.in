@@ -10,8 +10,11 @@
 #include <numeric>
 #include <random>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
+
+bool testOutput = true;
 
 static void @FUNC_NAME@(benchmark::State& state, string model_path)
 {
@@ -77,10 +80,14 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
       // std::cout << "input tensor size " << input_tensor_size << "  " << input_tensor_values.size() << std::endl;
 
       // Input tensor initialization
-      static std::uniform_real_distribution<float> distribution(-1, 1);
-      static std::default_random_engine generator;
-      std::generate(input_tensor_values.begin(), input_tensor_values.end(), []() { return distribution(generator); });
-      // fill_n(input_tensor_values.begin(), input_tensor_size, 1.0);
+
+      if (testOutput)
+         fill_n(input_tensor_values.begin(), input_tensor_values.size(), float(i)+1.);
+      else {
+         static std::uniform_real_distribution<float> distribution(-1, 1);
+         static std::default_random_engine generator;
+         std::generate(input_tensor_values.begin(), input_tensor_values.end(), []() { return distribution(generator); });
+      }
    }
 
       auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
@@ -92,6 +99,12 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
       float *floatarr = nullptr;
 
       std::vector<Ort::Value> input_tensors;
+
+      size_t osize = 1;
+      for (int  d : output_node_dims[0]) {
+         if (d > 0) osize *= d; // first dim(batch size) can be -1
+      }
+      std::vector<float> yOut(osize);
 
       double totDuration = 0;
       int ntimes = 0;
@@ -113,12 +126,25 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
             for (int k = 0; k < nin; k++) {
                input_offset[k] += inputSizes[k];
             }
+            if (testOutput && i == 0)
+               std::copy(floatarr, floatarr + osize, yOut.begin());
          }
 
          auto t2 = std::chrono::high_resolution_clock::now();
          auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
          totDuration += duration / 1.E3; // in milliseconds
          ntimes++;
+         if (testOutput) {
+            std::string filename = model_path + ".ort.out";
+            //std::cout << "writing file" << filename << std::endl;
+            ofstream f;
+            f.open(filename);
+            f << yOut.size() << std::endl;
+            for (size_t i = 0; i < yOut.size(); i++)
+             f << yOut[i] << "  ";
+            f << std::endl;
+            f.close();
+         }
    }
    //for (int i = 0; i < 10; i++)
    //  printf("%f\t", i, floatarr[i]);
