@@ -71,8 +71,13 @@ function(RB_ADD_GBENCHMARK benchmark)
   endif()
 
   # Add benchmark as a CTest
-  add_test(NAME rootbench-${benchmark}
-           COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false)
+  if (${rootbench-out-format-json})
+     add_test(NAME rootbench-${benchmark}
+              COMMAND ${benchmark} --benchmark_out_format=json --benchmark_out=rootbench-gbenchmark-${benchmark}.json --benchmark_color=false)
+  else()
+     add_test(NAME rootbench-${benchmark}
+              COMMAND ${benchmark} --benchmark_out_format=csv --benchmark_out=rootbench-gbenchmark-${benchmark}.csv --benchmark_color=false)
+  endif()
   set_tests_properties(rootbench-${benchmark} PROPERTIES
                        ENVIRONMENT LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}
                        TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
