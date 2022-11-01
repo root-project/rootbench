@@ -5,3 +5,4 @@
 #----------------------------------------------------------------------------
 option(coverage OFF)
 option(rootbench-datafiles OFF)
+option(rootbench-out-format-json OFF)
