@@ -139,9 +139,11 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
             //std::cout << "writing file" << filename << std::endl;
             ofstream f;
             f.open(filename);
-            f << yOut.size() << std::endl;
-            for (size_t i = 0; i < yOut.size(); i++)
+            f << yOut.size();
+            for (size_t i = 0; i < yOut.size(); i++) {
+             if ((i % 10) == 0) f << "\n"; // add endline every 10
              f << yOut[i] << "  ";
+            }
             f << std::endl;
             f.close();
          }
