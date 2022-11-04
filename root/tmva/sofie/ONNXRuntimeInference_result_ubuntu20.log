@@ -1,0 +1,32 @@
+Running ./ONNXRuntimeInference
+Run on (16 X 5000 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x8)
+  L1 Instruction 32 KiB (x8)
+  L2 Unified 256 KiB (x8)
+  L3 Unified 16384 KiB (x1)
+Load Average: 1.32, 1.84, 2.61
+***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisy and will incur extra overhead.
+----------------------------------------------------------------------------------------------------------------
+Benchmark                                                      Time             CPU   Iterations UserCounters...
+----------------------------------------------------------------------------------------------------------------
+BM_ONNXRuntime_Inference/Conv2DTranspose_Relu_Sigmoid        126 ms          126 ms            5 time/evt(ms)=1.83237
+BM_ONNXRuntime_Inference/Conv3d_d32_L4_B1                   3757 ms         3757 ms            1 time/evt(ms)=58.6969
+BM_ONNXRuntime_Inference/ConvTModel_G4                       126 ms          126 ms            6 time/evt(ms)=1.8286
+BM_ONNXRuntime_Inference/ConvTrans2dModel_B1               0.506 ms        0.506 ms         1394 time/evt(ms)=7.40356m
+BM_ONNXRuntime_Inference/Conv_d100_L14_B1                   6220 ms         6220 ms            1 time/evt(ms)=97.1541
+BM_ONNXRuntime_Inference/Conv_d100_L14_B32                  3187 ms         3187 ms            1 time/evt(ms)=49.5775
+BM_ONNXRuntime_Inference/Conv_d100_L1_B1                    8.48 ms         8.48 ms           81 time/evt(ms)=0.0758999
+BM_ONNXRuntime_Inference/DDB_B1                             5.76 ms         5.76 ms          121 time/evt(ms)=0.089551
+BM_ONNXRuntime_Inference/GRU_d10_L20_h8_B1                 0.689 ms        0.689 ms         1013 time/evt(ms)=0.0103855
+BM_ONNXRuntime_Inference/Generator_B1                       37.2 ms         37.1 ms           19 time/evt(ms)=0.451642
+BM_ONNXRuntime_Inference/Generator_B64                       527 ms          527 ms            1 time/evt(ms)=0.131812
+BM_ONNXRuntime_Inference/LSTM_d10_L20_h8_B1                 1.01 ms         1.01 ms          692 time/evt(ms)=0.0154544
+BM_ONNXRuntime_Inference/Linear_16                         0.123 ms        0.123 ms         5676 time/evt(ms)=1025.49u
+BM_ONNXRuntime_Inference/Linear_32                         0.146 ms        0.146 ms         4800 time/evt(ms)=834.229u
+BM_ONNXRuntime_Inference/Linear_64                         0.210 ms        0.210 ms         3346 time/evt(ms)=723.7u
+BM_ONNXRuntime_Inference/Linear_event                      0.510 ms        0.506 ms         1370 time/evt(ms)=7.52203m
+BM_ONNXRuntime_Inference/RNN_d10_L20_h8_B1                 0.509 ms        0.509 ms         1366 time/evt(ms)=7.57958m
+BM_ONNXRuntime_Inference/SimpleNN_Alice                    0.049 ms        0.049 ms        14632 time/evt(ms)=404.781u
+BM_ONNXRuntime_Inference/higgs_model_dense                 0.484 ms        0.484 ms         1447 time/evt(ms)=7.21045m
+BM_ONNXRuntime_Inference/resnet18v1                         2146 ms         2146 ms            1 time/evt(ms)=33.5231
