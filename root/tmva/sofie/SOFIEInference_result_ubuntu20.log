@@ -1,0 +1,31 @@
+Running ./SOFIEInference
+Run on (16 X 5000 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x8)
+  L1 Instruction 32 KiB (x8)
+  L2 Unified 256 KiB (x8)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.73, 1.85, 2.66
+***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisy and will incur extra overhead.
+--------------------------------------------------------------------------------------------
+Benchmark                                  Time             CPU   Iterations UserCounters...
+--------------------------------------------------------------------------------------------
+Conv2DTranspose_Relu_Sigmoid/15/1        105 ms          105 ms            6 time/evt(ms)=1.61552
+ConvTModel_G4/15/1                       106 ms          106 ms            6 time/evt(ms)=1.63189
+ConvTrans2dModel_B1/64/1               0.059 ms        0.059 ms        11831 time/evt(ms)=907.839u
+SimpleNN_Alice/16/1                    0.027 ms        0.027 ms        25532 time/evt(ms)=421.959u
+Linear_16/100/16                       0.053 ms        0.053 ms        13204 time/evt(ms)=813.883u
+Linear_32/100/32                       0.044 ms        0.044 ms        15859 time/evt(ms)=680.265u
+Linear_64/100/64                       0.039 ms        0.039 ms        18127 time/evt(ms)=594.752u
+Linear_event/100/1                     0.130 ms        0.130 ms         5554 time/evt(ms)=2.02161m
+Generator_B1/14/1                       26.7 ms         26.7 ms           26 time/evt(ms)=0.410543
+Generator_B64/14/64                      632 ms          629 ms            1 time/evt(ms)=0.166156
+higgs_model_dense/7/1                  0.153 ms        0.153 ms         4636 time/evt(ms)=2.3824m
+Conv_d100_L14_B1/10000/1                7938 ms         7938 ms            1 time/evt(ms)=124
+Conv_d100_L14_B32/10000/32              3449 ms         3448 ms            1 time/evt(ms)=53.6721
+Conv_d100_L1_B1/10000/1                 3.26 ms         3.26 ms          214 time/evt(ms)=0.0506315
+Conv3d_d32_L4_B1/32768/1                7111 ms         7111 ms            1 time/evt(ms)=111.109
+resnet18v1/150528/1                     2839 ms         2839 ms            1 time/evt(ms)=44.3493
+RNN_d10_L20_h8_B1/15/1                 0.117 ms        0.117 ms         5971 time/evt(ms)=1.81623m
+GRU_d10_L20_h8_B1/15/1                 0.496 ms        0.496 ms         1391 time/evt(ms)=7.74512m
+LSTM_d10_L20_h8_B1/1/1                 0.559 ms        0.559 ms         1118 time/evt(ms)=8.72194m
