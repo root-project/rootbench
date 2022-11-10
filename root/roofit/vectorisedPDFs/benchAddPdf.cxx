@@ -68,7 +68,8 @@ public:
    TestModelPdf(bool useUserExponential, size_t nEvts)
    {
 
-      if (printLevel == 0) RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
+      if (printLevel == 0)
+         RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
 
       w = std::make_unique<RooWorkspace>("w");
 
@@ -100,10 +101,12 @@ public:
       w->defineSet("obs", "x");
 
       pdf = w->pdf("SumGausExpo");
-      if (printLevel > 1) w->Print();
-      generateData(nEvents);
+      if (printLevel > 1)
+         w->Print();
+      generateData(nEvts);
 
-      if (printLevel > 1) data->Print();
+      if (printLevel > 1)
+         data->Print();
    }
    RooAbsPdf &GetPdf() { return *pdf; }
    RooAbsData &GetData() { return *data; }
@@ -127,7 +130,7 @@ public:
 
    void generateData(size_t nEvts)
    {
-      data = std::unique_ptr<RooAbsData>(pdf->generate(*w->set("obs"), nEvts) );
+      data = std::unique_ptr<RooAbsData>(pdf->generate(*w->set("obs"), nEvts));
       // allocate here output vector
       results = std::vector<double>(nEvts);
    }
@@ -138,22 +141,16 @@ public:
          results[i] = pdf->getLogVal(observables);
       }
    }
-   void EvalBatchCpu()
-   {
-      results = pdf->getValues(*data, RooFit::BatchModeOption::Cpu);
-   }
-   void EvalBatchCuda()
-   {
-      results = pdf->getValues(*data, RooFit::BatchModeOption::Cuda);
-   }
+   void EvalBatchCpu() { results = pdf->getValues(*data, RooFit::BatchModeOption::Cpu); }
+   void EvalBatchCuda() { results = pdf->getValues(*data, RooFit::BatchModeOption::Cuda); }
 };
 
 static void benchEval(benchmark::State &state)
 {
-   //std::cout << state.range(0) << " " << state.range(1) << "  " << state.range(2) << std::endl;
+   // std::cout << state.range(0) << " " << state.range(1) << "  " << state.range(2) << std::endl;
    RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
 
-   TestModelPdf model(false,nEvents);
+   TestModelPdf model(false, nEvents);
 
    for (auto _ : state) {
       for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
@@ -208,13 +205,11 @@ static void benchFit(benchmark::State &state)
 
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
       } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"),
-                            RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
       } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"),
-                            RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
       }
    }
 }
@@ -229,34 +224,32 @@ static void benchFitUser(benchmark::State &state)
 
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
       } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"),
-                            RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
       } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"),
-                            RooFit::PrintLevel(printLevel-1));
+         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
       }
    }
 }
 
 BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalScalar")->Args({runScalar});
 BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCPU")->Args({runCpu});
-//BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCUDA")->Args({runCuda});
+// BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCUDA")->Args({runCuda});
 
 BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalScalar")->Args({runScalar});
 BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPddWithUserExp_EvalBatchCPU")->Args({runCpu});
-//BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalBatchCUDA")->Args({runCuda});
+// BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalBatchCUDA")->Args({runCuda});
 
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCPU")->Args({fitCpu});
-//BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCUDA")->Args({fitCuda});
+// BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCUDA")->Args({fitCuda});
 
 BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCPU")->Args({fitCpu});
-//BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCUDA")->Args({fitCuda});
+// BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCUDA")->Args({fitCuda});
 
-//BENCHMARK_MAIN();
+// BENCHMARK_MAIN();
 
 int main(int argc, char **argv)
 {
