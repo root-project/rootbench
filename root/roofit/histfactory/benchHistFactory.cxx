@@ -33,7 +33,6 @@ public:
          constraintParams.add(*mc->GetNuisanceParameters());
 
       auto *pdf = w->pdf("simPdf");
-      auto *mu = w->var("SigXsecOverSM");
 
       std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*w->data("obsData"), Constrain(constraintParams),
                                                      GlobalObservables(*mc->GetGlobalObservables()), BatchMode(false))};
@@ -70,7 +69,6 @@ static void benchHistFactory001(benchmark::State &state)
    auto *mc = static_cast<RooStats::ModelConfig *>(w->obj("ModelConfig"));
 
    auto *pdf = w->pdf("simPdf");
-   auto *mu = w->var("SigXsecOverSM");
 
    std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*w->data("obsData"), Constrain(g_testData.constraintParams),
                                                   GlobalObservables(*mc->GetGlobalObservables()),
@@ -86,7 +84,7 @@ static void benchHistFactory001(benchmark::State &state)
    // fit by taking a reference minimization path.
 
    for (auto _ : state) {
-      for (std::size_t i = 0; i < minimizationPath.numEntries(); ++i) {
+      for (auto i = 0; i < minimizationPath.numEntries(); ++i) {
          state.PauseTiming();
          parameters.assign(*minimizationPath.get(i));
          state.ResumeTiming();
