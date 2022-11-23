@@ -29,6 +29,8 @@ struct ONNXFunctor {
 
    std::vector<const char *> input_node_names;
    std::vector<const char *> output_node_names;
+   std::vector<std::string> input_node_str;
+   std::vector<std::string> output_node_str;
 
    std::vector<float> input_tensor_values;
 
@@ -53,19 +55,25 @@ struct ONNXFunctor {
       // std::cout << "benchmarking model " << model_path << std::endl;
       session = std::make_shared<Ort::Session>(env, model_path.c_str(), session_options);
 
-     
+
 
       Ort::AllocatorWithDefaultOptions allocator;
-      input_node_names.push_back(session->GetInputName(0, allocator));
-      output_node_names.push_back( session->GetOutputName(0, allocator));
-
+   #if ORT_API_VERSION > 12
+      input_node_str.push_back(session->GetInputNameAllocated(0, allocator).get());
+      output_node_str.push_back(session->GetOutputNameAllocated(0, allocator).get());
+   #else
+      input_node_str.push_back(session->GetInputName(0, allocator));
+      output_node_str.push_back( session->GetOutputName(0, allocator));
+   #endif
+      input_node_names.push_back(input_node_str.back().c_str());
+      output_node_names.push_back(output_node_str.back().c_str());
       // Getting the shapes
 
       input_node_dims = session->GetInputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
       output_node_dims = session->GetOutputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
 
       // Calculating the dimension of the input tensor
-     
+
 
       size_t input_tensor_size = std::accumulate(input_node_dims.begin(), input_node_dims.end(), 1, std::multiplies<int>());
       //std::vector<float> input_tensor_values(input_tensor_size );
@@ -94,7 +102,7 @@ struct ONNXFunctor {
       inputArray[off + 5] = x5;
       inputArray[off + 6] = x6;
 
-      
+
 
       auto output_tensors = session->Run(Ort::RunOptions{nullptr}, input_node_names.data(), &inputTensor, 1, output_node_names.data(), 1);
       float * floatarr = output_tensors.front().GetTensorMutableData<float>();
@@ -130,8 +138,10 @@ void BM_RDF_ONNX_Inference(benchmark::State &state)
    auto fileName = "Higgs_data_full.root";
    // file is available at "https://cernbox.cern.ch/index.php/s/YuSHwTXBa0UBEhD/download";
    // do curl https://cernbox.cern.ch/index.php/s/XaPBtaGrnN38wU0 -o Higgs_data_full.root
+   // https://cernbox.cern.ch/s/vLOqclhWirZEWpj
+   std::string directLink = "https://cernbox.cern.ch/remote.php/dav/public-files/vLOqclhWirZEWpj/Higgs_data_full.root";
    if (gSystem->AccessPathName(fileName)) {
-      std::string cmd = "curl https://cernbox.cern.ch/index.php/s/YuSHwTXBa0UBEhD/download -o ";
+      std::string cmd = "curl " + directLink + " -o ";
       cmd += fileName;
       gSystem->Exec(cmd.c_str());
    }
