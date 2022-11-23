@@ -57,8 +57,9 @@ void BM_RDF_SOFIE_Inference(benchmark::State &state)
    auto fileName = "Higgs_data_full.root";
    //file is available at "https://cernbox.cern.ch/index.php/s/YuSHwTXBa0UBEhD/download";
    // do curl https://cernbox.cern.ch/index.php/s/XaPBtaGrnN38wU0 -o Higgs_data_full.root
-   if (gSystem->AccessPathName(fileName) ) {
-      std::string cmd = "curl https://cernbox.cern.ch/index.php/s/YuSHwTXBa0UBEhD/download -o ";
+   std::string directLink = "https://cernbox.cern.ch/remote.php/dav/public-files/vLOqclhWirZEWpj/Higgs_data_full.root";
+   if (gSystem->AccessPathName(fileName)) {
+      std::string cmd = "curl " + directLink + " -o ";
       cmd  += fileName;
       gSystem->Exec(cmd.c_str());
    }

@@ -33,13 +33,26 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
 
    vector<const char*> input_node_names(nin);
    vector<const char*> output_node_names(nout);
+   vector<std::string> inputStrings(nin);
+   vector<std::string> outputStrings(nout);
 
    Ort::AllocatorWithDefaultOptions allocator;
-   for (int i = 0; i < nin; i++)
-     input_node_names[i] = session.GetInputName(i, allocator);
-   for (int i = 0; i < nout; i++)
-     output_node_names[i] = session.GetOutputName(i, allocator);
-
+   for (int i = 0; i < nin; i++) {
+#if ORT_API_VERSION > 12
+      inputStrings[i] = session.GetInputNameAllocated(i, allocator).get();
+#else
+      inputStrings[i] = session.GetInputName(i, allocator);
+#endif
+      input_node_names[i] = inputStrings[i].c_str();
+   }
+   for (int i = 0; i < nout; i++) {
+#if ORT_API_VERSION > 12
+     outputStrings[i] = session.GetOutputNameAllocated(i, allocator).get();
+#else
+     outputStrings[i] = session.GetOutputName(i, allocator);
+#endif
+      output_node_names[i] = outputStrings[i].c_str();
+   }
    // Getting the shapes
    vector<vector<int64_t>> input_node_dims(nin);
    vector<vector<int64_t>> output_node_dims(nout);
