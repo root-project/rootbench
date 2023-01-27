@@ -243,11 +243,15 @@ BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPddWithUs
 
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCPU")->Args({fitCpu});
-// BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCUDA")->Args({fitCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCUDA")->Args({fitCuda});
+#endif
 
 BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCPU")->Args({fitCpu});
-// BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCUDA")->Args({fitCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCUDA")->Args({fitCuda});
+#endif
 
 // BENCHMARK_MAIN();
 
