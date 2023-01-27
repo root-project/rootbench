@@ -125,6 +125,8 @@ BENCHMARK(benchProdPdf)->Name("fit_Scalar")->Unit(benchmark::kMillisecond)->Args
 
 BENCHMARK(benchProdPdf)->Name("fit_CPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
 
-//BENCHMARK(benchProdPdf)->Name("fit_CUDA")->Unit(benchmark::kMillisecond)->Args({fitCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchProdPdf)->Name("fit_CUDA")->Unit(benchmark::kMillisecond)->Args({fitCuda});
+#endif
 
 BENCHMARK_MAIN();

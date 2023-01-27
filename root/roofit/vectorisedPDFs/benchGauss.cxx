@@ -214,18 +214,26 @@ static void benchFitGaussXSigma(benchmark::State &state)
 
 BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalScalar")->Args({runScalar});
 BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalBatchCPU")->Args({runCpu});
-// BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalBatchCUDA")->Args({runCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalBatchCUDA")->Args({runCuda});
+#endif
 
 BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalScalar")->Args({runScalar});
 BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalBatchCPU")->Args({runCpu});
-// BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalBatchCUDA")->Args({runCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalBatchCUDA")->Args({runCuda});
+#endif
 
 BENCHMARK(benchFitGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFitGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_FitBatchCPU")->Args({fitCpu});
-// BENCHMARK(benchFitGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_FitBatchCUDA")->Args({fitCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchFitGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_FitBatchCUDA")->Args({fitCuda});
+#endif
 
 BENCHMARK(benchFitGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFitGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_FitBatchCPU")->Args({fitCpu});
-// BENCHMARK(benchFitGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_FitBatchCUDA")->Args({fitCuda});
+#ifdef R__HAS_CUDA
+BENCHMARK(benchFitGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_FitBatchCUDA")->Args({fitCuda});
+#endif
 
 BENCHMARK_MAIN();
