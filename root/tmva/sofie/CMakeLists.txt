@@ -184,6 +184,14 @@ RB_ADD_GBENCHMARK(RDF_SOFIE_Inference
 
 add_dependencies(RDF_SOFIE_Inference SofieCompileModels)
 
+RB_ADD_GBENCHMARK(SOFIEInference_Reader
+    SOFIEInference_Reader.cxx
+    LABEL short
+    LIBRARIES Core Cling TMVA  ROOTTMVASofie ${SOFIE_BLAS_LIBS}
+)
+
+add_dependencies(SOFIEInference_Reader SofieCompileModels)
+
 #
 # add optimization flags for best performances (factor 3 on simple Conv1 test)
 #
