@@ -34,24 +34,22 @@
  * 9. as 3., but ...
  */
 
-#include "benchmark/benchmark.h"
+#include <RooDataSet.h>
+#include <RooGaussian.h>
+#include <RooRandom.h>
+#include <RooRealVar.h>
+#include <RooWorkspace.h>
 
-#include "RooRealVar.h"
-#include "RooGaussian.h"
-#include "RooDataSet.h"
-#include "RunContext.h"
-#include "RooWorkspace.h"
-
-#include "RooRandom.h"
+#include <benchmark/benchmark.h>
 
 enum RunConfig_t { runScalar, runCpu, runCuda, fitScalar, fitCpu, fitCuda };
 
 const size_t nEvents = 100000;
 const size_t nParamSets = 30;
+const auto minimizerName = "Minuit2";
 
 class GausModel {
 
-public:
 private:
    std::unique_ptr<RooWorkspace> _w;
    std::unique_ptr<RooAbsData> _data;
@@ -123,7 +121,6 @@ public:
 
 static void benchEvalGauss(benchmark::State &state)
 {
-   // std::cout << state.range(0) << " " << state.range(1) << "  " << state.range(2) << std::endl;
    RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
 
    GausModel model("x", nEvents);
@@ -182,11 +179,11 @@ static void benchFitGauss(benchmark::State &state)
       using namespace RooFit;
 
       if (runConfig == fitScalar) {
-         pdf.fitTo(data, Minimizer("Minuit2"), PrintLevel(-1));
+         pdf.fitTo(data, BatchMode("off"), Minimizer(minimizerName), PrintLevel(-1));
       } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, BatchMode("cpu"), Minimizer("Minuit2"), PrintLevel(-1));
+         pdf.fitTo(data, BatchMode("cpu"), Minimizer(minimizerName), PrintLevel(-1));
       } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, BatchMode("cuda"), Minimizer("Minuit2"), PrintLevel(-1));
+         pdf.fitTo(data, BatchMode("cuda"), Minimizer(minimizerName), PrintLevel(-1));
       }
    }
 }
@@ -203,11 +200,11 @@ static void benchFitGaussXSigma(benchmark::State &state)
       using namespace RooFit;
 
       if (runConfig == fitScalar) {
-         pdf.fitTo(data, Minimizer("Minuit2"), RooFit::PrintLevel(-1));
+         pdf.fitTo(data, BatchMode("off"), Minimizer(minimizerName), RooFit::PrintLevel(-1));
       } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, BatchMode("cpu"), Minimizer("Minuit2"), PrintLevel(-1));
+         pdf.fitTo(data, BatchMode("cpu"), Minimizer(minimizerName), PrintLevel(-1));
       } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, BatchMode("cuda"), Minimizer("Minuit2"), PrintLevel(-1));
+         pdf.fitTo(data, BatchMode("cuda"), Minimizer(minimizerName), PrintLevel(-1));
       }
    }
 }

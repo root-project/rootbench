@@ -45,8 +45,6 @@
 #include "RooWorkspace.h"
 #include "RooRandom.h"
 
-#include "SlowRooExponential.h"
-
 enum RunConfig_t { runScalar, runCpu, runCuda, fitScalar, fitCpu, fitCuda };
 
 size_t nEvents = 100000;
@@ -56,7 +54,6 @@ int printLevel = 0;
 
 class TestModelPdf {
 
-public:
 private:
    std::unique_ptr<RooWorkspace> w;
    std::unique_ptr<RooAbsData> data;
@@ -65,7 +62,7 @@ private:
    std::vector<double> results;
 
 public:
-   TestModelPdf(bool useUserExponential, size_t nEvts)
+   TestModelPdf(size_t nEvts)
    {
 
       if (printLevel == 0)
@@ -83,16 +80,10 @@ public:
       RooGaussian gauss("gauss", "gaussian PDF", x, mean, sigma);
 
       RooRealVar c1("c1", "Decay constant", -0.5, -10, -0.001);
-      std::unique_ptr<RooAbsPdf> ex;
-      // test with a user exponential to test case of user pdf evaluations
-      if (useUserExponential) {
-         ex = std::make_unique<SlowRooExponential>("Expo", "Exponential PDF", x, c1);
-      } else {
-         ex = std::make_unique<RooExponential>("Expo", "Exponential PDF", x, c1);
-      }
+      RooExponential ex{"Expo", "Exponential PDF", x, c1};
 
       RooRealVar fractionGaus("fractionGaus", "Fraction of Gauss component", 0.5, 0., 1.);
-      RooAddPdf addPdf("SumGausExpo", "Sum of Gaus and Exponential", RooArgSet(gauss, *ex), fractionGaus);
+      RooAddPdf addPdf("SumGausExpo", "Sum of Gaus and Exponential", {gauss, ex}, fractionGaus);
       // to avoid a warning when computing the   unnormalized RooAddPdf values
       addPdf.fixCoefNormalization(x);
 
@@ -147,35 +138,9 @@ public:
 
 static void benchEval(benchmark::State &state)
 {
-   // std::cout << state.range(0) << " " << state.range(1) << "  " << state.range(2) << std::endl;
    RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
 
-   TestModelPdf model(false, nEvents);
-
-   for (auto _ : state) {
-      for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
-
-         state.PauseTiming();
-         model.randomiseParameters();
-         state.ResumeTiming();
-
-         if (runConfig == runScalar) {
-            model.EvalScalar();
-         } else if (runConfig == runCpu) {
-            model.EvalBatchCpu();
-         } else if (runConfig == runCuda) {
-            model.EvalBatchCuda();
-         }
-      }
-   }
-}
-
-// test using user function
-static void benchEvalUser(benchmark::State &state)
-{
-   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-
-   TestModelPdf model(true, nEvents);
+   TestModelPdf model(nEvents);
 
    for (auto _ : state) {
       for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
@@ -199,36 +164,18 @@ static void benchFit(benchmark::State &state)
 {
    RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
 
-   TestModelPdf model(false, nEvents);
+   TestModelPdf model(nEvents);
    auto &pdf = model.GetPdf();
    auto &data = model.GetData();
 
+   using namespace RooFit;
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
+         pdf.fitTo(data, BatchMode("off"), Minimizer("Minuit2"), PrintLevel(printLevel - 1));
       } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
+         pdf.fitTo(data, BatchMode("cpu"), Minimizer("Minuit2"), PrintLevel(printLevel - 1));
       } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
-      }
-   }
-}
-
-static void benchFitUser(benchmark::State &state)
-{
-   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-
-   TestModelPdf model(true, nEvents);
-   auto &pdf = model.GetPdf();
-   auto &data = model.GetData();
-
-   for (auto _ : state) {
-      if (runConfig == fitScalar) {
-         pdf.fitTo(data, RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
-      } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, RooFit::BatchMode("cpu"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
-      } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, RooFit::BatchMode("cuda"), RooFit::Minimizer("Minuit2"), RooFit::PrintLevel(printLevel - 1));
+         pdf.fitTo(data, BatchMode("cuda"), Minimizer("Minuit2"), PrintLevel(printLevel - 1));
       }
    }
 }
@@ -237,20 +184,10 @@ BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalScala
 BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCPU")->Args({runCpu});
 // BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCUDA")->Args({runCuda});
 
-BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalScalar")->Args({runScalar});
-BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPddWithUserExp_EvalBatchCPU")->Args({runCpu});
-// BENCHMARK(benchEvalUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_EvalBatchCUDA")->Args({runCuda});
-
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCPU")->Args({fitCpu});
 #ifdef R__HAS_CUDA
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCUDA")->Args({fitCuda});
-#endif
-
-BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitScalar")->Args({fitScalar});
-BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCPU")->Args({fitCpu});
-#ifdef R__HAS_CUDA
-BENCHMARK(benchFitUser)->Unit(benchmark::kMillisecond)->Name("benchAddPdfWithUserExp_FitBatchCUDA")->Args({fitCuda});
 #endif
 
 // BENCHMARK_MAIN();
