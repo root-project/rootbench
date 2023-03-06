@@ -89,7 +89,8 @@ public:
       // generate events
       TRandom3 rng(seed);  // use same seed to be reproducible
       auto fpol = new TF1("fpol", "pol2", 0, 10);
-      fpol->SetParameters(1, 1, -0.1);
+      std::vector<double> p0{1.0, 1.0, -0.1};
+      fpol->SetParameters(p0.data());
       h1->FillRandom("fpol", (1. - sigFrac) * nevts, &rng);
 
       for (int i = 0; i < sigFrac * nevts / ng; ++i) {
