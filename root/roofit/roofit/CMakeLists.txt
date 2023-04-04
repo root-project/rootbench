@@ -14,3 +14,10 @@ RB_ADD_GBENCHMARK(benchRooFitBackends
   LIBRARIES Core MathCore RooFitCore RooFit)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/benchRooFitBackends_make_plot.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
+if(ROOT_VERSION VERSION_GREATER_EQUAL 6.29)
+  RB_ADD_GBENCHMARK(benchCodeSquashAD
+    benchCodeSquashAD.cxx
+    LABEL long
+    LIBRARIES Core MathCore RooFit RooStats RooFitCore)
+endif(ROOT_VERSION VERSION_GREATER_EQUAL 6.29)
