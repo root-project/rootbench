@@ -45,7 +45,7 @@
 #include "RooWorkspace.h"
 #include "RooRandom.h"
 
-enum RunConfig_t { runScalar, runCpu, runCuda, fitScalar, fitCpu, fitCuda };
+enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda };
 
 size_t nEvents = 100000;
 const size_t nParamSets = 30;
@@ -132,8 +132,7 @@ public:
          results[i] = pdf->getLogVal(observables);
       }
    }
-   void EvalBatchCpu() { results = pdf->getValues(*data, RooFit::BatchModeOption::Cpu); }
-   void EvalBatchCuda() { results = pdf->getValues(*data, RooFit::BatchModeOption::Cuda); }
+   void EvalBatchCpu() { results = pdf->getValues(*data); }
 };
 
 static void benchEval(benchmark::State &state)
@@ -153,8 +152,6 @@ static void benchEval(benchmark::State &state)
             model.EvalScalar();
          } else if (runConfig == runCpu) {
             model.EvalBatchCpu();
-         } else if (runConfig == runCuda) {
-            model.EvalBatchCuda();
          }
       }
    }
@@ -182,7 +179,6 @@ static void benchFit(benchmark::State &state)
 
 BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalScalar")->Args({runScalar});
 BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCPU")->Args({runCpu});
-// BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalBatchCUDA")->Args({runCuda});
 
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFit)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_FitBatchCPU")->Args({fitCpu});
