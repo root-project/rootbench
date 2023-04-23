@@ -29,105 +29,69 @@
  *
  */
 
+#include "helpers.h"
 
-#include "benchmark/benchmark.h"
-
-#include "RooRealVar.h"
 #include "RooJohnson.h"
 #include "RooAddPdf.h"
 #include "RooExponential.h"
 #include "RooDataSet.h"
 
-#include "RooRandom.h"
-void randomiseParameters(const RooArgSet& parameters, ULong_t seed=0) {
-  auto random = RooRandom::randomGenerator();
-  if (seed != 0)
-    random->SetSeed(seed);
+enum JohnsonRunConfig_t { runBatchNorm, runSingleNorm };
 
-  for (auto param : parameters) {
-    auto par = static_cast<RooAbsRealLValue*>(param);
-    const double uni = random->Uniform();
-    const double min = par->getMin();
-    const double max = par->getMax();
-    par->setVal(min + uni*(max-min));
-  }
-}
+static void benchJohnsonPlusExp(benchmark::State &state)
+{
+   JohnsonRunConfig_t runConfig = static_cast<JohnsonRunConfig_t>(state.range(0));
+   constexpr std::size_t nParamSets = 30;
+   constexpr std::size_t nEvents = 500000;
 
-enum RunConfig_t {runSingleUnnorm = 0,
-  runBatchNorm = 1, runSingleNorm,
-  runSingleNormLogs};
+   RooRealVar mass("mass", "mass", 0., 10., 400.);
+   RooRealVar mu("mu", "Location parameter of normal distribution", 100., 50., 200.);
+   RooRealVar sigma("sigma", "Two sigma of normal distribution", 2., 1.E-3, 100.);
+   RooRealVar gamma("gamma", "gamma", -10., -100., 100.);
+   RooRealVar delta("delta", "delta", 3., 1.E-3, 100.);
+   RooJohnson johnson("johnson", "johnson", mass, mu, sigma, gamma, delta, -1.E300);
 
-static void benchJohnsonPlusExp(benchmark::State& state) {
-  RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-  constexpr std::size_t nParamSets = 30;
-  constexpr std::size_t nEvents = 500000;
+   RooRealVar c("c", "c", -0.2, -1., -0.0001);
+   RooExponential exp("exp", "exp falling background", mass, c);
 
+   RooRealVar a("a", "a", 0.5, 0., 1.);
+   RooAddPdf sum("sum", "Johnson+exp", johnson, exp, a);
+   // to avoid a warning when computing the unnormalized RooAddPdf values
+   sum.fixCoefNormalization(mass);
 
-  RooRealVar mass("mass", "mass", 0., 10., 400.);
-  RooRealVar mu("mu", "Location parameter of normal distribution", 100., 50., 200.);
-  RooRealVar sigma("sigma", "Two sigma of normal distribution", 2., 1.E-3, 100.);
-  RooRealVar gamma("gamma", "gamma", -10., -100., 100.);
-  RooRealVar delta("delta", "delta", 3., 1.E-3, 100.);
-  RooJohnson johnson("johnson", "johnson", mass, mu, sigma, gamma, delta, -1.E300);
+   RooAbsPdf &pdf = sum;
 
-  RooRealVar c("c", "c", -0.2, -1., -0.0001);
-  RooExponential exp("exp", "exp falling background", mass, c);
+   std::unique_ptr<RooDataSet> data{pdf.generate(mass, nEvents)};
 
-  RooRealVar a("a", "a", 0.5, 0., 1.);
-  RooAddPdf sum("sum", "Johnson+exp", johnson, exp, a);
-  // to avoid a warning when computing the unnormalized RooAddPdf values
-  sum.fixCoefNormalization(mass);
+   RooArgSet &observables = *pdf.getObservables(data.get());
+   RooArgSet &parameters = *pdf.getParameters(data.get());
+   if (runConfig == runSingleNorm)
+      data->attachBuffers(observables);
 
+   std::vector<double> results(nEvents);
 
-  RooAbsPdf& pdf = sum;
+   for (auto _ : state) {
+      for (unsigned int paramSetIndex = 0; paramSetIndex < nParamSets; ++paramSetIndex) {
+         state.PauseTiming();
+         randomiseParameters(parameters, 1337 + paramSetIndex);
+         state.ResumeTiming();
 
-  auto data = pdf.generate(RooArgSet(mass), nEvents);
+         runConfig = static_cast<JohnsonRunConfig_t>(runConfig % 6);
 
-  RooArgSet& observables = *pdf.getObservables(data);
-  RooArgSet& parameters = *pdf.getParameters(data);
-  if (runConfig % 2 == 0)
-    data->attachBuffers(observables);
-
-  std::vector<double> results(nEvents);
-
-  for (auto _ : state) {
-    for (unsigned int paramSetIndex=0; paramSetIndex < nParamSets; ++paramSetIndex) {
-      state.PauseTiming();
-      randomiseParameters(parameters, 1337+paramSetIndex);
-      state.ResumeTiming();
-
-      runConfig = static_cast<RunConfig_t>(runConfig % 6);
-
-      if (runConfig == runBatchNorm) {
-        auto batchResult = pdf.getValues(*data);
-        if (batchResult.size() != (std::size_t) data->numEntries())
-          throw std::runtime_error("Batch computation failed.");
-      } else if (runConfig == runSingleUnnorm) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getVal();
-        }
-      } else if (runConfig == runSingleNorm) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getVal(&observables);
-        }
-      } else if (runConfig == runSingleNormLogs) {
-        for (unsigned int i=0; i < data->sumEntries(); ++i) {
-          observables = *data->get(i);
-          results[i] = pdf.getLogVal(&observables);
-        }
+         if (runConfig == runBatchNorm) {
+            auto batchResult = pdf.getValues(*data);
+            if (batchResult.size() != (std::size_t)data->numEntries())
+               throw std::runtime_error("Batch computation failed.");
+         } else if (runConfig == runSingleNorm) {
+            for (unsigned int i = 0; i < data->sumEntries(); ++i) {
+               observables = *data->get(i);
+               results[i] = pdf.getVal(&observables);
+            }
+         }
       }
-    }
-  }
+   }
 };
 
-BENCHMARK(benchJohnsonPlusExp)->Unit(benchmark::kMillisecond)
-        ->Args({runSingleUnnorm})
-        ->Args({runBatchNorm})
-        ->Args({runSingleNorm})
-        ->Args({runSingleNormLogs})
-    ;
-
+BENCHMARK(benchJohnsonPlusExp)->Unit(benchmark::kMillisecond)->Args({runBatchNorm})->Args({runSingleNorm});
 
 BENCHMARK_MAIN();

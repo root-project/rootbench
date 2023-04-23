@@ -34,7 +34,7 @@
  * 9. as 3., but ...
  */
 
-#include "benchmark/benchmark.h"
+#include "helpers.h"
 
 #include "RooRealVar.h"
 #include "RooGaussian.h"
@@ -45,12 +45,8 @@
 #include "RooWorkspace.h"
 #include "RooRandom.h"
 
-enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda };
-
 size_t nEvents = 100000;
 const size_t nParamSets = 30;
-
-int printLevel = 0;
 
 class TestModelPdf {
 
@@ -159,22 +155,11 @@ static void benchEval(benchmark::State &state)
 
 static void benchFit(benchmark::State &state)
 {
-   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-
    TestModelPdf model(nEvents);
-   auto &pdf = model.GetPdf();
-   auto &data = model.GetData();
-
-   using namespace RooFit;
-   for (auto _ : state) {
-      if (runConfig == fitScalar) {
-         pdf.fitTo(data, BatchMode("off"), Minimizer("Minuit2"), PrintLevel(printLevel - 1));
-      } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, BatchMode("cpu"), Minimizer("Minuit2"), PrintLevel(printLevel - 1));
-      } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, BatchMode("cuda"), Minimizer("Minuit2"), PrintLevel(printLevel - 1));
-      }
-   }
+   // We need to randomize the parameters so we don't start already at the
+   // minimum (the parameter values for which the dataset was created).
+   model.randomiseParameters();
+   runFitBenchmark(state, model.GetPdf(), model.GetData());
 }
 
 BENCHMARK(benchEval)->Unit(benchmark::kMillisecond)->Name("benchAddPdf_EvalScalar")->Args({runScalar});
