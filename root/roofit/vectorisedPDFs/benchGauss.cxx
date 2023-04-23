@@ -34,15 +34,13 @@
  * 9. as 3., but ...
  */
 
+#include "helpers.h"
+
 #include <RooDataSet.h>
 #include <RooGaussian.h>
 #include <RooRandom.h>
 #include <RooRealVar.h>
 #include <RooWorkspace.h>
-
-#include <benchmark/benchmark.h>
-
-enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda };
 
 const size_t nEvents = 100000;
 const size_t nParamSets = 30;
@@ -164,51 +162,27 @@ static void benchEvalGaussXSigma(benchmark::State &state)
 
 static void benchFitGauss(benchmark::State &state)
 {
-   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-
    GausModel model("x", nEvents);
-   auto &pdf = model.GetPdf();
-   auto &data = model.GetData();
-
-   for (auto _ : state) {
-      using namespace RooFit;
-
-      if (runConfig == fitScalar) {
-         pdf.fitTo(data, BatchMode("off"), Minimizer(minimizerName), PrintLevel(-1));
-      } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, BatchMode("cpu"), Minimizer(minimizerName), PrintLevel(-1));
-      } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, BatchMode("cuda"), Minimizer(minimizerName), PrintLevel(-1));
-      }
-   }
+   // We need to randomize the parameters so we don't start already at the
+   // minimum (the parameter values for which the dataset was created).
+   model.randomiseParameters();
+   runFitBenchmark(state, model.GetPdf(), model.GetData());
 }
 
 static void benchFitGaussXSigma(benchmark::State &state)
 {
-   RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-
    GausModel model("x,sigma", nEvents);
-   auto &pdf = model.GetPdf();
-   auto &data = model.GetData();
-
-   for (auto _ : state) {
-      using namespace RooFit;
-
-      if (runConfig == fitScalar) {
-         pdf.fitTo(data, BatchMode("off"), Minimizer(minimizerName), RooFit::PrintLevel(-1));
-      } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, BatchMode("cpu"), Minimizer(minimizerName), PrintLevel(-1));
-      } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, BatchMode("cuda"), Minimizer(minimizerName), PrintLevel(-1));
-      }
-   }
+   // We need to randomize the parameters so we don't start already at the
+   // minimum (the parameter values for which the dataset was created).
+   model.randomiseParameters();
+   runFitBenchmark(state, model.GetPdf(), model.GetData());
 }
 
-//BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalScalar")->Args({runScalar});
-//BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalBatchCPU")->Args({runCpu});
+// BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalScalar")->Args({runScalar});
+// BENCHMARK(benchEvalGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_EvalBatchCPU")->Args({runCpu});
 
-//BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalScalar")->Args({runScalar});
-//BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalBatchCPU")->Args({runCpu});
+// BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalScalar")->Args({runScalar});
+// BENCHMARK(benchEvalGaussXSigma)->Unit(benchmark::kMillisecond)->Name("benchGausXS_EvalBatchCPU")->Args({runCpu});
 
 BENCHMARK(benchFitGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_FitScalar")->Args({fitScalar});
 BENCHMARK(benchFitGauss)->Unit(benchmark::kMillisecond)->Name("benchGaus_FitBatchCPU")->Args({fitCpu});

@@ -1,23 +1,37 @@
-#include "RooGlobalFunc.h"
-#include "RooHelpers.h"
-#include "RooMsgService.h"
-#include "RooAddModel.h"
-#include "RooRealVar.h"
-#include "RooDataSet.h"
-#include "RooGaussian.h"
-#include "RooGaussModel.h"
-#include "RooCategory.h"
-#include "RooBMixDecay.h"
-#include "RooBCPEffDecay.h"
-#include "RooBDecay.h"
-#include "RooDecay.h"
-#include "RooFormulaVar.h"
-#include "RooTruthModel.h"
-#include "RooMinimizer.h"
+#include <RooGlobalFunc.h>
+#include <RooHelpers.h>
+#include <RooMsgService.h>
+#include <RooAddModel.h>
+#include <RooRealVar.h>
+#include <RooDataSet.h>
+#include <RooGaussian.h>
+#include <RooGaussModel.h>
+#include <RooCategory.h>
+#include <RooBMixDecay.h>
+#include <RooBCPEffDecay.h>
+#include <RooBDecay.h>
+#include <RooDecay.h>
+#include <RooFormulaVar.h>
+#include <RooTruthModel.h>
+#include <RooMinimizer.h>
 
 #include <benchmark/benchmark.h>
 
 namespace {
+
+void shiftParameters(const RooArgSet &parameters)
+{
+   // We need to change the parameters so we don't start already at the minimum
+   // (the parameter values for which the dataset was created). This time, we
+   // don't randomize them because the fit has many parameter and is not stable
+   // from many initial points. That's why they are only shifted away a little
+   // bit from their true value.
+   for (auto *param : static_range_cast<RooRealVar *>(parameters)) {
+      double val = param->getVal();
+      val = val + 0.05 * (param->getMax() - val);
+      param->setVal(val);
+   }
+}
 
 std::string convertBatchModeToString(int batchMode)
 {
@@ -46,8 +60,8 @@ static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
    // Parameters
    RooRealVar dm("dm", "delta m(B0)", 0.472, 0.1, 0.9);
    RooRealVar tau("tau", "tau (B0)", 1.547, 1.3, 1.9);
-   RooRealVar w("w", "flavour mistag rate", 0.1);
-   RooRealVar dw("dw", "delta mistag rate for B0/B0bar", 0.1);
+   RooRealVar w("w", "flavour mistag rate", 0.1, 0.0, 1.0);
+   RooRealVar dw("dw", "delta mistag rate for B0/B0bar", 0.1, 0.0, 1.0);
 
    RooCategory mixState("mixState", "B0/B0bar mixing state");
    mixState.defineType("mixed", -1);
@@ -68,6 +82,7 @@ static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
    RooArgSet params;
    RooArgSet paramsInitial;
    bmix.getParameters(data->get(), params);
+   shiftParameters(params);
    params.snapshot(paramsInitial);
 
    // Create NLL
@@ -100,8 +115,8 @@ static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
    // Parameters
    RooRealVar dm("dm", "delta m(B0)", 0.472, 0.1, 0.9);
    RooRealVar tau("tau", "tau (B0)", 1.547, 1.3, 1.9);
-   RooRealVar w("w", "flavour mistag rate", 0.1);
-   RooRealVar dw("dw", "delta mistag rate for B0/B0bar", 0.1);
+   RooRealVar w("w", "flavour mistag rate", 0.1, 0.0, 1.0);
+   RooRealVar dw("dw", "delta mistag rate for B0/B0bar", 0.1, 0.0, 1.0);
 
    RooCategory mixState("mixState", "B0/B0bar mixing state");
    mixState.defineType("mixed", -1);
@@ -130,6 +145,7 @@ static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
    RooArgSet params;
    RooArgSet paramsInitial;
    decay_gm1.getParameters(data->get(), params);
+   shiftParameters(params);
    params.snapshot(paramsInitial);
 
    // Create NLL
@@ -161,8 +177,8 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
    // Parameters
    RooRealVar dm("dm", "delta m(B0)", 0.472, 0.1, 0.9);
    RooRealVar tau("tau", "tau (B0)", 1.547, 1.3, 1.9);
-   RooRealVar w("w", "flavour mistag rate", 0.1);
-   RooRealVar dw("dw", "delta mistag rate for B0/B0bar", 0.1);
+   RooRealVar w("w", "flavour mistag rate", 0.1, 0.0, 1.0);
+   RooRealVar dw("dw", "delta mistag rate for B0/B0bar", 0.1, 0.0, 1.0);
 
    RooCategory mixState("mixState", "B0/B0bar mixing state");
    mixState.defineType("mixed", -1);
@@ -185,12 +201,12 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
    RooDecay decay_gm1("decay_gm1", "decay", dt, tau, gm1, RooDecay::DoubleSided);
 
    // Build another gaussian resolution model
-   RooRealVar bias2("bias2", "bias2", 0);
-   RooRealVar sigma2("sigma2", "sigma2", 5);
+   RooRealVar bias2("bias2", "bias2", 0, -1., 1.);
+   RooRealVar sigma2("sigma2", "sigma2", 5, 0.5, 10);
    RooGaussModel gm2("gm2", "gauss model 2", dt, bias2, sigma2);
    // Build a composite resolution model f*gm1+(1-f)*gm2
-   RooRealVar gm1frac("gm1frac", "fraction of gm1", 0.5);
-   RooAddModel gmsum("gmsum", "sum of gm1 and gm2", RooArgList(gm1, gm2), gm1frac);
+   RooRealVar gm1frac("gm1frac", "fraction of gm1", 0.5, 0.0, 1.0);
+   RooAddModel gmsum("gmsum", "sum of gm1 and gm2", {gm1, gm2}, gm1frac);
    // Construct decay(t) (x) (f*gm1 + (1-f)*gm2)
    RooDecay decay_gmsum("decay_gmsum", "decay", dt, tau, gmsum, RooDecay::DoubleSided);
 
@@ -201,6 +217,7 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
    RooArgSet params;
    RooArgSet paramsInitial;
    decay_gmsum.getParameters(data->get(), params);
+   shiftParameters(params);
    params.snapshot(paramsInitial);
 
    // Create NLL
