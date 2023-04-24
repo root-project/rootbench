@@ -42,13 +42,25 @@ std::string convertBatchModeToString(int batchMode)
    return "off";
 }
 
+std::unique_ptr<RooHelpers::LocalChangeMsgLevel> makeChangeMsgLvl()
+{
+   auto &msg = RooMsgService::instance();
+   msg.reset();
+   auto oldKillBelow = msg.globalKillBelow();
+   auto out = std::make_unique<RooHelpers::LocalChangeMsgLevel>(RooFit::WARNING);
+   msg.setGlobalKillBelow(oldKillBelow);
+   // Keep the FastEvaluations info so we see which classes still need to be supported
+   msg.addStream(RooFit::INFO, Topic(RooFit::FastEvaluations));
+   return out;
+}
+
 } // namespace
 
 static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
 {
    using namespace RooFit;
 
-   RooHelpers::LocalChangeMsgLevel changeMsgLvl(RooFit::WARNING);
+   auto changeMsgLevel = makeChangeMsgLvl();
 
    gErrorIgnoreLevel = kInfo;
    int events = state.range(0);
@@ -103,7 +115,7 @@ static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
 {
    using namespace RooFit;
 
-   RooHelpers::LocalChangeMsgLevel changeMsgLvl(RooFit::WARNING);
+   auto changeMsgLevel = makeChangeMsgLvl();
 
    gErrorIgnoreLevel = kInfo;
    int events = state.range(0);

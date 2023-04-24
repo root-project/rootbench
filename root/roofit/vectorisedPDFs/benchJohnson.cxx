@@ -29,12 +29,29 @@
  *
  */
 
-#include "helpers.h"
+#include <RooAddPdf.h>
+#include <RooDataSet.h>
+#include <RooExponential.h>
+#include <RooJohnson.h>
+#include <RooRandom.h>
+#include <RooRealVar.h>
 
-#include "RooJohnson.h"
-#include "RooAddPdf.h"
-#include "RooExponential.h"
-#include "RooDataSet.h"
+#include <benchmark/benchmark.h>
+
+void randomiseParameters(const RooArgSet &parameters, ULong_t seed = 0)
+{
+   auto random = RooRandom::randomGenerator();
+   if (seed != 0)
+      random->SetSeed(seed);
+
+   for (auto param : parameters) {
+      auto par = static_cast<RooAbsRealLValue *>(param);
+      const double uni = random->Uniform();
+      const double min = par->getMin();
+      const double max = par->getMax();
+      par->setVal(min + uni * (max - min));
+   }
+}
 
 enum JohnsonRunConfig_t { runBatchNorm, runSingleNorm };
 
