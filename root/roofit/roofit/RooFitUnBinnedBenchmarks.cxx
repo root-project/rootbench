@@ -250,29 +250,29 @@ const auto unit = benchmark::kMillisecond;
 
 #define ARGS UseRealTime()->Unit(unit)
 
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitLegacy")->Args({nEvents, 0, 1})->ARGS;
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU2")->Args({nEvents, 0, 2})->ARGS;
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU4")->Args({nEvents, 0, 4})->ARGS;
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitCPU")->Args({nEvents, 1, 1})->ARGS;
 #ifdef R__HAS_CUDA
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing__BatchMode_CUDA")->Args({nEvents, 2, 1})->ARGS;
+BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitCUDA")->Args({nEvents, 2, 1})->ARGS;
 #endif
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing__BatchMode_CPU")->Args({nEvents, 1, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing__NumCPU_1")->Args({nEvents, 0, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing__NumCPU_2")->Args({nEvents, 0, 2})->ARGS;
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing__NumCPU_4")->Args({nEvents, 0, 4})->ARGS;
 
+BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacy")->Args({nEvents, 0, 1})->ARGS;
+BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU2")->Args({nEvents, 0, 2})->ARGS;
+BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU4")->Args({nEvents, 0, 4})->ARGS;
+BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitCPU")->Args({nEvents, 1, 1})->ARGS;
 #ifdef R__HAS_CUDA
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution__BatchMode_CUDA")->Args({nEvents, 2, 1})->ARGS;
+BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitCUDA")->Args({nEvents, 2, 1})->ARGS;
 #endif
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution__BatchMode_CPU")->Args({nEvents, 1, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution__NumCPU_1")->Args({nEvents, 0, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution__NumCPU_2")->Args({nEvents, 0, 2})->ARGS;
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution__NumCPU_4")->Args({nEvents, 0, 4})->ARGS;
 
+BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacy")->Args({nEvents, 0, 1})->ARGS;
+BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU2")->Args({nEvents, 0, 2})->ARGS;
+BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU4")->Args({nEvents, 0, 4})->ARGS;
+BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCPU")->Args({nEvents, 1, 1})->ARGS;
 #ifdef R__HAS_CUDA
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss__BatchMode_CUDA")->Args({nEvents, 2, 1})->ARGS;
+BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCUDA")->Args({nEvents, 2, 1})->ARGS;
 #endif
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss__BatchMode_CPU")->Args({nEvents, 1, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss__NumCPU_1")->Args({nEvents, 0, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss__NumCPU_2")->Args({nEvents, 0, 2})->ARGS;
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss__NumCPU_4")->Args({nEvents, 0, 4})->ARGS;
 
 #undef ARGS
 
