@@ -115,12 +115,9 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
    RooArgSet origParams;
    params.snapshot(origParams);
 
-   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, RooFit::BatchMode("off"), Offset("off"))};
-   std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, RooFit::BatchMode("cpu"), Offset("off"))};
-   auto nllRefResolved = static_cast<RooAbsReal *>(nllRefBatch->servers()[0]);
-
-   std::string name = "myNll" + std::to_string(counter);
-   RooFuncWrapper nllFunc(name.c_str(), name.c_str(), *nllRefResolved, observables, &data, &model);
+   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, BatchMode("off"), Offset("off"))};
+   std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, BatchMode("cpu"), Offset("off"))};
+   std::unique_ptr<RooAbsReal> nllFunc{model.createNLL(data, BatchMode("codegen"), Offset("off"))};
 
    std::unique_ptr<RooMinimizer> m = nullptr;
 
@@ -128,13 +125,13 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
    if (code == RooFitADBenchmarksUtils::backend::Reference) {
       m.reset(new RooMinimizer(*nllRef));
    } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashNumDiff) {
-      m.reset(new RooMinimizer(nllFunc));
+      RooMinimizer::Config minimizerCfgNoAd;
+      minimizerCfgNoAd.useGradient = false;
+      m.reset(new RooMinimizer(*nllFunc, minimizerCfgNoAd));
    } else if (code == RooFitADBenchmarksUtils::backend::BatchMode) {
       m.reset(new RooMinimizer(*nllRefBatch));
    } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashAD) {
-      RooMinimizer::Config minimizerCfgAd;
-      minimizerCfgAd.gradFunc = [&](double *out) { nllFunc.getGradient(out); };
-      m.reset(new RooMinimizer(nllFunc, minimizerCfgAd));
+      m.reset(new RooMinimizer(*nllFunc));
    }
 
    for (auto _ : state) {
