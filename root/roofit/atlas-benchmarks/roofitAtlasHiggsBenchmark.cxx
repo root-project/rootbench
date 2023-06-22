@@ -150,6 +150,27 @@ void maskBrokenChannels()
    }
 }
 
+RooAbsPdf *createSimPdfSubset(RooWorkspace &ws, std::string newPdfName, int begin, int end)
+{
+   std::stringstream ss;
+   ss << "SIMUL::" << newPdfName << "( channelCat, ";
+   std::vector<std::string> channelNames;
+   for (auto state : *ws.cat("channelCat")) {
+      channelNames.push_back(state.first);
+   }
+   for (std::size_t iChannel = begin; iChannel < end; ++iChannel) {
+      ss << channelNames[iChannel] << "=" << channelNames[iChannel] << "_model";
+      if (iChannel == end - 1) {
+         ss << ")";
+      } else {
+         ss << ",";
+      }
+   }
+   ws.factory(ss.str());
+
+   return ws.pdf(newPdfName);
+}
+
 int main(int argc, char **argv)
 {
 
@@ -179,7 +200,11 @@ int main(int argc, char **argv)
    bmdata().tfile = std::unique_ptr<TFile>{TFile::Open(workspaceFiles[iWorkspace].c_str())};
    bmdata().ws = bmdata().tfile->Get<RooWorkspace>(workspaceNames[iWorkspace].c_str());
    auto mc = static_cast<RooStats::ModelConfig *>(bmdata().ws->obj("ModelConfig"));
+
    bmdata().pdf = mc->GetPdf();
+   // Use this instead to create a new simultaneous pdf that only includes a
+   // subset of the channels:
+   // bmdata().pdf = createSimPdfSubset(*bmdata().ws, "simPdfSubset", 0, 1);
 
    // Mask broken channels of the full Higgs combination workspace.
    if (iWorkspace == 2) {
