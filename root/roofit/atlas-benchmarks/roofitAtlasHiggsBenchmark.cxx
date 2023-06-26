@@ -4,6 +4,7 @@
 #include <RooRandom.h>
 #include <RooSimultaneous.h>
 #include <RooUniform.h>
+#include <RooMinimizer.h>
 #include <RooStats/ModelConfig.h>
 
 #include <TFile.h>
@@ -40,6 +41,7 @@ struct BenchmarkData {
    RooAbsData *data = nullptr;
    std::unique_ptr<RooAbsReal> nll;
    std::unique_ptr<RooAbsReal> batchedNll;
+   std::unique_ptr<RooAbsReal> codegenNll;
 };
 
 BenchmarkData &bmdata()
@@ -50,14 +52,13 @@ BenchmarkData &bmdata()
 
 static void benchCreateNLL(benchmark::State &state)
 {
-   const std::string batchMode = state.range(0) == 1 ? "cpu" : "off";
-   auto &nllPtr = state.range(0) == 1 ? bmdata().batchedNll : bmdata().nll;
+   const std::string batchMode = state.range(0) == 2 ? "codegen" : (state.range(0) == 1 ? "cpu" : "off");
+   auto &nllPtr =
+      state.range(0) == 2 ? bmdata().codegenNll : (state.range(0) == 1 ? bmdata().batchedNll : bmdata().nll);
 
    auto mc = static_cast<RooStats::ModelConfig *>(bmdata().ws->obj("ModelConfig"));
    RooArgSet const *globObs = mc->GetGlobalObservables();
    bmdata().data = bmdata().ws->data("toyData");
-
-   // bmdata().pdf->Print();
 
    for (auto _ : state) {
       nllPtr = std::unique_ptr<RooAbsReal>{bmdata().pdf->createNLL(*bmdata().data, GlobalObservables(*globObs),
@@ -65,36 +66,21 @@ static void benchCreateNLL(benchmark::State &state)
    }
 
    double val = nllPtr->getVal();
-   // nllPtr->Print("v");
 
    std::cout.precision(17);
    std::cout << "Initial value: " << std::fixed << val << std::endl;
 }
 
-static void benchEvaluatePdf(benchmark::State &state)
-{
-   bool kickAllParameters = state.range(0);
-
-   RooArgSet parameters;
-   bmdata().pdf->getParameters(bmdata().data->get(), parameters);
-
-   RooRandom::randomGenerator()->SetSeed(999);
-
-   bmdata().pdf->getVal();
-
-   for (auto _ : state) {
-      kickValues(parameters, kickAllParameters);
-      bmdata().pdf->getVal();
-   }
-}
-
 static void benchEvaluateNLL(benchmark::State &state)
 {
    bool kickAllParameters = state.range(0);
-   auto &nllPtr = state.range(1) == 1 ? bmdata().batchedNll : bmdata().nll;
+   auto &nllPtr =
+      state.range(1) == 2 ? bmdata().codegenNll : (state.range(1) == 1 ? bmdata().batchedNll : bmdata().nll);
 
    RooArgSet parameters;
    nllPtr->getParameters(nullptr, parameters);
+   RooArgSet initialParams;
+   parameters.snapshot(initialParams);
 
    RooRandom::randomGenerator()->SetSeed(999);
 
@@ -104,16 +90,43 @@ static void benchEvaluateNLL(benchmark::State &state)
       kickValues(parameters, kickAllParameters);
       nllPtr->getVal();
    }
+
+   parameters.assign(initialParams);
+}
+
+static void benchMinimizeNLL(benchmark::State &state)
+{
+   auto &nllPtr =
+      state.range(1) == 2 ? bmdata().codegenNll : (state.range(1) == 1 ? bmdata().batchedNll : bmdata().nll);
+
+   RooArgSet parameters;
+   nllPtr->getParameters(nullptr, parameters);
+   RooArgSet initialParams;
+   parameters.snapshot(initialParams);
+
+   nllPtr->getVal();
+   RooMinimizer minim{*nllPtr};
+   minim.setStrategy(0);
+
+   for (auto _ : state) {
+      minim.minimize("Minuit2", "MIGRAD");
+   }
+
+   parameters.assign(initialParams);
 }
 
 BENCHMARK(benchCreateNLL)->Name("createNLL")->Args({0})->Unit(kSecond)->Iterations(1);
 BENCHMARK(benchCreateNLL)->Name("createNLL_BatchMode")->Args({1})->Unit(kSecond)->Iterations(1);
-// BENCHMARK(benchEvaluatePdf)->Name("evaluatePdf")->Args({1})->Unit(kMillisecond);
-// BENCHMARK(benchEvaluatePdf)->Name("evaluatePdf_SingleKick")->Args({0})->Unit(kMillisecond);
+BENCHMARK(benchCreateNLL)->Name("createNLL_CodeGenAD")->Args({2})->Unit(kSecond)->Iterations(1);
 BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL")->Args({1, 0})->Unit(kMillisecond);
 BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_BatchMode")->Args({1, 1})->Unit(kMillisecond);
+BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD")->Args({1, 2})->Unit(kMillisecond);
 BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_SingleKick")->Args({0, 0})->Unit(kMillisecond);
 BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_BatchMode_SingleKick")->Args({0, 1})->Unit(kMillisecond);
+BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD_SingleKick")->Args({0, 2})->Unit(kMillisecond);
+// BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL")->Args({0})->Unit(kSecond)->Iterations(1);
+// BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_BatchMode")->Args({1})->Unit(kSecond)->Iterations(1);
+BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_CodeGenAD")->Args({2})->Unit(kSecond)->Iterations(1);
 
 // The channels 221 to 231 inclusive of the full combination workspace are
 // unfortunately corrupt. They contain RooAddPdfs that are affected by the
@@ -173,8 +186,7 @@ RooAbsPdf *createSimPdfSubset(RooWorkspace &ws, std::string newPdfName, int begi
 
 int main(int argc, char **argv)
 {
-
-   std::size_t iWorkspace = 0;
+   std::size_t iWorkspace = 1;
 
    // Parse command line arguments
    for (Int_t i = 1; i < argc; i++) {
@@ -201,10 +213,10 @@ int main(int argc, char **argv)
    bmdata().ws = bmdata().tfile->Get<RooWorkspace>(workspaceNames[iWorkspace].c_str());
    auto mc = static_cast<RooStats::ModelConfig *>(bmdata().ws->obj("ModelConfig"));
 
-   bmdata().pdf = mc->GetPdf();
+   // bmdata().pdf = mc->GetPdf();
    // Use this instead to create a new simultaneous pdf that only includes a
    // subset of the channels:
-   // bmdata().pdf = createSimPdfSubset(*bmdata().ws, "simPdfSubset", 0, 1);
+   bmdata().pdf = createSimPdfSubset(*bmdata().ws, "simPdfSubset", 0, 1);
 
    // Mask broken channels of the full Higgs combination workspace.
    if (iWorkspace == 2) {
