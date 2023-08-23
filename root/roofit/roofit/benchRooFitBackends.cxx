@@ -13,6 +13,7 @@
 #include <RooAddPdf.h>
 #include <RooDataSet.h>
 #include <RooExponential.h>
+#include <RooFitResult.h>
 #include <RooGaussian.h>
 #include <RooRandom.h>
 #include <RooRealVar.h>
@@ -136,10 +137,10 @@ public:
 
       generateData(nEvts);
    }
-   RooAbsPdf &GetPdf() { return *_pdf; }
-   RooAbsData &GetData() { return *_data; }
+   RooAbsPdf &pdf() { return *_pdf; }
+   RooAbsData &data() { return *_data; }
 
-   void randomiseParameters(ULong_t seed = 0)
+   void randomiseParameters(unsigned long seed = 0)
    {
       RooArgSet parameters;
       _pdf->getParameters(_data->get(), parameters);
@@ -162,14 +163,6 @@ public:
       // allocate here output vector
       _results = std::vector<double>(nEvts);
    }
-   void EvalScalar()
-   {
-      for (unsigned int i = 0; i < _data->sumEntries(); ++i) {
-         auto observables = _data->get(i);
-         _results[i] = _pdf->getLogVal(observables);
-      }
-   }
-   void EvalBatchCpu() { _results = _pdf->getValues(*_data); }
 };
 
 static void benchFitGauss(benchmark::State &state)
@@ -178,7 +171,7 @@ static void benchFitGauss(benchmark::State &state)
    // We need to randomize the parameters so we don't start already at the
    // minimum (the parameter values for which the dataset was created).
    model.randomiseParameters(1337);
-   runFitBenchmark(state, model.GetPdf(), model.GetData());
+   runFitBenchmark(state, model.pdf(), model.data());
 }
 
 static void benchFitGaussXSigma(benchmark::State &state)
@@ -187,17 +180,17 @@ static void benchFitGaussXSigma(benchmark::State &state)
    // We need to randomize the parameters so we don't start already at the
    // minimum (the parameter values for which the dataset was created).
    model.randomiseParameters(1337);
-   runFitBenchmark(state, model.GetPdf(), model.GetData());
+   runFitBenchmark(state, model.pdf(), model.data());
 }
 
 class TestModelPdf {
 
 private:
-   std::unique_ptr<RooWorkspace> w;
-   std::unique_ptr<RooAbsData> data;
-   RooAbsPdf *pdf;
-   std::string obsName;
-   std::vector<double> results;
+   std::unique_ptr<RooWorkspace> _ws;
+   std::unique_ptr<RooAbsData> _data;
+   RooAbsPdf *_pdf;
+   std::string _obsName;
+   std::vector<double> _results;
 
 public:
    TestModelPdf(size_t nEvts)
@@ -206,7 +199,7 @@ public:
       if (printLevel == 0)
          RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
 
-      w = std::make_unique<RooWorkspace>("w");
+      _ws = std::make_unique<RooWorkspace>("w");
 
       // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
       RooRealVar x("x", "x", -1.5, 40.5);
@@ -222,27 +215,29 @@ public:
 
       RooRealVar fractionGaus("fractionGaus", "Fraction of Gauss component", 0.5, 0., 1.);
       RooAddPdf addPdf("SumGausExpo", "Sum of Gaus and Exponential", {gauss, ex}, fractionGaus);
-      // to avoid a warning when computing the   unnormalized RooAddPdf values
+      // to avoid a warning when computing the unnormalized RooAddPdf values
       addPdf.fixCoefNormalization(x);
 
-      w->import(addPdf);
+      _ws->import(addPdf);
 
-      w->defineSet("obs", "x");
+      _ws->defineSet("obs", "x");
 
-      pdf = w->pdf("SumGausExpo");
-      if (printLevel > 1)
-         w->Print();
+      _pdf = _ws->pdf("SumGausExpo");
+      if (printLevel > 1) {
+         _ws->Print();
+      }
       generateData(nEvts);
 
-      if (printLevel > 1)
-         data->Print();
+      if (printLevel > 1) {
+         _data->Print();
+      }
    }
-   RooAbsPdf &GetPdf() { return *pdf; }
-   RooAbsData &GetData() { return *data; }
+   RooAbsPdf &pdf() { return *_pdf; }
+   RooAbsData &data() { return *_data; }
 
-   void randomiseParameters(ULong_t seed = 0)
+   void randomiseParameters(unsigned long seed = 0)
    {
-      auto parameters = pdf->getParameters(data.get());
+      std::unique_ptr<RooArgSet> parameters{_pdf->getParameters(_data.get())};
       auto random = RooRandom::randomGenerator();
       if (seed != 0)
          random->SetSeed(seed);
@@ -254,23 +249,14 @@ public:
          const double max = par->getMax();
          par->setVal(min + uni * (max - min));
       }
-      delete parameters;
    }
 
    void generateData(size_t nEvts)
    {
-      data = std::unique_ptr<RooAbsData>(pdf->generate(*w->set("obs"), nEvts));
+      _data = std::unique_ptr<RooAbsData>(_pdf->generate(*_ws->set("obs"), nEvts));
       // allocate here output vector
-      results = std::vector<double>(nEvts);
+      _results = std::vector<double>(nEvts);
    }
-   void EvalScalar()
-   {
-      for (unsigned int i = 0; i < data->sumEntries(); ++i) {
-         auto observables = data->get(i);
-         results[i] = pdf->getLogVal(observables);
-      }
-   }
-   void EvalBatchCpu() { results = pdf->getValues(*data); }
 };
 
 static void benchFit(benchmark::State &state)
@@ -279,7 +265,7 @@ static void benchFit(benchmark::State &state)
    // We need to randomize the parameters so we don't start already at the
    // minimum (the parameter values for which the dataset was created).
    model.randomiseParameters(1337);
-   runFitBenchmark(state, model.GetPdf(), model.GetData());
+   runFitBenchmark(state, model.pdf(), model.data());
 }
 
 static void benchModel(benchmark::State &state)
