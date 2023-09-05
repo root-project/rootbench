@@ -320,7 +320,7 @@ static void benchModel(benchmark::State &state)
 
 auto const unit = benchmark::kMillisecond;
 
-#ifdef R__HAS_CUDA
+#ifdef DO_BENCH_ROOFIT_CUDA
 // Only one iteration for CUDA benchmarks. Otherwise, the benchmark suit will
 // repeat them many times are they appear to be very fast, consuming almost no
 // CPU time.
