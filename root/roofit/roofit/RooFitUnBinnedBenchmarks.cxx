@@ -246,7 +246,7 @@ BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacy")->Args({nEvents, 
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
-#ifdef R__HAS_CUDA
+#ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
@@ -254,7 +254,7 @@ BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacy")->Args(
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
-#ifdef R__HAS_CUDA
+#ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
@@ -262,7 +262,7 @@ BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacy")->Args({nEvents
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
-#ifdef R__HAS_CUDA
+#ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
