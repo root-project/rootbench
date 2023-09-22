@@ -40,11 +40,11 @@ void runFitBenchmark(benchmark::State &state, RooAbsPdf &pdf, RooAbsData &data)
    using namespace RooFit;
    for (auto _ : state) {
       if (runConfig == fitScalar) {
-         pdf.fitTo(data, BatchMode("off"), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
+         pdf.fitTo(data, EvalBackend::Legacy(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
       } else if (runConfig == fitCpu) {
-         pdf.fitTo(data, BatchMode("cpu"), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
+         pdf.fitTo(data, EvalBackend::Cpu(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
       } else if (runConfig == fitCuda) {
-         pdf.fitTo(data, BatchMode("cuda"), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
+         pdf.fitTo(data, EvalBackend::Cuda(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
       }
       state.PauseTiming();
       params.assign(paramsInitial);

@@ -28,7 +28,7 @@ namespace {
   const int nChannelsForBinScan = 1;
   const std::vector<int> nCPUVector {1, 2, 3};
 
-  constexpr bool batchMode = true;
+  constexpr auto evalBackend = RooFit::EvalBackend::Value::Cpu;
 
   auto const timeUnit = benchmark::kMillisecond;
 
@@ -154,7 +154,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    std::unique_ptr<RooAbsData> data{w->data("obsData")};
    std::unique_ptr<ModelConfig> mc{static_cast<ModelConfig *>(w->genobj("ModelConfig"))};
    std::unique_ptr<RooAbsPdf> pdf{w->pdf(mc->GetPdf()->GetName())};
-   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), BatchMode(batchMode))};
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), EvalBackend(evalBackend))};
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -183,7 +183,7 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    RooAbsData *data = w->data("obsData");
    ModelConfig *mc = static_cast<ModelConfig *>(w->genobj("ModelConfig"));
    std::unique_ptr<RooAbsPdf> pdf{w->pdf(mc->GetPdf()->GetName())};
-   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), BatchMode(batchMode))};
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), EvalBackend(evalBackend))};
    RooArgSet params;
    pdf->getParameters(data->get(), params);
    w->saveSnapshot("no_fit", params, true);
@@ -220,7 +220,7 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    std::unique_ptr<RooAbsData> data{w->data("obsData")};
    std::unique_ptr<ModelConfig> mc{static_cast<ModelConfig *>(w->genobj("ModelConfig"))};
    std::unique_ptr<RooAbsPdf> pdf{w->pdf(mc->GetPdf()->GetName())};
-   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), BatchMode(batchMode))};
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*data, NumCPU(cpu, 0), EvalBackend(evalBackend))};
    RooArgSet params;
    pdf->getParameters(data->get(), params);
    w->saveSnapshot("no_fit", params, true);

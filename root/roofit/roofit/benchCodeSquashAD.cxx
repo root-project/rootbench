@@ -1,26 +1,27 @@
 #include <RooAbsData.h>
 #include <RooAbsPdf.h>
-#include <RooAddition.h>
 #include <RooAddPdf.h>
+#include <RooAddition.h>
+#include <RooCategory.h>
 #include <RooChebychev.h>
 #include <RooConstVar.h>
-#include <RooDataSet.h>
 #include <RooDataHist.h>
+#include <RooDataSet.h>
 #include <RooExponential.h>
+#include <RooFitResult.h>
 #include <RooGaussian.h>
 #include <RooMinimizer.h>
 #include <RooProduct.h>
 #include <RooRandom.h>
 #include <RooRealVar.h>
-#include <RooFitResult.h>
-#include <RooCategory.h>
 #include <RooSimultaneous.h>
 
-#include <TROOT.h>
-#include <TSystem.h>
-#include <TMath.h>
 #include <Math/Factory.h>
 #include <Math/Minimizer.h>
+
+#include <TMath.h>
+#include <TROOT.h>
+#include <TSystem.h>
 
 #include "BenchmarkUtils.h"
 
@@ -115,9 +116,10 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
    RooArgSet origParams;
    params.snapshot(origParams);
 
-   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, BatchMode("off"), Offset("off"))};
-   std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, BatchMode("cpu"), Offset("off"))};
-   std::unique_ptr<RooAbsReal> nllFunc{model.createNLL(data, BatchMode("codegen"), Offset("off"))};
+   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, EvalBackend::Legacy(), Offset("off"))};
+   std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, EvalBackend::Cpu(), Offset("off"))};
+   std::unique_ptr<RooAbsReal> nllFunc{model.createNLL(data, EvalBackend::Codegen(), Offset("off"))};
+   std::unique_ptr<RooAbsReal> nllFuncNoGrad{model.createNLL(data, EvalBackend::CodegenNoGrad(), Offset("off"))};
 
    std::unique_ptr<RooMinimizer> m = nullptr;
 
@@ -125,9 +127,7 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
    if (code == RooFitADBenchmarksUtils::backend::Reference) {
       m.reset(new RooMinimizer(*nllRef));
    } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashNumDiff) {
-      RooMinimizer::Config minimizerCfgNoAd;
-      minimizerCfgNoAd.useGradient = false;
-      m.reset(new RooMinimizer(*nllFunc, minimizerCfgNoAd));
+      m.reset(new RooMinimizer(*nllFuncNoGrad));
    } else if (code == RooFitADBenchmarksUtils::backend::BatchMode) {
       m.reset(new RooMinimizer(*nllRefBatch));
    } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashAD) {

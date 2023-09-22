@@ -35,7 +35,7 @@ public:
       auto *pdf = w->pdf("simPdf");
 
       std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*w->data("obsData"), Constrain(constraintParams),
-                                                     GlobalObservables(*mc->GetGlobalObservables()), BatchMode(false))};
+                                                     GlobalObservables(*mc->GetGlobalObservables()), EvalBackend::Legacy())};
 
       RooMinimizer m(*nll);
       m.setPrintLevel(-1);
@@ -70,9 +70,10 @@ static void benchHistFactory001(benchmark::State &state)
 
    auto *pdf = w->pdf("simPdf");
 
+   auto evalBackend = static_cast<EvalBackend::Value>(state.range(1));
    std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*w->data("obsData"), Constrain(g_testData.constraintParams),
                                                   GlobalObservables(*mc->GetGlobalObservables()),
-                                                  BatchMode(state.range(1)))};
+                                                  EvalBackend(evalBackend))};
 
    auto &minimizationPath = *g_testData.minimizationPath;
 
@@ -95,9 +96,12 @@ static void benchHistFactory001(benchmark::State &state)
 
 auto const unit = benchmark::kMillisecond;
 
-BENCHMARK(benchHistFactory001)->Unit(unit)->Args({1, 0})->Name("hf001__BinnedFitOptimization_ON___BatchMode_OFF");
-BENCHMARK(benchHistFactory001)->Unit(unit)->Args({0, 0})->Name("hf001__BinnedFitOptimization_OFF__BatchMode_OFF");
-BENCHMARK(benchHistFactory001)->Unit(unit)->Args({1, 1})->Name("hf001__BinnedFitOptimization_ON___BatchMode_ON_");
-BENCHMARK(benchHistFactory001)->Unit(unit)->Args({0, 1})->Name("hf001__BinnedFitOptimization_OFF__BatchMode_ON_");
+auto Legacy = static_cast<int>(RooFit::EvalBackend::Value::Legacy);
+auto Cpu = static_cast<int>(RooFit::EvalBackend::Value::Cpu);
+
+BENCHMARK(benchHistFactory001)->Unit(unit)->Args({1, Legacy})->Name("hf001__BinnedFitOptimization_ON___BatchMode_OFF");
+BENCHMARK(benchHistFactory001)->Unit(unit)->Args({0, Legacy})->Name("hf001__BinnedFitOptimization_OFF__BatchMode_OFF");
+BENCHMARK(benchHistFactory001)->Unit(unit)->Args({1, Cpu})->Name("hf001__BinnedFitOptimization_ON___BatchMode_ON_");
+BENCHMARK(benchHistFactory001)->Unit(unit)->Args({0, Cpu})->Name("hf001__BinnedFitOptimization_OFF__BatchMode_ON_");
 
 BENCHMARK_MAIN();
