@@ -1,19 +1,19 @@
-#include <RooGlobalFunc.h>
-#include <RooHelpers.h>
-#include <RooMsgService.h>
 #include <RooAddModel.h>
-#include <RooRealVar.h>
-#include <RooDataSet.h>
-#include <RooGaussian.h>
-#include <RooGaussModel.h>
-#include <RooCategory.h>
-#include <RooBMixDecay.h>
 #include <RooBCPEffDecay.h>
 #include <RooBDecay.h>
+#include <RooBMixDecay.h>
+#include <RooCategory.h>
+#include <RooDataSet.h>
 #include <RooDecay.h>
 #include <RooFormulaVar.h>
-#include <RooTruthModel.h>
+#include <RooGaussModel.h>
+#include <RooGaussian.h>
+#include <RooGlobalFunc.h>
+#include <RooHelpers.h>
 #include <RooMinimizer.h>
+#include <RooMsgService.h>
+#include <RooRealVar.h>
+#include <RooTruthModel.h>
 
 #include <benchmark/benchmark.h>
 
@@ -33,15 +33,6 @@ void shiftParameters(const RooArgSet &parameters)
    }
 }
 
-std::string convertBatchModeToString(int batchMode)
-{
-   if (batchMode == 1)
-      return "cpu";
-   if (batchMode == 2)
-      return "cuda";
-   return "off";
-}
-
 std::unique_ptr<RooHelpers::LocalChangeMsgLevel> makeChangeMsgLvl()
 {
    auto &msg = RooMsgService::instance();
@@ -56,7 +47,7 @@ std::unique_ptr<RooHelpers::LocalChangeMsgLevel> makeChangeMsgLvl()
 
 } // namespace
 
-static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
+static void BDecayWithMixing(benchmark::State &state)
 {
    using namespace RooFit;
 
@@ -64,7 +55,7 @@ static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
 
    gErrorIgnoreLevel = kInfo;
    int events = state.range(0);
-   int batchMode = state.range(1);
+   auto evalBackend = static_cast<RooFit::EvalBackend::Value>(state.range(1));
    int cpu = state.range(2);
 
    RooRealVar dt("dt", "dt", -10, 10);
@@ -98,8 +89,7 @@ static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
    params.snapshot(paramsInitial);
 
    // Create NLL
-   auto bm = convertBatchModeToString(batchMode);
-   std::unique_ptr<RooAbsReal> nll{bmix.createNLL(*data, NumCPU(cpu, 0), BatchMode(bm))};
+   std::unique_ptr<RooAbsReal> nll{bmix.createNLL(*data, NumCPU(cpu, 0), EvalBackend(evalBackend))};
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -111,7 +101,7 @@ static void BM_RooFit_BDecayWithMixing(benchmark::State &state)
    }
 }
 
-static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
+static void BDecayGaussResolution(benchmark::State &state)
 {
    using namespace RooFit;
 
@@ -119,7 +109,7 @@ static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
 
    gErrorIgnoreLevel = kInfo;
    int events = state.range(0);
-   int batchMode = state.range(1);
+   auto evalBackend = static_cast<RooFit::EvalBackend::Value>(state.range(1));
    int cpu = state.range(2);
 
    RooRealVar dt("dt", "dt", -10, 10);
@@ -161,8 +151,7 @@ static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
    params.snapshot(paramsInitial);
 
    // Create NLL
-   auto bm = convertBatchModeToString(batchMode);
-   std::unique_ptr<RooAbsReal> nll{decay_gm1.createNLL(*data, NumCPU(cpu, 0), BatchMode(bm))};
+   std::unique_ptr<RooAbsReal> nll{decay_gm1.createNLL(*data, NumCPU(cpu, 0), EvalBackend(evalBackend))};
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -173,7 +162,7 @@ static void BM_RooFit_BDecayGaussResolution(benchmark::State &state)
    }
 }
 
-static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
+static void BDecayDoubleGauss(benchmark::State &state)
 {
    using namespace RooFit;
 
@@ -181,7 +170,7 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
 
    gErrorIgnoreLevel = kInfo;
    int events = state.range(0);
-   int batchMode = state.range(1);
+   auto evalBackend = static_cast<RooFit::EvalBackend::Value>(state.range(1));
    int cpu = state.range(2);
 
    RooRealVar dt("dt", "dt", -10, 10);
@@ -233,8 +222,7 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
    params.snapshot(paramsInitial);
 
    // Create NLL
-   auto bm = convertBatchModeToString(batchMode);
-   std::unique_ptr<RooAbsReal> nll{decay_gmsum.createNLL(*data, NumCPU(cpu, 0), BatchMode(bm))};
+   std::unique_ptr<RooAbsReal> nll{decay_gmsum.createNLL(*data, NumCPU(cpu, 0), EvalBackend(evalBackend))};
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
@@ -248,30 +236,34 @@ static void BM_RooFit_BDecayDoubleGauss(benchmark::State &state)
 int nEvents = 100000;
 const auto unit = benchmark::kMillisecond;
 
+auto Legacy = static_cast<int>(RooFit::EvalBackend::Value::Legacy);
+auto Cpu = static_cast<int>(RooFit::EvalBackend::Value::Cpu);
+auto Cuda = static_cast<int>(RooFit::EvalBackend::Value::Cuda);
+
 #define ARGS UseRealTime()->Unit(unit)
 
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitLegacy")->Args({nEvents, 0, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU2")->Args({nEvents, 0, 2})->ARGS;
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU4")->Args({nEvents, 0, 4})->ARGS;
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitCPU")->Args({nEvents, 1, 1})->ARGS;
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacy")->Args({nEvents, Legacy, 1})->ARGS;
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
 #ifdef R__HAS_CUDA
-BENCHMARK(BM_RooFit_BDecayWithMixing)->Name("BDecayWithMixing_FitCUDA")->Args({nEvents, 2, 1})->ARGS;
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacy")->Args({nEvents, 0, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU2")->Args({nEvents, 0, 2})->ARGS;
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU4")->Args({nEvents, 0, 4})->ARGS;
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitCPU")->Args({nEvents, 1, 1})->ARGS;
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacy")->Args({nEvents, Legacy, 1})->ARGS;
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
 #ifdef R__HAS_CUDA
-BENCHMARK(BM_RooFit_BDecayGaussResolution)->Name("BDecayGaussResolution_FitCUDA")->Args({nEvents, 2, 1})->ARGS;
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacy")->Args({nEvents, 0, 1})->ARGS;
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU2")->Args({nEvents, 0, 2})->ARGS;
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU4")->Args({nEvents, 0, 4})->ARGS;
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCPU")->Args({nEvents, 1, 1})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacy")->Args({nEvents, Legacy, 1})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
 #ifdef R__HAS_CUDA
-BENCHMARK(BM_RooFit_BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCUDA")->Args({nEvents, 2, 1})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
 #undef ARGS
