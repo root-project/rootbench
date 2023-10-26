@@ -5,7 +5,6 @@
 class TFormulaTests : public TFormula {
 public:
   TFormulaTests(TString name, TString formula): TFormula(name,formula){}
-   virtual     ~TFormulaTests(){}
    Bool_t      ParserNew();
    Bool_t      GetVarVal();
    Bool_t      GetParVal();

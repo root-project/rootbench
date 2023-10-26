@@ -40,7 +40,7 @@ public:
       RooMinimizer m(*nll);
       m.setPrintLevel(-1);
       m.setStrategy(0);
-      m.setLoggingToDataSet(1);
+      m.setLoggingToDataSet(true);
 
       m.minimize("Minuit2");
 

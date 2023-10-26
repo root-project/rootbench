@@ -6,6 +6,7 @@
 
 #include "benchmark/benchmark.h"
 
+#include <memory>
 #include <random>
 #include <string>
 #include <sstream>
@@ -23,7 +24,7 @@ static void BM_TBufferFile_CreateEmpty(benchmark::State &state)
 {
    const char *filename = "empty.root";
    for (auto _ : state) {
-      TBufferMerger m(std::unique_ptr<TMemFile>(new TMemFile(filename, "RECREATE")));
+      TBufferMerger m(std::make_unique<TMemFile>(filename, "RECREATE"));
    }
 }
 BENCHMARK(BM_TBufferFile_CreateEmpty)->Unit(benchmark::kMicrosecond);
@@ -37,7 +38,7 @@ static void BM_TBufferFile_GetFile(benchmark::State &state)
       // FIXME: We should have a way to pass an externally constructed file or stream to
       // TFile*, this would allow us to create in-memory files and avoid killing disks
       // when we benchmark IO.
-      Merger = new TBufferMerger(std::unique_ptr<TMemFile>(new TMemFile("virtual_file.root", "RECREATE")));
+      Merger = new TBufferMerger(std::make_unique<TMemFile>("virtual_file.root", "RECREATE"));
    }
    for (auto _ : state) {
       // Run the test as normal.
@@ -89,7 +90,7 @@ static void BM_TBufferFile_FillTreeWithRandomData(benchmark::State &state)
    ROOT::EnableThreadSafety();
    if (state.thread_index() == 0) {
       // Setup code here.
-      Merger = new TBufferMerger(std::unique_ptr<TMemFile>(new TMemFile("virtual_file.root", "RECREATE")));
+      Merger = new TBufferMerger(std::make_unique<TMemFile>("virtual_file.root", "RECREATE"));
    }
    long size;
    int flush = state.range(0);

@@ -158,7 +158,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(0);
+   m.setProfile(false);
    m.setLogFile("benchmigradnchannellog");
    for (auto _ : state) {
       m.migrad();
@@ -190,7 +190,7 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(0);
+   m.setProfile(false);
    m.setLogFile("benchhessenchannellog");
    m.migrad();
    w->loadSnapshot("no_fit");
@@ -227,7 +227,7 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    RooMinimizer m(*nll);
    m.setPrintLevel(-1);
    m.setStrategy(0);
-   m.setProfile(0);
+   m.setProfile(false);
    m.setLogFile("benchhessenchannellog");
    m.migrad();
    m.hesse();

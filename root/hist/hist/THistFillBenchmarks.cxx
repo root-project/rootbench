@@ -125,7 +125,7 @@ static void BM_THist_FillN(benchmark::State &state)
       // FillN without weight
       hist->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], &weights[0], 1);
       // FillN with weights
-      hist->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], NULL, 1);
+      hist->FillN(nbOfDataPoints, &xCoords[0], &yCoords[0], nullptr, 1);
    }
 }
 BENCHMARK(BM_THist_FillN) -> Apply(FillArguments);
