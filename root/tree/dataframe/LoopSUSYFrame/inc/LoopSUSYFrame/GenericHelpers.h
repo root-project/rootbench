@@ -697,7 +697,7 @@ inline auto minDPhiDRLepJet(const bool showDR=false)
            if (showDR) vDiff.push_back(lep.DeltaR(jet));
            else vDiff.push_back(std::abs(lep.DeltaPhi(jet)));
        }
-       if(vDiff.size()>0) minVal = *std::min_element(vDiff.begin(),vDiff.end());
+       if(!vDiff.empty()) minVal = *std::min_element(vDiff.begin(),vDiff.end());
        return minVal;
     };
 }

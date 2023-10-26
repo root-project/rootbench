@@ -28,6 +28,7 @@
 #include "benchmark/benchmark.h"
 
 #include <limits>
+#include <memory>
 
 static int counter = 0;
 
@@ -125,13 +126,13 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
 
    int code = state.range(0);
    if (code == RooFitADBenchmarksUtils::backend::Reference) {
-      m.reset(new RooMinimizer(*nllRef));
+      m = std::make_unique<RooMinimizer>(*nllRef);
    } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashNumDiff) {
-      m.reset(new RooMinimizer(*nllFuncNoGrad));
+      m = std::make_unique<RooMinimizer>(*nllFuncNoGrad);
    } else if (code == RooFitADBenchmarksUtils::backend::BatchMode) {
-      m.reset(new RooMinimizer(*nllRefBatch));
+      m = std::make_unique<RooMinimizer>(*nllRefBatch);
    } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashAD) {
-      m.reset(new RooMinimizer(*nllFunc));
+      m = std::make_unique<RooMinimizer>(*nllFunc);
    }
 
    for (auto _ : state) {

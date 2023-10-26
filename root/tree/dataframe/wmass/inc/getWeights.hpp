@@ -32,7 +32,6 @@ class getWeights : public Module {
 
     public:
     
-    ~getWeights() {};
     RNode run(RNode) override;
     std::vector<ROOT::RDF::RResultPtr<TH1D>> getTH1() override;
     std::vector<ROOT::RDF::RResultPtr<TH2D>> getTH2() override;

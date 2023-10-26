@@ -60,7 +60,7 @@ private:
    bool useCLAD = false;
 
 public:
-   ManyGausFit(int ng = 30, int nbins = 1000, bool clad = false, bool debLevel = 0, int seed = 1111)
+   ManyGausFit(int ng = 30, int nbins = 1000, bool clad = false, bool debLevel = false, int seed = 1111)
    {
       useCLAD = clad;
       debug = debLevel;

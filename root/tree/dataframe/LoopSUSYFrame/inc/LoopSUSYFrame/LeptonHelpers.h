@@ -628,7 +628,8 @@ inline auto GetXMLFF_Eta_Pt(const std::vector<TString> ele_systList, const std::
                FFvalues["fakeWeight_statDown"] = -99.;
  
                std::vector<TString> allSyst;
-               for (const auto &syst : ele_systList) allSyst.push_back(syst); 
+               allSyst.reserve(ele_systList.size());
+               for (const auto &syst : ele_systList) allSyst.push_back(syst);
                for(const auto &muSys: muon_systList){
                    bool exist = false;
                    for(const auto &syst : allSyst){
