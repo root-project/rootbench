@@ -92,7 +92,7 @@ static void BM_TBufferFile_FillTreeWithRandomData(benchmark::State &state)
       // Setup code here.
       Merger = new TBufferMerger(std::make_unique<TMemFile>("virtual_file.root", "RECREATE"));
    }
-   long size;
+   long size = 0;
    int flush = state.range(0);
    for (auto _ : state) {
       FillTreeWithRandomData(*Merger, flush);
