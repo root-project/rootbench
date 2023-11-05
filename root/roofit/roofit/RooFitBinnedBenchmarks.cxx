@@ -61,10 +61,10 @@ Sample addVariations(Sample asample, int nnps, bool channel_crosstalk, int chann
    return asample;
 }
 
-Channel makeChannel(int channel, int nbins, int nnps)
+std::unique_ptr<RooStats::HistFactory::Channel> makeChannel(int channel, int nbins, int nnps)
 {
    std::string channel_name = "Region" + std::to_string(channel);
-   Channel chan(channel_name);
+   auto chan = std::make_unique<RooStats::HistFactory::Channel>(channel_name);
    gDirectory = nullptr;
    auto Signal_Hist = new TH1F("Signal", "Signal", nbins, 0, nbins);
    auto Background_Hist = new TH1F("Background", "Background", nbins, 0, nbins);
@@ -79,7 +79,7 @@ Channel makeChannel(int channel, int nbins, int nnps)
          Data_Hist->Fill(bin + 0.5);
       }
    }
-   chan.SetData(Data_Hist);
+   chan->SetData(Data_Hist);
    Sample background("background");
    background.SetNormalizeByTheory(false);
    background.SetHisto(Background_Hist);
@@ -94,8 +94,8 @@ Channel makeChannel(int channel, int nbins, int nnps)
       signal = addVariations(signal, nnps, true, channel);
       background = addVariations(background, nnps, false, channel);
    }
-   chan.AddSample(background);
-   chan.AddSample(signal);
+   chan->AddSample(background);
+   chan->AddSample(signal);
    return chan;
 }
 
@@ -109,15 +109,15 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
    meas.SetLumi(1.0);
    meas.SetLumiRelErr(0.10);
    meas.AddConstantParam("Lumi");
-   Channel chan;
+   std::unique_ptr<RooStats::HistFactory::Channel> chan;
    for (int channel = 0; channel < n_channels; ++channel) {
       chan = makeChannel(channel, nbins, nnps);
-      meas.AddChannel(chan);
+      meas.AddChannel(*chan);
    }
    HistoToWorkspaceFactoryFast hist2workspace(meas);
    RooWorkspace *ws;
    if (n_channels < 2) {
-      ws = hist2workspace.MakeSingleChannelModel(meas, chan);
+      ws = hist2workspace.MakeSingleChannelModel(meas, *chan);
    } else {
       ws = hist2workspace.MakeCombinedModel(meas);
    }

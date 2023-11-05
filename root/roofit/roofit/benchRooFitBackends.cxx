@@ -56,10 +56,6 @@ static void benchProdPdf(benchmark::State &state)
 {
    RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
 
-   const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-   // const int printLevel = state.range(1);
-   // const int nParamSets = 1; // state.range(2) > 1 : state.range(2) ? 1;
-
    // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
 
    RooWorkspace w;
@@ -271,10 +267,6 @@ static void benchFit(benchmark::State &state)
 static void benchModel(benchmark::State &state)
 {
    RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
-
-   const RunConfig_t runConfig = static_cast<RunConfig_t>(state.range(0));
-   // const int printLevel = state.range(1);
-   // const int nParamSets = 1; // state.range(2) > 1 : state.range(2) ? 1;
 
    // Declare variables x,mean,sigma with associated name, title, initial value and allowed range
 

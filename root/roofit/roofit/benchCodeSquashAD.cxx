@@ -87,16 +87,16 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
 
    auto nChannels = state.range(1);
 
-   for (std::size_t i = 0; i < nChannels; ++i) {
-      std::string suffix = "_" + std::to_string(i + 1);
+   for (int iChannel = 0; iChannel < nChannels; ++iChannel) {
+      std::string suffix = "_" + std::to_string(iChannel + 1);
       auto obsName = "x" + suffix;
       auto x = std::make_unique<RooRealVar>(obsName.c_str(), obsName.c_str(), 0, 10.);
       x->setBins(20);
 
-      std::unique_ptr<RooAbsPdf> model{createModel(*x, std::to_string(i + 1))};
+      std::unique_ptr<RooAbsPdf> model{createModel(*x, std::to_string(iChannel + 1))};
 
       pdfMap.insert({"channel" + suffix, model.get()});
-      channelCat.defineType("channel" + suffix, i);
+      channelCat.defineType("channel" + suffix, iChannel);
       dataMap.insert({"channel" + suffix, std::unique_ptr<RooAbsData>{model->generateBinned(*x, nEvents)}});
 
       observables.addOwned(std::move(x));
