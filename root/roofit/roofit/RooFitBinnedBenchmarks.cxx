@@ -121,9 +121,7 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
    } else {
       ws = hist2workspace.MakeCombinedModel(meas);
    }
-   RooFIter iter = ws->components().fwdIterator();
-   RooAbsArg *arg;
-   while ((arg = iter.next())) {
+   for (RooAbsArg * arg : ws->components()) {
       if (arg->IsA() == RooRealSumPdf::Class()) {
          arg->setAttribute("BinnedLikelihood");
          if(verbose) std::cout << "component " << arg->GetName() << " is a binned likelihood" << std::endl;
