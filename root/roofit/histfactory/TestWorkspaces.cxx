@@ -12,7 +12,7 @@
 /// Returns the workspace that is also created in the hf001_example.C tutorial.
 /// Note that running this function creates a directory `hf001_data` in the
 /// current directory.
-RooWorkspace *
+std::unique_ptr<RooWorkspace>
 TestWorkspaces::getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFast::Configuration const &cfg)
 {
    using namespace RooStats::HistFactory;
@@ -81,5 +81,5 @@ TestWorkspaces::getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFa
    meas.SetExportOnly(true);
 
    // Now, do the measurement
-   return MakeModelAndMeasurementFast(meas, cfg);
+   return std::unique_ptr<RooWorkspace>{MakeModelAndMeasurementFast(meas, cfg)};
 }
