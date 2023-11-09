@@ -115,11 +115,11 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
       meas.AddChannel(*chan);
    }
    HistoToWorkspaceFactoryFast hist2workspace(meas);
-   RooWorkspace *ws;
+   std::unique_ptr<RooWorkspace> ws;
    if (n_channels < 2) {
-      ws = hist2workspace.MakeSingleChannelModel(meas, *chan);
+      ws = std::unique_ptr<RooWorkspace>{hist2workspace.MakeSingleChannelModel(meas, *chan)};
    } else {
-      ws = hist2workspace.MakeCombinedModel(meas);
+      ws = std::unique_ptr<RooWorkspace>{hist2workspace.MakeCombinedModel(meas)};
    }
    for (RooAbsArg * arg : ws->components()) {
       if (arg->IsA() == RooRealSumPdf::Class()) {

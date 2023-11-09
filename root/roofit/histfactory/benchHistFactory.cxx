@@ -23,18 +23,18 @@ public:
       using namespace RooFit;
 
       RooStats::HistFactory::HistoToWorkspaceFactoryFast::Configuration hfCfg;
-      auto *w = TestWorkspaces::getWorkspace001(hfCfg);
+      std::unique_ptr<RooWorkspace> ws = TestWorkspaces::getWorkspace001(hfCfg);
 
-      auto *mc = static_cast<RooStats::ModelConfig *>(w->obj("ModelConfig"));
+      auto *mc = static_cast<RooStats::ModelConfig *>(ws->obj("ModelConfig"));
 
       if (mc->GetParametersOfInterest())
          constraintParams.add(*mc->GetParametersOfInterest());
       if (mc->GetNuisanceParameters())
          constraintParams.add(*mc->GetNuisanceParameters());
 
-      auto *pdf = w->pdf("simPdf");
+      auto *pdf = ws->pdf("simPdf");
 
-      std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*w->data("obsData"), Constrain(constraintParams),
+      std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*ws->data("obsData"), Constrain(constraintParams),
                                                      GlobalObservables(*mc->GetGlobalObservables()), EvalBackend::Legacy())};
 
       RooMinimizer m(*nll);
@@ -64,14 +64,14 @@ static void benchHistFactory001(benchmark::State &state)
 
    RooStats::HistFactory::HistoToWorkspaceFactoryFast::Configuration hfCfg;
    hfCfg.binnedFitOptimization = state.range(0);
-   auto *w = TestWorkspaces::getWorkspace001(hfCfg);
+   std::unique_ptr<RooWorkspace> ws = TestWorkspaces::getWorkspace001(hfCfg);
 
-   auto *mc = static_cast<RooStats::ModelConfig *>(w->obj("ModelConfig"));
+   auto *mc = static_cast<RooStats::ModelConfig *>(ws->obj("ModelConfig"));
 
-   auto *pdf = w->pdf("simPdf");
+   auto *pdf = ws->pdf("simPdf");
 
    auto evalBackend = static_cast<EvalBackend::Value>(state.range(1));
-   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*w->data("obsData"), Constrain(g_testData.constraintParams),
+   std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*ws->data("obsData"), Constrain(g_testData.constraintParams),
                                                   GlobalObservables(*mc->GetGlobalObservables()),
                                                   EvalBackend(evalBackend))};
 

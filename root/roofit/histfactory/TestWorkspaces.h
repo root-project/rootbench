@@ -3,11 +3,14 @@
 
 #include <RooStats/HistFactory/HistoToWorkspaceFactoryFast.h>
 
+#include <memory>
+
 class RooWorkspace;
 
 namespace TestWorkspaces {
 
-RooWorkspace *getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFast::Configuration const &cfg);
+std::unique_ptr<RooWorkspace>
+getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFast::Configuration const &cfg);
 
 } // namespace TestWorkspaces
 
