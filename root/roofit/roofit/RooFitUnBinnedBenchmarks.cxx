@@ -239,6 +239,10 @@ const auto unit = benchmark::kMillisecond;
 auto Legacy = static_cast<int>(RooFit::EvalBackend::Value::Legacy);
 auto Cpu = static_cast<int>(RooFit::EvalBackend::Value::Cpu);
 auto Cuda = static_cast<int>(RooFit::EvalBackend::Value::Cuda);
+//testing for codegen and codegen_no_grad-codegen without clad:
+auto Codegen = static_cast<int>(RooFit::EvalBackend::Value::Codegen);
+auto CodegenNoGrad = static_cast<int>(RooFit::EvalBackend::Value::CodegenNoGrad);
+
 
 #define ARGS UseRealTime()->Unit(unit)
 
@@ -246,6 +250,9 @@ BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacy")->Args({nEvents, 
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
+//testing for codegen and codegennograd
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCodegen")->Args({nEvents, Codegen, 1})->ARGS;
+BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCodegenNoGrad")->Args({nEvents, CodegenNoGrad, 1})->ARGS;
 #ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
@@ -254,6 +261,9 @@ BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacy")->Args(
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
+//testing for codegen and codegennograd
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCodegen")->Args({nEvents, Codegen, 1})->ARGS;
+BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCodegenNoGrad")->Args({nEvents, CodegenNoGrad, 1})->ARGS;
 #ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
@@ -262,6 +272,8 @@ BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacy")->Args({nEvents
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCodegen")->Args({nEvents, Codegen, 1})->ARGS;
+BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCodegenNoGrad")->Args({nEvents, CodegenNoGrad, 1})->ARGS;
 #ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif

@@ -22,11 +22,11 @@
 #include <benchmark/benchmark.h>
 
 int printLevel = 0;
-size_t nEvents = 100000;
+size_t nEvents = 10000;
 const auto minimizerName = "Minuit2";
 constexpr bool verbose = false;
 
-enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda };
+enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda};//, fitCodegen, fitCodegenNoGrad };
 
 void runFitBenchmark(benchmark::State &state, RooAbsPdf &pdf, RooAbsData &data)
 {
@@ -45,7 +45,11 @@ void runFitBenchmark(benchmark::State &state, RooAbsPdf &pdf, RooAbsData &data)
          pdf.fitTo(data, EvalBackend::Cpu(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
       } else if (runConfig == fitCuda) {
          pdf.fitTo(data, EvalBackend::Cuda(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
-      }
+      }// else if (runConfig == fitCodegen) {
+      //    pdf.fitTo(data, EvalBackend::Codegen(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
+      // } else if (runConfig == fitCodegenNoGrad) {
+      //    pdf.fitTo(data, EvalBackend::CodegenNoGrad(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
+      // } 
       state.PauseTiming();
       params.assign(paramsInitial);
       state.ResumeTiming();
@@ -324,18 +328,26 @@ auto const unit = benchmark::kMillisecond;
 BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitLegacy")->Args({fitScalar});
 BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCPU")->Args({fitCpu});
 CUDA_ONLY(BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCUDA")->Args({fitCuda}));
+BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCodegen")->Args({fitCodegen});
+BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCodegen_No_Grad")->Args({fitCodegenNoGrad});
 
 BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitLegacy")->Args({fitScalar});
 BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitCPU")->Args({fitCpu});
 CUDA_ONLY(BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitCUDA")->Args({fitCuda}));
+BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitCodegen")->Args({fitCodegen});
+BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitCodegen_No_Grad")->Args({fitCodegenNoGrad});
 
 BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitLegacy")->Args({fitScalar});
 BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCPU")->Args({fitCpu});
 CUDA_ONLY(BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCUDA")->Args({fitCuda}));
+BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCodegen")->Args({fitCodegen});
+BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCodegen_No_Grad")->Args({fitCodegenNoGrad});
 
 BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitLegacy")->Unit(benchmark::kMillisecond)->Args({fitScalar});
 BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
 CUDA_ONLY(BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCUDA")->Unit(benchmark::kMillisecond)->Args({fitCuda}));
+BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCodegen")->Unit(benchmark::kMillisecond)->Args({fitCodegen});
+BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCodegen_No_Grad")->Unit(benchmark::kMillisecond)->Args({fitCodegenNoGrad});
 
 // Watch out with the result from these benchmarks: if there are evaluation
 // errors during the minimization, the time differences will mostly come from
@@ -343,6 +355,8 @@ CUDA_ONLY(BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCUDA")->Unit(ben
 BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitLegacy")->Unit(benchmark::kMillisecond)->Args({fitScalar});
 BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitCPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
 CUDA_ONLY(BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitCUDA")->Unit(benchmark::kMillisecond)->Args({fitCuda}));
+BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitCodegen")->Unit(benchmark::kMillisecond)->Args({fitCodegen});
+BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitCodegen_No_Grad")->Unit(benchmark::kMillisecond)->Args({fitCodegenNoGrad});
 
 int main(int argc, char **argv)
 {
