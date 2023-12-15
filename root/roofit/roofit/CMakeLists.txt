@@ -14,7 +14,7 @@ RB_ADD_GBENCHMARK(benchRooFitBackends
   LIBRARIES Core MathCore RooFitCore RooFit)
 
 if(cuda)
-  target_compile_definitions(benchRooFitBinned PRIVATE DO_BENCH_ROOFIT_CUDA)
+  target_compile_definitions(benchRooFitUnbinned PRIVATE DO_BENCH_ROOFIT_CUDA)
   target_compile_definitions(benchRooFitBackends PRIVATE DO_BENCH_ROOFIT_CUDA)
 endif()
 

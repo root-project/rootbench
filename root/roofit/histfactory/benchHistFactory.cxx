@@ -23,7 +23,7 @@ public:
       using namespace RooFit;
 
       RooStats::HistFactory::HistoToWorkspaceFactoryFast::Configuration hfCfg;
-      std::unique_ptr<RooWorkspace> ws = TestWorkspaces::getWorkspace001(hfCfg);
+      ws = TestWorkspaces::getWorkspace001(hfCfg);
 
       auto *mc = static_cast<RooStats::ModelConfig *>(ws->obj("ModelConfig"));
 
@@ -46,6 +46,8 @@ public:
 
       minimizationPath = std::make_unique<RooDataSet>(*m.getLogDataSet());
    }
+
+   std::unique_ptr<RooWorkspace> ws;
 
    // Dataset with the floating parameters as columns, and each call to getVal
    // in the minimization path as rows.
