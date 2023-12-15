@@ -46,8 +46,7 @@ jobs:
       run: |
            conda activate root-nightly
            mkdir -p build && cd build
-           # The conda nightlies are not built with a cutting-edge ROOT version that the RooFit benchmarks require
-           cmake -Dcuda=OFF -Droofit=OFF ..
+           cmake -Dcuda=OFF ..
            cmake --build .
 
     - name: Run benchmarks

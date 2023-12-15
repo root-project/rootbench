@@ -10,7 +10,6 @@ endif()
 project(rootbench)
 
 option(cuda "Build benchmarks that run on CUDA GPUs" OFF)
-option(roofit "Build RooFit benchmarks" ON)
 
 include(CMakeToolsHelpers OPTIONAL)
 include(ExternalProject)

@@ -21,7 +21,7 @@ TestWorkspaces::getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFa
    // in case the file is not found
    if (bool bfile = gSystem->AccessPathName(inputFile.c_str())) {
       std::cout << "Input file is not found - run prepareHistFactory script " << std::endl;
-      gROOT->ProcessLine("mkdir -p hf001");
+      gSystem->mkdir("hf001");
       gROOT->ProcessLine(".! prepareHistFactory hf001");
       bfile = gSystem->AccessPathName(inputFile.c_str());
       if (bfile) {
