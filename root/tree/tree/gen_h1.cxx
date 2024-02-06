@@ -27,7 +27,6 @@
 
 // Import classes from experimental namespace for the time being
 using RNTupleModel = ROOT::Experimental::RNTupleModel;
-using RFieldBase = ROOT::Experimental::Detail::RFieldBase;
 using RNTupleWriter = ROOT::Experimental::RNTupleWriter;
 using RNTupleWriteOptions = ROOT::Experimental::RNTupleWriteOptions;
 
