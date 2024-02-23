@@ -1,4 +1,4 @@
-#include <ROOT/RNTuple.hxx>
+#include <ROOT/RNTupleReader.hxx>
 #include <TH1D.h>
 #include <benchmark/benchmark.h>
 #include <rootbench/RBConfig.h>
