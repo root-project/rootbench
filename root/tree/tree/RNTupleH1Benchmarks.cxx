@@ -1,10 +1,7 @@
 #include <benchmark/benchmark.h>
 
 #include <ROOT/RDataFrame.hxx>
-#include <ROOT/RNTuple.hxx>
-#include <ROOT/RNTupleDS.hxx>
-#include <ROOT/RNTupleOptions.hxx>
-#include <ROOT/RNTupleView.hxx>
+#include <ROOT/RNTupleReader.hxx>
 
 #include <TCanvas.h>
 #include <TChain.h>
@@ -40,13 +37,13 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
    auto ipiView = ntuple->GetView<std::int32_t>("event.ipi");
    auto ipisView = ntuple->GetView<std::int32_t>("event.ipis");
    auto md0_dView = ntuple->GetView<float>("event.md0_d");
-   auto trackView = ntuple->GetViewCollection("event.tracks");
+   auto trackView = ntuple->GetCollectionView("event.tracks");
    auto nhitrpView = ntuple->GetView<std::int32_t>("event.tracks._0.nhitrp");
    auto rstartView = ntuple->GetView<float>("event.tracks._0.rstart");
    auto rendView = ntuple->GetView<float>("event.tracks._0.rend");
    auto nlhkView = ntuple->GetView<float>("event.tracks._0.nlhk");
    auto nlhpiView = ntuple->GetView<float>("event.tracks._0.nlhpi");
-   auto njetsView = ntuple->GetViewCollection("event.jets");
+   auto njetsView = ntuple->GetCollectionView("event.jets");
    // Check print info (minitest)
    std::ostringstream os;
    ntuple->PrintInfo(ROOT::Experimental::ENTupleInfo::kSummary, os);

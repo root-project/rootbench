@@ -37,5 +37,5 @@ if(ROOT_root7_FOUND AND rootbench-datafiles)
    RNTupleLHCBBenchmarks.cxx
    LABEL short
    LIBRARIES Core Hist MathCore RIO Tree ROOTNTuple
-   DOWNLOAD_DATAFILES B2HHH~none.ntuple)
+   DOWNLOAD_DATAFILES B2HHH~none.rc2.ntuple)
 endif(ROOT_root7_FOUND AND rootbench-datafiles)

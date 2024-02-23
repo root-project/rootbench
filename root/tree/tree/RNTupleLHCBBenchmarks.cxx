@@ -1,4 +1,4 @@
-#include <ROOT/RNTuple.hxx>
+#include <ROOT/RNTupleReader.hxx>
 #include <TH1D.h>
 #include <benchmark/benchmark.h>
 #include <rootbench/RBConfig.h>
@@ -22,7 +22,7 @@ static void BM_RNTuple_LHCB(benchmark::State &state)
 {
    using RNTupleReader = ROOT::Experimental::RNTupleReader;
 
-   auto ntuple = RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
+   auto ntuple = RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.rc2.ntuple");
    auto viewH1IsMuon = ntuple->GetView<int>("H1_isMuon");
    auto viewH2IsMuon = ntuple->GetView<int>("H2_isMuon");
    auto viewH3IsMuon = ntuple->GetView<int>("H3_isMuon");

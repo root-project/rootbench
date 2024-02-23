@@ -1,5 +1,5 @@
-#include <ROOT/RNTuple.hxx>
 #include <ROOT/RNTupleDS.hxx>
+#include <ROOT/RNTupleReader.hxx>
 #include <ROOT/RDataFrame.hxx>
 
 #include <benchmark/benchmark.h>
@@ -58,10 +58,10 @@ auto Dataframe(DF &frame)
 
 static void BM_RNTupleDS_LHCB(benchmark::State &state)
 {
-   auto ntuple = ROOT::Experimental::RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
+   auto ntuple = ROOT::Experimental::RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.rc2.ntuple");
    const Long64_t nEntries = ntuple->GetNEntries() * (state.range(0) / 100.);
 
-   auto df = ROOT::RDF::Experimental::FromRNTuple("DecayTree", RB::GetDataDir() + "/B2HHH~none.ntuple");
+   ROOT::RDataFrame df(RB::GetDataDir() + "/B2HHH~none.rc2.ntuple", "DecayTree");
    auto df2 = df.Range(nEntries);
    auto h_ptr = Dataframe(df2);
    for (auto _ : state)
