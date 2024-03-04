@@ -19,25 +19,27 @@ using namespace RooStats;
 using namespace HistFactory;
 
 namespace {
-  constexpr bool verbose = false;
+constexpr bool verbose = false;
 
-  // test matrix configuration
-  const std::vector<int> nChannelsVector = {1, 2, 3};
-  const std::vector<int> nBinsVector {5, 10, 15};
-  const int nBinsForChannelScan = 10;
-  const int nChannelsForBinScan = 1;
-  const std::vector<int> nCPUVector {1, 2, 3};
+// test matrix configuration
+const std::vector<int> nChannelsVector = {1, 2, 3};
+const std::vector<int> nBinsVector{5, 10, 15};
+const int nBinsForChannelScan = 10;
+const int nChannelsForBinScan = 1;
+const std::vector<int> nCPUVector{1};
 
-  constexpr auto evalBackend = RooFit::EvalBackend::Value::Cpu;
+////default evaluation backend
+std::string evalBackend = "cpu";
 
-  auto const timeUnit = benchmark::kMillisecond;
+auto const timeUnit = benchmark::kMillisecond;
 
-  void setupRooMsgService() {
-     RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
-     RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
-     RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
-     RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
-  }
+void setupRooMsgService()
+{
+   RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Minimization);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
+   RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
+}
 
 } // namespace
 
@@ -48,9 +50,9 @@ Sample addVariations(Sample asample, int nnps, bool channel_crosstalk, int chann
       Double_t random = R->Rndm();
       double uncertainty_up = (1 + random) / sqrt(100);
       double uncertainty_down = (1 - random) / sqrt(100);
-      if(verbose) {
-        std::cout << "in channel " << channel << "nuisance +/- [" << uncertainty_up << "," << uncertainty_down << "]"
-                  << std::endl;
+      if (verbose) {
+         std::cout << "in channel " << channel << "nuisance +/- [" << uncertainty_up << "," << uncertainty_down << "]"
+                   << std::endl;
       }
       std::string nuis_name = "norm_uncertainty_" + std::to_string(nuis);
       if (!channel_crosstalk) {
@@ -101,8 +103,8 @@ std::unique_ptr<RooStats::HistFactory::Channel> makeChannel(int channel, int nbi
 
 void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const char *name_rootfile = "")
 {
-   if(verbose) {
-     std::cout << "in build binned test with output" << name_rootfile << std::endl;
+   if (verbose) {
+      std::cout << "in build binned test with output" << name_rootfile << std::endl;
    }
    Measurement meas("meas", "meas");
    meas.SetPOI("SignalStrength");
@@ -121,19 +123,20 @@ void buildBinnedTest(int n_channels = 1, int nbins = 10, int nnps = 1, const cha
    } else {
       ws = std::unique_ptr<RooWorkspace>{hist2workspace.MakeCombinedModel(meas)};
    }
-   for (RooAbsArg * arg : ws->components()) {
+   for (RooAbsArg *arg : ws->components()) {
       if (arg->IsA() == RooRealSumPdf::Class()) {
          arg->setAttribute("BinnedLikelihood");
-         if(verbose) std::cout << "component " << arg->GetName() << " is a binned likelihood" << std::endl;
+         if (verbose)
+            std::cout << "component " << arg->GetName() << " is a binned likelihood" << std::endl;
       }
    }
    ws->SetName("BinnedWorkspace");
    ws->writeToFile(name_rootfile);
 }
 
-//############## End of Base Algorithms ##############################
-//####################################################################
-//############## Start Of # Tests #############################
+// ############## End of Base Algorithms ##############################
+// ####################################################################
+// ############## Start Of # Tests #############################
 
 static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
 {
@@ -145,7 +148,8 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    auto infile = std::make_unique<TFile>("workspace.root", "RECREATE");
    //   if (infile->IsZombie()) {
    buildBinnedTest(chan, nbins, 2, "workspace.root");
-   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
+   if (verbose)
+      std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile.reset(TFile::Open("workspace.root"));
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -174,7 +178,8 @@ static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
    TFile *infile = new TFile("workspace.root");
    //   if (infile->IsZombie()) {
    buildBinnedTest(chan, nbins, 2, "workspace.root");
-   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
+   if (verbose)
+      std::cout << "Workspace for tests was created!" << std::endl;
    //   }
    infile = TFile::Open("workspace.root");
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -211,7 +216,8 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    auto infile = std::make_unique<TFile>("workspace.root");
    //   if (infile->IsZombie()) {
    buildBinnedTest(chan, nbins, 2, "workspace.root");
-   if(verbose) std::cout << "Workspace for tests was created!" << std::endl;
+   if (verbose)
+      std::cout << "Workspace for tests was created!" << std::endl;
    //}
    infile.reset(TFile::Open("workspace.root"));
    RooWorkspace *w = static_cast<RooWorkspace *>(infile->Get("BinnedWorkspace"));
@@ -235,11 +241,11 @@ static void BM_RooFit_BinnedTestMinos(benchmark::State &state)
    }
 }
 
-//############## Run # Tests ###############################
+// ############## Run # Tests ###############################
 
 static void ChanArguments(benchmark::internal::Benchmark *b)
 {
-      // channel scan
+   // channel scan
    for (int nChannels : nChannelsVector) {
       for (int nCPU : nCPUVector) {
          b->Args({nChannels, nBinsForChannelScan, nCPU});
@@ -254,24 +260,26 @@ static void ChanArguments(benchmark::internal::Benchmark *b)
    }
 }
 
-BENCHMARK(BM_RooFit_BinnedTestMigrad)
-   ->Apply(ChanArguments)
-   ->UseRealTime()
-   ->Unit(timeUnit)
-   ->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestHesse)
-   ->Apply(ChanArguments)
-   ->UseRealTime()
-   ->Unit(timeUnit)
-   ->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestMinos)
-   ->Apply(ChanArguments)
-   ->UseRealTime()
-   ->Unit(timeUnit)
-   ->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestMigrad)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestHesse)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
+BENCHMARK(BM_RooFit_BinnedTestMinos)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
 
-//############## End Of Tests ########################################
-//####################################################################
-//############## RUN #################################################
+// ############## End Of Tests ########################################
+// ####################################################################
+// ############## RUN #################################################
 
-BENCHMARK_MAIN();
+int main(int argc, char **argv)
+{
+
+   benchmark::Initialize(&argc, argv);
+
+   for (int i = 1; i < argc; ++i) {
+      if (std::string(argv[i]) == "-b") {
+         if (i + 1 < argc) {
+            // Set the evalBackend value from the next command-line argument
+            evalBackend = argv[i + 1];
+         }
+      }
+   }
+   benchmark::RunSpecifiedBenchmarks();
+}
