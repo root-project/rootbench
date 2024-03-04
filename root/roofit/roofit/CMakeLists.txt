@@ -19,6 +19,8 @@ if(cuda)
 endif()
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/benchRooFitBackends_make_plot.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/compare_benchmarks.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/run_benchmarks.sh DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 RB_ADD_GBENCHMARK(benchCodeSquashAD
   benchCodeSquashAD.cxx
