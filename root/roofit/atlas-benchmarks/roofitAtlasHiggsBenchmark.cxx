@@ -52,7 +52,7 @@ BenchmarkData &bmdata()
 
 static void benchCreateNLL(benchmark::State &state)
 {
-   const std::string batchMode = state.range(0) == 2 ? "codegen" : (state.range(0) == 1 ? "cpu" : "off");
+   const std::string evalBackend = state.range(0) == 2 ? "codegen" : (state.range(0) == 1 ? "cpu" : "legacy");
    auto &nllPtr =
       state.range(0) == 2 ? bmdata().codegenNll : (state.range(0) == 1 ? bmdata().batchedNll : bmdata().nll);
 
@@ -61,8 +61,8 @@ static void benchCreateNLL(benchmark::State &state)
    bmdata().data = bmdata().ws->data("toyData");
 
    for (auto _ : state) {
-      nllPtr = std::unique_ptr<RooAbsReal>{bmdata().pdf->createNLL(*bmdata().data, GlobalObservables(*globObs),
-                                                                   Offset(true), Optimize(2), BatchMode(batchMode))};
+      nllPtr = std::unique_ptr<RooAbsReal>{bmdata().pdf->createNLL(
+         *bmdata().data, GlobalObservables(*globObs), Offset(true), Optimize(2), EvalBackend(evalBackend))};
    }
 
    double val = nllPtr->getVal();
@@ -97,7 +97,7 @@ static void benchEvaluateNLL(benchmark::State &state)
 static void benchMinimizeNLL(benchmark::State &state)
 {
    auto &nllPtr =
-      state.range(1) == 2 ? bmdata().codegenNll : (state.range(1) == 1 ? bmdata().batchedNll : bmdata().nll);
+      state.range(0) == 2 ? bmdata().codegenNll : (state.range(0) == 1 ? bmdata().batchedNll : bmdata().nll);
 
    RooArgSet parameters;
    nllPtr->getParameters(nullptr, parameters);
@@ -115,23 +115,23 @@ static void benchMinimizeNLL(benchmark::State &state)
    parameters.assign(initialParams);
 }
 
-BENCHMARK(benchCreateNLL)->Name("createNLL")->Args({0})->Unit(kSecond)->Iterations(1);
-BENCHMARK(benchCreateNLL)->Name("createNLL_BatchMode")->Args({1})->Unit(kSecond)->Iterations(1);
+// BENCHMARK(benchCreateNLL)->Name("createNLL")->Args({0})->Unit(kSecond)->Iterations(1);
+// BENCHMARK(benchCreateNLL)->Name("createNLL_CPU")->Args({1})->Unit(kSecond)->Iterations(1);
 BENCHMARK(benchCreateNLL)->Name("createNLL_CodeGenAD")->Args({2})->Unit(kSecond)->Iterations(1);
-BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL")->Args({1, 0})->Unit(kMillisecond);
-BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_BatchMode")->Args({1, 1})->Unit(kMillisecond);
-BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD")->Args({1, 2})->Unit(kMillisecond);
-BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_SingleKick")->Args({0, 0})->Unit(kMillisecond);
-BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_BatchMode_SingleKick")->Args({0, 1})->Unit(kMillisecond);
-BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD_SingleKick")->Args({0, 2})->Unit(kMillisecond);
+// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL")->Args({1, 0})->Unit(kMillisecond);
+// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CPU")->Args({1, 1})->Unit(kMillisecond);
+// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD")->Args({1, 2})->Unit(kMillisecond);
+// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_SingleKick")->Args({0, 0})->Unit(kMillisecond);
+// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CPU_SingleKick")->Args({0, 1})->Unit(kMillisecond);
+// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD_SingleKick")->Args({0, 2})->Unit(kMillisecond);
 // BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL")->Args({0})->Unit(kSecond)->Iterations(1);
-// BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_BatchMode")->Args({1})->Unit(kSecond)->Iterations(1);
+// BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_CPU")->Args({1})->Unit(kSecond)->Iterations(1);
 BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_CodeGenAD")->Args({2})->Unit(kSecond)->Iterations(1);
 
 // The channels 221 to 231 inclusive of the full combination workspace are
 // unfortunately corrupt. They contain RooAddPdfs that are affected by the
 // notorious server-proxy-desyncing that can happen if the RooFit frameworks do
-// the wrong thing. Th new the BatchMode uses the client-server links to build
+// the wrong thing. Th new the EvalBackend uses the client-server links to build
 // the computation graph for evaluation, and the old RooFit uses the proxies
 // (the client-server links are only used to the dirty flag propagation in the
 // old RooFit). As the servers and proxies are out of sync in some channels, we
@@ -213,10 +213,10 @@ int main(int argc, char **argv)
    bmdata().ws = bmdata().tfile->Get<RooWorkspace>(workspaceNames[iWorkspace].c_str());
    auto mc = static_cast<RooStats::ModelConfig *>(bmdata().ws->obj("ModelConfig"));
 
-   // bmdata().pdf = mc->GetPdf();
+   bmdata().pdf = mc->GetPdf();
    // Use this instead to create a new simultaneous pdf that only includes a
    // subset of the channels:
-   bmdata().pdf = createSimPdfSubset(*bmdata().ws, "simPdfSubset", 0, 1);
+   // bmdata().pdf = createSimPdfSubset(*bmdata().ws, "simPdfSubset", 0, 5);
 
    // Mask broken channels of the full Higgs combination workspace.
    if (iWorkspace == 2) {
