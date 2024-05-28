@@ -1,0 +1,439 @@
+Performing Curl Test HAVE_FSETXATTR_5 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_fa8ed/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_fa8ed.dir/build.make CMakeFiles/cmTC_fa8ed.dir/build
+Building C object CMakeFiles/cmTC_fa8ed.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_FSETXATTR_5  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_fa8ed.dir/CurlTests.c.o -MF CMakeFiles/cmTC_fa8ed.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_fa8ed.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:552:26: error: too few arguments to function call, expected 6, have 5
+  fsetxattr(0, 0, 0, 0, 0);
+  ~~~~~~~~~              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/sys/xattr.h:67:5: note: 'fsetxattr' declared here
+int fsetxattr(int fd, const char *name, const void *value, size_t size, u_int32_t position, int options);
+    ^
+1 error generated.
+make[7]: *** [CMakeFiles/cmTC_fa8ed.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_fa8ed/fast] Error 2
+
+
+Performing Curl Test HAVE_IOCTLSOCKET failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6c5dd/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_6c5dd.dir/build.make CMakeFiles/cmTC_6c5dd.dir/build
+Building C object CMakeFiles/cmTC_6c5dd.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_IOCTLSOCKET  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_6c5dd.dir/CurlTests.c.o -MF CMakeFiles/cmTC_6c5dd.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_6c5dd.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:326:24: error: call to undeclared function 'ioctlsocket'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+ unsigned long flags = ioctlsocket(socket, FIONBIO, &flags);
+                       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:326:44: error: use of undeclared identifier 'FIONBIO'
+ unsigned long flags = ioctlsocket(socket, FIONBIO, &flags);
+                                           ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_6c5dd.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_6c5dd/fast] Error 2
+
+
+Performing Curl Test HAVE_IOCTLSOCKET_CAMEL failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8ceaf/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_8ceaf.dir/build.make CMakeFiles/cmTC_8ceaf.dir/build
+Building C object CMakeFiles/cmTC_8ceaf.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_IOCTLSOCKET_CAMEL  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_8ceaf.dir/CurlTests.c.o -MF CMakeFiles/cmTC_8ceaf.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_8ceaf.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:354:13: error: call to undeclared function 'IoctlSocket'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    if(0 != IoctlSocket(0, 0, 0))
+            ^
+1 error generated.
+make[7]: *** [CMakeFiles/cmTC_8ceaf.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_8ceaf/fast] Error 2
+
+
+Performing Curl Test HAVE_IOCTLSOCKET_CAMEL_FIONBIO failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b7009/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_b7009.dir/build.make CMakeFiles/cmTC_b7009.dir/build
+Building C object CMakeFiles/cmTC_b7009.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_IOCTLSOCKET_CAMEL_FIONBIO  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_b7009.dir/CurlTests.c.o -MF CMakeFiles/cmTC_b7009.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_b7009.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:382:17: error: call to undeclared function 'ioctlsocket'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        if(0 != ioctlsocket(0, FIONBIO, &flags))
+                ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:382:32: error: use of undeclared identifier 'FIONBIO'
+        if(0 != ioctlsocket(0, FIONBIO, &flags))
+                               ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_b7009.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_b7009/fast] Error 2
+
+
+Performing Curl Test HAVE_IOCTLSOCKET_FIONBIO failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_5c106/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_5c106.dir/build.make CMakeFiles/cmTC_5c106.dir/build
+Building C object CMakeFiles/cmTC_5c106.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_IOCTLSOCKET_FIONBIO  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_5c106.dir/CurlTests.c.o -MF CMakeFiles/cmTC_5c106.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_5c106.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:409:17: error: call to undeclared function 'ioctlsocket'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        if(0 != ioctlsocket(0, FIONBIO, &flags))
+                ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:409:32: error: use of undeclared identifier 'FIONBIO'
+        if(0 != ioctlsocket(0, FIONBIO, &flags))
+                               ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_5c106.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_5c106/fast] Error 2
+
+
+Performing Curl Test HAVE_SETSOCKOPT_SO_NONBLOCK failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cfedd/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_cfedd.dir/build.make CMakeFiles/cmTC_cfedd.dir/build
+Building C object CMakeFiles/cmTC_cfedd.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_SETSOCKOPT_SO_NONBLOCK  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_cfedd.dir/CurlTests.c.o -MF CMakeFiles/cmTC_cfedd.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_cfedd.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:505:43: error: use of undeclared identifier 'SO_NONBLOCK'
+        if(0 != setsockopt(0, SOL_SOCKET, SO_NONBLOCK, 0, 0))
+                                          ^
+1 error generated.
+make[7]: *** [CMakeFiles/cmTC_cfedd.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_cfedd/fast] Error 2
+
+
+Performing Curl Test HAVE_O_NONBLOCK failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1f38a/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_1f38a.dir/build.make CMakeFiles/cmTC_1f38a.dir/build
+Building C object CMakeFiles/cmTC_1f38a.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_O_NONBLOCK  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_1f38a.dir/CurlTests.c.o -MF CMakeFiles/cmTC_1f38a.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_1f38a.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+Linking C executable cmTC_1f38a
+/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1f38a.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_O_NONBLOCK  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_1f38a.dir/CurlTests.c.o -o cmTC_1f38a 
+ld: Undefined symbols:
+  _main, referenced from:
+      <initial-undefines>
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make[7]: *** [cmTC_1f38a] Error 1
+make[6]: *** [cmTC_1f38a/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYADDR_R_5 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f47e3/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_f47e3.dir/build.make CMakeFiles/cmTC_f47e3.dir/build
+Building C object CMakeFiles/cmTC_f47e3.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYADDR_R_5  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_f47e3.dir/CurlTests.c.o -MF CMakeFiles/cmTC_f47e3.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_f47e3.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:23: error: variable has incomplete type 'struct hostent_data'
+  struct hostent_data hdata;
+                      ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:10: note: forward declaration of 'struct hostent_data'
+  struct hostent_data hdata;
+         ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:127:8: error: call to undeclared function 'gethostbyaddr_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyaddr_r(address, length, type, &h, &hdata);
+       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:127:8: note: did you mean 'gethostbyaddr'?
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/netdb.h:274:17: note: 'gethostbyaddr' declared here
+struct hostent  *gethostbyaddr(const void *, socklen_t, int);
+                 ^
+3 errors generated.
+make[7]: *** [CMakeFiles/cmTC_f47e3.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_f47e3/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYADDR_R_7 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c0d2b/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_c0d2b.dir/build.make CMakeFiles/cmTC_c0d2b.dir/build
+Building C object CMakeFiles/cmTC_c0d2b.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYADDR_R_7  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_c0d2b.dir/CurlTests.c.o -MF CMakeFiles/cmTC_c0d2b.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_c0d2b.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:131:8: error: call to undeclared function 'gethostbyaddr_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  hp = gethostbyaddr_r(address, length, type, &h, buffer, 8192, &h_errnop);
+       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:131:8: note: did you mean 'gethostbyaddr'?
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/netdb.h:274:17: note: 'gethostbyaddr' declared here
+struct hostent  *gethostbyaddr(const void *, socklen_t, int);
+                 ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:131:6: warning: incompatible integer to pointer conversion assigning to 'struct hostent *' from 'int' [-Wint-conversion]
+  hp = gethostbyaddr_r(address, length, type, &h, buffer, 8192, &h_errnop);
+     ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_c0d2b.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_c0d2b/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYADDR_R_8 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b67e6/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_b67e6.dir/build.make CMakeFiles/cmTC_b67e6.dir/build
+Building C object CMakeFiles/cmTC_b67e6.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYADDR_R_8  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_b67e6.dir/CurlTests.c.o -MF CMakeFiles/cmTC_b67e6.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_b67e6.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:135:8: error: call to undeclared function 'gethostbyaddr_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyaddr_r(address, length, type, &h, buffer, 8192, &hp, &h_errnop);
+       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:135:8: note: did you mean 'gethostbyaddr'?
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/netdb.h:274:17: note: 'gethostbyaddr' declared here
+struct hostent  *gethostbyaddr(const void *, socklen_t, int);
+                 ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_b67e6.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_b67e6/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYADDR_R_5_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_3ab8a/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_3ab8a.dir/build.make CMakeFiles/cmTC_3ab8a.dir/build
+Building C object CMakeFiles/cmTC_3ab8a.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYADDR_R_5_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_3ab8a.dir/CurlTests.c.o -MF CMakeFiles/cmTC_3ab8a.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_3ab8a.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:23: error: variable has incomplete type 'struct hostent_data'
+  struct hostent_data hdata;
+                      ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:10: note: forward declaration of 'struct hostent_data'
+  struct hostent_data hdata;
+         ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:127:8: error: call to undeclared function 'gethostbyaddr_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyaddr_r(address, length, type, &h, &hdata);
+       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:127:8: note: did you mean 'gethostbyaddr'?
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/netdb.h:274:17: note: 'gethostbyaddr' declared here
+struct hostent  *gethostbyaddr(const void *, socklen_t, int);
+                 ^
+3 errors generated.
+make[7]: *** [CMakeFiles/cmTC_3ab8a.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_3ab8a/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYADDR_R_7_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d8a8b/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_d8a8b.dir/build.make CMakeFiles/cmTC_d8a8b.dir/build
+Building C object CMakeFiles/cmTC_d8a8b.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYADDR_R_7_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_d8a8b.dir/CurlTests.c.o -MF CMakeFiles/cmTC_d8a8b.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_d8a8b.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:131:8: error: call to undeclared function 'gethostbyaddr_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  hp = gethostbyaddr_r(address, length, type, &h, buffer, 8192, &h_errnop);
+       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:131:8: note: did you mean 'gethostbyaddr'?
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/netdb.h:274:17: note: 'gethostbyaddr' declared here
+struct hostent  *gethostbyaddr(const void *, socklen_t, int);
+                 ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:131:6: warning: incompatible integer to pointer conversion assigning to 'struct hostent *' from 'int' [-Wint-conversion]
+  hp = gethostbyaddr_r(address, length, type, &h, buffer, 8192, &h_errnop);
+     ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_d8a8b.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_d8a8b/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYADDR_R_8_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_093cd/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_093cd.dir/build.make CMakeFiles/cmTC_093cd.dir/build
+Building C object CMakeFiles/cmTC_093cd.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYADDR_R_8_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_093cd.dir/CurlTests.c.o -MF CMakeFiles/cmTC_093cd.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_093cd.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:135:8: error: call to undeclared function 'gethostbyaddr_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyaddr_r(address, length, type, &h, buffer, 8192, &hp, &h_errnop);
+       ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:135:8: note: did you mean 'gethostbyaddr'?
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/netdb.h:274:17: note: 'gethostbyaddr' declared here
+struct hostent  *gethostbyaddr(const void *, socklen_t, int);
+                 ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_093cd.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_093cd/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYNAME_R_3 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1e9d9/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_1e9d9.dir/build.make CMakeFiles/cmTC_1e9d9.dir/build
+Building C object CMakeFiles/cmTC_1e9d9.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYNAME_R_3  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_1e9d9.dir/CurlTests.c.o -MF CMakeFiles/cmTC_1e9d9.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_1e9d9.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:23: error: variable has incomplete type 'struct hostent_data'
+  struct hostent_data hdata;
+                      ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:10: note: forward declaration of 'struct hostent_data'
+  struct hostent_data hdata;
+         ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:141:8: error: call to undeclared function 'gethostbyname_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyname_r(address, &h, &hdata);
+       ^
+3 errors generated.
+make[7]: *** [CMakeFiles/cmTC_1e9d9.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_1e9d9/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYNAME_R_5 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_37594/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_37594.dir/build.make CMakeFiles/cmTC_37594.dir/build
+Building C object CMakeFiles/cmTC_37594.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYNAME_R_5  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_37594.dir/CurlTests.c.o -MF CMakeFiles/cmTC_37594.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_37594.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:144:8: error: call to undeclared function 'gethostbyname_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyname_r(address, &h, buffer, 8192, &h_errnop);
+       ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_37594.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_37594/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYNAME_R_6 failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ab034/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ab034.dir/build.make CMakeFiles/cmTC_ab034.dir/build
+Building C object CMakeFiles/cmTC_ab034.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYNAME_R_6  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_ab034.dir/CurlTests.c.o -MF CMakeFiles/cmTC_ab034.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_ab034.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:148:8: error: call to undeclared function 'gethostbyname_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyname_r(address, &h, buffer, 8192, &hp, &h_errnop);
+       ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_ab034.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_ab034/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYNAME_R_3_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d9303/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_d9303.dir/build.make CMakeFiles/cmTC_d9303.dir/build
+Building C object CMakeFiles/cmTC_d9303.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYNAME_R_3_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_d9303.dir/CurlTests.c.o -MF CMakeFiles/cmTC_d9303.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_d9303.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:23: error: variable has incomplete type 'struct hostent_data'
+  struct hostent_data hdata;
+                      ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:106:10: note: forward declaration of 'struct hostent_data'
+  struct hostent_data hdata;
+         ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:141:8: error: call to undeclared function 'gethostbyname_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyname_r(address, &h, &hdata);
+       ^
+3 errors generated.
+make[7]: *** [CMakeFiles/cmTC_d9303.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_d9303/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYNAME_R_5_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_22b17/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_22b17.dir/build.make CMakeFiles/cmTC_22b17.dir/build
+Building C object CMakeFiles/cmTC_22b17.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYNAME_R_5_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_22b17.dir/CurlTests.c.o -MF CMakeFiles/cmTC_22b17.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_22b17.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:144:8: error: call to undeclared function 'gethostbyname_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyname_r(address, &h, buffer, 8192, &h_errnop);
+       ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_22b17.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_22b17/fast] Error 2
+
+
+Performing Curl Test HAVE_GETHOSTBYNAME_R_6_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_953a5/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_953a5.dir/build.make CMakeFiles/cmTC_953a5.dir/build
+Building C object CMakeFiles/cmTC_953a5.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GETHOSTBYNAME_R_6_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_953a5.dir/CurlTests.c.o -MF CMakeFiles/cmTC_953a5.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_953a5.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:122:9: error: use of undeclared identifier 'gethostbyaddr_r'
+  (void)gethostbyaddr_r;
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:148:8: error: call to undeclared function 'gethostbyname_r'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  rc = gethostbyname_r(address, &h, buffer, 8192, &hp, &h_errnop);
+       ^
+2 errors generated.
+make[7]: *** [CMakeFiles/cmTC_953a5.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_953a5/fast] Error 2
+
+
+Performing Curl Test HAVE_INET_NTOA_R_DECL failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2648a/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_2648a.dir/build.make CMakeFiles/cmTC_2648a.dir/build
+Building C object CMakeFiles/cmTC_2648a.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_INET_NTOA_R_DECL  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_2648a.dir/CurlTests.c.o -MF CMakeFiles/cmTC_2648a.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_2648a.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:244:21: error: use of undeclared identifier 'inet_ntoa_r'
+  func = (func_type)inet_ntoa_r;
+                    ^
+1 error generated.
+make[7]: *** [CMakeFiles/cmTC_2648a.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_2648a/fast] Error 2
+
+
+Performing Curl Test HAVE_INET_NTOA_R_DECL_REENTRANT failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1d1ca/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_1d1ca.dir/build.make CMakeFiles/cmTC_1d1ca.dir/build
+Building C object CMakeFiles/cmTC_1d1ca.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_INET_NTOA_R_DECL_REENTRANT  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_1d1ca.dir/CurlTests.c.o -MF CMakeFiles/cmTC_1d1ca.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_1d1ca.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:260:22: error: use of undeclared identifier 'inet_ntoa_r'; did you mean 'inet_ntoa'?
+  func = (func_type)&inet_ntoa_r;
+                     ^~~~~~~~~~~
+                     inet_ntoa
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/arpa/inet.h:76:8: note: 'inet_ntoa' declared here
+char            *inet_ntoa(struct in_addr);
+                 ^
+1 error generated.
+make[7]: *** [CMakeFiles/cmTC_1d1ca.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_1d1ca/fast] Error 2
+
+
+Performing Curl Test HAVE_GLIBC_STRERROR_R failed with the following output:
+Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_80a4d/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_80a4d.dir/build.make CMakeFiles/cmTC_80a4d.dir/build
+Building C object CMakeFiles/cmTC_80a4d.dir/CurlTests.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DHAVE_GLIBC_STRERROR_R  -DHAVE_STDIO_H -DHAVE_INTTYPES_H -DHAVE_SYS_FILIO_H -DHAVE_SYS_IOCTL_H -DHAVE_SYS_PARAM_H -DHAVE_SYS_POLL_H -DHAVE_SYS_RESOURCE_H -DHAVE_SYS_SELECT_H -DHAVE_SYS_SOCKET_H -DHAVE_SYS_SOCKIO_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_UIO_H -DHAVE_SYS_UN_H -DHAVE_SYS_XATTR_H -DHAVE_ALLOCA_H -DHAVE_ARPA_INET_H -DHAVE_ARPA_TFTP_H -DHAVE_ASSERT_H -DHAVE_ERR_H -DHAVE_ERRNO_H -DHAVE_FCNTL_H -DHAVE_IFADDRS_H -DHAVE_LIBGEN_H -DHAVE_LOCALE_H -DHAVE_NET_IF_H -DHAVE_NETDB_H -DHAVE_NETINET_IN_H -DHAVE_NETINET_TCP_H -DHAVE_POLL_H -DHAVE_PWD_H -DHAVE_SETJMP_H -DHAVE_SGTTY_H -DHAVE_SIGNAL_H -DHAVE_STDBOOL_H -DHAVE_STDINT_H -DHAVE_STDIO_H -DHAVE_STDLIB_H -DHAVE_STRING_H -DHAVE_STRINGS_H -DHAVE_TERMIOS_H -DHAVE_TIME_H -DHAVE_UNISTD_H -DHAVE_UTIME_H -DHAVE_STDDEF_H -DHAVE_DLFCN_H -DHAVE_MEMORY_H -DHAVE_NETINET_IF_ETHER_H -DHAVE_STDINT_H -DHAVE_SYS_UTSNAME_H -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -fPIE -MD -MT CMakeFiles/cmTC_80a4d.dir/CurlTests.c.o -MF CMakeFiles/cmTC_80a4d.dir/CurlTests.c.o.d -o CMakeFiles/cmTC_80a4d.dir/CurlTests.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/CMake/CurlTests.c:521:51: error: subscripted value is not an array, pointer, or vector
+  check(strerror_r(EACCES, buffer, sizeof(buffer))[0]);
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+1 error generated.
+make[7]: *** [CMakeFiles/cmTC_80a4d.dir/CurlTests.c.o] Error 1
+make[6]: *** [cmTC_80a4d/fast] Error 2
+
+

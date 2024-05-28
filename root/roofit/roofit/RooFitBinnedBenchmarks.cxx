@@ -2,6 +2,7 @@
 #include "RooAddPdf.h"
 #include "RooRealVar.h"
 #include "RooMinimizer.h"
+#include "RooFuncWrapper.h"
 #include "TFile.h"
 #include "TH1.h"
 #include "TRandom.h"
@@ -22,14 +23,18 @@ namespace {
 constexpr bool verbose = false;
 
 // test matrix configuration
-const std::vector<int> nChannelsVector = {1, 2, 3};
+//const std::vector<int> nChannelsVector = {1, 2, 3};
+const std::vector<int> nChannelsVector = {2};
 const std::vector<int> nBinsVector{5, 10, 15};
-const int nBinsForChannelScan = 10;
+const int nBinsForChannelScan = 2;
 const int nChannelsForBinScan = 1;
 const std::vector<int> nCPUVector{1};
 
 ////default evaluation backend
 std::string evalBackend = "cpu";
+
+//default value for seeding step:
+bool seeding_only = false;
 
 auto const timeUnit = benchmark::kMillisecond;
 
@@ -40,6 +45,8 @@ void setupRooMsgService()
    RooMsgService::instance().getStream(1).removeTopic(RooFit::NumIntegration);
    RooMsgService::instance().getStream(1).removeTopic(RooFit::Eval);
 }
+
+TRandom *tRandom = nullptr;
 
 } // namespace
 
@@ -71,16 +78,26 @@ std::unique_ptr<RooStats::HistFactory::Channel> makeChannel(int channel, int nbi
    auto Signal_Hist = new TH1F("Signal", "Signal", nbins, 0, nbins);
    auto Background_Hist = new TH1F("Background", "Background", nbins, 0, nbins);
    auto Data_Hist = new TH1F("Data", "Data", nbins, 0, nbins);
+   //for (Int_t bin = 1; bin <= nbins; ++bin) {
+      //for (Int_t i = 0; i <= bin; ++i) {
+         //Signal_Hist->Fill(bin + 0.5);
+         //Data_Hist->Fill(bin + 0.5);
+      //}
+      //for (Int_t i = 0; i <= nbins; ++i) {
+         //Background_Hist->Fill(bin + 0.5);
+         //Data_Hist->Fill(bin + 0.5);
+      //}
+   //}
    for (Int_t bin = 1; bin <= nbins; ++bin) {
-      for (Int_t i = 0; i <= bin; ++i) {
-         Signal_Hist->Fill(bin + 0.5);
-         Data_Hist->Fill(bin + 0.5);
-      }
-      for (Int_t i = 0; i <= nbins; ++i) {
-         Background_Hist->Fill(bin + 0.5);
-         Data_Hist->Fill(bin + 0.5);
+      for (Int_t i = 1; i < bin; ++i) {
+         double randomSig = tRandom->Rndm();
+         Signal_Hist->SetBinContent(i, 10 * randomSig);
+         double randomBkg = tRandom->Rndm();
+         Background_Hist->SetBinContent(i, 100 * randomBkg);
+         Data_Hist->SetBinContent(i, tRandom->Poisson(10 * randomSig + 100 * randomBkg));
       }
    }
+
    chan->SetData(Data_Hist);
    Sample background("background");
    background.SetNormalizeByTheory(false);
@@ -165,7 +182,7 @@ static void BM_RooFit_BinnedTestMigrad(benchmark::State &state)
    for (auto _ : state) {
       m.migrad();
    }
-}
+}   
 
 static void BM_RooFit_BinnedTestHesse(benchmark::State &state)
 {
@@ -253,16 +270,16 @@ static void ChanArguments(benchmark::internal::Benchmark *b)
    }
 
    // bin scan
-   for (int nBins : nBinsVector) {
-      for (int nCPU : nCPUVector) {
-         b->Args({nChannelsForBinScan, nBins, nCPU});
-      }
-   }
+   //for (int nBins : nBinsVector) {
+      //for (int nCPU : nCPUVector) {
+         //b->Args({nChannelsForBinScan, nBins, nCPU});
+      //}
+   //}
 }
 
 BENCHMARK(BM_RooFit_BinnedTestMigrad)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestHesse)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
-BENCHMARK(BM_RooFit_BinnedTestMinos)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
+//BENCHMARK(BM_RooFit_BinnedTestHesse)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
+//BENCHMARK(BM_RooFit_BinnedTestMinos)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
 
 // ############## End Of Tests ########################################
 // ####################################################################
@@ -273,11 +290,18 @@ int main(int argc, char **argv)
 
    benchmark::Initialize(&argc, argv);
 
+   tRandom = new TRandom(1337);
+
    for (int i = 1; i < argc; ++i) {
       if (std::string(argv[i]) == "-b") {
          if (i + 1 < argc) {
             // Set the evalBackend value from the next command-line argument
             evalBackend = argv[i + 1];
+         }
+         if (i + 2 < argc) {
+            // Set the evalBackend value from the next command-line argument
+            evalBackend = argv[i + 1];
+            seeding_only = argv[i + 2];
          }
       }
    }

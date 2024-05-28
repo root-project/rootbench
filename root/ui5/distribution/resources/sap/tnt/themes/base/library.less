@@ -1,0 +1,918 @@
+/* NOTE: This file was generated as an optimized version of "library.source.less" for the Theme Designer. */
+
+/*!
+ * OpenUI5
+ * (c) Copyright 2009-2022 SAP SE or an SAP affiliate company.
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
+
+@import "../../../../../Base/baseLib/baseTheme/base.less"; /* ORIGINAL IMPORT PATH: "../../../../sap/ui/core/themes/base/base.less" */
+
+@import "../../../../sap/ui/core/themes/base/global.less";
+
+/* START "NavigationList.less" */
+/* ======================================= */
+/* CSS for control sap.tnt/NavigationList  */
+/* Base theme                              */
+/* ======================================= */
+
+@_sap_tnt_NavigationList_ItemHeight: 3rem;
+@_sap_tnt_NavigationList_NoIconsGroupPadding: 1rem;
+@_sap_tnt_NavigationList_NoIconsNestedItemPadding: 1rem;
+@_sap_tnt_NavigationList_ItemFocusBorder: @sapUiContentFocusWidth @sapUiContentFocusStyle @sapUiContentFocusColor;
+@_sap_tnt_NavigationList_SelectedItemBorderColor: @sapUiListSelectionBorderColor;
+@_sap_tnt_NavigationList_Collapsed_SelectedGroupBorderColor: @_sap_tnt_NavigationList_SelectedItemBorderColor;
+@_sap_tnt_NavigationList_Collapsed_GroupBorderColor: @sapUiListBorderColor;
+@_sap_tnt_NavigationList_GroupBottomBorderColor: @sapUiListBorderColor;
+
+.sapTntNavLI {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sapTntNavLI ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sapTntNavLIItem {
+	width : 100%;
+	height: @_sap_tnt_NavigationList_ItemHeight;
+
+	box-sizing: border-box;
+	cursor: pointer;
+	background-color: @sapUiListBackground;
+
+	span {
+		cursor: pointer;
+	}
+
+	&.sapTntNavLIItemDisabled {
+		cursor: auto;
+	  	opacity: @sapContent_DisabledOpacity;
+
+		span {
+			cursor: auto;
+		}
+	}
+
+	.sapMText {
+		color: @sapUiListTextColor;
+	}
+
+	.sapUiIcon {
+		color: @sapUiContentIconColor;
+	}
+
+	a {
+		width : 100%;
+		height: 100%;
+		text-decoration: none;
+		outline: none;
+
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		align-items: center;
+	}
+}
+
+.sapTntNavLIText {
+	width: 100%;
+	display: block;
+}
+
+.sapTntNavLIPopup .sapTntNavLIGroupItem .sapMText {
+	padding: 0 1rem;
+}
+
+.sapTntNavLIPopup .sapTntNavLIGroup .sapMText {
+	margin: 0 1rem 0 0;
+}
+
+.sapTntNavLI {
+	span.sapTntNavLIGroupIcon {
+		outline: none;
+		-webkit-user-select: none; /* Chrome all / Safari all */
+		-moz-user-select: none; /* Firefox all */
+		user-select: none;
+	}
+
+	img.sapTntNavLIGroupIcon {
+		height: 1.125rem;
+		width: 1.125rem;
+		padding: 0.6875rem 0.9375rem;
+	}
+}
+
+.sapTntNavLIPopup {
+	span.sapTntNavLIGroupIcon {
+		width: 1rem;
+		visibility: hidden;
+		min-width: 1rem;
+	}
+
+	img.sapTntNavLIGroupIcon {
+		width: 1rem;
+		visibility: hidden;
+		min-width: 1rem;
+		padding: 0;
+	}
+}
+
+.sapTntNavLI .sapTntNavLIExpandIcon {
+	min-width: 2rem;
+	padding: 0.75rem 0;
+	font-size: 0.875rem;
+
+	pointer-events: all;
+
+	outline: none;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	user-select: none;
+}
+
+.sapTntNavLIHiddenGroupItems {
+	display: none;
+}
+
+.sapTntNavLICollapsed {
+	width: 3rem;
+}
+
+.sapTntNavLI li,
+.sapTntNavLIItem {
+	position: relative;
+}
+
+.sapTntNavLIGroup {
+	border-bottom: 1px solid @sapUiListBorderColor;
+}
+
+.sapTntNavLI:not(.sapTntNavLIPopup) .sapTntNavLIGroup[aria-expanded="true"] {
+	border-color: @_sap_tnt_NavigationList_GroupBottomBorderColor;
+}
+
+.sapTntNavLICollapsed .sapTntNavLIGroup {
+	border-color: @_sap_tnt_NavigationList_Collapsed_GroupBorderColor;
+}
+
+.sapTntNavLIItem:not(.sapTntNavLIItemDisabled):hover {
+	background-color: @sapUiListHoverBackground;
+}
+
+.sapTntNavLI .sapTntNavLIGroup.sapTntNavLIItem:not(.sapTntNavLIItemDisabled):active,
+.sapTntNavLI .sapTntNavLIGroupItem.sapTntNavLIItem:not(.sapTntNavLIItemDisabled):active{
+	background-color: @sapUiListActiveBackground;
+
+	.sapMText {
+		color: @sapUiListActiveTextColor;
+	}
+
+	.sapUiIcon {
+		color: @sapUiListActiveTextColor;
+	}
+}
+
+
+.sapTntNavLIItemSelected.sapTntNavLIItem,
+.sapTntNavLIItemSelected .sapTntNavLIGroup,
+.sapTntNavLIItemSelected.sapTntNavLIGroupItem {
+	background-color: @sapUiListSelectionBackgroundColor;
+}
+
+.sapTntNavLIItemSelected .sapTntNavLIItem:hover,
+.sapTntNavLIItemSelected.sapTntNavLIItem.sapTntNavLIGroup:hover,
+.sapTntNavLIItemSelected.sapTntNavLIGroupItem.sapTntNavLIGroupItem:hover {
+	background-color: @sapUiListSelectionHoverBackground;
+}
+
+.sapTntNavLI:not(.sapTntNavLIPopup) .sapTntNavLIGroupItem.sapTntNavLIItem:last-child {
+	border-bottom: 1px solid @sapUiListBorderColor;
+
+	&.sapTntNavLIItemSelected {
+		border-color: @sapUiListSelectionBorderColor;
+	}
+}
+
+.sapTntNavLIItemSelected:not(.sapTntNavLIItemDisabled) {
+	border-bottom: 1px solid @_sap_tnt_NavigationList_SelectedItemBorderColor;
+}
+
+.sapTntNavLICollapsed,
+.sapTntNavLIPopup {
+	.sapTntNavLIGroup.sapTntNavLIItemSelected {
+		border-color: @_sap_tnt_NavigationList_Collapsed_SelectedGroupBorderColor;
+	}
+}
+
+.sapTntNavLI li:focus,
+.sapTntNavLIItem:focus {
+	outline: none;
+}
+
+.sapTntNavLI li:focus .sapTntNavLIItem::before,
+.sapTntNavLIItem:focus::before {
+	border: @_sap_tnt_NavigationList_ItemFocusBorder;
+	position: absolute;
+	content: " ";
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+	left: 1px;
+	z-index: 2;
+	pointer-events: none;
+}
+
+// NavigationList with icons
+.sapTntNavLI:not(.sapTntNavLINoIcons) {
+
+	span.sapTntNavLIGroupIcon {
+		min-width: 2.75rem;
+		padding: 0.6875rem 0;
+	}
+
+	.sapTntNavLIGroupItem .sapMText {
+		padding-left: 2.75rem;
+	}
+}
+
+// NavigationList without icons
+.sapTntNavLI.sapTntNavLINoIcons:not(.sapTntNavLIPopup) {
+
+	.sapTntNavLIGroup {
+		padding-left: @_sap_tnt_NavigationList_NoIconsGroupPadding;
+	}
+
+	// nested items
+	.sapTntNavLIGroupItem .sapMText {
+		padding-left: @_sap_tnt_NavigationList_NoIconsNestedItemPadding;
+	}
+}
+
+/* Compact size */
+.sapUiSizeCompact {
+
+	.sapTntNavLIItem {
+		height: 2rem;
+	}
+
+	.sapTntNavLIPopup .sapTntNavLIGroupItem .sapMText {
+		padding: 0 0.5rem;
+	}
+
+	.sapTntNavLIPopup .sapTntNavLIGroup .sapMText {
+		margin: 0 0.5rem 0 0;
+	}
+
+	.sapTntNavLI.sapTntNavLIPopup span.sapTntNavLIGroupIcon {
+		padding: 0.5rem 0;
+	}
+
+	.sapTntNavLI img.sapTntNavLIGroupIcon {
+	  padding: 0.5rem 0.4375rem;
+	}
+
+	.sapTntNavLIPopup span.sapTntNavLIGroupIcon {
+		width: 0.5rem;
+	  	min-width: 0.5rem;
+	}
+
+	// NavigationList with icons
+	.sapTntNavLI:not(.sapTntNavLINoIcons) {
+
+		span.sapTntNavLIGroupIcon {
+			min-width: 2.75rem;
+			padding: 0.5rem 0;
+		}
+	}
+}
+
+/* END "NavigationList.less" */
+
+/* START "ToolHeader.less" */
+/* =================================== */
+/* CSS for control sap.tnt/ToolHeader  */
+/* Base theme                          */
+/* =================================== */
+@_sap_tnt_ToolHeader_Height: 3rem;
+@_sap_tnt_ToolHeader_AvatarBackground: lighten(saturate(spin(@sapUiAccent6, 348), 36), 28);
+@_sap_tnt_ToolHeader_AvatarColor: @sapUiBaseText;
+@_sap_tnt_ToolHeader_BorderColor: contrast(@sapShellColor, @sapUiContentFocusColor, @sapUiContentContrastFocusColor, @sapContent_ContrastTextThreshold);
+
+.sapTntToolHeaderPopover.sapMOTAPopover.sapMPopover .sapMPopoverCont .sapMPopoverScroll,
+.sapTntToolHeaderPopover.sapMOTAPopover.sapMPopover .sapMPopoverCont .sapMPopoverScroll .sapMBtn {
+	padding: 0;
+}
+
+.sapTntToolHeader.sapMTB {
+	height: @_sap_tnt_ToolHeader_Height;
+}
+
+// ==========================================================================
+// sap.m.IconTabHeader overriding
+// ==========================================================================
+
+.sapMIBar.sapTntToolHeader .sapMBarChild.sapMITH {
+	height: @_sap_tnt_ToolHeader_Height;
+	box-shadow: none;
+	padding: 0 0.5rem;
+	flex: 1;
+	min-width: 0; // fixes Chrome flex issue
+
+	.sapMITBHead {
+		padding-top: 0;
+		padding-bottom: 0;
+
+		.sapMITBFilter .sapMITBText + .sapMITBContentArrow  {
+			&:after {
+				border-radius: 0.125rem;
+				box-shadow: none;
+				margin-bottom: 0.188rem;
+			}
+		}
+	}
+}
+
+.sapMITBFilterPopover.sapMITBFilterPopoverInToolHeader {
+	.sapUiIcon {
+		color: @sapUiContentNonInteractiveIconColor;
+	}
+}
+
+.sapTntToolHeader .sapMITH .sapMITBContentArrow {
+	margin: 0;
+}
+
+// ==========================================================================
+// sap.m.Avatar / sap.f.Avatar overriding
+// ==========================================================================
+
+.sapTntToolHeader .sapFAvatar {
+	background-color: @_sap_tnt_ToolHeader_AvatarBackground;
+	.sapFAvatarInitialsHolder,
+	.sapUiIcon.sapFAvatarTypeIcon  {
+		color: @_sap_tnt_ToolHeader_AvatarColor;
+	}
+}
+
+// ==========================================================================
+// sap.m.MenuButton overriding
+// ==========================================================================
+
+.sapTntToolHeader {
+	.sapMMenuBtn.sapMMenuBtnRegular .sapMBtnEmphasized.sapMBtnInner::after {
+		content: '\e287';
+	}
+}
+/* END "ToolHeader.less" */
+
+/* START "SideNavigation.less" */
+/* ======================================= */
+/* CSS for control sap.tnt/SideNavigation  */
+/* Base theme                              */
+/* ======================================= */
+
+@_sap_tnt_SideNavigation_NavigationSeparatorBackgroundColor: @sapUiGroupContentBorderColor;
+@_sap_tnt_SideNavigation_NavigationSeparatorHeight: 1px;
+
+.sapTntSideNavigation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: @sapUiListBackground;
+  border-right: 1px solid @sapUiGroupContentBorderColor;
+}
+
+.sapTntSideNavigation {
+  width: 15rem;
+}
+
+.sapTntSideNavigation.sapTntSideNavigationNotExpandedWidth {
+  width: 3rem;
+}
+
+.sapTntSideNavigationNotExpanded {
+
+	.sapTntNavLIText, .sapTntNavLIExpandIcon  {
+		display: none;
+	}
+	.sapTntSideNavigationSeparator {
+		margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+	}
+
+	.sapTntSideNavigationFlexible {
+		padding-right: 3rem;
+		width: 6rem;
+	}
+
+	.sapTnTNavLINotExpandedTriangle:not(.sapTntNavLIItemDisabled):after {
+		content: "";
+		width: 0;
+		height: 0;
+		border-left: 0.375rem solid transparent;
+		border-bottom: 0.375rem solid @sapUiContentIconColor;
+		position:absolute;
+		right: 0.1875rem;
+		bottom:0.125rem;
+	}
+}
+
+.sapTntSideNavigationFlexible {
+	-webkit-box-flex: 1;
+	-webkit-flex-grow: 1;
+	flex-grow: 1;
+	-webkit-flex-basis: 100%;
+	flex-basis: 100%;
+	position: relative;
+	overflow: hidden;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.sapTntSideNavigationSeparator {
+	margin: 0.25rem 0.875rem 0.25rem 0.875rem;
+	height: @_sap_tnt_SideNavigation_NavigationSeparatorHeight;
+	min-height: @_sap_tnt_SideNavigation_NavigationSeparatorHeight;
+	background-color: @_sap_tnt_SideNavigation_NavigationSeparatorBackgroundColor;
+}
+
+.sapTntSideNavigationFixed {
+  position: relative;
+}
+
+.sapTntSideNavigationVerticalScrolling {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 10rem;
+}
+
+/* Styles for layout with arrows
+   ========================================================================== */
+
+.sapTntSideNavigationScrollIcon {
+  display: none;
+  padding: 0.6875rem 0;
+  outline: none;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  user-select: none;
+  color: @sapUiContentIconColor;
+}
+
+.sapTntSideNavigationScrollIcon.sapUiIcon:focus {
+  outline: none;
+}
+
+.sapTntSideNavigationScrollIconDisabled {
+  cursor: auto;
+}
+
+.sapTntSideNavigationScrollIconUp {
+  border-bottom: 1px solid @sapUiListBorderColor;
+}
+
+.sapTntSideNavigationScrollIconDown {
+  border-top: 1px solid @sapUiListBorderColor;
+}
+
+.sapTntSideNavigationScrollIcon:not(.sapTntSideNavigationScrollIconDisabled):hover {
+  background-color: @sapUiListHoverBackground;
+}
+
+.sapTntSideNavigationScrollIcon:not(.sapTntSideNavigationScrollIconDisabled):active {
+  background-color: @sapUiListActiveBackground;
+  color: @sapUiListActiveTextColor;
+}
+
+/*  Compact size
+   ========================================================================== */
+
+.sapUiSizeCompact {
+
+  .sapTntSideNavigationNotExpanded {
+
+    .sapTntSideNavigationSeparator {
+     	margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+    }
+  }
+
+  .sapTntSideNavigationSeparator {
+	margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+  }
+
+  .sapTntSideNavigationScrollIcon {
+    padding: 0.5rem 0;
+  }
+}
+/* END "SideNavigation.less" */
+
+/* START "ToolPage.less" */
+/* ================================= */
+/* CSS for control sap.tnt/ToolPage  */
+/* Base theme                        */
+/* ================================= */
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@_sap_tnt_ToolPage_AsideWidth : 15rem;
+@_sap_tnt_ToolPage_AsideWidthOnTablet : 3rem;
+@_sap_tnt_ToolPage_HeaderHeight : 3rem;
+@_sap_tnt_ToolPage_FooterHeight : 3rem;
+
+@_sap_tnt_ToolPage_CompactAsideWidth : 15rem;
+@_sap_tnt_ToolPage_CompactAsideWidthOnTablet : 3rem;
+@_sap_tnt_ToolPage_CompactHeaderHeight : 3rem;
+@_sap_tnt_ToolPage_CompactFooterHeight : 2rem;
+
+@_sap_tnt_ToolPage_AnimationDuration : 0.3s;
+
+/* ==========================================================================
+   Root element
+   ========================================================================== */
+.sapTntToolPage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.sapTntToolPageHeader {
+  height: @_sap_tnt_ToolPage_HeaderHeight;
+}
+
+/* ==========================================================================
+   Content wrapper
+   ========================================================================== */
+.sapTntToolPageContentWrapper {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0; // fixes flex chrome issue
+  position: relative;
+}
+
+/* Aside container
+   ========================================================================== */
+
+.sapTntToolPageAside {
+  display: flex;
+  flex-direction: column;
+
+  will-change: transform;
+}
+
+.sapTntToolPageAsideContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.sapTntToolPageAsideFooter {
+  height: @_sap_tnt_ToolPage_FooterHeight;
+  overflow: hidden;
+}
+
+html:not([data-sap-ui-animation='off']) .sapTntToolPageMain {
+  transition: padding-left @_sap_tnt_ToolPage_AnimationDuration, transform @_sap_tnt_ToolPage_AnimationDuration;
+}
+
+html:not([data-sap-ui-animation='off']) .sapTntToolPageAside {
+  transition: transform @_sap_tnt_ToolPage_AnimationDuration;
+}
+
+.sap-desktop,
+.sap-tablet {
+  .sapTntToolPageAside {
+    width: @_sap_tnt_ToolPage_AsideWidth;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  .sapTntToolPageAside + .sapTntToolPageMain {
+    padding-left: @_sap_tnt_ToolPage_AsideWidth;
+  }
+}
+
+.sap-desktop,
+.sap-tablet {
+  .sapTntToolPageAsideCollapsed {
+    & > .sapTntToolPageAside {
+      width: @_sap_tnt_ToolPage_AsideWidthOnTablet;
+    }
+
+    & > .sapTntToolPageAside + .sapTntToolPageMain {
+      padding-left: @_sap_tnt_ToolPage_AsideWidthOnTablet;
+    }
+  }
+}
+
+.sap-phone {
+  .sapTntToolPageAside {
+    width: @_sap_tnt_ToolPage_AsideWidth;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  .sapTntToolPageMain {
+    transform: translateX(@_sap_tnt_ToolPage_AsideWidth);
+  }
+
+  .sapTntToolPageAsideCollapsed {
+    .sapTntToolPageAside {
+      transform: translateX(-@_sap_tnt_ToolPage_AsideWidth);
+    }
+    .sapTntToolPageMain {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Main container
+   ========================================================================== */
+
+.sapTntToolPageMain {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; // fixes flex chrome issue
+
+  will-change: transform;
+}
+
+.sapTntToolPageMainContent {
+  flex: 1;
+  min-height: 0; // fixes flex chrome issue
+  position: relative;
+}
+
+.sapTntToolPageMainContentWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.sapTntToolPageMainFooter {
+  height: @_sap_tnt_ToolPage_FooterHeight;
+  overflow: hidden;
+}
+
+/* Compact size */
+.sapUiSizeCompact {
+
+  .sapTntToolPageHeader {
+    height: @_sap_tnt_ToolPage_CompactHeaderHeight;
+  }
+
+  .sapTntToolPageAsideFooter {
+    height: @_sap_tnt_ToolPage_CompactFooterHeight;
+  }
+
+  .sapTntToolPageMainFooter {
+    height: @_sap_tnt_ToolPage_CompactFooterHeight;
+  }
+}
+
+.sap-desktop .sapUiSizeCompact,
+.sap-tablet .sapUiSizeCompact {
+  .sapTntToolPageAside {
+    width: @_sap_tnt_ToolPage_CompactAsideWidth;
+  }
+
+  .sapTntToolPageAside + .sapTntToolPageMain {
+    padding-left: @_sap_tnt_ToolPage_CompactAsideWidth;
+  }
+}
+
+.sap-desktop .sapUiSizeCompact,
+.sap-tablet .sapUiSizeCompact {
+  .sapTntToolPageAsideCollapsed {
+    .sapTntToolPageAside {
+      width: @_sap_tnt_ToolPage_CompactAsideWidthOnTablet;
+    }
+
+    .sapTntToolPageAside + .sapTntToolPageMain {
+      padding-left: @_sap_tnt_ToolPage_CompactAsideWidthOnTablet;
+    }
+  }
+}
+
+.sap-phone .sapUiSizeCompact {
+
+  .sapTntToolPageAside {
+    width: @_sap_tnt_ToolPage_CompactAsideWidth;
+  }
+
+  .sapTntToolPageMain {
+    transform: translateX(@_sap_tnt_ToolPage_CompactAsideWidth);
+  }
+
+  .sapTntToolPageAsideCollapsed {
+    .sapTntToolPageAside {
+      transform: translateX(-@_sap_tnt_ToolPage_CompactAsideWidth);
+    }
+    .sapTntToolPageMain {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* ==========================================================================
+   RTL
+   ========================================================================== */
+
+html[dir=rtl] {
+  &.sap-phone {
+    .sapTntToolPageMain {
+      transform: translateX(-@_sap_tnt_ToolPage_AsideWidth);
+    }
+
+    .sapTntToolPageAsideCollapsed {
+      .sapTntToolPageAside {
+        transform: translateX(@_sap_tnt_ToolPage_AsideWidth);
+      }
+      .sapTntToolPageMain {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &.sap-phone .sapUiSizeCompact {
+    .sapTntToolPageMain {
+      transform: translateX(-@_sap_tnt_ToolPage_CompactAsideWidth);
+    }
+
+    .sapTntToolPageAsideCollapsed {
+      .sapTntToolPageAside {
+        transform: translateX(@_sap_tnt_ToolPage_CompactAsideWidth);
+      }
+      .sapTntToolPageMain {
+        transform: translateX(0);
+      }
+    }
+  }
+}
+/* END "ToolPage.less" */
+
+/* START "InfoLabel.less" */
+/* ================================= */
+/* CSS for control sap.tnt/InfoLabel */
+/* Base theme                        */
+/* ================================= */
+
+@_sap_tnt_InfoLabel_NarrowPadding: 0 0.1875rem;
+@_sap_tnt_InfoLabel_LineHeight: normal;
+@_sap_tnt_InfoLabel_LineHeightDisplayOnly: 1rem;
+@_sap_tnt_InfoLabel_HeightWithoutBorders: 0.875rem;
+@_sap_tnt_InfoLabel_PaddingWhenEmpty: 0 @_sap_tnt_InfoLabel_HeightWithoutBorders/2;
+
+/* ==========================================================================
+   Root element
+   ========================================================================== */
+.sapTntInfoLabel {
+	box-sizing: border-box;
+	padding: 0 0.3125rem;
+	text-align: center;
+	border-radius: 0.5rem;
+	height: 1rem;
+	display: inline-block;
+	max-width: 100%;
+	line-height: @_sap_tnt_InfoLabel_LineHeight;
+
+	.sapTntInfoLabelInner {
+		font-size: @sapFontSmallSize;
+		font-weight: bold;
+		vertical-align: top;
+		letter-spacing: 0.0125rem;
+		text-transform: uppercase;
+		display: inline-block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		max-width: 100%;
+	}
+}
+
+.sapTntInfoLabelRenderModeNarrow { // Recommended for numeric labels (Numeric Mode)
+	padding: @_sap_tnt_InfoLabel_NarrowPadding
+}
+
+/* ==========================================================================
+   InfoLabel Display Only
+   ========================================================================== */
+.sapTntInfoLabel.sapTntInfoLabelDisplayOnly {
+	border: none;
+	background: @sapTextColor;
+
+	.sapTntInfoLabelInner {
+		color: @sapContent_ContrastTextColor;
+		line-height: @_sap_tnt_InfoLabel_LineHeightDisplayOnly;
+	}
+}
+
+/* ==========================================================================
+   InfoLabel No Text
+   ========================================================================== */
+   .sapTntInfoLabel.sapTntInfoLabelNoText {
+	padding: 0 0.1875rem;
+   }
+
+   /* ==========================================================================
+   InfoLabel With Icon
+   ========================================================================== */
+
+.sapTntInfoLabel.sapTntInfoLabelWithIcon {
+
+	.sapTntInfoLabelInner .sapTntInfoLabelText {
+		vertical-align: top;
+	}
+
+	.sapUiIcon {
+		padding-right: 0.125rem;
+		line-height: @_sap_tnt_InfoLabel_HeightWithoutBorders;
+		vertical-align: top;
+	}
+
+	&.sapTntInfoLabelNoText {
+		padding: @_sap_tnt_InfoLabel_NarrowPadding;
+
+		.sapUiIcon {
+			padding-right: 0;
+		}
+	}
+
+	&.sapTntInfoLabelDisplayOnly {
+		.sapUiIcon {
+			line-height: @_sap_tnt_InfoLabel_LineHeightDisplayOnly;
+		}
+	}
+}
+
+/* ==========================================================================
+   Empty InfoLabel
+   ========================================================================== */
+
+// It is recommended for the empty InfoLabel to be circle
+.sapTntInfoLabel.sapTntInfoLabelNoText:not(.sapTntInfoLabelWithIcon) {
+	&:not(.sapTntInfoLabelDisplayOnly) {
+		padding: @_sap_tnt_InfoLabel_PaddingWhenEmpty;
+	}
+	&.sapTntInfoLabelDisplayOnly {
+		padding: 0 @_sap_tnt_InfoLabel_LineHeightDisplayOnly/2;
+	}
+};
+
+/* ==========================================================================
+   InfoLabel in Form
+   ========================================================================== */
+
+.sapUiFormEdit .sapTntInfoLabel:not(.sapTntInfoLabelDisplayOnly) {
+	margin-top: 0.875rem;
+}
+
+/* Compact size */
+.sapUiSizeCompact .sapUiFormEdit .sapTntInfoLabel:not(.sapTntInfoLabelDisplayOnly) {
+	margin-top: 0.5rem;
+}
+
+
+/* ==========================================================================
+   InfoLabel in Table
+   ========================================================================== */
+
+.sapMListTbl .sapTntInfoLabel.sapTntInfoLabelWithIcon .sapUiIcon:not(.sapMLIBImgNav):not(.sapMBtnIcon) {
+	font-size: @sapMFontSmallSize;
+}
+/* END "InfoLabel.less" */

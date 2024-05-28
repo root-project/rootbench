@@ -1,0 +1,122 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 90,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "Calendar.less",
+			"size": 16775,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "CalendarRow.less",
+			"size": 3912,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ColorPicker.less",
+			"size": 3329,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ColorPicker/Alphaslider_BG.png",
+			"size": 2936,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ColorPicker/Swatch_BG.png",
+			"size": 954,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "FileUploader.less",
+			"size": 1851,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "Menu.less",
+			"size": 3257,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ShellHeader.less",
+			"size": 750,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ShellLayout.less",
+			"size": 1338,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ShellOverlay.less",
+			"size": 663,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 19816,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 119069,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 118701,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 159015,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 8036,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library.css",
+			"size": 158917,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library.less",
+			"size": 32869,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library.source.less",
+			"size": 543,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 167781,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 167683,
+			"theme": "sap_fiori_3"
+		}
+	]
+}

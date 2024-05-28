@@ -1,0 +1,1 @@
+"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool" -static -no_warning_for_no_symbols -o ../libLLVMDWARFLinker.a CMakeFiles/LLVMDWARFLinker.dir/DWARFLinkerCompileUnit.cpp.o CMakeFiles/LLVMDWARFLinker.dir/DWARFLinkerDeclContext.cpp.o CMakeFiles/LLVMDWARFLinker.dir/DWARFLinker.cpp.o CMakeFiles/LLVMDWARFLinker.dir/DWARFStreamer.cpp.o

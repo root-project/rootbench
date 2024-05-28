@@ -1,0 +1,379 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 64,
+			"theme": "base"
+		},
+		{
+			"name": "InfoLabel.less",
+			"size": 3773,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NavigationList.less",
+			"size": 5912,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SideNavigation.less",
+			"size": 3456,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ToolHeader.less",
+			"size": 2258,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ToolPage.less",
+			"size": 6035,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 3394,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 234,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 95411,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "fonts/SAP-icons-TNT.json",
+			"size": 6484,
+			"theme": "base"
+		},
+		{
+			"name": "fonts/SAP-icons-TNT.woff2",
+			"size": 29168,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/metadata.json",
+			"size": 289,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-CodePlaceholder.svg",
+			"size": 5769,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Company.svg",
+			"size": 7657,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-ExternalLink.svg",
+			"size": 6882,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-FaceID.svg",
+			"size": 14511,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Fingerprint.svg",
+			"size": 20333,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Lock.svg",
+			"size": 10739,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Mission.svg",
+			"size": 11358,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-NoApplications.svg",
+			"size": 10623,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-NoFlows.svg",
+			"size": 5218,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-NoUsers.svg",
+			"size": 8714,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Radar.svg",
+			"size": 9306,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Services.svg",
+			"size": 14710,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-SessionExpired.svg",
+			"size": 7870,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-SessionExpiring.svg",
+			"size": 8014,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Success.svg",
+			"size": 9779,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-SuccessfulAuth.svg",
+			"size": 5488,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-Unlock.svg",
+			"size": 11616,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Dialog-UnsuccessfulAuth.svg",
+			"size": 5767,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-CodePlaceholder.svg",
+			"size": 9471,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Company.svg",
+			"size": 13969,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-ExternalLink.svg",
+			"size": 12697,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-FaceID.svg",
+			"size": 18192,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Fingerprint.svg",
+			"size": 44073,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Lock.svg",
+			"size": 18914,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Mission.svg",
+			"size": 12173,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-NoApplications.svg",
+			"size": 12514,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-NoFlows.svg",
+			"size": 16330,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-NoUsers.svg",
+			"size": 12797,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Radar.svg",
+			"size": 15597,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Services.svg",
+			"size": 15010,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-SessionExpired.svg",
+			"size": 19584,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-SessionExpiring.svg",
+			"size": 20022,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Success.svg",
+			"size": 17147,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-SuccessfulAuth.svg",
+			"size": 13654,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-Unlock.svg",
+			"size": 10360,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Scene-UnsuccessfulAuth.svg",
+			"size": 15339,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-CodePlaceholder.svg",
+			"size": 4757,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Company.svg",
+			"size": 5326,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-ExternalLink.svg",
+			"size": 5551,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-FaceID.svg",
+			"size": 13412,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Fingerprint.svg",
+			"size": 15748,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Lock.svg",
+			"size": 10313,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Mission.svg",
+			"size": 12152,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-NoApplications.svg",
+			"size": 6316,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-NoFlows.svg",
+			"size": 4104,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-NoUsers.svg",
+			"size": 7074,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Radar.svg",
+			"size": 8140,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Services.svg",
+			"size": 13624,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-SessionExpired.svg",
+			"size": 7123,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-SessionExpiring.svg",
+			"size": 7326,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Success.svg",
+			"size": 7695,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-SuccessfulAuth.svg",
+			"size": 4771,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-Unlock.svg",
+			"size": 10494,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/tnt-Spot-UnsuccessfulAuth.svg",
+			"size": 4921,
+			"theme": "base"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 15212,
+			"theme": "base"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 1404,
+			"theme": "base"
+		},
+		{
+			"name": "library.css",
+			"size": 15207,
+			"theme": "base"
+		},
+		{
+			"name": "library.less",
+			"size": 22201,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library.source.less",
+			"size": 408,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 15990,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 15985,
+			"theme": "base"
+		}
+	]
+}

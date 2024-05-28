@@ -1,0 +1,1845 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 64,
+			"theme": "base"
+		},
+		{
+			"name": "AbstractContainer.less",
+			"size": 595,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ActionListItem.less",
+			"size": 1514,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ActionSelect.less",
+			"size": 677,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ActionSheet.less",
+			"size": 2901,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "App.less",
+			"size": 174,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Avatar.less",
+			"size": 5029,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Bar.less",
+			"size": 4212,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "BarBase.less",
+			"size": 1613,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Breadcrumbs.less",
+			"size": 2701,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "BusyDialog.less",
+			"size": 1156,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "BusyIndicator.less",
+			"size": 1498,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Button.less",
+			"size": 26735,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Carousel.less",
+			"size": 13169,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "CheckBox.less",
+			"size": 5539,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ColorPalette.less",
+			"size": 9136,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ColumnListItem.less",
+			"size": 5193,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ColumnMenu.less",
+			"size": 722,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ColumnResizer.less",
+			"size": 977,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ComboBox.less",
+			"size": 456,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ComboBoxBase.less",
+			"size": 1441,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ComboBoxTextField.less",
+			"size": 187,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "CustomListItem.less",
+			"size": 364,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "CustomTile.less",
+			"size": 600,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DatePicker.less",
+			"size": 672,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DateRangeSelection.less",
+			"size": 191,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DateTimePicker.less",
+			"size": 3409,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Dialog.less",
+			"size": 11844,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DisplayListItem.less",
+			"size": 1329,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DraftIndicator.less",
+			"size": 341,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DynamicDateRange.less",
+			"size": 1166,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ExpandableText.less",
+			"size": 1687,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FacetFilter.less",
+			"size": 3585,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FacetFilterItem.less",
+			"size": 852,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FacetFilterList.less",
+			"size": 1354,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FeedContent.less",
+			"size": 1815,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FeedInput.less",
+			"size": 3730,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FeedListItem.less",
+			"size": 9497,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FlexBox.less",
+			"size": 2751,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FormattedText.less",
+			"size": 806,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GenericTag.less",
+			"size": 3814,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GenericTile.less",
+			"size": 31152,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GroupHeaderListItem.less",
+			"size": 1844,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "HeaderContainer.less",
+			"size": 5333,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "IconTabBar.less",
+			"size": 37560,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "IconTabBarSelectList.less",
+			"size": 3790,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "IllustratedMessage.less",
+			"size": 1801,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Illustration.less",
+			"size": 1728,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Image.less",
+			"size": 1231,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ImageContent.less",
+			"size": 998,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Input.less",
+			"size": 3032,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "InputBase.less",
+			"size": 11823,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "InputListItem.less",
+			"size": 1028,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Label.less",
+			"size": 9056,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "LightBox.less",
+			"size": 7763,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Link.less",
+			"size": 2599,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ListBase.less",
+			"size": 6932,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ListItemBase.less",
+			"size": 7469,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Menu.less",
+			"size": 450,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MenuButton.less",
+			"size": 4084,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MenuListItem.less",
+			"size": 2435,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MessageBox.less",
+			"size": 1874,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MessagePage.less",
+			"size": 1928,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MessagePopover.less",
+			"size": 1190,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MessageStrip.less",
+			"size": 2133,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MessageToast.less",
+			"size": 642,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MessageView.less",
+			"size": 4529,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MultiComboBox.less",
+			"size": 3947,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "MultiInput.less",
+			"size": 4394,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NavContainer.less",
+			"size": 7283,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NewsContent.less",
+			"size": 2193,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NotificationListBase.less",
+			"size": 1213,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NotificationListGroup.less",
+			"size": 2261,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NotificationListItem.less",
+			"size": 2574,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "NumericContent.less",
+			"size": 5909,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectAttribute.less",
+			"size": 4485,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectHeader.less",
+			"size": 23020,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectIdentifier.less",
+			"size": 1979,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectListItem.less",
+			"size": 5154,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectMarker.less",
+			"size": 960,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectNumber.less",
+			"size": 6341,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ObjectStatus.less",
+			"size": 19826,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "OverflowToolbarAssociativePopover.less",
+			"size": 1915,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nColumnsPanel.less",
+			"size": 1936,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nConditionPanel.less",
+			"size": 1141,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nContainer.less",
+			"size": 353,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nDialog.less",
+			"size": 627,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nFilterPanel.less",
+			"size": 862,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nGroupPanel.less",
+			"size": 281,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "P13nSortPanel.less",
+			"size": 346,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PDFViewer.less",
+			"size": 499,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Page.less",
+			"size": 8448,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PagingButton.less",
+			"size": 214,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Panel.less",
+			"size": 2914,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PasteProvider.less",
+			"size": 578,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PlanningCalendar.less",
+			"size": 9366,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PlanningCalendarHeader.less",
+			"size": 584,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PlanningCalendarLegend.less",
+			"size": 535,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Popover.less",
+			"size": 8711,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ProgressIndicator.less",
+			"size": 5176,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "PullToRefresh.less",
+			"size": 3217,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "QuickView.less",
+			"size": 6166,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "RadioButton.less",
+			"size": 3980,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "RadioButtonGroup.less",
+			"size": 2190,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "RangeSlider.less",
+			"size": 1437,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "RatingIndicator.less",
+			"size": 3937,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ScrollBar.less",
+			"size": 872,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ScrollContainer.less",
+			"size": 813,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SearchField.less",
+			"size": 5680,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SegmentedButton.less",
+			"size": 4970,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Select.less",
+			"size": 13036,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SelectDialog.less",
+			"size": 624,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SelectList.less",
+			"size": 3312,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SelectionDetails.less",
+			"size": 260,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SelectionDetailsItem.less",
+			"size": 2183,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SemanticPage.less",
+			"size": 219,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Shell.less",
+			"size": 5460,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SimpleFixFlex.less",
+			"size": 413,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SinglePlanningCalendar.less",
+			"size": 1388,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SinglePlanningCalendarGrid.less",
+			"size": 19421,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SinglePlanningCalendarMonthGrid.less",
+			"size": 4854,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SlideTile.less",
+			"size": 4062,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Slider.less",
+			"size": 3088,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SliderTooltip.less",
+			"size": 1108,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SliderTooltipContainer.less",
+			"size": 361,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SplitButton.less",
+			"size": 1859,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SplitContainer.less",
+			"size": 5732,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "StandardListItem.less",
+			"size": 6948,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "StandardTile.less",
+			"size": 3773,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "StandardTreeItem.less",
+			"size": 430,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "StepInput.less",
+			"size": 687,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SuggestionItem.less",
+			"size": 250,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SuggestionsPopover.less",
+			"size": 3241,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Support.less",
+			"size": 1391,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Switch.less",
+			"size": 7409,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TabContainer.less",
+			"size": 1063,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TabStrip.less",
+			"size": 10166,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Table.less",
+			"size": 12234,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TablePersoDialog.less",
+			"size": 2874,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TableSelectDialog.less",
+			"size": 474,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Text.less",
+			"size": 2983,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TextArea.less",
+			"size": 3154,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Tile.less",
+			"size": 1579,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TileContainer.less",
+			"size": 5917,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TileContent.less",
+			"size": 3196,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TimePicker.less",
+			"size": 1689,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TimePickerClock.less",
+			"size": 5442,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TimePickerClocks.less",
+			"size": 1086,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TimePickerInputs.less",
+			"size": 496,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TimePickerSliders.less",
+			"size": 9067,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Title.less",
+			"size": 1811,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ToggleButton.less",
+			"size": 3803,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Token.less",
+			"size": 3102,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Tokenizer.less",
+			"size": 2249,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Toolbar.less",
+			"size": 3451,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ToolbarSeparator.less",
+			"size": 531,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ToolbarSpacer.less",
+			"size": 452,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "TreeItemBase.less",
+			"size": 1370,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "UploadCollection.less",
+			"size": 12685,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "UploadSet.less",
+			"size": 262,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ValueStateHeader.less",
+			"size": 1260,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ValueStateMessage.less",
+			"size": 749,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ViewSettingsDialog.less",
+			"size": 2634,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "WheelSlider.less",
+			"size": 7006,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "WheelSliderContainer.less",
+			"size": 1265,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Wizard.less",
+			"size": 2224,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "WizardProgressNavigator.less",
+			"size": 7767,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "WizardStep.less",
+			"size": 457,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 43250,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 234,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 146250,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-AddColumn.svg",
+			"size": 8994,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-AddPeople.svg",
+			"size": 29986,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-BalloonSky.svg",
+			"size": 41945,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-BeforeSearch.svg",
+			"size": 3026,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-Connection.svg",
+			"size": 8744,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-EmptyCalendar.svg",
+			"size": 58913,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-EmptyList.svg",
+			"size": 5992,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-EmptyPlanningCalendar.svg",
+			"size": 37779,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-ErrorScreen.svg",
+			"size": 21363,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-FilterTable.svg",
+			"size": 12451,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-GroupTable.svg",
+			"size": 18159,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NewMail.svg",
+			"size": 8192,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoActivities.svg",
+			"size": 6108,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoData.svg",
+			"size": 2637,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoEntries.svg",
+			"size": 2865,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoFilterResults.svg",
+			"size": 8950,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoMail.svg",
+			"size": 2591,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoMail_v1.svg",
+			"size": 9852,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoNotifications.svg",
+			"size": 7823,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoSavedItems.svg",
+			"size": 3490,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoSavedItems_v1.svg",
+			"size": 16890,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoSearchResults.svg",
+			"size": 3098,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoTasks.svg",
+			"size": 4668,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-NoTasks_v1.svg",
+			"size": 36657,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-PageNotFound.svg",
+			"size": 18622,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-ReloadScreen.svg",
+			"size": 20386,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-ResizeColumn.svg",
+			"size": 10067,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SearchEarth.svg",
+			"size": 12267,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SearchFolder.svg",
+			"size": 14693,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleBalloon.svg",
+			"size": 15180,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleBell.svg",
+			"size": 4500,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleCalendar.svg",
+			"size": 12636,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleCheckmark.svg",
+			"size": 2224,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleConnection.svg",
+			"size": 5952,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleEmptyDoc.svg",
+			"size": 6056,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleEmptyList.svg",
+			"size": 5038,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleError.svg",
+			"size": 5566,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleMagnifier.svg",
+			"size": 2812,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleMail.svg",
+			"size": 7693,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleNoSavedItems.svg",
+			"size": 17685,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleNotFoundMagnifier.svg",
+			"size": 6653,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleReload.svg",
+			"size": 6261,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SimpleTask.svg",
+			"size": 11644,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SleepingBell.svg",
+			"size": 11107,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SortColumn.svg",
+			"size": 8939,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-SuccessScreen.svg",
+			"size": 17182,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-Tent.svg",
+			"size": 20480,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-UnableToLoad.svg",
+			"size": 1864,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-UnableToUpload.svg",
+			"size": 2935,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Dialog-UploadCollection.svg",
+			"size": 17528,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Patterns.svg",
+			"size": 1400,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-AddColumn.svg",
+			"size": 14201,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-AddPeople.svg",
+			"size": 32948,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-BalloonSky.svg",
+			"size": 52441,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-BeforeSearch.svg",
+			"size": 14296,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-Connection.svg",
+			"size": 13014,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-EmptyCalendar.svg",
+			"size": 68413,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-EmptyList.svg",
+			"size": 10708,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-EmptyPlanningCalendar.svg",
+			"size": 46323,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-ErrorScreen.svg",
+			"size": 42266,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-FilterTable.svg",
+			"size": 18087,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-GroupTable.svg",
+			"size": 21897,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NewMail.svg",
+			"size": 19954,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoActivities.svg",
+			"size": 8857,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoData.svg",
+			"size": 7895,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoEntries.svg",
+			"size": 7023,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoFilterResults.svg",
+			"size": 16744,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoMail.svg",
+			"size": 10103,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoMail_v1.svg",
+			"size": 24980,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoNotifications.svg",
+			"size": 9638,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoSavedItems.svg",
+			"size": 21366,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoSavedItems_v1.svg",
+			"size": 18838,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoSearchResults.svg",
+			"size": 4789,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoTasks.svg",
+			"size": 7176,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-NoTasks_v1.svg",
+			"size": 58737,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-PageNotFound.svg",
+			"size": 21127,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-ReloadScreen.svg",
+			"size": 44410,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-ResizeColumn.svg",
+			"size": 15303,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SearchEarth.svg",
+			"size": 24597,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SearchFolder.svg",
+			"size": 18956,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleBalloon.svg",
+			"size": 17613,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleBell.svg",
+			"size": 5323,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleCalendar.svg",
+			"size": 45432,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleCheckmark.svg",
+			"size": 2931,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleConnection.svg",
+			"size": 6989,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleEmptyDoc.svg",
+			"size": 6877,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleEmptyList.svg",
+			"size": 7604,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleError.svg",
+			"size": 6941,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleMagnifier.svg",
+			"size": 3770,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleMail.svg",
+			"size": 9075,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleNoSavedItems.svg",
+			"size": 18835,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleNotFoundMagnifier.svg",
+			"size": 7687,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleReload.svg",
+			"size": 7103,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SimpleTask.svg",
+			"size": 11967,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SleepingBell.svg",
+			"size": 27804,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SortColumn.svg",
+			"size": 15076,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-SuccessScreen.svg",
+			"size": 40274,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-Tent.svg",
+			"size": 39021,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-UnableToLoad.svg",
+			"size": 5748,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-UnableToUpload.svg",
+			"size": 8016,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Scene-UploadCollection.svg",
+			"size": 19561,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-AddColumn.svg",
+			"size": 8932,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-AddPeople.svg",
+			"size": 29932,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-BalloonSky.svg",
+			"size": 23142,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-BeforeSearch.svg",
+			"size": 2586,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-Connection.svg",
+			"size": 13314,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-EmptyCalendar.svg",
+			"size": 49132,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-EmptyList.svg",
+			"size": 5757,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-EmptyPlanningCalendar.svg",
+			"size": 37646,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-ErrorScreen.svg",
+			"size": 15747,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-FilterTable.svg",
+			"size": 12677,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-GroupTable.svg",
+			"size": 18311,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NewMail.svg",
+			"size": 8802,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoActivities.svg",
+			"size": 7149,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoData.svg",
+			"size": 2354,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoEntries.svg",
+			"size": 3055,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoFilterResults.svg",
+			"size": 6964,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoMail.svg",
+			"size": 2257,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoMail_v1.svg",
+			"size": 8204,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoNotifications.svg",
+			"size": 4265,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoSavedItems.svg",
+			"size": 1904,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoSavedItems_v1.svg",
+			"size": 13738,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoSearchResults.svg",
+			"size": 2952,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoTasks.svg",
+			"size": 7461,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-NoTasks_v1.svg",
+			"size": 16672,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-PageNotFound.svg",
+			"size": 18063,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-ReloadScreen.svg",
+			"size": 13540,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-ResizeColumn.svg",
+			"size": 10062,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SearchEarth.svg",
+			"size": 18827,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SearchFolder.svg",
+			"size": 10063,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleBalloon.svg",
+			"size": 5484,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleBell.svg",
+			"size": 4272,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleCalendar.svg",
+			"size": 12359,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleCheckmark.svg",
+			"size": 1929,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleConnection.svg",
+			"size": 4442,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleEmptyDoc.svg",
+			"size": 3756,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleEmptyList.svg",
+			"size": 2859,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleError.svg",
+			"size": 5887,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleMagnifier.svg",
+			"size": 2681,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleMail.svg",
+			"size": 6871,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleNoSavedItems.svg",
+			"size": 17658,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleNotFoundMagnifier.svg",
+			"size": 4230,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleReload.svg",
+			"size": 4132,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SimpleTask.svg",
+			"size": 11412,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SleepingBell.svg",
+			"size": 12940,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SortColumn.svg",
+			"size": 8869,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-SuccessScreen.svg",
+			"size": 13086,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-Tent.svg",
+			"size": 19855,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-UnableToLoad.svg",
+			"size": 1632,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-UnableToUpload.svg",
+			"size": 2728,
+			"theme": "base"
+		},
+		{
+			"name": "illustrations/sapIllus-Spot-UploadCollection.svg",
+			"size": 16858,
+			"theme": "base"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 593643,
+			"theme": "base"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 18144,
+			"theme": "base"
+		},
+		{
+			"name": "library.css",
+			"size": 593613,
+			"theme": "base"
+		},
+		{
+			"name": "library.less",
+			"size": 684470,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library.source.less",
+			"size": 5495,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 629309,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 629279,
+			"theme": "base"
+		},
+		{
+			"name": "p13n.Container.less",
+			"size": 487,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "p13n.QueryPanel.less",
+			"size": 113,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "p13n.SelectionPanel.less",
+			"size": 923,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "shared.less",
+			"size": 6781,
+			"designtime": true,
+			"theme": "base"
+		}
+	]
+}

@@ -1,0 +1,100 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 650,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "Card.less",
+			"size": 207,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "DynamicPage.less",
+			"size": 3242,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "DynamicPageHeader.less",
+			"size": 374,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "DynamicPageTitle.less",
+			"size": 668,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "FlexibleColumnLayout.less",
+			"size": 803,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "ShellBar.less",
+			"size": 304,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 5350,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 99417,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 99057,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 101313,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 2208,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library.css",
+			"size": 101319,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library.less",
+			"size": 6492,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library.source.less",
+			"size": 497,
+			"designtime": true,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 103520,
+			"theme": "sap_belize"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 103526,
+			"theme": "sap_belize"
+		}
+	]
+}

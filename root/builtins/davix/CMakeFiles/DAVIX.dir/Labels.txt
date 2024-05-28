@@ -1,0 +1,13 @@
+# Target labels
+ DAVIX
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/CMakeFiles/DAVIX
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/CMakeFiles/DAVIX.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/CMakeFiles/DAVIX-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-update.rule

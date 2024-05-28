@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^[^.]+$|[.]h$|[.]icc$|[.]hxx$|[.]hpp$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/abhiacherjee/Documents/root_src/core/clingutils/src/multisetLinkdef.h
+multiset
+-
+set
+-
+string
+-
+
+/Users/abhiacherjee/Documents/root_src/interpreter/cling/include/cling/cint/multiset
+set
+-
+

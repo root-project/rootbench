@@ -1,0 +1,21 @@
+{
+	"symbols": [
+		"CodePlaceholder",
+		"Company",
+		"ExternalLink",
+		"FaceID",
+		"Fingerprint",
+		"Lock",
+		"NoApplications",
+		"NoFlows",
+		"NoUsers",
+		"Radar",
+		"Services",
+		"SessionExpired",
+		"SessionExpiring",
+		"Success",
+		"SuccessfulAuth",
+		"Unlock",
+		"UnsuccessfulAuth"
+	]
+}

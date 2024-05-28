@@ -1,0 +1,1 @@
+cmd='./configure;--prefix;<INSTALL_DIR>;--with-pic;--disable-shared;--with-png=no;--with-bzip2=no;--with-harfbuzz=no;--with-brotli=no;CC=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk;CFLAGS=-O'

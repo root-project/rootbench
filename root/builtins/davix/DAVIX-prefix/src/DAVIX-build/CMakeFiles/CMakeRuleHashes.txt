@@ -1,0 +1,13 @@
+# Hashes of file build rules.
+b397f3e5e2f8e0127585e8cdc5fa4aa3 CMakeFiles/BuildCurlBundled
+d69d66d4f9fdf54c1b4f9fec3c116f76 CMakeFiles/BuildCurlBundled-complete
+b397f3e5e2f8e0127585e8cdc5fa4aa3 CMakeFiles/GenerateVersionInfo
+284a02f66e9697fcfde7a4cfec28bf61 Version
+030eb0fd8528a941361ee7ce36aa4eef deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-build
+24f34cfee5216619c7160fd523802c1e deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-configure
+62c3313f4b2fd5fe9ae9fb0645cc0153 deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-download
+9e8c06dfe425892b78cde1874116f544 deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-install
+031c56f864ec2b4dbb53e8963179389c deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-mkdir
+6f00ad7494d8b9dcb92c86cc84bf48a9 deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-patch
+747dd3bee5c8399ca8f9fa7c7fafb2f2 deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-update
+5120716ef620bbfb110d23cd314da76f dist/CMakeFiles/abi-check

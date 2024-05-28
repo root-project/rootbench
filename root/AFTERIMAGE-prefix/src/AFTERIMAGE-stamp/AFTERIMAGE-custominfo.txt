@@ -1,0 +1,9 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=custom
+command=/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake;-E;copy_directory;/Users/abhiacherjee/Documents/root_src/graf2d/asimage/src/libAfterImage;AFTERIMAGE
+source_dir=/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE
+work_dir=/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src
+

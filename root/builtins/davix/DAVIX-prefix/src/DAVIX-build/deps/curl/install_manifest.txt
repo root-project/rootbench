@@ -1,0 +1,16 @@
+/usr/lib/libcurl.a
+/usr/bin/curl-config
+/usr/lib/pkgconfig/libcurl.pc
+/usr/include/curl/stdcheaders.h
+/usr/include/curl/mprintf.h
+/usr/include/curl/easy.h
+/usr/include/curl/curl.h
+/usr/include/curl/curlver.h
+/usr/include/curl/system.h
+/usr/include/curl/typecheck-gcc.h
+/usr/include/curl/multi.h
+/usr/include/curl/urlapi.h
+/usr/lib/cmake/CURL/CURLTargets.cmake
+/usr/lib/cmake/CURL/CURLTargets-noconfig.cmake
+/usr/lib/cmake/CURL/CURLConfigVersion.cmake
+/usr/lib/cmake/CURL/CURLConfig.cmake

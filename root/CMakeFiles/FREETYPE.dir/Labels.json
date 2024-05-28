@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/FREETYPE"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/FREETYPE.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/FREETYPE-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"FREETYPE"
+		],
+		"name" : "FREETYPE"
+	}
+}

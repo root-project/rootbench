@@ -1,0 +1,166 @@
+
+FreeType build system -- automatic system detection
+
+The following settings are used:
+
+  platform                    unix
+  compiler                    cc
+  configuration directory     ./builds/unix
+  configuration rules         ./builds/unix/unix.mk
+
+If this does not correspond to your system or settings please remove the file
+`config.mk' from this directory then read the INSTALL file for help.
+
+Otherwise, simply type `/Applications/Xcode.app/Contents/Developer/usr/bin/make' again to build the library,
+or `/Applications/Xcode.app/Contents/Developer/usr/bin/make refdoc' to build the API reference (this needs Python >= 3.5).
+
+Generating modules list in ./objs/ftmodule.h...
+done.
+* module: truetype  (Windows/Mac font files with extension *.ttf or *.ttc)
+* module: type1     (Postscript font files with extension *.pfa or *.pfb)
+* module: cff       (OpenType fonts with extension *.otf)
+* module: cid       (Postscript CID-keyed fonts, no known extension)
+* module: pfr       (PFR/TrueDoc font files with extension *.pfr)
+* module: type42    (Type 42 font files with no known extension)
+* module: winfnt    (Windows bitmap fonts with extension *.fnt or *.fon)
+* module: pcf       (pcf bitmap fonts)
+* module: bdf       (bdf bitmap fonts)
+* module: sfnt      (helper module for TrueType & OpenType formats)
+* module: autofit   (automatic hinting module)
+* module: pshinter  (Postscript hinter module)
+* module: smooth    (anti-aliased bitmap renderer)
+* module: raster    (monochrome bitmap renderer)
+* module: ot-svg    (OT-SVG glyph renderer module)
+* module: sdf       (signed distance field renderer)
+* module: bsdf      (bitmap to signed distance field converter)
+* module: psaux     (Postscript Type 1 & Type 2 helper module)
+* module: psnames   (Postscript & Unicode Glyph name handling)
+checking build system type... aarch64-apple-darwin22.6.0
+checking host system type... aarch64-apple-darwin22.6.0
+checking for gcc... /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether the compiler supports GNU C... yes
+checking whether /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk accepts -g... yes
+checking for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk option to enable C11 features... none needed
+checking how to run the C preprocessor... /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -E
+checking for pkg-config... no
+checking how to print strings... printf
+checking for a sed that does not truncate output... /usr/bin/sed
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for fgrep... /usr/bin/grep -F
+checking for ld used by /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk... /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+checking if the linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) is GNU ld... no
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 786432
+checking how to convert aarch64-apple-darwin22.6.0 file names to aarch64-apple-darwin22.6.0 format... func_convert_file_noop
+checking how to convert aarch64-apple-darwin22.6.0 file names to toolchain format... func_convert_file_noop
+checking for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld option to reload object files... -r
+checking for file... file
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for ar... ar
+checking for archiver @FILE support... no
+checking for strip... strip
+checking for ranlib... ranlib
+checking for gawk... no
+checking for mawk... no
+checking for nawk... no
+checking for awk... awk
+checking command to parse /usr/bin/nm -B output from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dsymutil... dsymutil
+checking for nmedit... nmedit
+checking for lipo... lipo
+checking for otool... otool
+checking for otool64... no
+checking for -single_module linker flag... ld: warning: -single_module is obsolete
+no
+checking for -exported_symbols_list linker flag... yes
+checking for -force_load linker flag... yes
+checking for stdio.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for strings.h... yes
+checking for sys/stat.h... yes
+checking for sys/types.h... yes
+checking for unistd.h... yes
+checking for sys/param.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk supports -fno-rtti -fno-exceptions... yes
+checking for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk option to produce PIC... -fno-common -DPIC
+checking if /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk PIC flag -fno-common -DPIC works... yes
+checking if /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk static flag -static works... no
+checking if /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk supports -c -o file.o... yes
+checking if /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk supports -c -o file.o... (cached) yes
+checking whether the /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... darwin22.6.0 dyld
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... no
+checking whether to build static libraries... yes
+checking for windows.h... no
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for a race-free mkdir -p... ./install-sh -c -d
+checking for fcntl.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for getpagesize... yes
+checking for working mmap... yes
+checking for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk options needed to detect all undeclared functions... none needed
+checking whether munmap is declared... yes
+checking for munmap's first parameter type... void *
+checking for memcpy... yes
+checking for memmove... yes
+checking /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk compiler flag -pedantic to assure ANSI C99 works correctly... ok, adding to XX_ANSIFLAGS
+checking /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk compiler flag -std=c99 to assure ANSI C99 works correctly... ok, adding to XX_ANSIFLAGS
+checking for -fvisibility=hidden compiler flag... yes
+checking for ZLIB... no
+checking for gzsetparams in -lz... yes
+checking for zlib.h... yes
+checking for library containing clock_gettime... none required
+checking for LIBRSVG... no
+checking target system type... aarch64-apple-darwin22.6.0
+checking whether /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk is Clang... yes
+checking whether pthreads work with "-pthread" and "-lpthread"... yes
+checking whether Clang needs flag to prevent "argument unused" warning when linking with -pthread... no
+checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+checking whether more special flags are required for pthreads... no
+checking for PTHREAD_PRIO_INHERIT... yes
+checking for python3... python3
+checking for python version... 3.11.3
+checking for `docwriter' Python module... no
+configure: creating ./config.status
+config.status: creating ftoption.h
+config.status: creating unix-cc.mk
+config.status: creating unix-def.mk
+config.status: creating ftconfig.h
+config.status: executing libtool commands
+configure:
+
+Library configuration:
+  external zlib: yes (autoconf test)
+  bzip2:         no
+  libpng:        no
+  harfbuzz:      no
+  brotli:        no
+  pthread:       yes
+

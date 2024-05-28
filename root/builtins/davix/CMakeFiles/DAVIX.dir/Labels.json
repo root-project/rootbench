@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/CMakeFiles/DAVIX"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/CMakeFiles/DAVIX.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/CMakeFiles/DAVIX-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-stamp/DAVIX-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"DAVIX"
+		],
+		"name" : "DAVIX"
+	}
+}

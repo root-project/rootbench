@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake;-P;/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/verify-OPENUI5.cmake;COMMAND;/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake;-P;/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/extract-OPENUI5.cmake
+source_dir=/Users/abhiacherjee/Documents/rootbench/root/ui5/distribution
+work_dir=/Users/abhiacherjee/Documents/rootbench/root/ui5
+url(s)=/Users/abhiacherjee/Documents/root_src/builtins/openui5/openui5.tar.gz
+hash=SHA256=cc6791ac9c064c3e3f8281870063c549fa5e3f1252095ccc5d542c33db9cf8b2
+no_extract=
+
