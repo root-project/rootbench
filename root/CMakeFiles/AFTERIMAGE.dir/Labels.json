@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/AFTERIMAGE"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/AFTERIMAGE.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/AFTERIMAGE-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"AFTERIMAGE"
+		],
+		"name" : "AFTERIMAGE"
+	}
+}

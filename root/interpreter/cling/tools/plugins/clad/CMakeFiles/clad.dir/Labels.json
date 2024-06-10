@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/CMakeFiles/clad"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/CMakeFiles/clad.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/CMakeFiles/clad-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"clad"
+		],
+		"name" : "clad"
+	}
+}

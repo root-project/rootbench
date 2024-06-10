@@ -1,0 +1,14 @@
+prefix=/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix
+exec_prefix=/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix
+libdir=/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/lib
+includedir=/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/include
+
+Name: FreeType 2
+URL: https://freetype.org
+Description: A free, high-quality, and portable font engine.
+Version: 24.3.18
+Requires: 
+Requires.private: 
+Libs: -L/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/lib -lfreetype -lz
+Libs.private: 
+Cflags: -I${includedir}/freetype2

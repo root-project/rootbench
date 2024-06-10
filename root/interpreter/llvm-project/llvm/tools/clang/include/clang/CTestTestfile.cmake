@@ -1,0 +1,14 @@
+# CMake generated Testfile for 
+# Source directory: /Users/abhiacherjee/Documents/root_src/interpreter/llvm-project/clang/include/clang
+# Build directory: /Users/abhiacherjee/Documents/rootbench/root/interpreter/llvm-project/llvm/tools/clang/include/clang
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+subdirs("AST")
+subdirs("Basic")
+subdirs("Driver")
+subdirs("Parse")
+subdirs("Sema")
+subdirs("Serialization")
+subdirs("StaticAnalyzer/Checkers")
+subdirs("Tooling/Syntax")

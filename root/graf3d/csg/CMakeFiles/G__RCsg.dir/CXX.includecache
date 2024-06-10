@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^[^.]+$|[.]h$|[.]icc$|[.]hxx$|[.]hpp$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/abhiacherjee/Documents/root_src/graf3d/csg/inc/CsgOps.h
+RtypesCore.h
+/Users/abhiacherjee/Documents/root_src/graf3d/csg/inc/RtypesCore.h
+
+/Users/abhiacherjee/Documents/root_src/graf3d/csg/inc/LinkDef.h
+
+include/DllImport.h
+
+include/RConfigure.h
+
+include/ROOT/RConfig.hxx
+../RVersion.h
+include/RVersion.h
+RConfigure.h
+include/ROOT/RConfigure.h
+stdlib.h
+-
+features.h
+-
+AvailabilityMacros.h
+-
+TargetConditionals.h
+-
+
+include/ROOT/RVersion.hxx
+
+include/RVersion.h
+ROOT/RVersion.hxx
+include/ROOT/RVersion.hxx
+
+include/RtypesCore.h
+ROOT/RConfig.hxx
+-
+DllImport.h
+include/DllImport.h
+cstddef
+-
+

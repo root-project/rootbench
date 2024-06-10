@@ -1,0 +1,13 @@
+# Target labels
+ MATHJAX
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/MATHJAX
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/MATHJAX.rule
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/MATHJAX-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/MATHJAX-update.rule

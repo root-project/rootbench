@@ -1,0 +1,1 @@
+"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool" -static -no_warning_for_no_symbols -o ../../../libLLVMOrcShared.a CMakeFiles/LLVMOrcShared.dir/AllocationActions.cpp.o CMakeFiles/LLVMOrcShared.dir/OrcError.cpp.o CMakeFiles/LLVMOrcShared.dir/OrcRTBridge.cpp.o CMakeFiles/LLVMOrcShared.dir/SimpleRemoteEPCUtils.cpp.o

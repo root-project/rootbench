@@ -1,0 +1,13 @@
+# Target labels
+ AFTERIMAGE
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/AFTERIMAGE
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/AFTERIMAGE.rule
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/AFTERIMAGE-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/AFTERIMAGE-prefix/src/AFTERIMAGE-stamp/AFTERIMAGE-update.rule

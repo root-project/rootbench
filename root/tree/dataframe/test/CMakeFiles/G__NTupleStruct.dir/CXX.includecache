@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^[^.]+$|[.]h$|[.]icc$|[.]hxx$|[.]hpp$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/NTupleStruct.hxx
+
+/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/NTupleStructLinkDef.h
+

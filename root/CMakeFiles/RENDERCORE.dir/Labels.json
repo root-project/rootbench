@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/RENDERCORE"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/RENDERCORE.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/RENDERCORE-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"RENDERCORE"
+		],
+		"name" : "RENDERCORE"
+	}
+}
