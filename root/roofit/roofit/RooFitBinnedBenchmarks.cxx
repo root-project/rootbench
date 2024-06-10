@@ -270,11 +270,11 @@ static void ChanArguments(benchmark::internal::Benchmark *b)
    }
 
    // bin scan
-   //for (int nBins : nBinsVector) {
-      //for (int nCPU : nCPUVector) {
-         //b->Args({nChannelsForBinScan, nBins, nCPU});
-      //}
-   //}
+   for (int nBins : nBinsVector) {
+      for (int nCPU : nCPUVector) {
+         b->Args({nChannelsForBinScan, nBins, nCPU});
+      }
+   }
 }
 
 BENCHMARK(BM_RooFit_BinnedTestMigrad)->Apply(ChanArguments)->UseRealTime()->Unit(timeUnit)->Iterations(1);
@@ -299,7 +299,7 @@ int main(int argc, char **argv)
             evalBackend = argv[i + 1];
          }
          if (i + 2 < argc) {
-            // Set the evalBackend value from the next command-line argument
+            // Set the sevalBackend value from the next command-line argument
             evalBackend = argv[i + 1];
             seeding_only = argv[i + 2];
          }
