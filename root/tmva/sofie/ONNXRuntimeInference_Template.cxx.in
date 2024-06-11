@@ -11,6 +11,7 @@
 #include <random>
 #include <chrono>
 #include <fstream>
+#include <filesystem>
 
 using namespace std;
 
@@ -168,4 +169,29 @@ static void @FUNC_NAME@(benchmark::State& state, string model_path)
 }
 @BENCHMARK_CAPTURES@
 
-BENCHMARK_MAIN();
+//BENCHMARK_MAIN();
+
+// define main to pass some convenient command line parameters
+int main(int argc, char **argv) {
+
+   // Parse command line arguments
+   for (int i = 1; i < argc; i++) {
+      std::string arg = argv[i];
+      if (arg == "-v") {
+         //std::cout << "---running in verbose mode" << std::endl;
+         //verbose = true;
+      } else if ((arg == "-d" || arg == "--dir") && argc > i+1) {
+         std::string pathDir = argv[i+1];
+         std::filesystem::path path(pathDir);
+         std::filesystem::current_path(path);
+         i++;
+      }
+   }
+
+   std::cout << "running benchmark from current directory " << std::filesystem::current_path()  << std::endl;
+
+   ::benchmark::Initialize(&argc, argv);
+   ::benchmark::RunSpecifiedBenchmarks();
+
+   return 0;
+}

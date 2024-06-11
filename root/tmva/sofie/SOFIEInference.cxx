@@ -10,6 +10,7 @@
 #include <memory>
 #include <functional>
 #include <random>
+#include <filesystem>
 
 #include "Linear_event.hxx"
 #include "Linear_16.hxx"
@@ -60,7 +61,8 @@ void BM_SOFIE_Inference(benchmark::State &state)
       std::generate(input.begin(), input.end(), []() { return distribution(generator); });
    }
    float *input_ptr = input.data();
-   S s("");
+   // construct session (no need to pass filename, use default value)
+   S s;
 
    double totDuration = 0;
    int ntimes = 0;
@@ -143,7 +145,8 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
       input3 = vector<float>(input3.size(),3.);
    }
 
-   S s("");
+   // create session with default filename
+   S s{};
 
    //std::cout << "init done - do benchmark \n";
 
@@ -199,5 +202,30 @@ BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_RNN_d10_L20_h8_B1::Session)->N
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_GRU_d10_L20_h8_B1::Session)->Name("GRU_d10_L20_h8_B1")->Args({3 * 5, 1})->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(BM_SOFIE_Inference, TMVA_SOFIE_LSTM_d10_L20_h8_B1::Session)->Name("LSTM_d10_L20_h8_B1")->Args({1 * 1, 1})->Unit(benchmark::kMillisecond);
 
+// default main
+//BENCHMARK_MAIN();
 
-BENCHMARK_MAIN();
+// define main to pass some convenient command line parameters
+int main(int argc, char **argv) {
+
+   // Parse command line arguments
+   for (Int_t i = 1; i < argc; i++) {
+      std::string arg = argv[i];
+      if (arg == "-v") {
+         std::cout << "---running in verbose mode" << std::endl;
+         verbose = true;
+      } else if ((arg == "-d" || arg == "--dir") && argc > i+1) {
+         std::string pathDir = argv[i+1];
+         std::filesystem::path path(pathDir);
+         std::filesystem::current_path(path);
+         i++;
+      }
+   }
+
+   std::cout << "running benchmark from current directory " << std::filesystem::current_path()  << std::endl;
+
+   ::benchmark::Initialize(&argc, argv);
+   ::benchmark::RunSpecifiedBenchmarks();
+
+   return 0;
+}

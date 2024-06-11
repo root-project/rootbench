@@ -22,8 +22,8 @@ int main(int argc, char *argv[]){
    RModelParser_ONNX parser;
    std::cout << "Parsing file " << argv[1] << std::endl;
    RModel model = parser.Parse(argv[1]);
-   model.Generate();
+   model.Generate(Options::kDefault, 1);
+   model.PrintRequiredInputTensors();
    model.OutputGenerated(outname);
-
    return 0;
 }
