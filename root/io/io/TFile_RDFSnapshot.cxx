@@ -15,7 +15,7 @@ auto SetupRDF() {
    return tdf_1;
 }
 
-auto SetupRDFOptions(ROOT::ECompressionAlgorithm alg, int level) {
+auto SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::EValues alg, int level) {
   ROOT::RDF::RSnapshotOptions options;
   options.fCompressionAlgorithm = alg;
   options.fCompressionLevel = level;
@@ -25,7 +25,7 @@ auto SetupRDFOptions(ROOT::ECompressionAlgorithm alg, int level) {
 
 static void BM_TFile_RDFSnapshot_ZLIB(benchmark::State &state) {
   auto tdf = SetupRDF();
-  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kZLIB, 1);
+  auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kZLIB, 1);
   for (auto _ : state) {
      //And we write out the dataset on disk
      tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
@@ -36,7 +36,7 @@ BENCHMARK(BM_TFile_RDFSnapshot_ZLIB)->Unit(benchmark::kMicrosecond);
 
 static void BM_TFile_RDFSnapshot_LZ4(benchmark::State &state) {
   auto tdf = SetupRDF();
-  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kLZ4, 4);
+  auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kLZ4, 4);
   for (auto _ : state) {
      //And we write out the dataset on disk
      tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
@@ -47,7 +47,7 @@ BENCHMARK(BM_TFile_RDFSnapshot_LZ4)->Unit(benchmark::kMicrosecond);
 
 static void BM_TFile_RDFSnapshot_LZMA (benchmark::State &state) {
   auto tdf = SetupRDF();
-  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kLZMA, 8);
+  auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kLZMA, 8);
   for (auto _ : state) {
      //And we write out the dataset on disk
      tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
@@ -57,7 +57,7 @@ BENCHMARK(BM_TFile_RDFSnapshot_LZMA)->Unit(benchmark::kMicrosecond);
 
 static void BM_TFile_RDFSnapshot_ZSTD (benchmark::State &state) {
   auto tdf = SetupRDF();
-  auto options = SetupRDFOptions(ROOT::ECompressionAlgorithm::kZSTD, 6);
+  auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kZSTD, 6);
   for (auto _ : state) {
      //And we write out the dataset on disk
      tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
