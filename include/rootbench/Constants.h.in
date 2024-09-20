@@ -1,3 +1,6 @@
 namespace RB {
    static constexpr const char* kDatasetDirectory = "@RB_DATASETDIR@";
 }
+
+#cmakedefine RB_ON_WIN32 ${RB_ON_WIN32}
+#cmakedefine RB_ON_UNIX ${RB_ON_UNIX}
