@@ -31,27 +31,9 @@ public:
          constraintParams.add(*mc->GetParametersOfInterest());
       if (mc->GetNuisanceParameters())
          constraintParams.add(*mc->GetNuisanceParameters());
-
-      auto *pdf = ws->pdf("simPdf");
-
-      std::unique_ptr<RooAbsReal> nll{pdf->createNLL(*ws->data("obsData"), Constrain(constraintParams),
-                                                     GlobalObservables(*mc->GetGlobalObservables()), EvalBackend::Legacy())};
-
-      RooMinimizer m(*nll);
-      m.setPrintLevel(-1);
-      m.setStrategy(0);
-      m.setLoggingToDataSet(true);
-
-      m.minimize("Minuit2");
-
-      minimizationPath = std::make_unique<RooDataSet>(*m.getLogDataSet());
    }
 
    std::unique_ptr<RooWorkspace> ws;
-
-   // Dataset with the floating parameters as columns, and each call to getVal
-   // in the minimization path as rows.
-   std::unique_ptr<RooDataSet> minimizationPath;
 
    // The constraint parameters in the model.
    RooArgSet constraintParams;
@@ -77,22 +59,23 @@ static void benchHistFactory001(benchmark::State &state)
                                                   GlobalObservables(*mc->GetGlobalObservables()),
                                                   EvalBackend(evalBackend))};
 
-   auto &minimizationPath = *g_testData.minimizationPath;
-
-   RooArgSet parameters{};
+   RooArgSet parameters;
+   RooArgSet initialParams;
    nll->getParameters(nullptr, parameters);
+   parameters.snapshot(initialParams);
 
    // The minimization path depends on the configuration in unpredictable ways.
    // That's why we don't use the RooMinimizer each time, but only "emulate" a
    // fit by taking a reference minimization path.
 
    for (auto _ : state) {
-      for (auto i = 0; i < minimizationPath.numEntries(); ++i) {
-         state.PauseTiming();
-         parameters.assign(*minimizationPath.get(i));
-         state.ResumeTiming();
-         nll->getVal();
-      }
+      state.PauseTiming();
+      parameters.assign(initialParams);
+      RooMinimizer m(*nll);
+      m.setPrintLevel(-1);
+      m.setStrategy(0);
+      state.ResumeTiming();
+      m.minimize("Minuit2");
    }
 }
 
