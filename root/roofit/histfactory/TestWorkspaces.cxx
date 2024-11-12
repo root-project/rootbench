@@ -40,7 +40,6 @@ TestWorkspaces::getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFa
 
    meas.SetLumi(1.0);
    meas.SetLumiRelErr(0.10);
-   meas.SetExportOnly(false);
    meas.SetBinHigh(2);
 
    // Create a channel
@@ -77,8 +76,6 @@ TestWorkspaces::getWorkspace001(RooStats::HistFactory::HistoToWorkspaceFactoryFa
    // print some output,
    meas.CollectHistograms();
    meas.PrintTree(oocoutI(nullptr, HistFactory));
-
-   meas.SetExportOnly(true);
 
    // Now, do the measurement
    return std::unique_ptr<RooWorkspace>{MakeModelAndMeasurementFast(meas, cfg)};
