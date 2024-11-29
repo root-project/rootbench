@@ -1,0 +1,31 @@
+<version>
+    @VERSION_STRING@
+</version>
+
+<headers>
+    @CMAKE_SOURCE_DIR@/include/davix/
+</headers>
+
+<libs>
+    @CMAKE_BINARY_DIR@/src/
+</libs>
+
+
+<skip_symbols>
+<!-- httpcodeTo** functions were commented as private, false positive -->
+_ZN5Davix19httpcodeToDavixCodeEiRKSsS1_PPNS_10DavixErrorE
+_ZN5Davix15httpcodeIsValidEi
+
+<!-- typeinfo symbol, ignore this, false positive due to clang change -->
+_ZN5Davix4HookINS_17HookReceiveHeaderEE7getTypeEPS2_
+_ZN5Davix4HookINS_17HookReceiveHeaderEE7getTypeEv
+_ZN5Davix4HookINS_19HookRequestPostExecEE7getTypeEPS2_
+_ZN5Davix4HookINS_19HookRequestPostExecEE7getTypeEv
+_ZN5Davix4HookINS_18HookRequestPreExecEE7getTypeEPS2_
+_ZN5Davix4HookINS_18HookRequestPreExecEE7getTypeEv
+_ZN5Davix4HookINS_14HookSendHeaderEE7getTypeEPS2_
+_ZN5Davix4HookINS_14HookSendHeaderEE7getTypeEv
+
+<!-- operator move inside scope, false positive, ABI preserved -->
+_ZlsRSoRKN5Davix3UriE
+</skip_symbols>

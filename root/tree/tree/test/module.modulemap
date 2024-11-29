@@ -1,0 +1,7 @@
+module "SillyStruct" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/tree/test/SillyStruct.h" { header "/Users/abhiacherjee/Documents/root_src/tree/tree/test/SillyStruct.h" export * }
+  link "libSillyStruct.so"
+  export *
+}
+

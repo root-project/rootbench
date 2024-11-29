@@ -1,0 +1,38 @@
+[  0%] Built target intrinsics_gen
+[  3%] Building CXX object demos/ErrorEstimation/CustomModel/CMakeFiles/cladCustomModelPlugin.dir/CustomModel.cpp.o
+[  6%] Linking CXX shared library libcladCustomModelPlugin.dylib
+[  6%] Built target cladCustomModelPlugin
+[  9%] Building CXX object demos/ErrorEstimation/PrintModel/CMakeFiles/cladPrintModelPlugin.dir/PrintModel.cpp.o
+[ 12%] Linking CXX shared library libcladPrintModelPlugin.dylib
+[ 12%] Built target cladPrintModelPlugin
+[ 15%] Generating VCSVersion.inc
+[ 18%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/BaseForwardModeVisitor.cpp.o
+[ 21%] Building CXX object tools/CMakeFiles/cladPlugin.dir/ClangPlugin.cpp.o
+[ 25%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/CladUtils.cpp.o
+[ 28%] Building CXX object tools/CMakeFiles/cladPlugin.dir/ClangBackendPlugin.cpp.o
+[ 31%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/ConstantFolder.cpp.o
+[ 34%] Building CXX object tools/CMakeFiles/cladPlugin.dir/DerivedFnInfo.cpp.o
+[ 37%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/DerivativeBuilder.cpp.o
+[ 40%] Building CXX object tools/CMakeFiles/cladPlugin.dir/RequiredSymbols.cpp.o
+[ 43%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/DiffPlanner.cpp.o
+[ 46%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/ErrorEstimator.cpp.o
+[ 50%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/EstimationModel.cpp.o
+[ 53%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/ForwardModeVisitor.cpp.o
+[ 56%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/HessianModeVisitor.cpp.o
+[ 59%] Linking CXX static library ../lib/libcladPlugin.a
+[ 62%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/JacobianModeVisitor.cpp.o
+[ 62%] Built target cladPlugin
+[ 65%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/MultiplexExternalRMVSource.cpp.o
+[ 68%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/ReverseModeVisitor.cpp.o
+[ 71%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/StmtClone.cpp.o
+[ 75%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/VectorForwardModeVisitor.cpp.o
+[ 78%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/Version.cpp.o
+[ 81%] Building CXX object lib/Differentiator/CMakeFiles/cladDifferentiator.dir/VisitorBase.cpp.o
+[ 84%] Linking CXX static library ../libcladDifferentiator.a
+[ 84%] Built target cladDifferentiator
+[ 87%] Building CXX object tools/CMakeFiles/clad.dir/DerivedFnInfo.cpp.o
+[ 90%] Building CXX object tools/CMakeFiles/clad.dir/RequiredSymbols.cpp.o
+[ 93%] Building CXX object tools/CMakeFiles/clad.dir/ClangPlugin.cpp.o
+[ 96%] Building CXX object tools/CMakeFiles/clad.dir/ClangBackendPlugin.cpp.o
+[100%] Linking CXX shared module ../lib/clad.dylib
+[100%] Built target clad

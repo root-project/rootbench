@@ -1,0 +1,13 @@
+# Target labels
+ clad
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/CMakeFiles/clad
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/CMakeFiles/clad.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/CMakeFiles/clad-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/interpreter/cling/tools/plugins/clad/clad-prefix/src/clad-stamp/clad-update.rule

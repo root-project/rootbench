@@ -1,0 +1,23 @@
+{ decls }
+namespace std { inline namespace __1 {  } }
+
+[ libmapDict.so ]
+# List of selected classes
+class map<basic_string<char,char_traits<char>,allocator<char> >,basic_string<char,char_traits<char>,allocator<char> >,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,basic_string<char,char_traits<char>,allocator<char> > > > >
+class map<basic_string<char,char_traits<char>,allocator<char> >,double,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,double> > >
+class map<basic_string<char,char_traits<char>,allocator<char> >,float,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,float> > >
+class map<basic_string<char,char_traits<char>,allocator<char> >,int,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,int> > >
+class map<basic_string<char,char_traits<char>,allocator<char> >,long,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,long> > >
+class map<basic_string<char,char_traits<char>,allocator<char> >,void*,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,void*> > >
+class map<char*,char*>
+class map<char*,double>
+class map<char*,float>
+class map<char*,int>
+class map<char*,long>
+class map<char*,void*>
+class map<string,double>
+class map<string,float>
+class map<string,int>
+class map<string,long>
+class map<string,string>
+class map<string,void*>

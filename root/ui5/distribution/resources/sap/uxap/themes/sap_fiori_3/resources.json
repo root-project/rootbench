@@ -1,0 +1,112 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 90,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "AnchorBar.less",
+			"size": 8887,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "HierarchicalSelect.less",
+			"size": 5021,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "IconTabBar.less",
+			"size": 398,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ObjectPageHeader.less",
+			"size": 3816,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ObjectPageHeaderContent.less",
+			"size": 3198,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ObjectPageLayout.less",
+			"size": 2005,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ObjectPageSection.less",
+			"size": 1593,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "ObjectPageSubSection.less",
+			"size": 1501,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 1542,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 95557,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 95195,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 76591,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 553,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library.css",
+			"size": 76582,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library.less",
+			"size": 27502,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library.source.less",
+			"size": 586,
+			"designtime": true,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 79035,
+			"theme": "sap_fiori_3"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 79026,
+			"theme": "sap_fiori_3"
+		}
+	]
+}

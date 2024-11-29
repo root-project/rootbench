@@ -1,0 +1,13 @@
+# Target labels
+ RENDERCORE
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/RENDERCORE
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/RENDERCORE.rule
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/RENDERCORE-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/RENDERCORE-prefix/src/RENDERCORE-stamp/RENDERCORE-update.rule

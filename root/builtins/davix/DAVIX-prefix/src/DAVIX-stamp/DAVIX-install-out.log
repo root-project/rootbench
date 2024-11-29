@@ -1,0 +1,59 @@
+[  1%] Generating Version
+Cannot regenerate include/davix/features.hpp from git
+Cannot regenerate version.cmake from git
+[  1%] Built target GenerateVersionInfo
+[  9%] Built target BuildCurlBundled
+[ 35%] Built target LibNeonObjects
+[100%] Built target libdavix_static
+Install the project...
+-- Install configuration: "RelWithDebInfo"
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/features.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/compat
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/compat/davix_ignored.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/compat/deprecated.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/file
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/file/davposix.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/file/davfile.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/file/davix_file_info.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/auth
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/auth/davixauth.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/auth/davixx509cred.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/davix_file_types.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/davixcontext.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_uri.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_azure_utils.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_nocopy.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_types.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_s3_utils.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_config.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_gcloud_utils.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_misc_utils.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_swift_utils.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/utils/davix_logger.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/status
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/status/davixstatusrequest.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/hooks
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/hooks/davix_hooks_fwd.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/hooks/davix_hooks_impl.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/hooks/davix_hooks.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/params
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/params/davixrequestparams.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/params/davix_request_params_types.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/request
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/request/httprequest.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/copy
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/copy/davixcopy.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/include/davix/davix.hpp
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/doc/davix/RELEASE-NOTES.md
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/doc/davix/LICENSE
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/lib/libdavix.a
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-get.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-http.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-ls.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-mkdir.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-mv.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-put.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man1/davix-rm.1
+-- Installing: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/share/man/man3/libdavix.3

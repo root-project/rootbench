@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake;-P;/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/verify-MATHJAX.cmake;COMMAND;/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake;-P;/Users/abhiacherjee/Documents/rootbench/root/MATHJAX-prefix/src/MATHJAX-stamp/extract-MATHJAX.cmake
+source_dir=/Users/abhiacherjee/Documents/rootbench/root/js/mathjax
+work_dir=/Users/abhiacherjee/Documents/rootbench/root/js
+url(s)=/Users/abhiacherjee/Documents/root_src/documentation/doxygen/mathjax.tar.gz
+hash=SHA256=c5e22e60430a65963a87ab4dcc8856b9be5bd434d3b3871f27ee65b584c3c3ea
+no_extract=
+

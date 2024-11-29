@@ -1,0 +1,9 @@
+{ decls }
+namespace std { inline namespace __1 {  } }
+
+[ libvalarrayDict.so ]
+# List of selected classes
+class valarray<double>
+class valarray<float>
+class valarray<int>
+class valarray<long>

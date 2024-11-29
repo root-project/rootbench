@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/BuildCurlBundled"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/BuildCurlBundled.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/BuildCurlBundled-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/deps/curl/src/BuildCurlBundled-stamp/BuildCurlBundled-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"BuildCurlBundled"
+		],
+		"name" : "BuildCurlBundled"
+	}
+}

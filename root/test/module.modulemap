@@ -1,0 +1,35 @@
+module "Event" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/test/Event.h" { header "/Users/abhiacherjee/Documents/root_src/test/Event.h" export * }
+  link "libEvent.so"
+  export *
+}
+
+module "Hello" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/test/Hello.h" { header "/Users/abhiacherjee/Documents/root_src/test/Hello.h" export * }
+  link "libHello.so"
+  export *
+}
+
+module "Aclock" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/test/Aclock.h" { header "/Users/abhiacherjee/Documents/root_src/test/Aclock.h" export * }
+  link "libAclock.so"
+  export *
+}
+
+module "TBench" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/test/TBench.h" { header "/Users/abhiacherjee/Documents/root_src/test/TBench.h" export * }
+  link "libTBench.so"
+  export *
+}
+
+module "TrackMathCoreDict" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/test/TrackMathCore.h" { header "/Users/abhiacherjee/Documents/root_src/test/TrackMathCore.h" export * }
+  link "libTrackMathCoreDict.so"
+  export *
+}
+

@@ -1,0 +1,7 @@
+module "CustomStructUtil" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/ntupleutil/v7/test/CustomStructUtil.hxx" { header "/Users/abhiacherjee/Documents/root_src/tree/ntupleutil/v7/test/CustomStructUtil.hxx" export * }
+  link "libCustomStructUtil.so"
+  export *
+}
+

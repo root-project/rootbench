@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "../../lib/libGCocoa.pdb"
+  "../../lib/libGCocoa.so"
+  "CMakeFiles/GCocoa.dir/src/CocoaConstants.mm.o"
+  "CMakeFiles/GCocoa.dir/src/CocoaConstants.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/CocoaGuiTypes.mm.o"
+  "CMakeFiles/GCocoa.dir/src/CocoaGuiTypes.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/CocoaPrivate.mm.o"
+  "CMakeFiles/GCocoa.dir/src/CocoaPrivate.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/FontCache.mm.o"
+  "CMakeFiles/GCocoa.dir/src/FontCache.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/MenuLoader.mm.o"
+  "CMakeFiles/GCocoa.dir/src/MenuLoader.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/QuartzPixmap.mm.o"
+  "CMakeFiles/GCocoa.dir/src/QuartzPixmap.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/QuartzWindow.mm.o"
+  "CMakeFiles/GCocoa.dir/src/QuartzWindow.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/ROOTApplicationDelegate.mm.o"
+  "CMakeFiles/GCocoa.dir/src/ROOTApplicationDelegate.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/ROOTOpenGLView.mm.o"
+  "CMakeFiles/GCocoa.dir/src/ROOTOpenGLView.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/TGCocoa.mm.o"
+  "CMakeFiles/GCocoa.dir/src/TGCocoa.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/TGOSXGL.mm.o"
+  "CMakeFiles/GCocoa.dir/src/TGOSXGL.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/TGQuartz.mm.o"
+  "CMakeFiles/GCocoa.dir/src/TGQuartz.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/X11Atoms.mm.o"
+  "CMakeFiles/GCocoa.dir/src/X11Atoms.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/X11Buffer.mm.o"
+  "CMakeFiles/GCocoa.dir/src/X11Buffer.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/X11Colors.mm.o"
+  "CMakeFiles/GCocoa.dir/src/X11Colors.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/X11Events.mm.o"
+  "CMakeFiles/GCocoa.dir/src/X11Events.mm.o.d"
+  "CMakeFiles/GCocoa.dir/src/XLFDParser.mm.o"
+  "CMakeFiles/GCocoa.dir/src/XLFDParser.mm.o.d"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/GCocoa.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

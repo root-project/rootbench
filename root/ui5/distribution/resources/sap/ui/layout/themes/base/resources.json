@@ -1,0 +1,189 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 64,
+			"theme": "base"
+		},
+		{
+			"name": "AlignedFlowLayout.less",
+			"size": 1151,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "BlockLayout.less",
+			"size": 4812,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "BlockLayoutCell.less",
+			"size": 1423,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "BlockLayoutRow.less",
+			"size": 979,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "CSSGrid.less",
+			"size": 2081,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ColumnLayout.less",
+			"size": 10825,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DynamicSideContent.less",
+			"size": 1633,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FixFlex.less",
+			"size": 2367,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Form.less",
+			"size": 629,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FormLayout.less",
+			"size": 2448,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Grid.less",
+			"size": 8588,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GridLayout.less",
+			"size": 5926,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "HorizontalLayout.less",
+			"size": 2030,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ResponsiveFlowLayout.less",
+			"size": 1349,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ResponsiveGridLayout.less",
+			"size": 16291,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ResponsiveLayout.less",
+			"size": 8457,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ResponsiveSplitter.less",
+			"size": 3355,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SimpleForm.less",
+			"size": 488,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Splitter.less",
+			"size": 7831,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "VerticalLayout.less",
+			"size": 1577,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 5893,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 240,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 98056,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "img/create.txt",
+			"size": 0,
+			"theme": "base"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 152905,
+			"theme": "base"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 2588,
+			"theme": "base"
+		},
+		{
+			"name": "library.css",
+			"size": 152436,
+			"theme": "base"
+		},
+		{
+			"name": "library.less",
+			"size": 86009,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library.source.less",
+			"size": 866,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 152615,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 152146,
+			"theme": "base"
+		}
+	]
+}

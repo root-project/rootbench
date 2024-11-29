@@ -1,0 +1,28 @@
+/bin/mkdir -p /Users/abhiacherjee/Documents/rootbench/root/include/libAfterImage
+installing libAfterImage headers using command - 
+    "/usr/bin/install -c -m 644 <header> /Users/abhiacherjee/Documents/rootbench/root/include/libAfterImage" :
+-n afterimage.h 
+-n afterbase.h 
+-n ascmap.h 
+-n asfont.h 
+-n asim_afterbase.h 
+-n asimage.h 
+-n asstorage.h 
+-n asvisual.h 
+-n blender.h 
+-n bmp.h 
+-n char2uni.h 
+-n draw.h 
+-n export.h 
+-n imencdec.h 
+-n import.h 
+-n scanline.h 
+-n transform.h 
+-n ungif.h 
+-n xcf.h 
+-n ximage.h 
+-n xpm.h 
+-n xwrap.h 
+
+Done.
+/usr/bin/install -c -m 755 libAfterImage.a /Users/abhiacherjee/Documents/rootbench/root/lib

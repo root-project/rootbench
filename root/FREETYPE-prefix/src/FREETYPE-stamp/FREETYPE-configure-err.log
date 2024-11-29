@@ -1,0 +1,6 @@
+configure: WARNING:
+  `make refdoc' will fail since pip package `docwriter' is not installed.
+  To install, run `python3 -m pip install docwriter', or to use a Python
+  virtual environment, run `make refdoc-venv' (requires pip package
+  `virtualenv').  These operations require Python >= 3.5.
+  

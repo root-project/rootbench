@@ -1,0 +1,42 @@
+file(REMOVE_RECURSE
+  "../../include/ROOT/RAttrAggregation.hxx"
+  "../../include/ROOT/RAttrAxis.hxx"
+  "../../include/ROOT/RAttrBase.hxx"
+  "../../include/ROOT/RAttrBorder.hxx"
+  "../../include/ROOT/RAttrFill.hxx"
+  "../../include/ROOT/RAttrFont.hxx"
+  "../../include/ROOT/RAttrLine.hxx"
+  "../../include/ROOT/RAttrMap.hxx"
+  "../../include/ROOT/RAttrMargins.hxx"
+  "../../include/ROOT/RAttrMarker.hxx"
+  "../../include/ROOT/RAttrText.hxx"
+  "../../include/ROOT/RAttrValue.hxx"
+  "../../include/ROOT/RAxisDrawable.hxx"
+  "../../include/ROOT/RCanvas.hxx"
+  "../../include/ROOT/RColor.hxx"
+  "../../include/ROOT/RDisplayItem.hxx"
+  "../../include/ROOT/RDrawable.hxx"
+  "../../include/ROOT/RDrawableRequest.hxx"
+  "../../include/ROOT/RFrame.hxx"
+  "../../include/ROOT/RMenuItems.hxx"
+  "../../include/ROOT/ROnFrameDrawable.hxx"
+  "../../include/ROOT/RPad.hxx"
+  "../../include/ROOT/RPadBase.hxx"
+  "../../include/ROOT/RPadDisplayItem.hxx"
+  "../../include/ROOT/RPadExtent.hxx"
+  "../../include/ROOT/RPadLength.hxx"
+  "../../include/ROOT/RPadPos.hxx"
+  "../../include/ROOT/RPalette.hxx"
+  "../../include/ROOT/RPaletteDrawable.hxx"
+  "../../include/ROOT/RPave.hxx"
+  "../../include/ROOT/RStyle.hxx"
+  "../../include/ROOT/RVirtualCanvasPainter.hxx"
+  "../../include/ROOT/TObjectDisplayItem.hxx"
+  "../../include/ROOT/TObjectDrawable.hxx"
+  "CMakeFiles/move_header_graf2d_gpadv7"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/move_header_graf2d_gpadv7.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

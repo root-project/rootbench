@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc ../../lib/librpdutil.a CMakeFiles/rpdutil.dir/src/daemon.cxx.o CMakeFiles/rpdutil.dir/src/error.cxx.o CMakeFiles/rpdutil.dir/src/net.cxx.o CMakeFiles/rpdutil.dir/src/netpar.cxx.o CMakeFiles/rpdutil.dir/src/rpdutils.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib ../../lib/librpdutil.a

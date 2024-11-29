@@ -1,0 +1,50 @@
+.TH root 1 
+.SH SYNOPSIS
+usage: root [-b B] [-x X] [-e E] [-n N] [-t T] [-q Q] [-l L] [-a A] [-config CONFIG] [-h HELP]
+            [--version VERSION] [--notebook NOTEBOOK] [--web WEB] [--web=<browser> WEB=<BROWSER>]
+            [dir] [data1.root...dataN.root] [file1.C...fileN.C]
+
+.SH DESCRIPTION
+ROOTs Object-Oriented Technologies.
+
+root is an interactive interpreter of C++ code. It uses the ROOT  framework.  For  more information on ROOT, please refer to
+
+An extensive Users Guide is available from that site (see below).
+
+.SH OPTIONS
+.IP -b
+Run in batch mode without graphics
+.IP -x
+Exit on exceptions
+.IP -e
+Execute the command passed between single quotes
+.IP -n
+Do not execute logon and logoff macros as specified in .rootrc
+.IP -t
+Enable thread-safety and implicit multi-threading (IMT)
+.IP -q
+Exit after processing command line macro files
+.IP -l
+Do not show the ROOT banner
+.IP -a
+Show the ROOT splash screen
+.IP -config
+print ./configure options
+.IP -h -? --help
+Show summary of options
+.IP --version
+Show the ROOT version
+.IP --notebook
+Execute ROOT notebook
+.IP --web
+Display graphics in a default web browser
+.IP --web=<browser>
+Display graphics in specified web browser
+.IP [dir]
+if dir is a valid directory cd to it before executing
+.IP [data1.root...dataN.root]
+Open the given ROOT files; remote protocols (such as http://) are supported
+.IP [file1.C...fileN.C]
+Execute the ROOT macro file1.C ... fileN.C.
+.IP
+Compilation flags as well as macro arguments can be passed, see format in https://root.cern/manual/root_macros_and_shared_libraries/
