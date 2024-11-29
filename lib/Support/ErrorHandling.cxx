@@ -1,6 +1,6 @@
 ///\file Contains utilities to handle error situations.
 
-#include "rootbench/ErrorHandling.h"
+#include "rootbench/Support/ErrorHandling.h"
 
 #include <iostream>
 
