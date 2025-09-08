@@ -7,7 +7,7 @@ else()
   cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 endif()
 
-project(rootbench)
+project(rootbench LANGUAGES CXX)
 
 option(cuda "Build benchmarks that run on CUDA GPUs" OFF)
 
