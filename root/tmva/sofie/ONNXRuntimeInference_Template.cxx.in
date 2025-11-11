@@ -1,0 +1,197 @@
+// @HEAD_COMMENT@
+// Author: Federico Sossai (fsossai), 2021
+
+#include <benchmark/benchmark.h>
+//#include <onnxruntime/core/session/onnxruntime_cxx_api.h>
+#include <onnxruntime_cxx_api.h>
+
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <random>
+#include <chrono>
+#include <fstream>
+#include <filesystem>
+
+using namespace std;
+
+bool testOutput = true;
+
+static void @FUNC_NAME@(benchmark::State& state, string model_path)
+{
+   Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "benchmark");
+
+   Ort::SessionOptions session_options;
+   session_options.SetIntraOpNumThreads(1);
+   session_options.SetInterOpNumThreads(1);
+   session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);
+
+   //std::cout << "benchmarking model " << model_path << std::endl;
+   Ort::Session session(env, model_path.c_str(), session_options);
+
+   int nin = session.GetInputCount();
+   int nout = 1;
+
+   vector<const char*> input_node_names(nin);
+   vector<const char*> output_node_names(nout);
+   vector<std::string> inputStrings(nin);
+   vector<std::string> outputStrings(nout);
+
+   Ort::AllocatorWithDefaultOptions allocator;
+   for (int i = 0; i < nin; i++) {
+#if ORT_API_VERSION > 12
+      inputStrings[i] = session.GetInputNameAllocated(i, allocator).get();
+#else
+      inputStrings[i] = session.GetInputName(i, allocator);
+#endif
+      input_node_names[i] = inputStrings[i].c_str();
+   }
+   for (int i = 0; i < nout; i++) {
+#if ORT_API_VERSION > 12
+     outputStrings[i] = session.GetOutputNameAllocated(i, allocator).get();
+#else
+     outputStrings[i] = session.GetOutputName(i, allocator);
+#endif
+      output_node_names[i] = outputStrings[i].c_str();
+   }
+   // Getting the shapes
+   vector<vector<int64_t>> input_node_dims(nin);
+   vector<vector<int64_t>> output_node_dims(nout);
+
+   for (int i = 0; i < nin; i++)
+      input_node_dims[i] = session.GetInputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
+   for (int i = 0; i < nout; i++)
+      output_node_dims[i] = session.GetOutputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
+
+   // for (int i = 0; i < nin; i++) {
+   //    std::cout << "input " << input_node_names[i] << " shape : ";
+   //    for (int j = 0; j < input_node_dims[i].size(); j++)
+   //       std::cout << "  " << input_node_dims[i][j];
+   //    std::cout << std::endl;
+   // }
+   // fix negative shapes
+   for (int i = 0; i < nin; i++) {
+      for (int j = 0; j < input_node_dims[i].size(); j++) {
+         if (input_node_dims[i][j] < 0) input_node_dims[i][j] = - input_node_dims[i][j];
+      }
+   }
+
+
+   // Calculating the dimension of the input tensor
+   int nevts = 64;
+   int bsize = input_node_dims[0][0]; // assume this
+   //std::cout << "Using bsize = " << bsize << std::endl;
+   int nbatches = nevts / bsize;
+
+   std::vector<std::vector<float>> inputData(nin);
+   std::vector<size_t> inputSizes(nin);
+
+   for (int i = 0; i < nin; i++) {
+      size_t input_tensor_size = accumulate(input_node_dims[i].begin(), input_node_dims[i].end(), 1, multiplies<int>());
+      inputSizes[i] = input_tensor_size;
+      auto &input_tensor_values = inputData[i];
+      input_tensor_values.resize(input_tensor_size * nbatches);
+      // std::cout << "input tensor size " << input_tensor_size << "  " << input_tensor_values.size() << std::endl;
+
+      // Input tensor initialization
+
+      if (testOutput)
+         fill_n(input_tensor_values.begin(), input_tensor_values.size(), float(i)+1.);
+      else {
+         static std::uniform_real_distribution<float> distribution(-1, 1);
+         static std::default_random_engine generator;
+         std::generate(input_tensor_values.begin(), input_tensor_values.end(), []() { return distribution(generator); });
+      }
+   }
+
+      auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
+      // Ort::Value input_tensor = Ort::Value::CreateTensor<float>(memory_info,
+      //    input_tensor_values.data(), input_tensor_size,
+      //    input_node_dims.data(), input_node_dims.size());
+
+      // Running the model
+      float *floatarr = nullptr;
+
+      std::vector<Ort::Value> input_tensors;
+
+      size_t osize = 1;
+      for (int  d : output_node_dims[0]) {
+         if (d > 0) osize *= d; // first dim(batch size) can be -1
+      }
+      std::vector<float> yOut(osize);
+
+      double totDuration = 0;
+      int ntimes = 0;
+      for (auto _ : state) {
+         auto t1 = std::chrono::high_resolution_clock::now();
+         std::vector<size_t> input_offset(nin);
+         for (int i = 0; i < nevts; i += bsize) {
+            // if (input_offset > input_tensor_values.size()) {
+            //    std::cout << "Error in input size " << i << "  " << nevts << "  " << model_path << std::endl;
+            //    throw std::runtime_error("Bad input size ");
+            // }
+            for (int k = 0; k < nin; k++) {
+               input_tensors.emplace_back(Ort::Value::CreateTensor<float>(memory_info, inputData[k].data() + input_offset[k],
+                                               inputSizes[k], input_node_dims[k].data(), input_node_dims[k].size()));
+            }
+            auto output_tensors = session.Run(Ort::RunOptions{nullptr}, input_node_names.data(), input_tensors.data(), nin,
+                                              output_node_names.data(), nout);
+            floatarr = output_tensors.front().GetTensorMutableData<float>();
+            for (int k = 0; k < nin; k++) {
+               input_offset[k] += inputSizes[k];
+            }
+            if (testOutput && i == 0)
+               std::copy(floatarr, floatarr + osize, yOut.begin());
+         }
+
+         auto t2 = std::chrono::high_resolution_clock::now();
+         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+         totDuration += duration / 1.E3; // in milliseconds
+         ntimes++;
+         if (testOutput) {
+            std::string filename = model_path + ".ort.out";
+            //std::cout << "writing file" << filename << std::endl;
+            ofstream f;
+            f.open(filename);
+            f << yOut.size();
+            for (size_t i = 0; i < yOut.size(); i++) {
+             if ((i % 10) == 0) f << "\n"; // add endline every 10
+             f << yOut[i] << "  ";
+            }
+            f << std::endl;
+            f.close();
+         }
+   }
+   //for (int i = 0; i < 10; i++)
+   //  printf("%f\t", i, floatarr[i]);
+   state.counters["time/evt(ms)"] = totDuration / double(ntimes * nevts);
+
+}
+@BENCHMARK_CAPTURES@
+
+//BENCHMARK_MAIN();
+
+// define main to pass some convenient command line parameters
+int main(int argc, char **argv) {
+
+   // Parse command line arguments
+   for (int i = 1; i < argc; i++) {
+      std::string arg = argv[i];
+      if (arg == "-v") {
+         //std::cout << "---running in verbose mode" << std::endl;
+         //verbose = true;
+      } else if ((arg == "-d" || arg == "--dir") && argc > i+1) {
+         std::string pathDir = argv[i+1];
+         std::filesystem::path path(pathDir);
+         std::filesystem::current_path(path);
+         i++;
+      }
+   }
+
+   std::cout << "running benchmark from current directory " << std::filesystem::current_path()  << std::endl;
+
+   ::benchmark::Initialize(&argc, argv);
+   ::benchmark::RunSpecifiedBenchmarks();
+
+   return 0;
+}
