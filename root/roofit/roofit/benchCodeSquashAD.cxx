@@ -62,15 +62,22 @@ std::unique_ptr<RooAbsPdf> createModel(RooRealVar &x, std::string const &channel
    return std::unique_ptr<RooAbsPdf>{static_cast<RooAbsPdf *>(model.cloneTree())};
 }
 
+enum backend {
+   Reference,
+   BatchMode,
+   CodeSquashNumDiff,
+   CodeSquashAD
+};
+
 static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
 {
    using namespace RooFit;
 
    counter++;
 
-   gInterpreter->ProcessLine("gErrorIgnoreLevel = 2001;");
-   auto &msg = RooMsgService::instance();
-   msg.setGlobalKillBelow(RooFit::WARNING);
+   // gInterpreter->ProcessLine("gErrorIgnoreLevel = 2001;");
+   // auto &msg = RooMsgService::instance();
+   // msg.setGlobalKillBelow(RooFit::WARNING);
 
    // Generate the same dataset for all backends.
    RooRandom::randomGenerator()->SetSeed(100);
@@ -117,26 +124,28 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
    RooArgSet origParams;
    params.snapshot(origParams);
 
-   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, EvalBackend::Legacy(), Offset("off"))};
-   std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, EvalBackend::Cpu(), Offset("off"))};
-   std::unique_ptr<RooAbsReal> nllFunc{model.createNLL(data, EvalBackend::Codegen(), Offset("off"))};
-   std::unique_ptr<RooAbsReal> nllFuncNoGrad{model.createNLL(data, EvalBackend::CodegenNoGrad(), Offset("off"))};
+   std::cout << "nparams: " << params.size() << std::endl;
+
+   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, EvalBackend::Legacy(), Offset("initial"))};
+   std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, EvalBackend::Cpu(), Offset("initial"))};
+   std::unique_ptr<RooAbsReal> nllFunc{model.createNLL(data, EvalBackend::Codegen(), Offset("initial"))};
+   std::unique_ptr<RooAbsReal> nllFuncNoGrad{model.createNLL(data, EvalBackend::CodegenNoGrad(), Offset("initial"))};
 
    std::unique_ptr<RooMinimizer> m = nullptr;
 
    int code = state.range(0);
-   if (code == RooFitADBenchmarksUtils::backend::Reference) {
+   if (code == backend::Reference) {
       m = std::make_unique<RooMinimizer>(*nllRef);
-   } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashNumDiff) {
+   } else if (code == backend::CodeSquashNumDiff) {
       m = std::make_unique<RooMinimizer>(*nllFuncNoGrad);
-   } else if (code == RooFitADBenchmarksUtils::backend::BatchMode) {
+   } else if (code == backend::BatchMode) {
       m = std::make_unique<RooMinimizer>(*nllRefBatch);
-   } else if (code == RooFitADBenchmarksUtils::backend::CodeSquashAD) {
+   } else if (code == backend::CodeSquashAD) {
       m = std::make_unique<RooMinimizer>(*nllFunc);
    }
 
    for (auto _ : state) {
-      m->setPrintLevel(-1);
+      // m->setPrintLevel(-1);
       m->setStrategy(0);
       params.assign(origParams);
 
@@ -146,7 +155,33 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
 
 int main(int argc, char **argv)
 {
-   RooFitADBenchmarksUtils::doBenchmarks(BM_RooFuncWrapper_ManyParams_Minimization, 2, 2, 1, 20);
+   std::vector<long int> rangeLow{1, 2, 3, 4, 5, 6, 7, 8, 12, 17, 23, 28, 33, 38, 43, 49, 54, 59};
+   std::vector<long int> rangeHigh{64,  70,  75,  80,  85,  90,  96,  100, 110, 120, 130, 140,
+                                   150, 160, 170, 180, 190, 200, 225, 250, 275, 300, 325};
+   std::vector<long int> range;
+   range.insert(range.end(), rangeLow.begin(), rangeLow.end());
+   range.insert(range.end(), rangeHigh.begin(), rangeHigh.end());
+
+   // Run the minimization with the reference NLL
+   RooFitADBenchmarksUtils::doBenchmarks("NllReferenceMinimization", Reference,
+                                         BM_RooFuncWrapper_ManyParams_Minimization, range, 1);
+
+   // Run the minimization with the reference NLL (BatchMode)
+   RooFitADBenchmarksUtils::doBenchmarks("NllBatchModeMinimization", BatchMode,
+                                         BM_RooFuncWrapper_ManyParams_Minimization, range, 1);
+
+   // Run the minimization with the code-squashed version with AD.
+   RooFitADBenchmarksUtils::doBenchmarks("NllCodeSquash_AD", CodeSquashAD, BM_RooFuncWrapper_ManyParams_Minimization,
+                                         range, 1);
+   // RooFitADBenchmarksUtils::doBenchmarks("NllCodeSquash_AD", CodeSquashAD,
+   // BM_RooFuncWrapper_ManyParams_Minimization, {250}, 1);
+
+   // Run the minimization with the code-squashed version with numerical-diff.
+   // We can't go to more than 59 channels here, because since offsetting is
+   // not supported, the fit will not converge anymore if the number of bins is
+   // sufficiently high.
+   RooFitADBenchmarksUtils::doBenchmarks("NllCodeSquash_NumDiff", CodeSquashNumDiff,
+                                         BM_RooFuncWrapper_ManyParams_Minimization, rangeLow, 1);
 
    benchmark::Initialize(&argc, argv);
    benchmark::RunSpecifiedBenchmarks();
