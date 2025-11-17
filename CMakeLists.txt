@@ -62,7 +62,14 @@ include(PytestBenchmark)
 
 #---Add ROOT include direcories and used compilation flags
 include_directories(${ROOT_INCLUDE_DIRS})
-add_definitions(${ROOT_CXX_FLAGS})
+string(REPLACE " " ";" ROOT_C_FLAGS_LIST ${ROOT_C_FLAGS})
+string(REPLACE " " ";" ROOT_CXX_FLAGS_LIST ${ROOT_CXX_FLAGS})
+foreach(C_COMPILE_FLAG ${ROOT_C_FLAGS_LIST})
+  add_compile_options($<$<COMPILE_LANGUAGE:C>:${C_COMPILE_FLAG}>)
+endforeach()
+foreach(CXX_COMPILE_FLAG ${ROOT_CXX_FLAGS_LIST})
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:${CXX_COMPILE_FLAG}>)
+endforeach()
 
 #---Include rootbench options
 include(RootBenchOptions)
@@ -82,6 +89,15 @@ if(rootbench-datafiles)
   message(STATUS "INFO: rootbench-datafiles option is ON. Multiple data files are getting pulled from https://root.cern.ch/files/rootbench")
 endif(rootbench-datafiles)
 set(RB_DATASETDIR ${PROJECT_BINARY_DIR}/rootbench-datafiles)
+
+#---Define some constants for Constants.h.in ---------------------------------------------------
+if(WIN32)
+  set(RB_ON_WIN32 1)
+  set(RB_ON_UNIX 0)
+else(WIN32)
+  set(RB_ON_WIN32 0)
+  set(RB_ON_UNIX 1)
+endif()
 
 #---Enable and setup CTest.
 include(RootBenchCTest)
