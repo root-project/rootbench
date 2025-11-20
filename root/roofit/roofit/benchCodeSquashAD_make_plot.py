@@ -8,7 +8,6 @@ filename = "benchCodeSquashAD.out"
 
 
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -110,16 +109,7 @@ while i < len(lines):
 df = pd.DataFrame(datas)
 df = df.query("nparams > 10 and nparams < 2500 and backend != 'legacy'")
 
-
-t = np.arange(0.01, 5.0, 0.01)
-s1 = np.sin(2 * np.pi * t)
-s2 = np.exp(-t)
-s3 = np.sin(4 * np.pi * t)
-
-f, (a0, a1) = plt.subplots(2, 1, gridspec_kw={"height_ratios": [2, 1]})
-
 dfs = dict()
-
 
 for backend, df_g in df.groupby("backend"):
     dfs[backend] = df_g
@@ -128,32 +118,119 @@ for backend, df_g in df.groupby("backend"):
     # vals = df_g.eval("fval")
     if backend == "codegen_no_grad":
         continue
-    if backend == "RooFit AD":
-        a0.plot(nparams, vals + 0 * df_g["jitting"], label=backend)
-        a0.plot(nparams, df_g["jitting"], label="JIT time", color="k", linewidth=1, linestyle="--")
-    else:
-        a0.plot(nparams, vals, label=backend)
-        # plt.plot(nparams, df_g["jitting"], label=backend + "_jit")
 
 nparams = dfs["RooFit"]["nparams"]
 
-a0.legend(loc="upper left")
+# Plotting with ROOT
 
-plt.tick_params("x", labelsize=6)
+import ROOT
 
-# make these tick labels invisible
-# plt.tick_params('x', labelbottom=False)
-vals = dfs["RooFit"]["migrad"].values / dfs["RooFit AD"]["migrad"].values
+# ----------------------------------------------------------------------
+# ROOT setup
+# ----------------------------------------------------------------------
+ROOT.gROOT.SetBatch(True)
+ROOT.gStyle.SetOptStat(0)
 
-a1.plot(nparams, vals, color="k")
+# c = ROOT.TCanvas("c", "Scaling study", 800, 900)
+c = ROOT.TCanvas("c", "Scaling study", 800, 700)
+# c = ROOT.TCanvas("c", "Scaling study", int(0.75 * 800), int(0.75 * 700))
+c.Divide(1, 2)
 
-a1.set_xlabel("Number of parameters")
-a0.set_ylabel("Minimization time [s]")
-a0.set_ylim(0, 30)
-a0.set_xlim(0, nparams.to_numpy()[-1])
+pad_top = c.cd(1)
+pad_top.SetPad(0.0, 0.32, 1.0, 1.0)
+pad_top.SetBottomMargin(0.15)
 
-a1.set_ylabel("AD speedup")
-a1.set_ylim(1, 4.2)
-a1.set_xlim(0, nparams.to_numpy()[-1])
+pad_bottom = c.cd(2)
+pad_bottom.SetPad(0.0, 0.0, 1.0, 0.32)
+pad_bottom.SetTopMargin(0.05)
+pad_bottom.SetBottomMargin(0.25)
 
-plt.savefig("scaling_study.png")
+# ----------------------------------------------------------------------
+# Convert grouped data to ROOT TGraphs
+# ----------------------------------------------------------------------
+graphs = {}
+jit_graphs = {}
+
+colors = {
+    "RooFit": ROOT.kBlue + 1,
+    "Hardcoded": ROOT.kRed + 1,
+    "RooFit AD": ROOT.kGreen + 2,
+}
+
+for backend, df_g in df.groupby("backend"):
+    x = df_g["nparams"].to_numpy()
+    y = df_g.eval("migrad + seeding").to_numpy()
+
+    g = ROOT.TGraph(len(x), x.astype("float64"), y.astype("float64"))
+    g.SetLineColor(colors.get(backend, ROOT.kBlack))
+    g.SetLineWidth(3)
+    # g.SetMarkerStyle(20)
+    g.SetTitle("")
+    graphs[backend] = g
+
+    if backend == "RooFit AD":
+        yjit = df_g["jitting"].to_numpy()
+        gj = ROOT.TGraph(len(x), x.astype("float64"), yjit.astype("float64"))
+        gj.SetLineColor(ROOT.kBlack)
+        gj.SetLineStyle(2)
+        gj.SetLineWidth(2)
+        jit_graphs[backend] = gj
+
+# ----------------------------------------------------------------------
+# Draw top pad (timing)
+# ----------------------------------------------------------------------
+pad_top.cd()
+frame = pad_top.DrawFrame(0, 0, df["nparams"].max(), 30, ";Number of parameters;Minimization time [s]")
+
+frame.GetXaxis().SetLabelSize(0.05)
+frame.GetXaxis().SetTitleSize(0.06)
+frame.GetYaxis().SetLabelSize(0.05)
+frame.GetYaxis().SetTitleSize(0.06)
+
+legend = ROOT.TLegend(0.15, 0.65, 0.55, 0.88)
+legend.SetTextSize(0.05)
+
+for backend, g in graphs.items():
+    g.Draw("LP SAME")
+    legend.AddEntry(g, backend, "LP")
+
+    if backend == "RooFit AD":
+        jit_graphs[backend].Draw("L SAME")
+        legend.AddEntry(jit_graphs[backend], "JIT time", "L")
+
+legend.Draw()
+
+# ----------------------------------------------------------------------
+# Compute speedup curve
+# ----------------------------------------------------------------------
+df_R = dfs["RooFit"]
+df_AD = dfs["RooFit AD"]
+
+x = df_R["nparams"].to_numpy()
+speedup = df_R["migrad"].values / df_AD["migrad"].values
+
+g_speed = ROOT.TGraph(len(x), x.astype("float64"), speedup.astype("float64"))
+g_speed.SetLineWidth(2)
+g_speed.SetLineColor(ROOT.kBlack)
+
+# ----------------------------------------------------------------------
+# Draw bottom pad (speedup)
+# ----------------------------------------------------------------------
+pad_bottom.cd()
+frame2 = pad_bottom.DrawFrame(0, 1, df["nparams"].max(), 4.2, ";Number of parameters;AD speedup")
+
+# Make font sizes match the top panel
+frame2.GetXaxis().SetLabelSize(0.09)
+frame2.GetXaxis().SetTitleSize(0.10)
+frame2.GetYaxis().SetLabelSize(0.09)
+frame2.GetYaxis().SetTitleSize(0.10)
+
+frame2.GetYaxis().SetTitleOffset(0.4)  # closer to the axis
+
+g_speed.Draw("L SAME")
+
+# ----------------------------------------------------------------------
+# Save result
+# ----------------------------------------------------------------------
+c.SaveAs("scaling_study_root.png")
+c.SaveAs("scaling_study_root.pdf")
