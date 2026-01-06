@@ -20,7 +20,7 @@ static void BM_RDataFrame_CreateFromFile(benchmark::State &state)
 {
    const auto fname = RB::GetTempFs() + "/tdf_createfromfile.root";
    const auto treeName = "t";
-   RDataFrame(0).Snapshot<>(treeName, fname, {});
+   RDataFrame(0).Snapshot(treeName, fname, {});
 
    for (auto _ : state)
       RDataFrame(treeName, fname);
@@ -84,7 +84,7 @@ static void BM_RDataFrame_NoOpLoopOnFile(benchmark::State &state)
 {
    const auto fname = RB::GetTempFs() + "/tdf_nooplooponfile" + std::to_string(state.range(0)) + ".root";
    const auto treeName = "t";
-   RDataFrame(state.range(0)).Snapshot<>(treeName, fname, {});
+   RDataFrame(state.range(0)).Snapshot(treeName, fname, {});
 
    for (auto _ : state)
       RDataFrame(treeName, fname).Foreach([] {});

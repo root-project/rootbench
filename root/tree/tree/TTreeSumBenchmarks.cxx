@@ -32,7 +32,7 @@ void MakeDataIfNeeded()
       ROOT::RDataFrame(nEntries)
          .Define(scalarBranch, [] { return 42; })
          .Define(vectorBranch, [] { return std::vector<int>{1, 2, 3, 4, 5, 6, 7, 8}; })
-         .Snapshot<int, std::vector<int>>(treeName, pathToFile.c_str(), {scalarBranch, vectorBranch});
+         .Snapshot(treeName, pathToFile.c_str(), {scalarBranch, vectorBranch});
 }
 
 static void BM_TTreeSum_SumScalarTBranchGetEntry(benchmark::State &state)
