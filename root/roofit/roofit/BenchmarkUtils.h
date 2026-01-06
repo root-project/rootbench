@@ -15,7 +15,13 @@ template <typename F>
 void doBenchmarks(const char *name, int backend, F func, std::vector<long int> const &range, int numIterations = 1,
                   benchmark::TimeUnit unit = benchmark::kMillisecond)
 {
-   benchmark::RegisterBenchmark(name, func)->ArgsProduct({{backend}, range})->Unit(unit)->Iterations(numIterations);
+   std::vector<std::vector<int64_t>> arglists;
+   arglists.emplace_back(std::vector<int64_t>{backend});
+   arglists.emplace_back();
+   for (auto val : range) {
+      arglists.back().emplace_back(val);
+   }
+   benchmark::RegisterBenchmark(name, func)->ArgsProduct(arglists)->Unit(unit)->Iterations(numIterations);
 }
 
 void randomizeParameters(const RooArgSet &parameters)
