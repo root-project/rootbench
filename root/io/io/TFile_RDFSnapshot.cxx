@@ -28,7 +28,7 @@ static void BM_TFile_RDFSnapshot_ZLIB(benchmark::State &state) {
   auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kZLIB, 1);
   for (auto _ : state) {
      //And we write out the dataset on disk
-     tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
   }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_ZLIB)->Unit(benchmark::kMicrosecond);
@@ -39,7 +39,7 @@ static void BM_TFile_RDFSnapshot_LZ4(benchmark::State &state) {
   auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kLZ4, 4);
   for (auto _ : state) {
      //And we write out the dataset on disk
-     tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
   }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_LZ4)->Unit(benchmark::kMicrosecond);
@@ -50,7 +50,7 @@ static void BM_TFile_RDFSnapshot_LZMA (benchmark::State &state) {
   auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kLZMA, 8);
   for (auto _ : state) {
      //And we write out the dataset on disk
-     tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
   }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_LZMA)->Unit(benchmark::kMicrosecond);
@@ -60,7 +60,7 @@ static void BM_TFile_RDFSnapshot_ZSTD (benchmark::State &state) {
   auto options = SetupRDFOptions(ROOT::RCompressionSetting::EAlgorithm::kZSTD, 6);
   for (auto _ : state) {
      //And we write out the dataset on disk
-     tdf.Snapshot<double>("randomNumbers", "bench_data.root", {"rnd"}, options);
+     tdf.Snapshot("randomNumbers", "bench_data.root", {"rnd"}, options);
   }
 }
 BENCHMARK(BM_TFile_RDFSnapshot_ZSTD)->Unit(benchmark::kMicrosecond);
