@@ -24,7 +24,6 @@
 int printLevel = 0;
 size_t nEvents = 100000;
 const auto minimizerName = "Minuit2";
-constexpr bool verbose = false;
 
 enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda };
 
