@@ -46,9 +46,9 @@ inline void SetSeed(int N)
 template <typename T>
 class TypeSize {
    template <typename C>
-   static constexpr size_t Get(decltype(&C::Size))
+   static constexpr size_t Get(decltype(&C::size))
    {
-      return C::Size;
+      return C::size();
    }
    template <typename C>
    static constexpr size_t Get(typename std::enable_if<std::is_arithmetic<C>::value>::type * = 0)
