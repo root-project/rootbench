@@ -17,8 +17,10 @@ namespace RB {
   inline std::string GetTempFs() {
     if (char* tempfs = std::getenv("RB_TEMP_FS"))
       return tempfs;
-
-    rb_abort("Please set the RB_TEMP_FS env variable!");
+    else {
+      printf("RB_TEMP_FS variable not defined. Using \"./\" instead.");
+      return "./";
+    }
   }
 
   inline std::string GetRootSys() {
