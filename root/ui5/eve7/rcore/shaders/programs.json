@@ -1,0 +1,107 @@
+{
+  "custom_copyTexture": {
+    "description": "Default gl2 program used for testing.",
+    "shaders": {
+      "vertex": "custom/drawToTexture/copy_texture_template.vert",
+      "fragment": "custom/drawToTexture/copy_texture_template.frag"
+    }
+  },
+  "custom_copyDepthToRed": {
+    "description": "Copy depth buffer values to R component (R32F) for picking depth extraction.",
+    "shaders": {
+      "vertex": "custom/drawToTexture/copyDepthToRed.vert",
+      "fragment": "custom/drawToTexture/copyDepthToRed.frag"
+    }
+  },
+  "custom_GBufferMini": {
+    "description": "GBuffer with minimal output for custom_outline.",
+    "shaders": {
+      "vertex": "custom/GBuffer/GBufferMini_template.vert",
+      "fragment": "custom/GBuffer/GBufferMini_template.frag"
+    }
+  },
+  "custom_outline": {
+    "description": "Outline.",
+    "shaders": {
+      "vertex": "custom/post_process/outline.vert",
+      "fragment": "custom/post_process/outline.frag"
+    }
+  },
+  "custom_gaussBlur": {
+    "description": "Gaussian Blur.",
+    "shaders": {
+      "vertex": "custom/post_process/gaussBlur.vert",
+      "fragment": "custom/post_process/gaussBlur.frag"
+    }
+  },
+  "custom_blendingAdditive": {
+    "description": "Default gl2 program used for testing.",
+    "shaders": {
+      "vertex": "custom/blending/additive.vert",
+      "fragment": "custom/blending/additive.frag"
+    }
+  },
+  "custom_ToneMapping": {
+    "description": "Default gl2 program used for testing.",
+    "shaders": {
+      "vertex": "custom/post_process/ToneMapping.vert",
+      "fragment": "custom/post_process/ToneMapping.frag"
+    }
+  },
+  "phong": {
+    "description": "Default gl2 program used for testing.",
+    "shaders": {
+      "vertex": "phong/phong_template.vert",
+      "fragment": "phong/phong_template.frag"
+    }
+  },
+  "basic": {
+    "description": "Default gl2 program used for testing.",
+    "shaders": {
+      "vertex": "basic/basic_template.vert",
+      "fragment": "basic/basic_template.frag"
+    }
+  },
+  "basic_zsprite": {
+    "description": "ZSprite instanced through texture; supports PICKING and OUTLINE modes.",
+    "shaders": {
+      "vertex": "basic/basic_zsprite_template.vert",
+      "fragment": "basic/basic_zsprite_template.frag"
+    }
+  },
+  "basic_stripes": {
+    "description": "Default gl2 program used for testing.",
+    "shaders": {
+      "vertex": "basic/basic_stripes_template.vert",
+      "fragment": "basic/basic_stripes_template.frag"
+    }
+  },
+  "custom_GBufferMini_stripes": {
+    "description": "GBuffer with minimal output for custom_outline.",
+    "shaders": {
+      "vertex": "custom/GBuffer/GBufferMini_stripes.vert",
+      "fragment": "custom/GBuffer/GBufferMini_stripes.frag"
+    }
+  },
+  "custom_picker_TRIANGLES": {
+    "description": "Color picker TRIANGLES.",
+    "shaders": {
+      "vertex": "picker/picker_TRIANGLES.vert",
+      "fragment": "picker/picker_TRIANGLES.frag"
+    }
+  },
+  "custom_picker_POINTS": {
+    "description": "Color picker POINTS.",
+    "shaders": {
+      "vertex": "picker/picker_POINTS.vert",
+      "fragment": "picker/picker_POINTS.frag"
+    }
+  },
+  "custom_text2D": {
+    "description": "Text2D.",
+    "shaders": {
+      "vertex": "custom/text/text2D.vert",
+      "fragment": "custom/text/text2D.frag"
+    }
+  }
+}

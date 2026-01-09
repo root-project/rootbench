@@ -1,0 +1,13 @@
+# Target labels
+ OPENUI5
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/OPENUI5
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/OPENUI5.rule
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/OPENUI5-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/OPENUI5-prefix/src/OPENUI5-stamp/OPENUI5-update.rule

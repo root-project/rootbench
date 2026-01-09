@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/googletest"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/googletest.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/googletest-complete.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-build.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-configure.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-download.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-install.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-mkdir.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-patch.rule"
+		},
+		{
+			"file" : "/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"googletest"
+		],
+		"name" : "googletest"
+	}
+}

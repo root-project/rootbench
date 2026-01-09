@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "../../include/ROOT/RFile.hxx"
+  "../../include/ROOT/RIoUring.hxx"
+  "../../include/ROOT/RRawFile.hxx"
+  "../../include/ROOT/RRawFileUnix.hxx"
+  "../../include/ROOT/RRawFileWin.hxx"
+  "../../include/ROOT/TBufferMerger.hxx"
+  "../../include/TArchiveFile.h"
+  "../../include/TBufferFile.h"
+  "../../include/TBufferIO.h"
+  "../../include/TBufferJSON.h"
+  "../../include/TBufferText.h"
+  "../../include/TCollectionProxyFactory.h"
+  "../../include/TContainerConverters.h"
+  "../../include/TDirectoryFile.h"
+  "../../include/TEmulatedCollectionProxy.h"
+  "../../include/TEmulatedMapProxy.h"
+  "../../include/TFPBlock.h"
+  "../../include/TFile.h"
+  "../../include/TFileCacheRead.h"
+  "../../include/TFileCacheWrite.h"
+  "../../include/TFileMerger.h"
+  "../../include/TFilePrefetch.h"
+  "../../include/TFree.h"
+  "../../include/TGenCollectionProxy.h"
+  "../../include/TGenCollectionStreamer.h"
+  "../../include/TKey.h"
+  "../../include/TKeyMapFile.h"
+  "../../include/TLockFile.h"
+  "../../include/TMakeProject.h"
+  "../../include/TMapFile.h"
+  "../../include/TMemFile.h"
+  "../../include/TStreamerInfo.h"
+  "../../include/TStreamerInfoActions.h"
+  "../../include/TVirtualCollectionIterators.h"
+  "../../include/TZIPFile.h"
+  "CMakeFiles/move_header_io_io"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/move_header_io_io.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

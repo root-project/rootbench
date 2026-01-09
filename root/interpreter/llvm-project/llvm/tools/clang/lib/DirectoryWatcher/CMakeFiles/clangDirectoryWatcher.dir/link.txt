@@ -1,0 +1,1 @@
+"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool" -static -no_warning_for_no_symbols -o ../../../../lib/libclangDirectoryWatcher.a CMakeFiles/obj.clangDirectoryWatcher.dir/DirectoryScanner.cpp.o "CMakeFiles/obj.clangDirectoryWatcher.dir/mac/DirectoryWatcher-mac.cpp.o"

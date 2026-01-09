@@ -1,0 +1,1696 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      The system is: Darwin - 22.6.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 
+      Build flags: -m64;-pipe;-W;-Wall;-fsigned-char;-fno-common;-Qunused-arguments;-pthread
+      Id flags:  
+      
+      The output was:
+      1
+      ld: library 'System' not found
+      clang: error: linker command failed with exit code 1 (use -v to see invocation)
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 
+      Build flags: -m64;-pipe;-W;-Wall;-fsigned-char;-fno-common;-Qunused-arguments;-pthread
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is AppleClang, found in:
+        /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/3.28.2/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ 
+      Build flags: -std=c++17;-Wc++11-narrowing;-Wsign-compare;-Wsometimes-uninitialized;-Wconditional-uninitialized;-Wheader-guard;-Warray-bounds;-Wcomment;-Wtautological-compare;-Wstrncat-size;-Wloop-analysis;-Wbool-conversion;-m64;-pipe;-W;-Wall;-Woverloaded-virtual;-fsigned-char;-fno-common;-Qunused-arguments;-pthread;-stdlib=libc++;-fPIC
+      Id flags:  
+      
+      The output was:
+      1
+      ld: library 'c++' not found
+      clang: error: linker command failed with exit code 1 (use -v to see invocation)
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ 
+      Build flags: -std=c++17;-Wc++11-narrowing;-Wsign-compare;-Wsometimes-uninitialized;-Wconditional-uninitialized;-Wheader-guard;-Warray-bounds;-Wcomment;-Wtautological-compare;-Wstrncat-size;-Wloop-analysis;-Wbool-conversion;-m64;-pipe;-W;-Wall;-Woverloaded-virtual;-fsigned-char;-fno-common;-Qunused-arguments;-pthread;-stdlib=libc++;-fPIC
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is AppleClang, found in:
+        /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/3.28.2/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6d21e/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_6d21e.dir/build.make CMakeFiles/cmTC_6d21e.dir/build
+        Building C object CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5   -v -Wl,-v -MD -MT CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCCompilerABI.c
+        Apple clang version 15.0.0 (clang-1500.1.0.2.5)
+        Target: arm64-apple-darwin22.6.0
+        Thread model: posix
+        InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx13.5.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.2 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 1022.1 -v -fcoverage-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -W -Wall -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdebug-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk -ferror-limit 19 -pthread -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 15.0.0 (clang-1500.1.0.2.5) default target arm64-apple-darwin22.6.0
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include"
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking C executable cmTC_6d21e
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6d21e.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -o cmTC_6d21e 
+        Apple clang version 15.0.0 (clang-1500.1.0.2.5)
+        Target: arm64-apple-darwin22.6.0
+        Thread model: posix
+        InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 13.5.0 14.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -o cmTC_6d21e -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld  PROJECT:dyld-1022.1
+        BUILD 05:27:37 Dec  7 2023
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h
+        will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+        LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+        TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.0.12.8)
+        Library search paths:
+        Framework search paths:
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+          add: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include]
+          add: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        end of search list found
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include] ==> [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        implicit include dirs: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6d21e/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_6d21e.dir/build.make CMakeFiles/cmTC_6d21e.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5   -v -Wl -v -MD -MT CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.1.0.2.5)]
+        ignore line: [Target: arm64-apple-darwin22.6.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
+        ignore line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx13.5.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.2 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 1022.1 -v -fcoverage-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -W -Wall -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdebug-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rbUvIk -ferror-limit 19 -pthread -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 15.0.0 (clang-1500.1.0.2.5) default target arm64-apple-darwin22.6.0]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_6d21e]
+        ignore line: [/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6d21e.dir/link.txt --verbose=1]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl -search_paths_first -Wl -headerpad_max_install_names  -v -Wl -v CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -o cmTC_6d21e ]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.1.0.2.5)]
+        ignore line: [Target: arm64-apple-darwin22.6.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
+        link line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 13.5.0 14.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -o cmTC_6d21e -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+          arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [13.5.0] ==> ignore
+          arg [14.2] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_6d21e] ==> ignore
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_6d21e.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lSystem] ==> lib [System]
+          arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a] ==> lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        remove lib [System]
+        remove lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_461ed/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_461ed.dir/build.make CMakeFiles/cmTC_461ed.dir/build
+        Building CXX object CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5   -v -Wl,-v -MD -MT CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Apple clang version 15.0.0 (clang-1500.1.0.2.5)
+        Target: arm64-apple-darwin22.6.0
+        Thread model: posix
+        InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx13.5.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.2 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 1022.1 -v -fcoverage-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1 -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -W -Wall -Woverloaded-virtual -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -std=c++17 -fdeprecated-macro -fdebug-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P -ferror-limit 19 -pthread -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 15.0.0 (clang-1500.1.0.2.5) default target arm64-apple-darwin22.6.0
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include"
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking CXX executable cmTC_461ed
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_461ed.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_461ed 
+        Apple clang version 15.0.0 (clang-1500.1.0.2.5)
+        Target: arm64-apple-darwin22.6.0
+        Thread model: posix
+        InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 13.5.0 14.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -o cmTC_461ed -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld  PROJECT:dyld-1022.1
+        BUILD 05:27:37 Dec  7 2023
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h
+        will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+        LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+        TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.0.12.8)
+        Library search paths:
+        Framework search paths:
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1]
+          add: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+          add: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include]
+          add: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        end of search list found
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include] ==> [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        implicit include dirs: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_461ed/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_461ed.dir/build.make CMakeFiles/cmTC_461ed.dir/build]
+        ignore line: [Building CXX object CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5   -v -Wl -v -MD -MT CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.1.0.2.5)]
+        ignore line: [Target: arm64-apple-darwin22.6.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
+        ignore line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx13.5.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.2 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 1022.1 -v -fcoverage-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1 -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -W -Wall -Woverloaded-virtual -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -std=c++17 -fdeprecated-macro -fdebug-compilation-dir=/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-15lS8P -ferror-limit 19 -pthread -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 15.0.0 (clang-1500.1.0.2.5) default target arm64-apple-darwin22.6.0]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_461ed]
+        ignore line: [/opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_461ed.dir/link.txt --verbose=1]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl -search_paths_first -Wl -headerpad_max_install_names  -v -Wl -v CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_461ed ]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.1.0.2.5)]
+        ignore line: [Target: arm64-apple-darwin22.6.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
+        link line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 13.5.0 14.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -o cmTC_461ed -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+          arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [13.5.0] ==> ignore
+          arg [14.2] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_461ed] ==> ignore
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_461ed.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lc++] ==> lib [c++]
+          arg [-lSystem] ==> lib [System]
+          arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a] ==> lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        remove lib [System]
+        remove lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        implicit libs: [c++]
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckCXXSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "cmake/modules/CMakeCXX11Support.cmake:26 (CHECK_CXX_SOURCE_COMPILES)"
+      - "CMakeLists.txt:61 (include)"
+    checks:
+      - "Performing Test HAVE_TR1_SUPPORT"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-HRsysG"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-HRsysG"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_TR1_SUPPORT"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-HRsysG'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f1916/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_f1916.dir/build.make CMakeFiles/cmTC_f1916.dir/build
+        Building CXX object CMakeFiles/cmTC_f1916.dir/src.cxx.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DHAVE_TR1_SUPPORT  -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_f1916.dir/src.cxx.o -MF CMakeFiles/cmTC_f1916.dir/src.cxx.o.d -o CMakeFiles/cmTC_f1916.dir/src.cxx.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-HRsysG/src.cxx
+        /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-HRsysG/src.cxx:2:10: fatal error: 'tr1/functional' file not found
+        #include <tr1/functional>
+                 ^~~~~~~~~~~~~~~~
+        1 error generated.
+        make[4]: *** [CMakeFiles/cmTC_f1916.dir/src.cxx.o] Error 1
+        make[3]: *** [cmTC_f1916/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:13 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file malloc.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rkejB1"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rkejB1"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_MALLOC_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rkejB1'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ad5ff/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ad5ff.dir/build.make CMakeFiles/cmTC_ad5ff.dir/build
+        Building C object CMakeFiles/cmTC_ad5ff.dir/HAVE_MALLOC_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_ad5ff.dir/HAVE_MALLOC_H.c.o -MF CMakeFiles/cmTC_ad5ff.dir/HAVE_MALLOC_H.c.o.d -o CMakeFiles/cmTC_ad5ff.dir/HAVE_MALLOC_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rkejB1/HAVE_MALLOC_H.c
+        /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rkejB1/HAVE_MALLOC_H.c:2:10: fatal error: 'malloc.h' file not found
+        #include <malloc.h>
+                 ^~~~~~~~~~
+        1 error generated.
+        make[4]: *** [CMakeFiles/cmTC_ad5ff.dir/HAVE_MALLOC_H.c.o] Error 1
+        make[3]: *** [cmTC_ad5ff/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:14 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file string.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-le7s3p"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-le7s3p"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_STRING_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-le7s3p'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f7f45/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_f7f45.dir/build.make CMakeFiles/cmTC_f7f45.dir/build
+        Building C object CMakeFiles/cmTC_f7f45.dir/HAVE_STRING_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_f7f45.dir/HAVE_STRING_H.c.o -MF CMakeFiles/cmTC_f7f45.dir/HAVE_STRING_H.c.o.d -o CMakeFiles/cmTC_f7f45.dir/HAVE_STRING_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-le7s3p/HAVE_STRING_H.c
+        Linking C executable cmTC_f7f45
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f7f45.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_f7f45.dir/HAVE_STRING_H.c.o -o cmTC_f7f45 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:15 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file strings.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-0kzrtF"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-0kzrtF"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_STRINGS_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-0kzrtF'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_36897/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_36897.dir/build.make CMakeFiles/cmTC_36897.dir/build
+        Building C object CMakeFiles/cmTC_36897.dir/HAVE_STRINGS_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_36897.dir/HAVE_STRINGS_H.c.o -MF CMakeFiles/cmTC_36897.dir/HAVE_STRINGS_H.c.o.d -o CMakeFiles/cmTC_36897.dir/HAVE_STRINGS_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-0kzrtF/HAVE_STRINGS_H.c
+        Linking C executable cmTC_36897
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_36897.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_36897.dir/HAVE_STRINGS_H.c.o -o cmTC_36897 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:16 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file locale.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-3FwiR5"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-3FwiR5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_LOCALE_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-3FwiR5'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1a38c/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_1a38c.dir/build.make CMakeFiles/cmTC_1a38c.dir/build
+        Building C object CMakeFiles/cmTC_1a38c.dir/HAVE_LOCALE_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_1a38c.dir/HAVE_LOCALE_H.c.o -MF CMakeFiles/cmTC_1a38c.dir/HAVE_LOCALE_H.c.o.d -o CMakeFiles/cmTC_1a38c.dir/HAVE_LOCALE_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-3FwiR5/HAVE_LOCALE_H.c
+        Linking C executable cmTC_1a38c
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a38c.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_1a38c.dir/HAVE_LOCALE_H.c.o -o cmTC_1a38c 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:17 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file errno.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-wvbtDu"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-wvbtDu"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_ERRNO_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-wvbtDu'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cc310/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_cc310.dir/build.make CMakeFiles/cmTC_cc310.dir/build
+        Building C object CMakeFiles/cmTC_cc310.dir/HAVE_ERRNO_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_cc310.dir/HAVE_ERRNO_H.c.o -MF CMakeFiles/cmTC_cc310.dir/HAVE_ERRNO_H.c.o.d -o CMakeFiles/cmTC_cc310.dir/HAVE_ERRNO_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-wvbtDu/HAVE_ERRNO_H.c
+        Linking C executable cmTC_cc310
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc310.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_cc310.dir/HAVE_ERRNO_H.c.o -o cmTC_cc310 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:18 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file stdlib.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-5yj7jW"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-5yj7jW"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_STDLIB_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-5yj7jW'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_4a7bf/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_4a7bf.dir/build.make CMakeFiles/cmTC_4a7bf.dir/build
+        Building C object CMakeFiles/cmTC_4a7bf.dir/HAVE_STDLIB_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_4a7bf.dir/HAVE_STDLIB_H.c.o -MF CMakeFiles/cmTC_4a7bf.dir/HAVE_STDLIB_H.c.o.d -o CMakeFiles/cmTC_4a7bf.dir/HAVE_STDLIB_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-5yj7jW/HAVE_STDLIB_H.c
+        Linking C executable cmTC_4a7bf
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4a7bf.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_4a7bf.dir/HAVE_STDLIB_H.c.o -o cmTC_4a7bf 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:22 (CHECK_INCLUDE_FILE_CXX)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for C++ include ext/algorithm"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FxtdcG"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FxtdcG"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_EXT_ALGORITHM"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FxtdcG'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ac7dd/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ac7dd.dir/build.make CMakeFiles/cmTC_ac7dd.dir/build
+        Building CXX object CMakeFiles/cmTC_ac7dd.dir/CheckIncludeFile.cxx.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_ac7dd.dir/CheckIncludeFile.cxx.o -MF CMakeFiles/cmTC_ac7dd.dir/CheckIncludeFile.cxx.o.d -o CMakeFiles/cmTC_ac7dd.dir/CheckIncludeFile.cxx.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FxtdcG/CheckIncludeFile.cxx
+        /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FxtdcG/CheckIncludeFile.cxx:1:10: fatal error: 'ext/algorithm' file not found
+        #include <ext/algorithm>
+                 ^~~~~~~~~~~~~~~
+        1 error generated.
+        make[4]: *** [CMakeFiles/cmTC_ac7dd.dir/CheckIncludeFile.cxx.o] Error 1
+        make[3]: *** [cmTC_ac7dd/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:23 (CHECK_INCLUDE_FILE_CXX)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for C++ include atomic"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-n4tXo0"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-n4tXo0"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC -std=c++11"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_ATOMIC"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-n4tXo0'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_843cb/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_843cb.dir/build.make CMakeFiles/cmTC_843cb.dir/build
+        Building CXX object CMakeFiles/cmTC_843cb.dir/CheckIncludeFile.cxx.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC -std=c++11  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_843cb.dir/CheckIncludeFile.cxx.o -MF CMakeFiles/cmTC_843cb.dir/CheckIncludeFile.cxx.o.d -o CMakeFiles/cmTC_843cb.dir/CheckIncludeFile.cxx.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-n4tXo0/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_843cb
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_843cb.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -std=c++17 -Wc++11-narrowing -Wsign-compare -Wsometimes-uninitialized -Wconditional-uninitialized -Wheader-guard -Warray-bounds -Wcomment -Wtautological-compare -Wstrncat-size -Wloop-analysis -Wbool-conversion -m64 -pipe -W -Wall -Woverloaded-virtual -fsigned-char -fno-common -Qunused-arguments -pthread -stdlib=libc++  -fPIC -std=c++11  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_843cb.dir/CheckIncludeFile.cxx.o -o cmTC_843cb 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:26 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file sys/poll.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-YQl9oz"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-YQl9oz"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SYS_POLL_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-YQl9oz'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_13686/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_13686.dir/build.make CMakeFiles/cmTC_13686.dir/build
+        Building C object CMakeFiles/cmTC_13686.dir/HAVE_SYS_POLL_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_13686.dir/HAVE_SYS_POLL_H.c.o -MF CMakeFiles/cmTC_13686.dir/HAVE_SYS_POLL_H.c.o.d -o CMakeFiles/cmTC_13686.dir/HAVE_SYS_POLL_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-YQl9oz/HAVE_SYS_POLL_H.c
+        Linking C executable cmTC_13686
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_13686.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_13686.dir/HAVE_SYS_POLL_H.c.o -o cmTC_13686 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:27 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file sys/select.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-tVid2t"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-tVid2t"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SYS_SELECT_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-tVid2t'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_07735/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_07735.dir/build.make CMakeFiles/cmTC_07735.dir/build
+        Building C object CMakeFiles/cmTC_07735.dir/HAVE_SYS_SELECT_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_07735.dir/HAVE_SYS_SELECT_H.c.o -MF CMakeFiles/cmTC_07735.dir/HAVE_SYS_SELECT_H.c.o.d -o CMakeFiles/cmTC_07735.dir/HAVE_SYS_SELECT_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-tVid2t/HAVE_SYS_SELECT_H.c
+        Linking C executable cmTC_07735
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_07735.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_07735.dir/HAVE_SYS_SELECT_H.c.o -o cmTC_07735 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:28 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file sys/socket.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-l23bNN"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-l23bNN"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SYS_SOCKET_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-l23bNN'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0f79a/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_0f79a.dir/build.make CMakeFiles/cmTC_0f79a.dir/build
+        Building C object CMakeFiles/cmTC_0f79a.dir/HAVE_SYS_SOCKET_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_0f79a.dir/HAVE_SYS_SOCKET_H.c.o -MF CMakeFiles/cmTC_0f79a.dir/HAVE_SYS_SOCKET_H.c.o.d -o CMakeFiles/cmTC_0f79a.dir/HAVE_SYS_SOCKET_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-l23bNN/HAVE_SYS_SOCKET_H.c
+        Linking C executable cmTC_0f79a
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f79a.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_0f79a.dir/HAVE_SYS_SOCKET_H.c.o -o cmTC_0f79a 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:29 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file sys/time.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-NBIuCo"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-NBIuCo"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SYS_TIME_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-NBIuCo'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6f39e/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_6f39e.dir/build.make CMakeFiles/cmTC_6f39e.dir/build
+        Building C object CMakeFiles/cmTC_6f39e.dir/HAVE_SYS_TIME_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_6f39e.dir/HAVE_SYS_TIME_H.c.o -MF CMakeFiles/cmTC_6f39e.dir/HAVE_SYS_TIME_H.c.o.d -o CMakeFiles/cmTC_6f39e.dir/HAVE_SYS_TIME_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-NBIuCo/HAVE_SYS_TIME_H.c
+        Linking C executable cmTC_6f39e
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f39e.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_6f39e.dir/HAVE_SYS_TIME_H.c.o -o cmTC_6f39e 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:30 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file sys/uio.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pOUNSJ"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pOUNSJ"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SYS_UIO_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pOUNSJ'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ee265/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ee265.dir/build.make CMakeFiles/cmTC_ee265.dir/build
+        Building C object CMakeFiles/cmTC_ee265.dir/HAVE_SYS_UIO_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_ee265.dir/HAVE_SYS_UIO_H.c.o -MF CMakeFiles/cmTC_ee265.dir/HAVE_SYS_UIO_H.c.o.d -o CMakeFiles/cmTC_ee265.dir/HAVE_SYS_UIO_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pOUNSJ/HAVE_SYS_UIO_H.c
+        Linking C executable cmTC_ee265
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ee265.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_ee265.dir/HAVE_SYS_UIO_H.c.o -o cmTC_ee265 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:31 (CHECK_FUNCTION_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for setsockopt"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-hfQLao"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-hfQLao"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SETSOCKOPT"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-hfQLao'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6f990/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_6f990.dir/build.make CMakeFiles/cmTC_6f990.dir/build
+        Building C object CMakeFiles/cmTC_6f990.dir/CheckFunctionExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=setsockopt -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_6f990.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_6f990.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_6f990.dir/CheckFunctionExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-hfQLao/CheckFunctionExists.c
+        Linking C executable cmTC_6f990
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f990.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=setsockopt -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_6f990.dir/CheckFunctionExists.c.o -o cmTC_6f990 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:250 (check_include_file)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:35 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jSibu4"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jSibu4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jSibu4'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_dd281/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_dd281.dir/build.make CMakeFiles/cmTC_dd281.dir/build
+        Building C object CMakeFiles/cmTC_dd281.dir/CheckIncludeFile.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_dd281.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_dd281.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_dd281.dir/CheckIncludeFile.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jSibu4/CheckIncludeFile.c
+        Linking C executable cmTC_dd281
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dd281.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_dd281.dir/CheckIncludeFile.c.o -o cmTC_dd281 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:251 (check_include_file)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:35 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-baGo9Q"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-baGo9Q"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-baGo9Q'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ca337/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ca337.dir/build.make CMakeFiles/cmTC_ca337.dir/build
+        Building C object CMakeFiles/cmTC_ca337.dir/CheckIncludeFile.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_ca337.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_ca337.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_ca337.dir/CheckIncludeFile.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-baGo9Q/CheckIncludeFile.c
+        Linking C executable cmTC_ca337
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ca337.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_ca337.dir/CheckIncludeFile.c.o -o cmTC_ca337 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:252 (check_include_file)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:35 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-aFFyYm"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-aFFyYm"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-aFFyYm'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_09819/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_09819.dir/build.make CMakeFiles/cmTC_09819.dir/build
+        Building C object CMakeFiles/cmTC_09819.dir/CheckIncludeFile.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_09819.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_09819.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_09819.dir/CheckIncludeFile.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-aFFyYm/CheckIncludeFile.c
+        Linking C executable cmTC_09819
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_09819.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_09819.dir/CheckIncludeFile.c.o -o cmTC_09819 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:35 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of int"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-SpALvG"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-SpALvG"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_INT"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-SpALvG'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6dcfb/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_6dcfb.dir/build.make CMakeFiles/cmTC_6dcfb.dir/build
+        Building C object CMakeFiles/cmTC_6dcfb.dir/DEF_SIZEOF_INT.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_6dcfb.dir/DEF_SIZEOF_INT.c.o -MF CMakeFiles/cmTC_6dcfb.dir/DEF_SIZEOF_INT.c.o.d -o CMakeFiles/cmTC_6dcfb.dir/DEF_SIZEOF_INT.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-SpALvG/DEF_SIZEOF_INT.c
+        Linking C executable cmTC_6dcfb
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6dcfb.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_6dcfb.dir/DEF_SIZEOF_INT.c.o -o cmTC_6dcfb 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:36 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of long"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PhGYcU"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PhGYcU"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_LONG"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PhGYcU'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1a99c/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_1a99c.dir/build.make CMakeFiles/cmTC_1a99c.dir/build
+        Building C object CMakeFiles/cmTC_1a99c.dir/DEF_SIZEOF_LONG.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_1a99c.dir/DEF_SIZEOF_LONG.c.o -MF CMakeFiles/cmTC_1a99c.dir/DEF_SIZEOF_LONG.c.o.d -o CMakeFiles/cmTC_1a99c.dir/DEF_SIZEOF_LONG.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PhGYcU/DEF_SIZEOF_LONG.c
+        Linking C executable cmTC_1a99c
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a99c.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_1a99c.dir/DEF_SIZEOF_LONG.c.o -o cmTC_1a99c 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:37 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of size_t"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-uZ3TK4"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-uZ3TK4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_SIZE_T"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-uZ3TK4'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_21cd7/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_21cd7.dir/build.make CMakeFiles/cmTC_21cd7.dir/build
+        Building C object CMakeFiles/cmTC_21cd7.dir/DEF_SIZEOF_SIZE_T.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_21cd7.dir/DEF_SIZEOF_SIZE_T.c.o -MF CMakeFiles/cmTC_21cd7.dir/DEF_SIZEOF_SIZE_T.c.o.d -o CMakeFiles/cmTC_21cd7.dir/DEF_SIZEOF_SIZE_T.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-uZ3TK4/DEF_SIZEOF_SIZE_T.c
+        Linking C executable cmTC_21cd7
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_21cd7.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_21cd7.dir/DEF_SIZEOF_SIZE_T.c.o -o cmTC_21cd7 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:38 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of ssize_t"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-T5R0Xv"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-T5R0Xv"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_SSIZE_T"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-T5R0Xv'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_39d21/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_39d21.dir/build.make CMakeFiles/cmTC_39d21.dir/build
+        Building C object CMakeFiles/cmTC_39d21.dir/DEF_SIZEOF_SSIZE_T.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_39d21.dir/DEF_SIZEOF_SSIZE_T.c.o -MF CMakeFiles/cmTC_39d21.dir/DEF_SIZEOF_SSIZE_T.c.o.d -o CMakeFiles/cmTC_39d21.dir/DEF_SIZEOF_SSIZE_T.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-T5R0Xv/DEF_SIZEOF_SSIZE_T.c
+        Linking C executable cmTC_39d21
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39d21.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_39d21.dir/DEF_SIZEOF_SSIZE_T.c.o -o cmTC_39d21 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:39 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of off_t"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-ers5sa"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-ers5sa"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_OFF_T"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-ers5sa'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e3be1/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_e3be1.dir/build.make CMakeFiles/cmTC_e3be1.dir/build
+        Building C object CMakeFiles/cmTC_e3be1.dir/DEF_SIZEOF_OFF_T.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_e3be1.dir/DEF_SIZEOF_OFF_T.c.o -MF CMakeFiles/cmTC_e3be1.dir/DEF_SIZEOF_OFF_T.c.o.d -o CMakeFiles/cmTC_e3be1.dir/DEF_SIZEOF_OFF_T.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-ers5sa/DEF_SIZEOF_OFF_T.c
+        Linking C executable cmTC_e3be1
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e3be1.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_e3be1.dir/DEF_SIZEOF_OFF_T.c.o -o cmTC_e3be1 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:42 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file unistd.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-41zCXK"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-41zCXK"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-41zCXK'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0819a/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_0819a.dir/build.make CMakeFiles/cmTC_0819a.dir/build
+        Building C object CMakeFiles/cmTC_0819a.dir/HAVE_UNISTD_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_0819a.dir/HAVE_UNISTD_H.c.o -MF CMakeFiles/cmTC_0819a.dir/HAVE_UNISTD_H.c.o.d -o CMakeFiles/cmTC_0819a.dir/HAVE_UNISTD_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-41zCXK/HAVE_UNISTD_H.c
+        Linking C executable cmTC_0819a
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0819a.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_0819a.dir/HAVE_UNISTD_H.c.o -o cmTC_0819a 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:43 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file signal.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-6zdwd4"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-6zdwd4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SIGNAL_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-6zdwd4'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ea292/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ea292.dir/build.make CMakeFiles/cmTC_ea292.dir/build
+        Building C object CMakeFiles/cmTC_ea292.dir/HAVE_SIGNAL_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_ea292.dir/HAVE_SIGNAL_H.c.o -MF CMakeFiles/cmTC_ea292.dir/HAVE_SIGNAL_H.c.o.d -o CMakeFiles/cmTC_ea292.dir/HAVE_SIGNAL_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-6zdwd4/HAVE_SIGNAL_H.c
+        Linking C executable cmTC_ea292
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ea292.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_ea292.dir/HAVE_SIGNAL_H.c.o -o cmTC_ea292 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:44 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file fcntl.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jbw0tF"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jbw0tF"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_FCNTL_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jbw0tF'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bddac/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_bddac.dir/build.make CMakeFiles/cmTC_bddac.dir/build
+        Building C object CMakeFiles/cmTC_bddac.dir/HAVE_FCNTL_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_bddac.dir/HAVE_FCNTL_H.c.o -MF CMakeFiles/cmTC_bddac.dir/HAVE_FCNTL_H.c.o.d -o CMakeFiles/cmTC_bddac.dir/HAVE_FCNTL_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-jbw0tF/HAVE_FCNTL_H.c
+        Linking C executable cmTC_bddac
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bddac.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_bddac.dir/HAVE_FCNTL_H.c.o -o cmTC_bddac 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:45 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file termios.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pXKqxB"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pXKqxB"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_TERMIOS_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pXKqxB'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_55874/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_55874.dir/build.make CMakeFiles/cmTC_55874.dir/build
+        Building C object CMakeFiles/cmTC_55874.dir/HAVE_TERMIOS_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_55874.dir/HAVE_TERMIOS_H.c.o -MF CMakeFiles/cmTC_55874.dir/HAVE_TERMIOS_H.c.o.d -o CMakeFiles/cmTC_55874.dir/HAVE_TERMIOS_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pXKqxB/HAVE_TERMIOS_H.c
+        Linking C executable cmTC_55874
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_55874.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_55874.dir/HAVE_TERMIOS_H.c.o -o cmTC_55874 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:46 (CHECK_FUNCTION_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for getpass"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-43Hz7a"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-43Hz7a"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_GETPASS"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-43Hz7a'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_9c0fc/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_9c0fc.dir/build.make CMakeFiles/cmTC_9c0fc.dir/build
+        Building C object CMakeFiles/cmTC_9c0fc.dir/CheckFunctionExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=getpass -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_9c0fc.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_9c0fc.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_9c0fc.dir/CheckFunctionExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-43Hz7a/CheckFunctionExists.c
+        Linking C executable cmTC_9c0fc
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c0fc.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=getpass -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_9c0fc.dir/CheckFunctionExists.c.o -o cmTC_9c0fc 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:47 (CHECK_FUNCTION_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for gmtime_r"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pTaxSq"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pTaxSq"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_GMTIME_R"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pTaxSq'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_28428/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_28428.dir/build.make CMakeFiles/cmTC_28428.dir/build
+        Building C object CMakeFiles/cmTC_28428.dir/CheckFunctionExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=gmtime_r -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_28428.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_28428.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_28428.dir/CheckFunctionExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-pTaxSq/CheckFunctionExists.c
+        Linking C executable cmTC_28428
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28428.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=gmtime_r -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_28428.dir/CheckFunctionExists.c.o -o cmTC_28428 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:48 (CHECK_FUNCTION_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for gettimeofday"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-lmUiNI"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-lmUiNI"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_GETTIMEOFDAY"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-lmUiNI'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_db251/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_db251.dir/build.make CMakeFiles/cmTC_db251.dir/build
+        Building C object CMakeFiles/cmTC_db251.dir/CheckFunctionExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=gettimeofday -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_db251.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_db251.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_db251.dir/CheckFunctionExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-lmUiNI/CheckFunctionExists.c
+        Linking C executable cmTC_db251
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_db251.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=gettimeofday -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_db251.dir/CheckFunctionExists.c.o -o cmTC_db251 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:52 (CHECK_SYMBOL_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for SetConsoleMode"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iGLTgS"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iGLTgS"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_SETCONSOLEMODE"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iGLTgS'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b99b7/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_b99b7.dir/build.make CMakeFiles/cmTC_b99b7.dir/build
+        Building C object CMakeFiles/cmTC_b99b7.dir/CheckSymbolExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_b99b7.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_b99b7.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_b99b7.dir/CheckSymbolExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iGLTgS/CheckSymbolExists.c
+        /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iGLTgS/CheckSymbolExists.c:2:10: fatal error: 'windows.h' file not found
+        #include <windows.h>
+                 ^~~~~~~~~~~
+        1 error generated.
+        make[4]: *** [CMakeFiles/cmTC_b99b7.dir/CheckSymbolExists.c.o] Error 1
+        make[3]: *** [cmTC_b99b7/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:59 (CHECK_FUNCTION_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for strptime"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-zZYLYn"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-zZYLYn"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_STRPTIME_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-zZYLYn'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_71198/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_71198.dir/build.make CMakeFiles/cmTC_71198.dir/build
+        Building C object CMakeFiles/cmTC_71198.dir/CheckFunctionExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=strptime -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_71198.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_71198.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_71198.dir/CheckFunctionExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-zZYLYn/CheckFunctionExists.c
+        Linking C executable cmTC_71198
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_71198.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=strptime -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_71198.dir/CheckFunctionExists.c.o -o cmTC_71198 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:62 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file netdb.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xzDMke"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xzDMke"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_NETDB_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xzDMke'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_986d9/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_986d9.dir/build.make CMakeFiles/cmTC_986d9.dir/build
+        Building C object CMakeFiles/cmTC_986d9.dir/HAVE_NETDB_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_986d9.dir/HAVE_NETDB_H.c.o -MF CMakeFiles/cmTC_986d9.dir/HAVE_NETDB_H.c.o.d -o CMakeFiles/cmTC_986d9.dir/HAVE_NETDB_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xzDMke/HAVE_NETDB_H.c
+        Linking C executable cmTC_986d9
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_986d9.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_986d9.dir/HAVE_NETDB_H.c.o -o cmTC_986d9 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:63 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file arpa/inet.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FF14eu"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FF14eu"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_ARPA_INET_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FF14eu'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ce0f5/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_ce0f5.dir/build.make CMakeFiles/cmTC_ce0f5.dir/build
+        Building C object CMakeFiles/cmTC_ce0f5.dir/HAVE_ARPA_INET_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_ce0f5.dir/HAVE_ARPA_INET_H.c.o -MF CMakeFiles/cmTC_ce0f5.dir/HAVE_ARPA_INET_H.c.o.d -o CMakeFiles/cmTC_ce0f5.dir/HAVE_ARPA_INET_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-FF14eu/HAVE_ARPA_INET_H.c
+        Linking C executable cmTC_ce0f5
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ce0f5.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_ce0f5.dir/HAVE_ARPA_INET_H.c.o -o cmTC_ce0f5 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:64 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file netinet/in.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVP3pZ"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVP3pZ"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_NETINET_IN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVP3pZ'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8f246/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_8f246.dir/build.make CMakeFiles/cmTC_8f246.dir/build
+        Building C object CMakeFiles/cmTC_8f246.dir/HAVE_NETINET_IN_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_8f246.dir/HAVE_NETINET_IN_H.c.o -MF CMakeFiles/cmTC_8f246.dir/HAVE_NETINET_IN_H.c.o.d -o CMakeFiles/cmTC_8f246.dir/HAVE_NETINET_IN_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVP3pZ/HAVE_NETINET_IN_H.c
+        Linking C executable cmTC_8f246
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8f246.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_8f246.dir/HAVE_NETINET_IN_H.c.o -o cmTC_8f246 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:65 (CHECK_INCLUDE_FILES)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for include file netinet/tcp.h"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PgUqIV"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PgUqIV"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_NETINET_TCP_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PgUqIV'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_01cd3/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_01cd3.dir/build.make CMakeFiles/cmTC_01cd3.dir/build
+        Building C object CMakeFiles/cmTC_01cd3.dir/HAVE_NETINET_TCP_H.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_01cd3.dir/HAVE_NETINET_TCP_H.c.o -MF CMakeFiles/cmTC_01cd3.dir/HAVE_NETINET_TCP_H.c.o.d -o CMakeFiles/cmTC_01cd3.dir/HAVE_NETINET_TCP_H.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-PgUqIV/HAVE_NETINET_TCP_H.c
+        Linking C executable cmTC_01cd3
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01cd3.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_01cd3.dir/HAVE_NETINET_TCP_H.c.o -o cmTC_01cd3 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:69 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of in_addr_t"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iQbF8h"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iQbF8h"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_IN_ADDR_T"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iQbF8h'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d9d7d/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_d9d7d.dir/build.make CMakeFiles/cmTC_d9d7d.dir/build
+        Building C object CMakeFiles/cmTC_d9d7d.dir/DEF_SIZEOF_IN_ADDR_T.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_d9d7d.dir/DEF_SIZEOF_IN_ADDR_T.c.o -MF CMakeFiles/cmTC_d9d7d.dir/DEF_SIZEOF_IN_ADDR_T.c.o.d -o CMakeFiles/cmTC_d9d7d.dir/DEF_SIZEOF_IN_ADDR_T.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-iQbF8h/DEF_SIZEOF_IN_ADDR_T.c
+        Linking C executable cmTC_d9d7d
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9d7d.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_d9d7d.dir/DEF_SIZEOF_IN_ADDR_T.c.o -o cmTC_d9d7d 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:74 (CHECK_TYPE_SIZE)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Check size of socklen_t"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-AaqRsM"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-AaqRsM"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_DEF_SIZEOF_SOCKLEN_T"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-AaqRsM'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e33cf/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_e33cf.dir/build.make CMakeFiles/cmTC_e33cf.dir/build
+        Building C object CMakeFiles/cmTC_e33cf.dir/DEF_SIZEOF_SOCKLEN_T.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_e33cf.dir/DEF_SIZEOF_SOCKLEN_T.c.o -MF CMakeFiles/cmTC_e33cf.dir/DEF_SIZEOF_SOCKLEN_T.c.o.d -o CMakeFiles/cmTC_e33cf.dir/DEF_SIZEOF_SOCKLEN_T.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-AaqRsM/DEF_SIZEOF_SOCKLEN_T.c
+        Linking C executable cmTC_e33cf
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e33cf.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_e33cf.dir/DEF_SIZEOF_SOCKLEN_T.c.o -o cmTC_e33cf 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "cmake/modules/PortabilityGNUCheck.cmake:79 (CHECK_FUNCTION_EXISTS)"
+      - "CMakeLists.txt:62 (include)"
+    checks:
+      - "Looking for getaddrinfo"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rhNVrw"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rhNVrw"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "HAVE_GETADDRINFO_H"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rhNVrw'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_86840/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_86840.dir/build.make CMakeFiles/cmTC_86840.dir/build
+        Building C object CMakeFiles/cmTC_86840.dir/CheckFunctionExists.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=getaddrinfo -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_86840.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_86840.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_86840.dir/CheckFunctionExists.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-rhNVrw/CheckFunctionExists.c
+        Linking C executable cmTC_86840
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_86840.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread -DCHECK_FUNCTION_EXISTS=getaddrinfo -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_86840.dir/CheckFunctionExists.c.o -o cmTC_86840 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/opt/homebrew/Cellar/cmake/3.28.2/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "CMakeLists.txt:84 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVi1rJ"
+      binary: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVi1rJ"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread"
+      CMAKE_MODULE_PATH: "/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/cmake/modules/"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: "13.5"
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVi1rJ'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_04ea8/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_04ea8.dir/build.make CMakeFiles/cmTC_04ea8.dir/build
+        Building C object CMakeFiles/cmTC_04ea8.dir/src.c.o
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -MD -MT CMakeFiles/cmTC_04ea8.dir/src.c.o -MF CMakeFiles/cmTC_04ea8.dir/src.c.o.d -o CMakeFiles/cmTC_04ea8.dir/src.c.o -c /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build/CMakeFiles/CMakeScratch/TryCompile-xVi1rJ/src.c
+        Linking C executable cmTC_04ea8
+        /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_04ea8.dir/link.txt --verbose=1
+        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -m64 -pipe -W -Wall -fsigned-char -fno-common -Qunused-arguments -pthread  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_04ea8.dir/src.c.o -o cmTC_04ea8 
+        
+      exitCode: 0
+...

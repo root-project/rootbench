@@ -1,0 +1,710 @@
+CMake Warning at CMakeLists.txt:51 (message):
+  the curl cmake build system is poorly maintained.  Be aware
+
+
+CMake Warning at CMake/Macros.cmake:86 (message):
+  Found no *nroff program
+Call Stack (most recent call first):
+  CMakeLists.txt:215 (curl_nroff_check)
+
+
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_auth.c:331:31: warning: 'RAND_pseudo_bytes' is deprecated [-Wdeprecated-declarations]
+    if (RAND_status() == 1 && RAND_pseudo_bytes(data, sizeof data) >= 0) {
+                              ^
+/opt/homebrew/include/openssl/rand.h:79:1: note: 'RAND_pseudo_bytes' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_1_1_0 int RAND_pseudo_bytes(unsigned char *buf, int num);
+^
+/opt/homebrew/include/openssl/macros.h:216:49: note: expanded from macro 'OSSL_DEPRECATEDIN_1_1_0'
+#   define OSSL_DEPRECATEDIN_1_1_0              OSSL_DEPRECATED(1.1.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+1 warning generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_basic.c:208:21: warning: format specifies type 'long' but the argument has type 'ne_off_t' (aka 'long long') [-Wformat]
+                    range->start);
+                    ^~~~~~~~~~~~
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_basic.c:213:21: warning: format specifies type 'long' but the argument has type 'ne_off_t' (aka 'long long') [-Wformat]
+                    range->start, range->end);
+                    ^~~~~~~~~~~~
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_basic.c:213:35: warning: format specifies type 'long' but the argument has type 'ne_off_t' (aka 'long long') [-Wformat]
+                    range->start, range->end);
+                                  ^~~~~~~~~~
+3 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_locks.c:116:12: warning: missing field 'name' initializer [-Wmissing-field-initializers]
+    { NULL }
+           ^
+1 warning generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_request.c:341:25: warning: format specifies type 'long' but the argument has type 'ne_off_t' (aka 'long long') [-Wformat]
+                        req->body.file.offset);
+                        ^~~~~~~~~~~~~~~~~~~~~
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_request.c:504:70: warning: format specifies type 'long' but the argument has type 'ne_off_t' (aka 'long long') [-Wformat]
+    ne_print_request_header(req, "Content-Length", "%" FMT_NE_OFF_T, length);
+                                                    ~~~~~~~~~~~~~~~  ^~~~~~
+2 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_xml.c:173:1: warning: missing field 'externalSubset' initializer [-Wmissing-field-initializers]
+};
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_xml.c:341:59: warning: passing 'const char *const *' to parameter of type 'const char **' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                  elm->nspace, elm->name, PASS_ATTS(atts));
+                                                          ^~~~~~~~~~~~~~~
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_xml.c:179:25: note: expanded from macro 'PASS_ATTS'
+#define PASS_ATTS(atts) (atts ? (const char **)(atts) : empty_atts)
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_openssl.c:1332:42: warning: comparison of function 'thread_lock_neon' equal to a null pointer is always false [-Wtautological-pointer-compare]
+    if (CRYPTO_get_locking_callback() == thread_lock_neon
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    ^~~~~~~~~~~~~~~~
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/libneon/src/ne_openssl.c:1332:42: note: prefix with the address-of operator to silence this warning
+    if (CRYPTO_get_locking_callback() == thread_lock_neon
+                                         ^
+                                         &
+1 warning generated.
++ '[' -f lib/curl_config.h ']'
++ echo '#include<time.h>
+        int main() { struct timespec ts; clock_gettime(CLOCK_MONOTONIC, &ts); return 0; }'
++ gcc test.c -o /dev/null
++ '[' 0 -ne 0 ']'
++ rm test.c
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/mprintf.c:949:10: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+        (sprintf)(work, formatbuf, p->data.dnum);
+         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/stdio.h:180:1: note: 'sprintf' has been explicitly marked deprecated here
+__deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/sys/cdefs.h:215:48: note: expanded from macro '__deprecated_msg'
+        #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+                                                      ^
+1 warning generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/md4.c:116:9: warning: 'CC_MD4_Init' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  (void)CC_MD4_Init(ctx);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:106:12: note: 'CC_MD4_Init' has been explicitly marked deprecated here
+extern int CC_MD4_Init(CC_MD4_CTX *c)
+           ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/md4.c:121:9: warning: 'CC_MD4_Update' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  (void)CC_MD4_Update(ctx, data, (CC_LONG)size);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:109:12: note: 'CC_MD4_Update' has been explicitly marked deprecated here
+extern int CC_MD4_Update(CC_MD4_CTX *c, const void *data, CC_LONG len)
+           ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/md4.c:126:9: warning: 'CC_MD4_Final' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  (void)CC_MD4_Final(result, ctx);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:112:12: note: 'CC_MD4_Final' has been explicitly marked deprecated here
+extern int CC_MD4_Final(unsigned char *md, CC_MD4_CTX *c)
+           ^
+3 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/md5.c:160:3: warning: 'CC_MD5_Init' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  CC_MD5_Init(ctx);
+  ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:133:12: note: 'CC_MD5_Init' has been explicitly marked deprecated here
+extern int CC_MD5_Init(CC_MD5_CTX *c)
+           ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/md5.c:167:3: warning: 'CC_MD5_Update' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  CC_MD5_Update(ctx, input, inputLen);
+  ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:136:12: note: 'CC_MD5_Update' has been explicitly marked deprecated here
+extern int CC_MD5_Update(CC_MD5_CTX *c, const void *data, CC_LONG len)
+           ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/md5.c:172:3: warning: 'CC_MD5_Final' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  CC_MD5_Final(digest, ctx);
+  ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:139:12: note: 'CC_MD5_Final' has been explicitly marked deprecated here
+extern int CC_MD5_Final(unsigned char *md, CC_MD5_CTX *c)
+           ^
+3 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1143:6: warning: 'CFURLCreateDataAndPropertiesFromResource' is deprecated: first deprecated in macOS 10.9 - For resource data, use the CFReadStream API. For file resource properties, use CFURLCopyResourcePropertiesForKeys. [-Wdeprecated-declarations]
+  if(CFURLCreateDataAndPropertiesFromResource(NULL, pkcs_url, &pkcs_data,
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFURLAccess.h:52:9: note: 'CFURLCreateDataAndPropertiesFromResource' has been explicitly marked deprecated here
+Boolean CFURLCreateDataAndPropertiesFromResource(CFAllocatorRef alloc, CFURLRef url, CFDataRef *resourceData, CFDictionaryRef *properties, CFArrayRef desiredProperties, SInt32 *errorCode) API_DEPRECATED("For resource data, use the CFReadStream API. For file resource properties, use CFURLCopyResourcePropertiesForKeys.", macos(10.0,10.9), ios(2.0,7.0), watchos(2.0,2.0), tvos(9.0,9.0));
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1251:20: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      *darwinver = kTLSProtocol1;
+                   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+    kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1254:20: warning: 'kTLSProtocol11' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      *darwinver = kTLSProtocol11;
+                   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:158:5: note: 'kTLSProtocol11' has been explicitly marked deprecated here
+    kTLSProtocol11 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 7,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1257:20: warning: 'kTLSProtocol12' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      *darwinver = kTLSProtocol12;
+                   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:159:5: note: 'kTLSProtocol12' has been explicitly marked deprecated here
+    kTLSProtocol12 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 8,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1263:22: warning: 'kTLSProtocol13' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+        *darwinver = kTLSProtocol13;
+                     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:161:5: note: 'kTLSProtocol13' has been explicitly marked deprecated here
+    kTLSProtocol13 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 10,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1313:6: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  if(SSLSetProtocolVersionMax != NULL) {
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1314:34: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+    SSLProtocol darwin_ver_min = kTLSProtocol1;
+                                 ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+    kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1315:34: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+    SSLProtocol darwin_ver_max = kTLSProtocol1;
+                                 ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+    kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1329:11: warning: 'SSLSetProtocolVersionMin' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    (void)SSLSetProtocolVersionMin(BACKEND->ssl_ctx, darwin_ver_min);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:458:1: note: 'SSLSetProtocolVersionMin' has been explicitly marked deprecated here
+SSLSetProtocolVersionMin  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1330:11: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, darwin_ver_max);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1397:6: warning: 'SSLCreateContext' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  if(SSLCreateContext != NULL) {  /* use the newer API if available */
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:316:1: note: 'SSLCreateContext' has been explicitly marked deprecated here
+SSLCreateContext(CFAllocatorRef __nullable alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType)
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1400:24: warning: 'SSLCreateContext' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    BACKEND->ssl_ctx = SSLCreateContext(NULL, kSSLClientSide, kSSLStreamType);
+                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:316:1: note: 'SSLCreateContext' has been explicitly marked deprecated here
+SSLCreateContext(CFAllocatorRef __nullable alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType)
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1400:47: warning: 'kSSLClientSide' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+    BACKEND->ssl_ctx = SSLCreateContext(NULL, kSSLClientSide, kSSLStreamType);
+                                              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:218:5: note: 'kSSLClientSide' has been explicitly marked deprecated here
+    kSSLClientSide CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0)
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1400:63: warning: 'kSSLStreamType' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+    BACKEND->ssl_ctx = SSLCreateContext(NULL, kSSLClientSide, kSSLStreamType);
+                                                              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:223:5: note: 'kSSLStreamType' has been explicitly marked deprecated here
+    kSSLStreamType CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0),
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1431:6: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  if(SSLSetProtocolVersionMax != NULL) {
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1434:13: warning: 'SSLSetProtocolVersionMin' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      (void)SSLSetProtocolVersionMin(BACKEND->ssl_ctx, kTLSProtocol1);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:458:1: note: 'SSLSetProtocolVersionMin' has been explicitly marked deprecated here
+SSLSetProtocolVersionMin  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1434:56: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      (void)SSLSetProtocolVersionMin(BACKEND->ssl_ctx, kTLSProtocol1);
+                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+    kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1437:15: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+        (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kTLSProtocol13);
+              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1437:58: warning: 'kTLSProtocol13' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+        (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kTLSProtocol13);
+                                                         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:161:5: note: 'kTLSProtocol13' has been explicitly marked deprecated here
+    kTLSProtocol13 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 10,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1440:15: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+        (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kTLSProtocol12);
+              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1440:58: warning: 'kTLSProtocol12' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+        (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kTLSProtocol12);
+                                                         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:159:5: note: 'kTLSProtocol12' has been explicitly marked deprecated here
+    kTLSProtocol12 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 8,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1459:13: warning: 'SSLSetProtocolVersionMin' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      err = SSLSetProtocolVersionMin(BACKEND->ssl_ctx, kSSLProtocol3);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:458:1: note: 'SSLSetProtocolVersionMin' has been explicitly marked deprecated here
+SSLSetProtocolVersionMin  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1459:56: warning: 'kSSLProtocol3' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      err = SSLSetProtocolVersionMin(BACKEND->ssl_ctx, kSSLProtocol3);
+                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:165:5: note: 'kSSLProtocol3' has been explicitly marked deprecated here
+    kSSLProtocol3 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 2,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1464:13: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kSSLProtocol3);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1464:56: warning: 'kSSLProtocol3' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kSSLProtocol3);
+                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:165:5: note: 'kSSLProtocol3' has been explicitly marked deprecated here
+    kSSLProtocol3 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 2,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1467:13: warning: 'SSLSetProtocolVersionMin' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      err = SSLSetProtocolVersionMin(BACKEND->ssl_ctx, kSSLProtocol2);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:458:1: note: 'SSLSetProtocolVersionMin' has been explicitly marked deprecated here
+SSLSetProtocolVersionMin  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1467:56: warning: 'kSSLProtocol2' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      err = SSLSetProtocolVersionMin(BACKEND->ssl_ctx, kSSLProtocol2);
+                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:164:5: note: 'kSSLProtocol2' has been explicitly marked deprecated here
+    kSSLProtocol2 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 1,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1472:13: warning: 'SSLSetProtocolVersionMax' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kSSLProtocol2);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:494:1: note: 'SSLSetProtocolVersionMax' has been explicitly marked deprecated here
+SSLSetProtocolVersionMax  (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1472:56: warning: 'kSSLProtocol2' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      (void)SSLSetProtocolVersionMax(BACKEND->ssl_ctx, kSSLProtocol2);
+                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:164:5: note: 'kSSLProtocol2' has been explicitly marked deprecated here
+    kSSLProtocol2 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 1,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1599:13: warning: 'SSLSetALPNProtocols' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      err = SSLSetALPNProtocols(BACKEND->ssl_ctx, alpnArr);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1332:1: note: 'SSLSetALPNProtocols' has been explicitly marked deprecated here
+SSLSetALPNProtocols         (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1660:13: warning: 'SSLSetCertificate' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      err = SSLSetCertificate(BACKEND->ssl_ctx, certs);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:637:1: note: 'SSLSetCertificate' has been explicitly marked deprecated here
+SSLSetCertificate                       (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1718:6: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  if(SSLSetSessionOption != NULL && darwinver_maj >= 13) {
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+SSLSetSessionOption                     (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1723:11: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLSetSessionOption(BACKEND->ssl_ctx,
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+SSLSetSessionOption                     (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1724:31: warning: 'kSSLSessionOptionBreakOnServerAuth' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+                              kSSLSessionOptionBreakOnServerAuth,
+                              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:99:2: note: 'kSSLSessionOptionBreakOnServerAuth' has been explicitly marked deprecated here
+        kSSLSessionOptionBreakOnServerAuth CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0) = 0,
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1763:11: warning: 'SSLSetPeerDomainName' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLSetPeerDomainName(BACKEND->ssl_ctx, hostname,
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:686:1: note: 'SSLSetPeerDomainName' has been explicitly marked deprecated here
+SSLSetPeerDomainName            (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1789:9: warning: 'SSLGetNumberSupportedCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLGetNumberSupportedCiphers(BACKEND->ssl_ctx, &all_ciphers_count);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:818:1: note: 'SSLGetNumberSupportedCiphers' has been explicitly marked deprecated here
+SSLGetNumberSupportedCiphers (SSLContextRef                     context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1806:9: warning: 'SSLGetSupportedCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLGetSupportedCiphers(BACKEND->ssl_ctx, all_ciphers,
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:832:1: note: 'SSLGetSupportedCiphers' has been explicitly marked deprecated here
+SSLGetSupportedCiphers           (SSLContextRef                 context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1893:9: warning: 'SSLSetEnabledCiphers' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLSetEnabledCiphers(BACKEND->ssl_ctx, allowed_ciphers,
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:865:1: note: 'SSLSetEnabledCiphers' has been explicitly marked deprecated here
+SSLSetEnabledCiphers            (SSLContextRef                  context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1905:6: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  if(SSLSetSessionOption != NULL) {
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+SSLSetSessionOption                     (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1906:5: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    SSLSetSessionOption(BACKEND->ssl_ctx, kSSLSessionOptionSendOneByteRecord,
+    ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+SSLSetSessionOption                     (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1906:43: warning: 'kSSLSessionOptionSendOneByteRecord' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+    SSLSetSessionOption(BACKEND->ssl_ctx, kSSLSessionOptionSendOneByteRecord,
+                                          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:123:5: note: 'kSSLSessionOptionSendOneByteRecord' has been explicitly marked deprecated here
+    kSSLSessionOptionSendOneByteRecord CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0) = 4,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1908:5: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    SSLSetSessionOption(BACKEND->ssl_ctx, kSSLSessionOptionFalseStart,
+    ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+SSLSetSessionOption                     (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1908:43: warning: 'kSSLSessionOptionFalseStart' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+    SSLSetSessionOption(BACKEND->ssl_ctx, kSSLSessionOptionFalseStart,
+                                          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:117:5: note: 'kSSLSessionOptionFalseStart' has been explicitly marked deprecated here
+    kSSLSessionOptionFalseStart CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0) = 3,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1922:13: warning: 'SSLSetPeerID' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      err = SSLSetPeerID(BACKEND->ssl_ctx, ssl_sessionid, ssl_sessionid_len);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1285:1: note: 'SSLSetPeerID' has been explicitly marked deprecated here
+SSLSetPeerID                            (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1940:13: warning: 'SSLSetPeerID' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+      err = SSLSetPeerID(BACKEND->ssl_ctx, ssl_sessionid, ssl_sessionid_len);
+            ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1285:1: note: 'SSLSetPeerID' has been explicitly marked deprecated here
+SSLSetPeerID                            (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1957:9: warning: 'SSLSetIOFuncs' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLSetIOFuncs(BACKEND->ssl_ctx, SocketRead, SocketWrite);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:418:1: note: 'SSLSetIOFuncs' has been explicitly marked deprecated here
+SSLSetIOFuncs                           (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:1968:9: warning: 'SSLSetConnection' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLSetConnection(BACKEND->ssl_ctx, connssl);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:657:1: note: 'SSLSetConnection' has been explicitly marked deprecated here
+SSLSetConnection                        (SSLContextRef                  context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2187:18: warning: 'SSLCopyPeerTrust' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  OSStatus ret = SSLCopyPeerTrust(ctx, &trust);
+                 ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1261:1: note: 'SSLCopyPeerTrust' has been explicitly marked deprecated here
+SSLCopyPeerTrust                        (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2215:9: warning: 'SecTrustEvaluate' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+  ret = SecTrustEvaluate(trust, &trust_eval);
+        ^~~~~~~~~~~~~~~~
+        SecTrustEvaluateWithError
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:364:10: note: 'SecTrustEvaluate' has been explicitly marked deprecated here
+OSStatus SecTrustEvaluate(SecTrustRef trust, SecTrustResultType *result)
+         ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2260:20: warning: 'SSLCopyPeerTrust' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    OSStatus ret = SSLCopyPeerTrust(ctx, &trust);
+                   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1261:1: note: 'SSLCopyPeerTrust' has been explicitly marked deprecated here
+SSLCopyPeerTrust                        (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2264:24: warning: 'SecTrustCopyPublicKey' is deprecated: first deprecated in macOS 11.0 [-Wdeprecated-declarations]
+    SecKeyRef keyRef = SecTrustCopyPublicKey(trust);
+                       ^~~~~~~~~~~~~~~~~~~~~
+                       SecTrustCopyKey
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:476:11: note: 'SecTrustCopyPublicKey' has been explicitly marked deprecated here
+SecKeyRef SecTrustCopyPublicKey(SecTrustRef trust)
+          ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2360:9: warning: 'SSLHandshake' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLHandshake(BACKEND->ssl_ctx);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1641:1: note: 'SSLHandshake' has been explicitly marked deprecated here
+SSLHandshake                            (SSLContextRef          context)
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2593:11: warning: 'SSLGetNegotiatedCipher' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    (void)SSLGetNegotiatedCipher(BACKEND->ssl_ctx, &cipher);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1314:1: note: 'SSLGetNegotiatedCipher' has been explicitly marked deprecated here
+SSLGetNegotiatedCipher          (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2594:11: warning: 'SSLGetNegotiatedProtocolVersion' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    (void)SSLGetNegotiatedProtocolVersion(BACKEND->ssl_ctx, &protocol);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:803:1: note: 'SSLGetNegotiatedProtocolVersion' has been explicitly marked deprecated here
+SSLGetNegotiatedProtocolVersion         (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2596:12: warning: 'kSSLProtocol2' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      case kSSLProtocol2:
+           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:164:5: note: 'kSSLProtocol2' has been explicitly marked deprecated here
+    kSSLProtocol2 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 1,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2600:12: warning: 'kSSLProtocol3' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      case kSSLProtocol3:
+           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:165:5: note: 'kSSLProtocol3' has been explicitly marked deprecated here
+    kSSLProtocol3 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 2,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2604:12: warning: 'kTLSProtocol1' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      case kTLSProtocol1:
+           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:157:5: note: 'kTLSProtocol1' has been explicitly marked deprecated here
+    kTLSProtocol1 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 4,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2609:12: warning: 'kTLSProtocol11' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      case kTLSProtocol11:
+           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:158:5: note: 'kTLSProtocol11' has been explicitly marked deprecated here
+    kTLSProtocol11 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 7,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2613:12: warning: 'kTLSProtocol12' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      case kTLSProtocol12:
+           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:159:5: note: 'kTLSProtocol12' has been explicitly marked deprecated here
+    kTLSProtocol12 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 8,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2619:12: warning: 'kTLSProtocol13' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      case kTLSProtocol13:
+           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolTypes.h:161:5: note: 'kTLSProtocol13' has been explicitly marked deprecated here
+    kTLSProtocol13 CF_ENUM_DEPRECATED(10_2, 10_15, 5_0, 13_0) = 10,
+    ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2634:15: warning: 'SSLCopyALPNProtocols' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+        err = SSLCopyALPNProtocols(BACKEND->ssl_ctx, &alpnArr);
+              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1354:1: note: 'SSLCopyALPNProtocols' has been explicitly marked deprecated here
+SSLCopyALPNProtocols        (SSLContextRef      context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2713:6: warning: 'SecTrustEvaluateAsync' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+  if(SecTrustEvaluateAsync != NULL) {
+     ^~~~~~~~~~~~~~~~~~~~~
+     SecTrustEvaluateAsyncWithError
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:382:10: note: 'SecTrustEvaluateAsync' has been explicitly marked deprecated here
+OSStatus SecTrustEvaluateAsync(SecTrustRef trust,
+         ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2715:11: warning: 'SSLCopyPeerTrust' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLCopyPeerTrust(BACKEND->ssl_ctx, &trust);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1261:1: note: 'SSLCopyPeerTrust' has been explicitly marked deprecated here
+SSLCopyPeerTrust                        (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2723:23: warning: 'SecTrustGetCertificateAtIndex' is deprecated: first deprecated in macOS 12.0 [-Wdeprecated-declarations]
+        server_cert = SecTrustGetCertificateAtIndex(trust, i);
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                      SecTrustCopyCertificateChain
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecTrust.h:523:19: note: 'SecTrustGetCertificateAtIndex' has been explicitly marked deprecated here
+SecCertificateRef SecTrustGetCertificateAtIndex(SecTrustRef trust, CFIndex ix)
+                  ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2938:11: warning: 'SSLClose' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    (void)SSLClose(BACKEND->ssl_ctx);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1731:1: note: 'SSLClose' has been explicitly marked deprecated here
+SSLClose                                        (SSLContextRef          context)
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:2940:8: warning: 'SSLCreateContext' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    if(SSLCreateContext != NULL)
+       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:316:1: note: 'SSLCreateContext' has been explicitly marked deprecated here
+SSLCreateContext(CFAllocatorRef __nullable alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType)
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3040:11: warning: 'SSLGetSessionState' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLGetSessionState(BACKEND->ssl_ctx, &state);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:370:1: note: 'SSLGetSessionState' has been explicitly marked deprecated here
+SSLGetSessionState                      (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3042:23: warning: 'kSSLConnected' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      return state == kSSLConnected || state == kSSLHandshake;
+                      ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:152:2: note: 'kSSLConnected' has been explicitly marked deprecated here
+        kSSLConnected CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0),       /* Handshake complete, ready for normal I/O */
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3042:49: warning: 'kSSLHandshake' is deprecated: first deprecated in macOS 10.15 [-Wdeprecated-declarations]
+      return state == kSSLConnected || state == kSSLHandshake;
+                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:151:2: note: 'kSSLHandshake' has been explicitly marked deprecated here
+        kSSLHandshake CF_ENUM_DEPRECATED(10_2, 10_15, 2_0, 13_0),       /* SSL handshake in progress */
+        ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3056:11: warning: 'SSLGetBufferedReadSize' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLGetBufferedReadSize(BACKEND->ssl_ctx, &buffer);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1705:1: note: 'SSLGetBufferedReadSize' has been explicitly marked deprecated here
+SSLGetBufferedReadSize          (SSLContextRef context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3091:9: warning: 'CC_MD5' is deprecated: first deprecated in macOS 10.15 - This function is cryptographically broken and should not be used in security contexts. Clients should migrate to SHA256 (or stronger). [-Wdeprecated-declarations]
+  (void)CC_MD5(tmp, (CC_LONG)tmplen, md5sum);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/CommonCrypto/CommonDigest.h:142:23: note: 'CC_MD5' has been explicitly marked deprecated here
+extern unsigned char *CC_MD5(const void *data, CC_LONG len, unsigned char *md)
+                      ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3108:6: warning: 'SSLSetSessionOption' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  if(SSLSetSessionOption != NULL)
+     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:384:1: note: 'SSLSetSessionOption' has been explicitly marked deprecated here
+SSLSetSessionOption                     (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3142:11: warning: 'SSLWrite' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLWrite(BACKEND->ssl_ctx, NULL, 0UL, &processed);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1670:1: note: 'SSLWrite' has been explicitly marked deprecated here
+SSLWrite                                        (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3161:11: warning: 'SSLWrite' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+    err = SSLWrite(BACKEND->ssl_ctx, mem, len, &processed);
+          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1670:1: note: 'SSLWrite' has been explicitly marked deprecated here
+SSLWrite                                        (SSLContextRef          context,
+^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/deps/curl/lib/vtls/sectransp.c:3192:9: warning: 'SSLRead' is deprecated: first deprecated in macOS 10.15 - No longer supported. Use Network.framework. [-Wdeprecated-declarations]
+  err = SSLRead(BACKEND->ssl_ctx, buf, buffersize, &processed);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:1689:1: note: 'SSLRead' has been explicitly marked deprecated here
+SSLRead                                         (SSLContextRef          context,
+^
+75 warnings generated.
+In file included from /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/backend/StandaloneNeonRequest.cpp:22:
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/backend/StandaloneNeonRequest.hpp:142:8: warning: private field '_reuse_session' is not used [-Wunused-private-field]
+  bool _reuse_session;
+       ^
+1 warning generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/curl/CurlSession.cpp:31:23: warning: unused variable 'curl_once' [-Wunused-variable]
+static std::once_flag curl_once;
+                      ^
+In file included from /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/curl/CurlSession.cpp:22:
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/curl/CurlSession.hpp:80:23: warning: private field '_factory' is not used [-Wunused-private-field]
+  CurlSessionFactory &_factory;
+                      ^
+2 warnings generated.
+In file included from /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/curl/StandaloneCurlRequest.cpp:22:
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/curl/StandaloneCurlRequest.hpp:127:8: warning: private field '_reuse_session' is not used [-Wunused-private-field]
+  bool _reuse_session;
+       ^
+1 warning generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/libs/alibxx/crypto/hmacsha.cpp:69:5: warning: 'SHA256_Init' is deprecated [-Wdeprecated-declarations]
+    SHA256_Init(&sha256);
+    ^
+/opt/homebrew/include/openssl/sha.h:73:1: note: 'SHA256_Init' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 int SHA256_Init(SHA256_CTX *c);
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/libs/alibxx/crypto/hmacsha.cpp:70:5: warning: 'SHA256_Update' is deprecated [-Wdeprecated-declarations]
+    SHA256_Update(&sha256, input.c_str(), input.size());
+    ^
+/opt/homebrew/include/openssl/sha.h:74:1: note: 'SHA256_Update' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 int SHA256_Update(SHA256_CTX *c,
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/libs/alibxx/crypto/hmacsha.cpp:71:5: warning: 'SHA256_Final' is deprecated [-Wdeprecated-declarations]
+    SHA256_Final(hash, &sha256);
+    ^
+/opt/homebrew/include/openssl/sha.h:76:1: note: 'SHA256_Final' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 int SHA256_Final(unsigned char *md, SHA256_CTX *c);
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/libs/alibxx/crypto/hmacsha.cpp:90:16: warning: 'EVP_PKEY_get1_RSA' is deprecated [-Wdeprecated-declarations]
+    RSA *rsa = EVP_PKEY_get1_RSA(private_key);
+               ^
+/opt/homebrew/include/openssl/evp.h:1355:1: note: 'EVP_PKEY_get1_RSA' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/libs/alibxx/crypto/hmacsha.cpp:101:8: warning: 'RSA_sign' is deprecated [-Wdeprecated-declarations]
+    if(RSA_sign(NID_sha256, (const unsigned char*) digest.c_str(), digest.size(), (unsigned char*) retbuff, &siglen, rsa) != 1) {
+       ^
+/opt/homebrew/include/openssl/rsa.h:359:1: note: 'RSA_sign' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 int RSA_sign(int type, const unsigned char *m,
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/libs/alibxx/crypto/hmacsha.cpp:105:5: warning: 'RSA_free' is deprecated [-Wdeprecated-declarations]
+    RSA_free(rsa);
+    ^
+/opt/homebrew/include/openssl/rsa.h:304:1: note: 'RSA_free' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 void RSA_free(RSA *r);
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+6 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/utils/CompatibilityHacks.cpp:111:25: warning: comparison of integers of different signs: 'ssize_t' (aka 'long') and 'const uint64_t' (aka 'const unsigned long long') [-Wsign-compare]
+  if(provider.getSize() < s3SizeThreshold && !uri.fragmentParamExists("forceMultiPart")) {
+     ~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~
+1 warning generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/utils/davix_s3_utils.cpp:521:9: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+        sprintf(p, "%02x", data[offset]);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/stdio.h:180:1: note: 'sprintf' has been explicitly marked deprecated here
+__deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/sys/cdefs.h:215:48: note: expanded from macro '__deprecated_msg'
+        #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+                                                      ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/utils/davix_s3_utils.cpp:531:5: warning: 'MD5' is deprecated [-Wdeprecated-declarations]
+    MD5((unsigned char*)input.c_str(), input.size(), result_buf);
+    ^
+/opt/homebrew/include/openssl/md5.h:52:1: note: 'MD5' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 unsigned char *MD5(const unsigned char *d, size_t n,
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/utils/davix_s3_utils.cpp:546:5: warning: 'MD5' is deprecated [-Wdeprecated-declarations]
+    MD5((unsigned char*)file_buf, statbuf.st_size, result_buf);
+    ^
+/opt/homebrew/include/openssl/md5.h:52:1: note: 'MD5' has been explicitly marked deprecated here
+OSSL_DEPRECATEDIN_3_0 unsigned char *MD5(const unsigned char *d, size_t n,
+^
+/opt/homebrew/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
+#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+                                                ^
+/opt/homebrew/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
+#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+                                                   ^
+3 warnings generated.
+/Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX/src/utils/davixuri.cpp:713:9: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+        sprintf(p, "%%%02X", (unsigned char) *pnt);
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/stdio.h:180:1: note: 'sprintf' has been explicitly marked deprecated here
+__deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/sys/cdefs.h:215:48: note: expanded from macro '__deprecated_msg'
+        #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+                                                      ^
+1 warning generated.

@@ -1,0 +1,18 @@
+{ decls }
+namespace std { inline namespace __1 {  } }
+
+[ libmultimapDict.so ]
+# List of selected classes
+class multimap<basic_string<char,char_traits<char>,allocator<char> >,double,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,double> > >
+class multimap<basic_string<char,char_traits<char>,allocator<char> >,int,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,int> > >
+class multimap<basic_string<char,char_traits<char>,allocator<char> >,long,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,long> > >
+class multimap<basic_string<char,char_traits<char>,allocator<char> >,void*,less<basic_string<char,char_traits<char>,allocator<char> > >,allocator<pair<const basic_string<char,char_traits<char>,allocator<char> >,void*> > >
+class multimap<char*,char*>
+class multimap<char*,double>
+class multimap<char*,int>
+class multimap<char*,long>
+class multimap<char*,void*>
+class multimap<string,double>
+class multimap<string,int>
+class multimap<string,long>
+class multimap<string,void*>

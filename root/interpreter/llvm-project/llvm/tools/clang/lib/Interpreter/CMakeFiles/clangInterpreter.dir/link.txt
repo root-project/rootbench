@@ -1,0 +1,1 @@
+"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool" -static -no_warning_for_no_symbols -o ../../../../lib/libclangInterpreter.a CMakeFiles/obj.clangInterpreter.dir/IncrementalExecutor.cpp.o CMakeFiles/obj.clangInterpreter.dir/IncrementalParser.cpp.o CMakeFiles/obj.clangInterpreter.dir/Interpreter.cpp.o

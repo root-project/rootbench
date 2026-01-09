@@ -1,0 +1,42 @@
+file(REMOVE_RECURSE
+  "../libcladDifferentiator.a"
+  "../libcladDifferentiator.pdb"
+  "CMakeFiles/cladDifferentiator.dir/BaseForwardModeVisitor.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/BaseForwardModeVisitor.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/CladUtils.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/CladUtils.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/ConstantFolder.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/ConstantFolder.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/DerivativeBuilder.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/DerivativeBuilder.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/DiffPlanner.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/DiffPlanner.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/ErrorEstimator.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/ErrorEstimator.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/EstimationModel.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/EstimationModel.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/ForwardModeVisitor.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/ForwardModeVisitor.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/HessianModeVisitor.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/HessianModeVisitor.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/JacobianModeVisitor.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/JacobianModeVisitor.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/MultiplexExternalRMVSource.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/MultiplexExternalRMVSource.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/ReverseModeVisitor.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/ReverseModeVisitor.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/StmtClone.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/StmtClone.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/VectorForwardModeVisitor.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/VectorForwardModeVisitor.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/Version.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/Version.cpp.o.d"
+  "CMakeFiles/cladDifferentiator.dir/VisitorBase.cpp.o"
+  "CMakeFiles/cladDifferentiator.dir/VisitorBase.cpp.o.d"
+  "VCSVersion.inc"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/cladDifferentiator.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

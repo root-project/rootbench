@@ -1,0 +1,72 @@
+.TH hadd 1 
+.SH SYNOPSIS
+usage: hadd [-a] [-f] [-f[0-9]] [-fk] [-ff] [-k] [-O] [-T] [-v V] [-j J] [-dbg] [-d D] [-n N]
+            [-cachesize CACHESIZE] [-experimental-io-features EXPERIMENTAL_IO_FEATURES]
+            TARGET SOURCES
+
+.SH DESCRIPTION
+This program will add histograms, trees and other objects from a list
+of ROOT files and write them to a target ROOT file. The target file is
+newly created and must not exist, or if -f ("force") is given, must
+not be one of the source files.
+.SH OPTIONS
+.IP -a
+Append to the output
+.IP -f
+Force overwriting of output file
+.IP -f[0-9]
+Gives the ability to specify the compression level of the target file.
+.IP
+Default is 1 (kDefaultZLIB), 0 is uncompressed, 9 is maximum
+.IP
+compression (see TFile::TFile documentation). You can also specify the
+.IP
+full compresion algorithm, e.g. -f206
+.IP -fk
+Sets the target file to contain the baskets with the same compression
+.IP
+as the input files (unless -O is specified). Compresses the meta data
+.IP
+using the compression level specified in the first input or the
+.IP
+compression setting after fk (for example 206 when using -fk206)
+.IP -ff
+The compression level use is the one specified in the first input
+.IP -k
+Skip corrupt or non-existent files, do not exit
+.IP -O
+Re-optimize basket size when merging TTree
+.IP -T
+Do not merge Trees
+.IP -v
+Explicitly set the verbosity level: 0 request no output, 99 is the
+.IP
+default
+.IP -j
+Parallelize the execution in 'J' processes. If the number of processes
+.IP
+is not specified, use the system maximum.
+.IP -dbg
+Enable verbosity. If -j was specified, do not not delete partial files
+.IP
+stored inside working directory.
+.IP -d
+Carry out the partial multiprocess execution in the specified
+.IP
+directory
+.IP -n
+Open at most 'N' files at once (use 0 to request to use the system
+.IP
+maximum)
+.IP -cachesize
+Resize the prefetching cache use to speed up I/O operations (use 0 to
+.IP
+disable)
+.IP -experimental-io-features
+Used with an argument provided, enables the corresponding experimental
+.IP
+feature for output trees. See ROOT::Experimental::EIOFeatures
+.IP TARGET
+Target file
+.IP SOURCES
+Source files

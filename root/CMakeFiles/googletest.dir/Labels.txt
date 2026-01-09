@@ -1,0 +1,13 @@
+# Target labels
+ googletest
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/googletest
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/googletest.rule
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/googletest-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/googletest-prefix/src/googletest-stamp/googletest-update.rule

@@ -1,0 +1,1 @@
+"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool" -static -no_warning_for_no_symbols -o ../../../../lib/libclangEdit.a CMakeFiles/obj.clangEdit.dir/Commit.cpp.o CMakeFiles/obj.clangEdit.dir/EditedSource.cpp.o CMakeFiles/obj.clangEdit.dir/RewriteObjCFoundationAPI.cpp.o

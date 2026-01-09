@@ -1,0 +1,10 @@
+configure: WARNING: sys/wait.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: sys/wait.h: proceeding with the compiler's result
+configure: WARNING: sys/time.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: sys/time.h: proceeding with the compiler's result
+configure: WARNING: errno.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: errno.h: proceeding with the compiler's result
+configure: WARNING: zlib.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: zlib.h: proceeding with the compiler's result
+configure: WARNING: sys/dirent.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: sys/dirent.h: proceeding with the compiler's result

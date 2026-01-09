@@ -1,0 +1,22 @@
+module "dataframe_splitcoll_arrayview" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/TwoFloats.h" { header "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/TwoFloats.h" export * }
+  link "libdataframe_splitcoll_arrayview.so"
+  export *
+}
+
+module "dataframe_simple" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/MaxSlotHelper.h" { header "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/MaxSlotHelper.h" export * }
+  module "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/SimpleFiller.h" { header "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/SimpleFiller.h" export * }
+  link "libdataframe_simple.so"
+  export *
+}
+
+module "NTupleStruct" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/NTupleStruct.hxx" { header "/Users/abhiacherjee/Documents/root_src/tree/dataframe/test/NTupleStruct.hxx" export * }
+  link "libNTupleStruct.so"
+  export *
+}
+

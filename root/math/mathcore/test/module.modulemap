@@ -1,0 +1,7 @@
+module "TrackMathCoreUnitDict" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/math/mathcore/test/stress/TrackMathCore.h" { header "/Users/abhiacherjee/Documents/root_src/math/mathcore/test/stress/TrackMathCore.h" export * }
+  link "libTrackMathCoreUnitDict.so"
+  export *
+}
+

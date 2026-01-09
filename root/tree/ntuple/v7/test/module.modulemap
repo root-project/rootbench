@@ -1,0 +1,14 @@
+module "CustomStruct" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/ntuple/v7/test/CustomStruct.hxx" { header "/Users/abhiacherjee/Documents/root_src/tree/ntuple/v7/test/CustomStruct.hxx" export * }
+  link "libCustomStruct.so"
+  export *
+}
+
+module "ntuple_types" {
+  requires cplusplus
+  module "/Users/abhiacherjee/Documents/root_src/tree/ntuple/v7/test/ProxiedSTLContainer.hxx" { header "/Users/abhiacherjee/Documents/root_src/tree/ntuple/v7/test/ProxiedSTLContainer.hxx" export * }
+  link "libntuple_types.so"
+  export *
+}
+

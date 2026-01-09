@@ -1,0 +1,166 @@
+{
+	"_version": "1.1.0",
+	"resources": [
+		{
+			"name": ".theming",
+			"size": 64,
+			"theme": "base"
+		},
+		{
+			"name": "AvatarGroup.less",
+			"size": 4014,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "Card.less",
+			"size": 11457,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "CardLoading.less",
+			"size": 4206,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "CardNumericIndicators.less",
+			"size": 851,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DynamicPage.less",
+			"size": 8310,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DynamicPageHeader.less",
+			"size": 1540,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "DynamicPageTitle.less",
+			"size": 8818,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "FlexibleColumnLayout.less",
+			"size": 3259,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GridContainer.less",
+			"size": 1311,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GridDragAndDrop.less",
+			"size": 159,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GridList.less",
+			"size": 1615,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "GridListItem.less",
+			"size": 2365,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ListPlaceholder.less",
+			"size": 1028,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ProductSwitch.less",
+			"size": 74,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ProductSwitchItem.less",
+			"size": 3086,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "SemanticPage.less",
+			"size": 740,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "ShellBar.less",
+			"size": 8689,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.css",
+			"size": 3874,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.less",
+			"size": 234,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "css_variables.source.less",
+			"size": 95650,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library-RTL.css",
+			"size": 67079,
+			"theme": "base"
+		},
+		{
+			"name": "library-parameters.json",
+			"size": 1541,
+			"theme": "base"
+		},
+		{
+			"name": "library.css",
+			"size": 67085,
+			"theme": "base"
+		},
+		{
+			"name": "library.less",
+			"size": 63108,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library.source.less",
+			"size": 782,
+			"designtime": true,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton-RTL.css",
+			"size": 68894,
+			"theme": "base"
+		},
+		{
+			"name": "library_skeleton.css",
+			"size": 68900,
+			"theme": "base"
+		}
+	]
+}

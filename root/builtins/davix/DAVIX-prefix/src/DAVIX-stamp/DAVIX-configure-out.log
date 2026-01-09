@@ -1,0 +1,104 @@
+loading initial cache file /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/tmp/DAVIX-cache-RelWithDebInfo.cmake
+-- The C compiler identification is AppleClang 15.0.0.15000100
+-- The CXX compiler identification is AppleClang 15.0.0.15000100
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python: /opt/homebrew/Frameworks/Python.framework/Versions/3.12/bin/python3.12 (found version "3.12.1") found components: Interpreter 
+Cannot regenerate version.cmake from git
+-- davix is used as APPLICATION_NAME
+-- C++11 activated full
+-- Performing Test HAVE_TR1_SUPPORT
+-- Performing Test HAVE_TR1_SUPPORT - Failed
+-- no TR1 support
+-- Looking for include file malloc.h
+-- Looking for include file malloc.h - not found
+-- Looking for include file string.h
+-- Looking for include file string.h - found
+-- Looking for include file strings.h
+-- Looking for include file strings.h - found
+-- Looking for include file locale.h
+-- Looking for include file locale.h - found
+-- Looking for include file errno.h
+-- Looking for include file errno.h - found
+-- Looking for include file stdlib.h
+-- Looking for include file stdlib.h - found
+-- Looking for C++ include ext/algorithm
+-- Looking for C++ include ext/algorithm - not found
+-- Looking for C++ include atomic
+-- Looking for C++ include atomic - found
+-- Looking for include file sys/poll.h
+-- Looking for include file sys/poll.h - found
+-- Looking for include file sys/select.h
+-- Looking for include file sys/select.h - found
+-- Looking for include file sys/socket.h
+-- Looking for include file sys/socket.h - found
+-- Looking for include file sys/time.h
+-- Looking for include file sys/time.h - found
+-- Looking for include file sys/uio.h
+-- Looking for include file sys/uio.h - found
+-- Looking for setsockopt
+-- Looking for setsockopt - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- Check size of size_t
+-- Check size of size_t - done
+-- Check size of ssize_t
+-- Check size of ssize_t - done
+-- Check size of off_t
+-- Check size of off_t - done
+-- Looking for include file unistd.h
+-- Looking for include file unistd.h - found
+-- Looking for include file signal.h
+-- Looking for include file signal.h - found
+-- Looking for include file fcntl.h
+-- Looking for include file fcntl.h - found
+-- Looking for include file termios.h
+-- Looking for include file termios.h - found
+-- Looking for getpass
+-- Looking for getpass - found
+-- Looking for gmtime_r
+-- Looking for gmtime_r - found
+-- Looking for gettimeofday
+-- Looking for gettimeofday - found
+-- Looking for SetConsoleMode
+-- Looking for SetConsoleMode - not found
+-- Looking for strptime
+-- Looking for strptime - found
+-- Looking for include file netdb.h
+-- Looking for include file netdb.h - found
+-- Looking for include file arpa/inet.h
+-- Looking for include file arpa/inet.h - found
+-- Looking for include file netinet/in.h
+-- Looking for include file netinet/in.h - found
+-- Looking for include file netinet/tcp.h
+-- Looking for include file netinet/tcp.h - found
+-- Check size of in_addr_t
+-- Check size of in_addr_t - done
+-- Check size of socklen_t
+-- Check size of socklen_t - done
+-- Looking for getaddrinfo
+-- Looking for getaddrinfo - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Found OpenSSL: /opt/homebrew/lib/libcrypto.dylib (found version "3.2.1")  
+-- Found LibXml2: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/lib/libxml2.tbd (found version "2.9.13") 
+-- Configuring done (8.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/abhiacherjee/Documents/rootbench/root/builtins/davix/DAVIX-prefix/src/DAVIX-build

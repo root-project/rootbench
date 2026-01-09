@@ -1,0 +1,1 @@
+"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool" -static -no_warning_for_no_symbols -o ../libLLVMDebuginfod.a CMakeFiles/LLVMDebuginfod.dir/BuildIDFetcher.cpp.o CMakeFiles/LLVMDebuginfod.dir/Debuginfod.cpp.o CMakeFiles/LLVMDebuginfod.dir/HTTPClient.cpp.o CMakeFiles/LLVMDebuginfod.dir/HTTPServer.cpp.o

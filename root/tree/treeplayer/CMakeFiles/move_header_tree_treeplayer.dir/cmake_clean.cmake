@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "../../include/ROOT/TTreeProcessorMP.hxx"
+  "../../include/ROOT/TTreeProcessorMT.hxx"
+  "../../include/ROOT/TTreeReaderFast.hxx"
+  "../../include/ROOT/TTreeReaderValueFast.hxx"
+  "../../include/TBranchProxy.h"
+  "../../include/TBranchProxyClassDescriptor.h"
+  "../../include/TBranchProxyDescriptor.h"
+  "../../include/TBranchProxyDirector.h"
+  "../../include/TBranchProxyTemplate.h"
+  "../../include/TChainIndex.h"
+  "../../include/TFileDrawMap.h"
+  "../../include/TFormLeafInfo.h"
+  "../../include/TFormLeafInfoReference.h"
+  "../../include/TFriendProxy.h"
+  "../../include/TFriendProxyDescriptor.h"
+  "../../include/TMPWorkerTree.h"
+  "../../include/TRefArrayProxy.h"
+  "../../include/TRefProxy.h"
+  "../../include/TSelectorDraw.h"
+  "../../include/TSelectorEntries.h"
+  "../../include/TSimpleAnalysis.h"
+  "../../include/TTreeDrawArgsParser.h"
+  "../../include/TTreeFormula.h"
+  "../../include/TTreeFormulaManager.h"
+  "../../include/TTreeGeneratorBase.h"
+  "../../include/TTreeIndex.h"
+  "../../include/TTreePerfStats.h"
+  "../../include/TTreePlayer.h"
+  "../../include/TTreeProxyGenerator.h"
+  "../../include/TTreeReader.h"
+  "../../include/TTreeReaderArray.h"
+  "../../include/TTreeReaderGenerator.h"
+  "../../include/TTreeReaderUtils.h"
+  "../../include/TTreeReaderValue.h"
+  "../../include/TTreeTableInterface.h"
+  "CMakeFiles/move_header_tree_treeplayer"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/move_header_tree_treeplayer.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

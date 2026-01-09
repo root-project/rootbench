@@ -1,0 +1,13 @@
+# Target labels
+ FREETYPE
+# Source files and their labels
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/FREETYPE
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/FREETYPE.rule
+/Users/abhiacherjee/Documents/rootbench/root/CMakeFiles/FREETYPE-complete.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-build.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-configure.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-download.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-install.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-mkdir.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-patch.rule
+/Users/abhiacherjee/Documents/rootbench/root/FREETYPE-prefix/src/FREETYPE-stamp/FREETYPE-update.rule
