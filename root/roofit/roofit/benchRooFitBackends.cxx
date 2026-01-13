@@ -22,7 +22,7 @@
 #include <benchmark/benchmark.h>
 
 int printLevel = 0;
-size_t nEvents = 100000;
+size_t nEvents = 10000;
 const auto minimizerName = "Minuit2";
 
 enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda };

@@ -155,12 +155,22 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
 
 int main(int argc, char **argv)
 {
+   // If you want to make a more complete scaling study, you can scale up to a larger number of channels:
+ // #define LARGE_STUDY
+
+#ifdef LARGE_STUDY
    std::vector<long int> rangeLow{1, 2, 3, 4, 5, 6, 7, 8, 12, 17, 23, 28, 33, 38, 43, 49, 54, 59};
+#else
+   std::vector<long int> rangeLow{1, 3, 5, 7, 12, 23, 33, 43, 54};
+#endif
    std::vector<long int> rangeHigh{64,  70,  75,  80,  85,  90,  96,  100, 110, 120, 130, 140,
                                    150, 160, 170, 180, 190, 200, 225, 250, 275, 300, 325};
    std::vector<long int> range;
    range.insert(range.end(), rangeLow.begin(), rangeLow.end());
+
+#ifdef LARGE_STUDY
    range.insert(range.end(), rangeHigh.begin(), rangeHigh.end());
+#endif
 
    // Run the minimization with the reference NLL
    RooFitADBenchmarksUtils::doBenchmarks("NllReferenceMinimization", Reference,
