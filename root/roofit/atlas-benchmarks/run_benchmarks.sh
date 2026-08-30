@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ./roofitAtlasHiggsBenchmark 0
 ./roofitAtlasHiggsBenchmark 1
