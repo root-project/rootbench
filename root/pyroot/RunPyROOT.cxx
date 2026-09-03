@@ -2,22 +2,16 @@
 
 #include "benchmark/benchmark.h"
 
-BENCHMARK_CAPTURE(TestTutorial, Test_hsimple_py, "tutorials/pyroot/", "hsimple.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_framework_py, "tutorials/pyroot/", "framework.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_hsum_py, "tutorials/pyroot/", "hsum.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_formula1_py, "tutorials/pyroot/", "formula1.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_fillrandom_py, "tutorials/pyroot/", "fillrandom.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_fit1_py, "tutorials/pyroot/", "fit1.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_h1draw_py, "tutorials/pyroot/", "h1draw.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_graph_py, "tutorials/pyroot/", "graph.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_gerrors_py, "tutorials/pyroot/", "gerrors.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_tornado_py, "tutorials/pyroot/", "tornado.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_surfaces_py, "tutorials/pyroot/", "surfaces.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_zdemo_py, "tutorials/pyroot/", "zdemo.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_geometry_py, "tutorials/pyroot/", "geometry.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_na49view_py, "tutorials/pyroot/", "na49view.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_file_py, "tutorials/pyroot/", "file.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_ntuple1_py, "tutorials/pyroot/", "ntuple1.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
-BENCHMARK_CAPTURE(TestTutorial, Test_rootmarks_py, "tutorials/pyroot/", "rootmarks.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
+// The Python tutorials that no longer exist in ROOT (framework.py, hsum.py,
+// fillrandom.py, h1draw.py, graph.py, gerrors.py, zdemo.py, file.py and
+// rootmarks.py) were dropped from the benchmarks, as well as geometry.py and
+// na49view.py, which cannot run standalone because they depend on a geometry
+// that needs to be created by other macros first.
+BENCHMARK_CAPTURE(TestTutorial, Test_hsimple_py, "tutorials", "hsimple.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_formula1_py, "tutorials", "visualisation/graphics/formula1.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_fit1_py, "tutorials", "math/fit/fit1.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_tornado_py, "tutorials", "visualisation/graphics/tornado.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_surfaces_py, "tutorials", "visualisation/graphics/surfaces.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
+BENCHMARK_CAPTURE(TestTutorial, Test_ntuple1_py, "tutorials", "io/tree/ntuple1.py")->Unit(benchmark::kMicrosecond)->UseManualTime();
 
 BENCHMARK_MAIN();
