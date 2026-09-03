@@ -58,7 +58,7 @@ auto Dataframe(DF &frame)
 
 static void BM_RNTupleDS_LHCB(benchmark::State &state)
 {
-   auto ntuple = ROOT::Experimental::RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.rc2.ntuple");
+   auto ntuple = ROOT::RNTupleReader::Open("DecayTree", RB::GetDataDir() + "/B2HHH~none.rc2.ntuple");
    const Long64_t nEntries = ntuple->GetNEntries() * (state.range(0) / 100.);
 
    ROOT::RDataFrame df(RB::GetDataDir() + "/B2HHH~none.rc2.ntuple", "DecayTree");
