@@ -40,9 +40,7 @@ if(ROOT_root7_FOUND AND rootbench-datafiles AND ROOT_dataframe_FOUND)
     LABEL short
     LIBRARIES Core Hist MathCore RIO Tree ROOTNTuple
     DOWNLOAD_DATAFILES gg_data-zstd.root
-    SETUP "${CMAKE_CURRENT_BINARY_DIR}/gen_atlas -i ${RB_DATASETDIR}/gg_data-zstd.root -o ${RB_DATASETDIR} -c zlib"
     SETUP "${CMAKE_CURRENT_BINARY_DIR}/gen_atlas -i ${RB_DATASETDIR}/gg_data-zstd.root -o ${RB_DATASETDIR} -c lzma"
-    SETUP "${CMAKE_CURRENT_BINARY_DIR}/gen_atlas -i ${RB_DATASETDIR}/gg_data-zstd.root -o ${RB_DATASETDIR} -c lz4"
     SETUP "${CMAKE_CURRENT_BINARY_DIR}/gen_atlas -i ${RB_DATASETDIR}/gg_data-zstd.root -o ${RB_DATASETDIR} -c zstd"
     SETUP "${CMAKE_CURRENT_BINARY_DIR}/gen_atlas -i ${RB_DATASETDIR}/gg_data-zstd.root -o ${RB_DATASETDIR} -c none")
 endif(ROOT_root7_FOUND AND rootbench-datafiles AND ROOT_dataframe_FOUND)
