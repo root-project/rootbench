@@ -1,40 +1,11 @@
 #include <benchmark/benchmark.h>
 
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-#include <algorithm>
-#include <cassert>
-#include <cstdio>
-#include <iostream>
-#include <future>
-#include <memory>
+#include <cstdint>
 #include <string>
 #include <vector>
 
-#include <ROOT/RDataFrame.hxx>
-#include <ROOT/RNTuple.hxx>
-#include <ROOT/RNTupleDS.hxx>
-#include <ROOT/RNTupleOptions.hxx>
-#include <Compression.h>
-#include <TApplication.h>
-#include <TBranch.h>
-#include <TCanvas.h>
-#include <TClassTable.h>
-#include <TF1.h>
-#include <TFile.h>
+#include <ROOT/RNTupleReader.hxx>
 #include <TH1D.h>
-#include <TLatex.h>
-#include <TLegend.h>
-#include <TLorentzVector.h>
-#include <TMath.h>
-#include <TStyle.h>
-#include <TSystem.h>
-#include <TTree.h>
-#include <TTreeReader.h>
-#include <TTreePerfStats.h>
 
 #include <Math/Vector4D.h>
 
@@ -49,7 +20,7 @@ static float ComputeInvariantMass(float pt0, float pt1, float eta0, float eta1, 
 }
 
 
-static void ProcessNTuple(ROOT::Experimental::RNTupleReader *ntuple, TH1D *hMass, bool isMC)
+static void ProcessNTuple(ROOT::RNTupleReader *ntuple, TH1D *hMass, bool isMC)
 {
 
     auto viewTrigP           = ntuple->GetView<bool>("trigP");
@@ -128,7 +99,7 @@ static void ProcessNTuple(ROOT::Experimental::RNTupleReader *ntuple, TH1D *hMass
 
 static void BM_RNTuple_ATLAS(benchmark::State &state, const std::string &comprAlgorithm)
 {
-    using RNTupleReader = ROOT::Experimental::RNTupleReader;
+    using ROOT::RNTupleReader;
     std::string path = RB::GetDataDir() + "/atlas-" + comprAlgorithm + ".ntuple";
 
     for (auto _ : state) {
@@ -146,4 +117,4 @@ BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_LZMA, "lzma")->Unit(benchma
 BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_ZSTD, "zstd")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_None, "none")->Unit(benchmark::kMicrosecond)->Iterations(5);
 
-BENCHMARK_MAIN(); 
+BENCHMARK_MAIN();

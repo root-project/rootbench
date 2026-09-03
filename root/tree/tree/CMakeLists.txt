@@ -17,9 +17,7 @@ if(ROOT_root7_FOUND AND rootbench-datafiles AND ROOT_dataframe_FOUND)
   )
 
   RB_ADD_TOOL(gen_atlas ${CMAKE_CURRENT_SOURCE_DIR}/gen_atlas.cxx
-            LIBRARIES Core Hist Imt RIO Tree TreePlayer
-            ROOTDataFrame ROOTVecOps ROOTNTuple
-            DEPENDS libh1event
+            LIBRARIES Core RIO Tree ROOTNTuple ROOTNTupleUtil
   )
 
   RB_ADD_GBENCHMARK(RNTupleH1Benchmarks
