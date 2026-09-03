@@ -13,6 +13,8 @@
 
 #include "benchmark/benchmark.h"
 
+#include "rootbench/RBConfig.h"
+
 #include "MakeRandomTTree.h"
 
 using namespace TMVA::Experimental;
@@ -23,10 +25,10 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
    // Open output file
-   TString outfileName( "bdt_bench_train_output.root" );
+   TString outfileName( RB::GetTempFs() + "/bdt_bench_train_output.root" );
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
 
-   // Set up (generate one extra event for testing)
+   // Set up
    TTree *sigTree = genTree("sigTree", nEvents, nVars,0.3, 0.5, 100);
    TTree *bkgTree = genTree("bkgTree", nEvents, nVars,-0.3, 0.5, 101);
 
@@ -43,7 +45,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       dataloader->AddVariable(var_name.c_str(), 'D');
    }
 
-   // For each benchmark we specifically ignore this test event such that we exclusively benchmark training.
+   // Use all events for training such that we exclusively benchmark training.
    dataloader->PrepareTrainingAndTestTree("",
                   Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:!V", nEvents, nEvents));
 
@@ -83,31 +85,34 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
-   // Open output file
-   TString outfileName( "bdt_bench_test_output.root" );
-   TFile* outputFile = TFile::Open(outfileName, "RECREATE");
 
    // Set up
-   auto inputFile = new TFile("bdt_bench_test_input.root","RECREATE");
+   string infileName = RB::GetTempFs() + "/bdt_bench_test_input.root";
+   auto inputFile = new TFile(infileName.c_str(),"RECREATE");
    TTree *testTree = genTree("testTree", nEvents, nVars,0.3, 0.5, 102, false);
    testTree->Write();
    delete testTree;
    inputFile->Close();
    delete inputFile;
 
-   ROOT::RDataFrame testDF("testTree","bdt_bench_test_input.root");
+   ROOT::RDataFrame testDF("testTree",infileName);
    auto testTensor = AsTensor<Float_t>(testDF);
+
+   // The weight files are produced by BM_TMVA_BDTTraining, which runs first
+   // because it is registered first. Running BM_TMVA_BDTTesting alone (e.g.
+   // via --benchmark_filter) is not supported.
+   string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
+   string weightFile = "./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml";
+   if(gSystem->AccessPathName(weightFile.c_str())){
+      state.SkipWithError(("weight file " + weightFile + " not found, it is produced by BM_TMVA_BDTTraining").c_str());
+      return;
+   }
 
    for(auto _: state){
       // Test a TMVA method via RReader
-      string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
-
-      RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
+      RReader model(weightFile);
       model.Compute(testTensor);
    }
-
-   // Teardown
-   outputFile->Close();
 }
 BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}});
 
