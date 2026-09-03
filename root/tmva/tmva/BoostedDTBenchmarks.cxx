@@ -48,8 +48,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
                   Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:!V", nEvents, nEvents));
 
    for(auto _: state){
-      ROOT::EnableImplicitMT(state.range(2));
-
       // Create factory instance
       auto factory = new TMVA::Factory("bdt-bench", outputFile,
                                     "Silent:!DrawProgressBar:AnalysisType=Classification");
@@ -58,7 +56,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       string opts = "!V:!H:NTrees=" + to_string(state.range(0)) + ":MaxDepth=" + to_string(state.range(1));
 
       // Train a TMVA method
-      string key = to_string(state.range(0)) + "_" + to_string(state.range(1)) + "_" + to_string(state.range(2));
+      string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
       auto method = factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT_" + key, opts);
       TMVA::Event::SetIsTraining(kTRUE);
       method->TrainMethod();
@@ -79,7 +77,7 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    outputFile->Close();
    delete outputFile;
 }
-BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}, {1, 4, 8, 16}});
+BENCHMARK(BM_TMVA_BDTTraining)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}});
 
 static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Parameters
@@ -101,10 +99,8 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    auto testTensor = AsTensor<Float_t>(testDF);
 
    for(auto _: state){
-      ROOT::EnableImplicitMT(state.range(2));
-
       // Test a TMVA method via RReader
-      string key = to_string(state.range(0)) + "_" + to_string(state.range(1)) + "_" + to_string(state.range(2));
+      string key = to_string(state.range(0)) + "_" + to_string(state.range(1));
 
       RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
       model.Compute(testTensor);
@@ -113,6 +109,6 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Teardown
    outputFile->Close();
 }
-BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}, {1, 4, 8, 16}});
+BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}});
 
 BENCHMARK_MAIN();
