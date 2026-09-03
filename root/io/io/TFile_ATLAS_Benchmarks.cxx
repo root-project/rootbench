@@ -28,7 +28,10 @@ static void BM_ATLAS_Decompress(benchmark::State &state, int algo, std::string f
     std::string old_filename = (RB::GetDataDir() + "/" + filename + ".root");
     std::string new_filename = (RB::GetTempFs() + "/level_" + std::to_string(comp_level) + "_atlas_" + GetAlgoName(algo) + ".root");
 
-    gSystem->Exec(("hadd -v 0 -f" + comp_setting + " " + new_filename + " " + old_filename).c_str());
+    if (gSystem->Exec(("hadd -v 0 -f" + comp_setting + " " + new_filename + " " + old_filename).c_str()) != 0) {
+        state.SkipWithError(("hadd failed to recompress " + old_filename).c_str());
+        return;
+    }
 
     TFile *newfile = new TFile(new_filename.c_str());
     state.counters["comp_size"] = newfile->GetSize();
