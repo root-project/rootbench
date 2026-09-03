@@ -25,8 +25,8 @@ static void BM_ATLAS_Decompress(benchmark::State &state, int algo, std::string f
 
     int comp_level = state.range(0);
     std::string comp_setting = std::to_string(algo * 100 + comp_level);
-    std::string old_filename = (RB::GetDataDir() + "/" + filename + ".root").c_str();
-    std::string new_filename = (RB::GetTempFs() + "level_" + std::to_string(comp_level) + "_atlas_" + GetAlgoName(algo) + ".root").c_str();
+    std::string old_filename = (RB::GetDataDir() + "/" + filename + ".root");
+    std::string new_filename = (RB::GetTempFs() + "/level_" + std::to_string(comp_level) + "_atlas_" + GetAlgoName(algo) + ".root");
 
     gSystem->Exec(("hadd -v 0 -f" + comp_setting + " " + new_filename + " " + old_filename).c_str());
 
@@ -52,7 +52,7 @@ static void BM_ATLAS_Decompress(benchmark::State &state, int algo, std::string f
 
     }
 
-    gSystem->Exec(("rm -f " + new_filename).c_str());
+    gSystem->Unlink(new_filename.c_str());
 }
 
 // Benchmarks for ATLAS files of experimental (real) data are deleted

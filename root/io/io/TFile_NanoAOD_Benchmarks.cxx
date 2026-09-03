@@ -25,8 +25,8 @@ static void BM_NanoAOD_Decompress(benchmark::State &state, int algo) {
 
     int comp_level = state.range(0);
     std::string comp_setting = std::to_string(algo * 100 + comp_level);
-    std::string old_filename = (RB::GetDataDir() + "/Run2012B_DoubleElectron.root").c_str();
-    std::string new_filename = (RB::GetTempFs() + "level_" + std::to_string(comp_level) + "_nanoaod_" + GetAlgoName(algo) + ".root").c_str();
+    std::string old_filename = (RB::GetDataDir() + "/Run2012B_DoubleElectron.root");
+    std::string new_filename = (RB::GetTempFs() + "/level_" + std::to_string(comp_level) + "_nanoaod_" + GetAlgoName(algo) + ".root");
 
     gSystem->Exec(("hadd -v 0 -f" + comp_setting + " " + new_filename + " " + old_filename).c_str());
 
@@ -35,7 +35,7 @@ static void BM_NanoAOD_Decompress(benchmark::State &state, int algo) {
     newfile->Close();
 
     for (auto _ : state) {
-        
+
         TFile *hfile = new TFile(new_filename.c_str());
         TTree *tree = (TTree*)hfile->Get("Events");
 
@@ -52,7 +52,7 @@ static void BM_NanoAOD_Decompress(benchmark::State &state, int algo) {
 
     }
 
-    gSystem->Exec(("rm -f " + new_filename).c_str());
+    gSystem->Unlink(new_filename.c_str());
 }
 
 
