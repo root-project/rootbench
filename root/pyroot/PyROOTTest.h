@@ -1,35 +1,36 @@
-#include <iostream>
-#include <cstdlib>
+#include <chrono>
 #include <string>
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
-
-#include <unistd.h>
 
 #include "benchmark/benchmark.h"
 
-#include <chrono>
-
+#include "rootbench/MemoryMeasurement.h"
 #include "rootbench/RBConfig.h"
 
-static int runTutorial(const std::string& dir, const std::string& filename) {
+static int runTutorial(const std::string& dir, const std::string& filename, long& maxRssKiB) {
   std::string rootsys = RB::GetRootSys();
   std::string fullpath = rootsys + "/" + dir + "/" + filename;
-  std::string rootInvocation = "root -l -b -q -e 'TPython::Exec(\" exec( open(\"" + fullpath + "\").read())\")'";
-    return std::system(rootInvocation.c_str());
+  // Exit with a non-zero status if the Python tutorial fails, since a failure
+  // of the interpreted code does not propagate into the exit status of root
+  // by itself.
+  std::string rootInvocation =
+      "root -l -b -q -e 'gSystem->Exit(!TPython::Exec(\"exec(open(\\\"" + fullpath + "\\\").read())\"))'";
+  return RB::RunCommandMeasuringRss(rootInvocation, maxRssKiB);
 }
 
 static void TestTutorial(benchmark::State &state, const char *dir, const char *tutorial) {
-  int peakSize = 0;
+  long peakSizeKiB = 0;
   for(auto _ : state){
       auto start = std::chrono::high_resolution_clock::now();
-      runTutorial(dir, tutorial);
+      int status = runTutorial(dir, tutorial, peakSizeKiB);
       auto end   = std::chrono::high_resolution_clock::now();
+      if (status != 0) {
+         state.SkipWithError(("failed to run tutorial \"" + std::string(tutorial) + "\"").c_str());
+         return;
+      }
       auto elapsed_seconds =
       std::chrono::duration_cast<std::chrono::duration<double>>(
         end - start);
       state.SetIterationTime(elapsed_seconds.count());
    }
-   state.counters.insert({{"RSS", peakSize}});
+   state.counters.insert({{"RSS", static_cast<double>(peakSizeKiB)}});
 }
