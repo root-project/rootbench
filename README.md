@@ -39,6 +39,13 @@ also, you can use
 cmake --build . -- -jN
 ```
 where 'N' is the maximum number of processor cores you want to use.
+
+### Runtime environment variables
+Some benchmarks write temporary files while they run. The directory used for these files can be chosen with the `RB_TEMP_FS` environment variable before invoking the benchmarks (e.g. via `ctest`):
+```bash
+export RB_TEMP_FS=/dev/shm
+```
+Ideally this points to a RAM-backed filesystem such as `/dev/shm` on Linux, so that disk I/O does not distort the measurements. If the variable is not set, the current working directory is used and a notice is printed.
 ## Extending the benchmarks
 ROOTBench relies on [Google Benchmark](https://github.com/google/benchmark). We recommend to read the [available documentation](https://github.com/google/benchmark/blob/master/README.md) and browse the existing examples [here](https://github.com/google/benchmark/tree/master/test) for more advanced usage.
 
