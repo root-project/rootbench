@@ -98,6 +98,10 @@ int main(int argc, char **argv)
       outputFile += std::string("X") + ((bloatFactor < 10) ? "0" : "") + std::to_string(bloatFactor);
    }
    outputFile += std::string("-") + compressionShorthand + ".ntuple";
+   if (!gSystem->AccessPathName(outputFile.c_str())) {
+      std::cout << "Output file " << outputFile << " already exists, nothing to do" << std::endl;
+      return 0;
+   }
    std::cout << "Converting " << JoinStrings(inputFiles, " ") << " --> " << outputFile << std::endl;
 
    TChain *tree = new TChain("h42");
