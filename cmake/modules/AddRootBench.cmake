@@ -101,7 +101,7 @@ function(RB_ADD_PYTESTBENCHMARK benchmark)
     endif()
     set(filename ${ARG_UNPARSED_ARGUMENTS})
 
-    if(PYTEST_FOUND)
+    if(RB_PYTEST_FOUND)
       if(ARG_DOWNLOAD_DATAFILES)
           RB_ADD_DOWNLOAD_FIXTURE(${benchmark} DOWNLOAD_DATAFILES ${ARG_DOWNLOAD_DATAFILES})
       endif()
@@ -119,7 +119,7 @@ function(RB_ADD_PYTESTBENCHMARK benchmark)
                            TIMEOUT "${TIMEOUT_VALUE}" LABELS "${ARG_LABEL}" RUN_SERIAL TRUE
                            FIXTURES_REQUIRED "setup-${benchmark};download-${benchmark}-datafiles")
     else()
-      message(STATUS "pytest was not found, benchmark " ${benchmark} " will be ignored")
+      message(STATUS "Python modules required for pytest benchmarks were not found, benchmark " ${benchmark} " will be ignored")
     endif()
 
   else()
