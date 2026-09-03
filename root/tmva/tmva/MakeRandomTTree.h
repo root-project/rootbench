@@ -1,12 +1,15 @@
 #include "TRandom3.h"
 #include "TTree.h"
 
+#include <string>
+#include <vector>
+
 // Utility function for generating a random TTree with Gaussian float data, for the specified number of points and vars
 TTree* genTree(std::string name, UInt_t nPoints, const UInt_t nVars, Double_t offset, Double_t scale = 0.3, UInt_t seed = 100,
                bool evtCol = true){
    // Initialisation
    TRandom3 rng(seed);
-   Float_t vars[nVars]; for(auto& var: vars){ var = 0.0;}
+   std::vector<Float_t> vars(nVars, 0.0);
    UInt_t id = 0;
 
    // Create new TTree instance
@@ -17,7 +20,7 @@ TTree* genTree(std::string name, UInt_t nPoints, const UInt_t nVars, Double_t of
       std::string var_name = "var" + std::to_string(i);
       std::string var_leaflist = var_name + "/F";
 
-      data->Branch(var_name.c_str(), vars + i, var_leaflist.c_str());
+      data->Branch(var_name.c_str(), vars.data() + i, var_leaflist.c_str());
    }
 
    // And add a branch for the (unique) Event identifier
