@@ -111,8 +111,6 @@ static void BM_RNTuple_ATLAS(benchmark::State &state, const std::string &comprAl
         delete hData;
     }
 }
-BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_LZ4, "lz4")->Unit(benchmark::kMicrosecond)->Iterations(5);
-BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_ZLIB, "zlib")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_LZMA, "lzma")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_ZSTD, "zstd")->Unit(benchmark::kMicrosecond)->Iterations(5);
 BENCHMARK_CAPTURE(BM_RNTuple_ATLAS, BM_RNTuple_ATLAS_None, "none")->Unit(benchmark::kMicrosecond)->Iterations(5);
