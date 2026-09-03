@@ -22,13 +22,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
-   Bool_t mem_stats = (state.range(0) == 2000) && (state.range(1) == 10) && (state.range(2) == 1);
-
-   // Memory benchmark data placeholder
-   ProcInfo_t pinfo;
-   Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
-   double mem_res = 0.0;
-
    // Open output file
    TString outfileName( "bdt_bench_train_output.root" );
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
@@ -54,8 +47,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
    dataloader->PrepareTrainingAndTestTree("",
                   Form("SplitMode=Block:nTrain_Signal=%i:nTrain_Background=%i:!V", nEvents, nEvents));
 
-   // Benchmarking
-   UInt_t iter_c = 0;
    for(auto _: state){
       ROOT::EnableImplicitMT(state.range(2));
 
@@ -63,12 +54,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       auto factory = new TMVA::Factory("bdt-bench", outputFile,
                                     "Silent:!DrawProgressBar:AnalysisType=Classification");
 
-      // Get current memory usage statistics after setup
-      if(mem_stats && iter_c == 0){
-         gSystem->GetProcInfo(&pinfo);
-         init_mem_res = pinfo.fMemResident;
-      }
-      
       // Construct training options string
       string opts = "!V:!H:NTrees=" + to_string(state.range(0)) + ":MaxDepth=" + to_string(state.range(1));
 
@@ -78,13 +63,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       TMVA::Event::SetIsTraining(kTRUE);
       method->TrainMethod();
 
-      // Maintain Memory statistics (independent from Google Benchmark)
-      if(mem_stats && iter_c == 0){
-         gSystem->GetProcInfo(&pinfo);
-         term_mem_res = pinfo.fMemResident;
-         mem_res += (double) (term_mem_res - init_mem_res);
-      }
-
       TMVA::Event::SetIsTraining(kFALSE);
       method->Data()->DeleteAllResults(TMVA::Types::kTraining, method->GetAnalysisType());
 
@@ -92,16 +70,6 @@ static void BM_TMVA_BDTTraining(benchmark::State &state){
       factory->DeleteAllMethods();
       factory->fMethodsMap.clear();
       delete factory;
-
-      // DEBUG
-      // cout << "[DEBUG] " << key << ": res_mem_init = " << (double) init_mem_res << ", res_mem_term = " << (double) term_mem_res << endl;
-
-      iter_c++;
-   }
-
-   if(mem_stats){
-      mem_res *= iter_c;
-      state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
    }
 
    // Teardown
@@ -117,13 +85,6 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    // Parameters
    UInt_t nVars = 4;
    UInt_t nEvents = 500;
-   Bool_t mem_stats = (state.range(0) == 2000) && (state.range(1) == 10) && (state.range(2) == 1);
-
-   // Memory benchmark data placeholder
-   ProcInfo_t pinfo;
-   Long_t init_mem_res, term_mem_res; init_mem_res = term_mem_res = 0;
-   double mem_res = 0.0;
-
    // Open output file
    TString outfileName( "bdt_bench_test_output.root" );
    TFile* outputFile = TFile::Open(outfileName, "RECREATE");
@@ -139,36 +100,14 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    ROOT::RDataFrame testDF("testTree","bdt_bench_test_input.root");
    auto testTensor = AsTensor<Float_t>(testDF);
 
-   // Benchmarking
-   UInt_t iter_c = 0;
    for(auto _: state){
       ROOT::EnableImplicitMT(state.range(2));
 
       // Test a TMVA method via RReader
       string key = to_string(state.range(0)) + "_" + to_string(state.range(1)) + "_" + to_string(state.range(2));
 
-      // Get current memory usage statistics after setup
-      if(mem_stats && iter_c == 0){
-         gSystem->GetProcInfo(&pinfo);
-         init_mem_res = pinfo.fMemResident;
-      }
-
       RReader model("./bdt-bench/weights/bdt-bench_BDT_" + key + ".weights.xml");
       model.Compute(testTensor);
-
-      // Maintain Memory statistics (independent from Google Benchmark)
-      if(mem_stats && iter_c == 0){
-         gSystem->GetProcInfo(&pinfo);
-         term_mem_res = pinfo.fMemResident;
-         mem_res += (double) (term_mem_res - init_mem_res);
-      }
-
-      iter_c++;
-   }
-
-   if(mem_stats){
-      mem_res *= iter_c;
-      state.counters["Resident Memory"] = benchmark::Counter(mem_res, benchmark::Counter::kAvgIterations);
    }
 
    // Teardown
