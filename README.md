@@ -46,6 +46,19 @@ Some benchmarks write temporary files while they run. The directory used for the
 export RB_TEMP_FS=/dev/shm
 ```
 Ideally this points to a RAM-backed filesystem such as `/dev/shm` on Linux, so that disk I/O does not distort the measurements. If the variable is not set, the current working directory is used and a notice is printed.
+
+### Profiling a benchmark
+The benchmarks are standalone executables, so they can be profiled directly with [perf](https://perf.wiki.kernel.org) on Linux. To profile a single benchmark, select it with `--benchmark_filter` and generate a flame graph from the recording:
+```bash
+perf record -g ./root/math/mathcore/TRandomBenchmarks --benchmark_filter='BM_Rndm<TRandom3>'
+perf script report flamegraph  # writes an interactive flamegraph.html
+```
+The second command is built into perf since Linux 5.8. With older perf versions, the same can be achieved by piping `perf script` through the scripts from the [FlameGraph repository](https://github.com/brendangregg/FlameGraph):
+```bash
+perf script | stackcollapse-perf.pl | flamegraph.pl > flamegraph.svg
+```
+If the recorded call stacks come out truncated, record with `perf record --call-graph dwarf` instead of `-g`, since parts of ROOT and its dependencies may be compiled without frame pointers. Note that recording requires `kernel.perf_event_paranoid` to be at most 2 (profiling your own processes), which may not be the case on shared machines.
+
 ## Extending the benchmarks
 ROOTBench relies on [Google Benchmark](https://github.com/google/benchmark). We recommend to read the [available documentation](https://github.com/google/benchmark/blob/master/README.md) and browse the existing examples [here](https://github.com/google/benchmark/tree/master/test) for more advanced usage.
 
