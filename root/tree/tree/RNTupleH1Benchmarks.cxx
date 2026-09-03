@@ -22,7 +22,7 @@
 
 static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgorithm)
 {
-   using RNTupleReader = ROOT::Experimental::RNTupleReader;
+   using ROOT::RNTupleReader;
    gSystem->Load("./libh1event");
    // Open RNtuple file with RNTuple reader
    std::string path = RB::GetDataDir() + "/h1dst-" + comprAlgorithm + ".ntuple";
@@ -46,7 +46,7 @@ static void BM_RNTuple_H1(benchmark::State &state, const std::string &comprAlgor
    auto njetsView = ntuple->GetCollectionView("event.jets");
    // Check print info (minitest)
    std::ostringstream os;
-   ntuple->PrintInfo(ROOT::Experimental::ENTupleInfo::kSummary, os);
+   ntuple->PrintInfo(ROOT::ENTupleInfo::kSummary, os);
    // Benchmark loop
    for (auto _ : state) {
       // TH1D & TH2D histograms to be filled with data

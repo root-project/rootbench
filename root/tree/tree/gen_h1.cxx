@@ -24,10 +24,9 @@
 
 #include "h1event.h"
 
-// Import classes from experimental namespace for the time being
-using RNTupleModel = ROOT::Experimental::RNTupleModel;
-using RNTupleWriter = ROOT::Experimental::RNTupleWriter;
-using RNTupleWriteOptions = ROOT::Experimental::RNTupleWriteOptions;
+using ROOT::RNTupleModel;
+using ROOT::RNTupleWriter;
+using ROOT::RNTupleWriteOptions;
 
 std::string JoinStrings(const std::vector<std::string> &strings, const std::string &joint)
 {
