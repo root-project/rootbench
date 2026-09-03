@@ -1,29 +1,14 @@
-#include <ROOT/RField.hxx>
-#include <ROOT/RNTuple.hxx>
-#include <ROOT/RNTupleModel.hxx>
-#include <ROOT/RNTupleOptions.hxx>
+#include <ROOT/RNTupleImporter.hxx>
+#include <ROOT/RNTupleWriteOptions.hxx>
 
-#include <TBranch.h>
-#include <TBranchElement.h>
-#include <TBranchSTL.h>
-#include <TCanvas.h>
-#include <TFile.h>
-#include <TH1F.h>
-#include <TLeaf.h>
-#include <TTree.h>
+#include <TSystem.h>
 
-#include <cassert>
 #include <iostream>
-#include <memory>
 #include <string>
-#include <vector>
 
 #include <unistd.h>
 
-using RNTupleModel = ROOT::Experimental::RNTupleModel;
-using RFieldBase = ROOT::Experimental::Detail::RFieldBase;
-using RNTupleWriter = ROOT::Experimental::RNTupleWriter;
-using RNTupleWriteOptions = ROOT::Experimental::RNTupleWriteOptions;
+using ROOT::Experimental::RNTupleImporter;
 
 int GetCompressionSettings(std::string shorthand)
 {
@@ -40,43 +25,13 @@ int GetCompressionSettings(std::string shorthand)
    abort();
 }
 
-
-static void SplitPath(const std::string &path, std::string *basename, std::string *suffix)
+void Usage(char *progname)
 {
-    size_t idx_dot = path.find_last_of(".");
-    if (idx_dot == std::string::npos) {
-        *basename = path;
-        suffix->clear();
-    } else {
-        *basename = path.substr(0, idx_dot);
-        *suffix = path.substr(idx_dot + 1);
-    }
-}
-
-
-std::string StripSuffix(const std::string &path) {
-    std::string basename;
-    std::string suffix;
-    SplitPath(path, &basename, &suffix);
-    return basename;
-}
-
-
-std::string GetFileName(const std::string &path) {
-    const std::string::size_type idx = path.find_last_of('/');
-    if (idx != std::string::npos)
-        return path.substr(idx+1);
-    else
-        return path;
-}
-
-
-void Usage(char *progname) {
    std::cout << "Usage: " << progname << " -i <gg_*.root> -o <ntuple-path> -c <compression>" << std::endl;
 }
 
-
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
    std::string inputFile = "gg_data.root";
    std::string outputPath = ".";
    int compressionSettings = 0;
@@ -105,61 +60,16 @@ int main(int argc, char **argv) {
          return 1;
       }
    }
-   std::string outputFile = outputPath + "/" + "atlas" + "-" + compressionShorthand + ".ntuple";
-
-   std::unique_ptr<TFile> f(TFile::Open(inputFile.c_str()));
-   assert(f && ! f->IsZombie());
-
-   auto model = RNTupleModel::Create();
-
-   auto tree = f->Get<TTree>("mini");
-   for (auto b : TRangeDynCast<TBranch>(*tree->GetListOfBranches())) {
-      assert(b);
-
-      TLeaf *l = static_cast<TLeaf*>(b->GetListOfLeaves()->First());
-
-      auto field = RFieldBase::Create(l->GetName(), l->GetTypeName());
-
-      if (typeid(*b) == typeid(TBranchSTL) || typeid(*b) == typeid(TBranchElement)) {
-         if (field->GetType() == "std::vector<bool>") {
-            std::vector<bool> **v = new std::vector<bool> *();
-            tree->SetBranchAddress(b->GetName(), v);
-            model->GetDefaultEntry()->CaptureValue(field->CaptureValue(*v));
-            model->GetRootField()->Attach(std::unique_ptr<RFieldBase>(field));
-         } else if (field->GetType() == "std::vector<float>") {
-            std::vector<float> **v = new std::vector<float> *();
-            tree->SetBranchAddress(b->GetName(), v);
-            model->GetDefaultEntry()->CaptureValue(field->CaptureValue(*v));
-            model->GetRootField()->Attach(std::unique_ptr<RFieldBase>(field));
-         } else if (field->GetType() == "std::vector<std::int32_t>") {
-            std::vector<std::int32_t> **v = new std::vector<std::int32_t> *();
-            tree->SetBranchAddress(b->GetName(), v);
-            model->GetDefaultEntry()->CaptureValue(field->CaptureValue(*v));
-            model->GetRootField()->Attach(std::unique_ptr<RFieldBase>(field));
-         } else if (field->GetType() == "std::vector<std::uint32_t>") {
-            std::vector<std::uint32_t> **v = new std::vector<std::uint32_t> *();
-            tree->SetBranchAddress(b->GetName(), v);
-            model->GetDefaultEntry()->CaptureValue(field->CaptureValue(*v));
-            model->GetRootField()->Attach(std::unique_ptr<RFieldBase>(field));
-         } else {
-            assert(false);
-         }
-      } else {
-         model->AddField(std::unique_ptr<RFieldBase>(field));
-         void *fieldDataPtr = model->GetDefaultEntry()->GetValue(l->GetName()).GetRawPtr();
-         tree->SetBranchAddress(b->GetName(), fieldDataPtr);
-      }
+   std::string outputFile = outputPath + "/atlas-" + compressionShorthand + ".ntuple";
+   if (!gSystem->AccessPathName(outputFile.c_str())) {
+      std::cout << "Output file " << outputFile << " already exists, nothing to do" << std::endl;
+      return 0;
    }
+   std::cout << "Converting " << inputFile << " --> " << outputFile << std::endl;
 
-   RNTupleWriteOptions options;
+   auto importer = RNTupleImporter::Create(inputFile, "mini", outputFile);
+   ROOT::RNTupleWriteOptions options;
    options.SetCompression(compressionSettings);
-   auto ntuple = RNTupleWriter::Recreate(std::move(model), "mini", outputFile, options);
-
-   auto nEntries = tree->GetEntries();
-   for (decltype(nEntries) i = 0; i < nEntries; ++i) {
-      tree->GetEntry(i);
-      ntuple->Fill();
-   }
-
-   tree->ResetBranchAddresses();
-} 
+   importer->SetWriteOptions(options);
+   importer->Import();
+}
