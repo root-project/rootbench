@@ -44,6 +44,18 @@ if(NOT DEFINED ROOTSYS)
 endif()
 get_filename_component(ROOT_LIBRARY_DIR "${ROOTSYS}/lib" ABSOLUTE)
 
+#---Several benchmarks rely on hadd in their setup fixtures, so make sure it is available.
+if(CMAKE_PROJECT_NAME STREQUAL ROOT)
+  # When building as part of ROOT, hadd is built in the same build tree and
+  # does not exist yet at configuration time.
+  set(RB_HADD_EXECUTABLE ${CMAKE_BINARY_DIR}/bin/hadd)
+else()
+  find_program(RB_HADD_EXECUTABLE hadd HINTS ${ROOTSYS}/bin)
+  if(NOT RB_HADD_EXECUTABLE)
+    message(FATAL_ERROR "hadd was not found, neither in PATH nor in ${ROOTSYS}/bin. It is required by several benchmarks, please make sure it is provided by your ROOT installation.")
+  endif()
+endif()
+
 #---Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
