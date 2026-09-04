@@ -14,7 +14,7 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-cpu_FOUND AND ROOT_imt_FOUND)
    RB_ADD_GBENCHMARK(ConvNetCpuBenchmarks
       ConvNetCpuBenchmarks.cxx
       LABEL short
-      LIBRARIES Core Tree MathCore RIO Hist TMVA PyMVA)
+      LIBRARIES Core Tree MathCore RIO Hist TMVA)
 endif()
 
 if (ROOT_cuda_FOUND AND ROOT_tmva-gpu_FOUND)
@@ -22,7 +22,7 @@ if (ROOT_cuda_FOUND AND ROOT_tmva-gpu_FOUND)
    RB_ADD_GBENCHMARK(ConvNetCudaBenchmarks
       ConvNetCudaBenchmarks.cxx
       LABEL short
-      LIBRARIES Core Tree MathCore RIO Hist TMVA PyMVA ${DNN_CUDA_LIBRARIES})
+      LIBRARIES Core Tree MathCore RIO Hist TMVA ${DNN_CUDA_LIBRARIES})
 endif()
 
 if(ROOT_tmva_FOUND AND ROOT_tmva-cpu_FOUND AND ROOT_imt_FOUND)
