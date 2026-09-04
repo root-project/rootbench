@@ -13,8 +13,10 @@
 #include "TPad.h"
 #include "TCanvas.h"
 
+#include "rootbench/RBConfig.h"
+
 void MakeTimeData(int n, int ntime, int ndim ){
-   TString fname = TString::Format("time_data_t%d_d%d.root", ntime, ndim);
+   TString fname = TString::Format("%s/time_data_t%d_d%d.root", RB::GetTempFs().c_str(), ntime, ndim);
    
    std::vector<TH1 *> v1(ntime);
    std::vector<TH1 *> v2(ntime);
@@ -142,7 +144,7 @@ void RNN_benchmark(TString archName) {
 
    std::cout << "Running with nthreads  = " << ROOT::GetThreadPoolSize() << std::endl;
 
-   TString inputFileName = "time_data_t10_d30.root";
+   TString inputFileName = TString::Format("%s/time_data_t%d_d%d.root", RB::GetTempFs().c_str(), ntime, ninput);
 
    bool fileExist = !gSystem->AccessPathName(inputFileName);
 
@@ -156,14 +158,14 @@ void RNN_benchmark(TString archName) {
    }
    std::cout << "--- RNNClassification  : Using input file: " << inputFile->GetName() << std::endl;
 
-   TString outfileName(TString::Format("data_RNN_%s.root", archName.Data()));
+   TString outfileName(TString::Format("%s/data_RNN_%s.root", RB::GetTempFs().c_str(), archName.Data()));
    TFile *outputFile = nullptr;
    outputFile = TFile::Open(outfileName, "RECREATE");
 
    // Creating the factory object
    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile,
                                               "!V:!Silent:Color:DrawProgressBar:Transformations=None:!Correlations:"
-                                              "AnalysisType=Classification:ModelPersistence");
+                                              "AnalysisType=Classification:!ModelPersistence");
    TMVA::DataLoader *dataloader = new TMVA::DataLoader("dataset");
 
    TTree *signalTree = (TTree *)inputFile->Get("sgn");
