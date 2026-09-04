@@ -18,7 +18,7 @@ if(ROOT_tmva_FOUND AND ROOT_tmva-cpu_FOUND AND ROOT_imt_FOUND)
 
    RB_ADD_GBENCHMARK(RNNCpuBenchmarks
       RNNCpuBenchmarks.cxx
-      LABEL short
+      LABEL long
       LIBRARIES Core Tree MathCore Gpad RIO Hist TMVA)
 endif()
 
@@ -31,6 +31,6 @@ if (ROOT_cuda_FOUND AND ROOT_tmva-gpu_FOUND)
 
    RB_ADD_GBENCHMARK(RNNCudaBenchmarks
       RNNCudaBenchmarks.cxx
-      LABEL short
+      LABEL long
       LIBRARIES Core Tree MathCore Gpad RIO Hist TMVA ${DNN_CUDA_LIBRARIES})
 endif()
