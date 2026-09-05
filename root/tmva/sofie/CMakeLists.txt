@@ -1,12 +1,15 @@
 # TMVA SOFIE inference benchmarks.
 # @author Federico Sossai (fsossai), Lorenzo Moneta
 
-# SOFIE is built unconditionally with TMVA in recent ROOT versions, so probe
-# for its libraries directly instead of relying on a ROOT build option. In
-# ROOT-builtin builds the library targets exist; in standalone builds the
-# libraries are found in the ROOT installation.
+# Check if SOFIE is available. ROOT versions up to 6.40 have a dedicated
+# tmva-sofie build option that is advertised as a ROOT feature, while in
+# later versions SOFIE is built unconditionally with TMVA and we probe for
+# its libraries directly: in ROOT-builtin builds the library targets exist,
+# and in standalone builds the libraries are found in the ROOT installation.
 set(RB_HAVE_SOFIE FALSE)
-if(TARGET ROOTTMVASofie AND TARGET ROOTTMVASofieParser)
+if(ROOT_tmva-sofie_FOUND)
+  set(RB_HAVE_SOFIE TRUE)
+elseif(TARGET ROOTTMVASofie AND TARGET ROOTTMVASofieParser)
   set(RB_HAVE_SOFIE TRUE)
 else()
   find_library(RB_SOFIE_LIBRARY ROOTTMVASofie HINTS ${ROOT_LIBRARY_DIR})
