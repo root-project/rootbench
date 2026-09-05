@@ -63,10 +63,13 @@ set(sofie_models
   SimpleNN_Alice
   higgs_model_dense)
 
-# Command line tool that generates the inference code for an ONNX model.
-add_executable(emitFromONNX EmitFromONNX.cxx)
-target_link_libraries(emitFromONNX Core ROOTTMVASofie ROOTTMVASofieParser)
-set_target_properties(emitFromONNX PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+# Command line tool that generates the inference code for an ONNX model. The
+# target name is prefixed with "rootbench-" to avoid a clash with the
+# emitFromONNX target of the SOFIE tests when rootbench is built as part of
+# ROOT itself.
+add_executable(rootbench-emitFromONNX EmitFromONNX.cxx)
+target_link_libraries(rootbench-emitFromONNX Core ROOTTMVASofie ROOTTMVASofieParser)
+set_target_properties(rootbench-emitFromONNX PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 set(model_dir ${CMAKE_CURRENT_BINARY_DIR}/input_models)
 set(model_generator ${CMAKE_CURRENT_SOURCE_DIR}/make_input_models.py)
@@ -80,8 +83,8 @@ foreach(name ${sofie_models})
     COMMENT "Generating ONNX model ${name}")
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${name}.hxx ${CMAKE_CURRENT_BINARY_DIR}/${name}.dat
-    COMMAND emitFromONNX ${model_dir}/${name}.onnx
-    DEPENDS emitFromONNX ${model_dir}/${name}.onnx
+    COMMAND rootbench-emitFromONNX ${model_dir}/${name}.onnx
+    DEPENDS rootbench-emitFromONNX ${model_dir}/${name}.onnx
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating SOFIE inference code for ${name}")
   list(APPEND sofie_headers ${CMAKE_CURRENT_BINARY_DIR}/${name}.hxx)
