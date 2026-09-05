@@ -151,8 +151,14 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
 }
 #endif
 
+// Some models from PR #239 are not benchmarked because they are not
+// supported by the current version of SOFIE:
+//   * RNN_d10_L20_h8_B1, GRU_d10_L20_h8_B1, LSTM_d10_L20_h8_B1, DDB_B1:
+//     the generated code does not compile
+//   * Conv2DTranspose_Relu_Sigmoid: dynamic tensor error when parsing
+//   * resnet18v1: "intermediate tensor already exists" error when parsing
+
 BENCHMARK_CAPTURE(BM_SOFIE_Inference,higgs_model_dense,"higgs_model_dense.onnx")->Args({7, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference,Conv2DTranspose_Relu_Sigmoid,"Conv2DTranspose_Relu_Sigmoid.onnx")->Args({15,1})->Unit(benchmark::kMillisecond);
 BENCHMARK_CAPTURE(BM_SOFIE_Inference, ConvTrans2dModel_B1,"ConvTrans2dModel_B1.onnx")->Args({4*4*4,1})->Unit(benchmark::kMillisecond);
 
 BENCHMARK_CAPTURE(BM_SOFIE_Inference, SimpleNN_Alice,"SimpleNN_Alice.onnx")->Args({16,1})->Unit(benchmark::kMillisecond);
@@ -169,13 +175,5 @@ BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L14_B32,"Conv_d100_L14_B32.onnx"
 BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L1_B1,"Conv_d100_L1_B1.onnx")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
 
 BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv3d_d32_L4_B1,"Conv3d_d32_L4_B1.onnx")->Args({32*32*32, 1})->Unit(benchmark::kMillisecond);
-
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, resnet18v1,"resnet18v1.onnx")->Args({3 * 224 * 224, 1})->Unit(benchmark::kMillisecond);
-
-//Recurrent benchmark
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, RNN_d10_L20_h8_B1,"RNN_d10_L20_h8_B1.onnx")->Args({3 * 5, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, GRU_d10_L20_h8_B1,"GRU_d10_L20_h8_B1.onnx")->Args({3 * 5, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, LSTM_d10_L20_h8_B1,"LSTM_d10_L20_h8_B1.onnx")->Args({1 * 1, 1})->Unit(benchmark::kMillisecond);
-
 
 BENCHMARK_MAIN();
