@@ -18,7 +18,11 @@
 
 using namespace std;
 bool verbose = false;
+// use fixed instead of random input data, so that inference outputs are reproducible
 bool testOutput = true;
+// write the first inference output of each model to a file (for validating
+// the results across ROOT versions)
+bool writeOutput = false;
 
 
 void BM_SOFIE_Inference(benchmark::State &state, std::string model_file)
@@ -49,7 +53,7 @@ void BM_SOFIE_Inference(benchmark::State &state, std::string model_file)
    int ntimes = 0;
    std::vector<float> yOut;
    bool first = true;
-   bool doWrite = testOutput;
+   bool doWrite = writeOutput;
    for (auto _ : state) {
       auto t1 = std::chrono::high_resolution_clock::now();
       for (int i = 0; i < nevts; i += bsize) {

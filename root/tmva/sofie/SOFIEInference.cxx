@@ -39,7 +39,11 @@
 
 using namespace std;
 bool verbose = false;
+// use fixed instead of random input data, so that inference outputs are reproducible
 bool testOutput = true;
+// write the first inference output of each model to a file (for validating
+// the results across ROOT versions), enabled with the -o command line option
+bool writeOutput = false;
 
 
 template <class S>
@@ -68,7 +72,7 @@ void BM_SOFIE_Inference(benchmark::State &state)
    int ntimes = 0;
    std::vector<float> yOut;
    bool first = true;
-   bool doWrite = testOutput;
+   bool doWrite = writeOutput;
    for (auto _ : state) {
       auto t1 = std::chrono::high_resolution_clock::now();
       for (int i = 0; i < nevts; i += bsize) {
@@ -203,6 +207,9 @@ int main(int argc, char **argv) {
       if (arg == "-v") {
          std::cout << "---running in verbose mode" << std::endl;
          verbose = true;
+      } else if (arg == "-o") {
+         std::cout << "---writing inference outputs to files" << std::endl;
+         writeOutput = true;
       } else if ((arg == "-d" || arg == "--dir") && argc > i+1) {
          std::string pathDir = argv[i+1];
          std::filesystem::path path(pathDir);
