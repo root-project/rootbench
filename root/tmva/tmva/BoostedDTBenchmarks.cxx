@@ -4,8 +4,9 @@
 #include "TTree.h"
 #include "TFile.h"
 
+#include "ROOT/RDataFrame.hxx"
+
 #include "TMVA/RReader.hxx"
-#include "TMVA/RTensorUtils.hxx"
 #include "TMVA/DataLoader.h"
 #include "TMVA/Factory.h"
 #include "TMVA/MethodBase.h"
@@ -95,8 +96,16 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    inputFile->Close();
    delete inputFile;
 
+   // Collect the test events, using the naming convention for randomly
+   // generated TTrees in MakeRandomTTree.h.
    ROOT::RDataFrame testDF("testTree",infileName);
-   auto testTensor = AsTensor<Float_t>(testDF);
+   std::vector<std::vector<float>> testData(nEvents, std::vector<float>(nVars));
+   for(UInt_t i = 0; i < nVars; i++){
+      auto col = testDF.Take<Float_t>("var" + to_string(i));
+      for(UInt_t j = 0; j < nEvents; j++){
+         testData[j][i] = (*col)[j];
+      }
+   }
 
    // The weight files are produced by BM_TMVA_BDTTraining, which runs first
    // because it is registered first. Running BM_TMVA_BDTTesting alone (e.g.
@@ -111,7 +120,9 @@ static void BM_TMVA_BDTTesting(benchmark::State &state){
    for(auto _: state){
       // Test a TMVA method via RReader
       RReader model(weightFile);
-      model.Compute(testTensor);
+      for(const auto &event : testData){
+         model.Compute(event);
+      }
    }
 }
 BENCHMARK(BM_TMVA_BDTTesting)->ArgsProduct({{2000, 1000, 400, 100}, {10, 8, 6, 4, 2}});
