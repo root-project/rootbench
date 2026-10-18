@@ -285,27 +285,30 @@ static void benchFitProdPdf(benchmark::State &state)
 
 /// Extended sum of five components.
 ///
-/// Watch out with the result from this benchmark: if there are evaluation
-/// errors during the minimization, the time differences will mostly come from
-/// how the backends are handling those. This might or might not be wanted.
+/// The Gamma component is a shoulder at low x, distinct from the broad
+/// Gaussian, and the yield ranges scale with the number of events. Otherwise
+/// the yields of two nearly identical components are degenerate and Migrad
+/// often fails to converge, in particular with many events.
 static void benchFitModel(benchmark::State &state)
 {
    auto changeMsgLevel = makeChangeMsgLvl();
 
    RooWorkspace w;
-   w.factory("Gamma::vpdf(x[0,20],g[20,0.1,40],b[0.5,0.01,10],m0[-1,-20,0])");
+   w.factory("Gamma::vpdf(x[0,20],g[2,0.1,40],b[2,0.01,10],m0[-1,-20,0])");
    w.factory("Gaussian::gpdf(x,m1[10,0,20],s1[2,0.1,10])");
    w.factory("Gaussian::g2(x,m2[5,0,20],s2[0.3,0.01,10])");
    w.factory("Gaussian::g3(x,m3[15,0,20],s3[0.4,0.01,10])");
    w.factory("Polynomial::pol(x,a[-0.01,-0.05,0.1])");
-   w.factory("SUM::model(ns1[0,1000000000]*vpdf,ns2[0,10000000000]*gpdf,ng2[0,1000000000]*g2,ng3[0,10000000000]*g3, "
-             "npol[0,10000000000]*pol)");
+   w.factory("SUM::model(ns1[0,1]*vpdf,ns2[0,1]*gpdf,ng2[0,1]*g2,ng3[0,1]*g3,npol[0,1]*pol)");
 
-   w.var("ns1")->setVal(0.2 * nEvents);
-   w.var("ns2")->setVal(0.3 * nEvents);
-   w.var("ng2")->setVal(0.1 * nEvents);
-   w.var("ng3")->setVal(0.1 * nEvents);
-   w.var("npol")->setVal(0.3 * nEvents);
+   // The yields are set to the expected numbers of events, with ranges up to
+   // ten times the total number of events.
+   const std::pair<const char *, double> yields[] = {
+      {"ns1", 0.2}, {"ns2", 0.3}, {"ng2", 0.1}, {"ng3", 0.1}, {"npol", 0.3}};
+   for (auto const &[name, fraction] : yields) {
+      w.var(name)->setRange(0, 10. * nEvents);
+      w.var(name)->setVal(fraction * nEvents);
+   }
 
    auto &pdf = *w.pdf("model");
    std::unique_ptr<RooDataSet> data{generateData(pdf, {*w.var("x")})};
