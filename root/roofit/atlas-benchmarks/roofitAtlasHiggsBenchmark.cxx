@@ -39,7 +39,6 @@ struct BenchmarkData {
    RooAbsPdf *pdf = nullptr;
    std::unique_ptr<RooAbsPdf> ownedPdf;
    RooAbsData *data = nullptr;
-   std::unique_ptr<RooAbsReal> nll;
    std::unique_ptr<RooAbsReal> batchedNll;
    std::unique_ptr<RooAbsReal> codegenNll;
 };
@@ -52,9 +51,8 @@ BenchmarkData &bmdata()
 
 static void benchCreateNLL(benchmark::State &state)
 {
-   const std::string evalBackend = state.range(0) == 2 ? "codegen" : (state.range(0) == 1 ? "cpu" : "legacy");
-   auto &nllPtr =
-      state.range(0) == 2 ? bmdata().codegenNll : (state.range(0) == 1 ? bmdata().batchedNll : bmdata().nll);
+   const std::string evalBackend = state.range(0) == 2 ? "codegen" : "cpu";
+   auto &nllPtr = state.range(0) == 2 ? bmdata().codegenNll : bmdata().batchedNll;
 
    auto mc = static_cast<RooStats::ModelConfig *>(bmdata().ws->obj("ModelConfig"));
    RooArgSet const *globObs = mc->GetGlobalObservables();
@@ -74,8 +72,7 @@ static void benchCreateNLL(benchmark::State &state)
 static void benchEvaluateNLL(benchmark::State &state)
 {
    bool kickAllParameters = state.range(0);
-   auto &nllPtr =
-      state.range(1) == 2 ? bmdata().codegenNll : (state.range(1) == 1 ? bmdata().batchedNll : bmdata().nll);
+   auto &nllPtr = state.range(1) == 2 ? bmdata().codegenNll : bmdata().batchedNll;
 
    RooArgSet parameters;
    nllPtr->getParameters(nullptr, parameters);
@@ -96,8 +93,7 @@ static void benchEvaluateNLL(benchmark::State &state)
 
 static void benchMinimizeNLL(benchmark::State &state)
 {
-   auto &nllPtr =
-      state.range(0) == 2 ? bmdata().codegenNll : (state.range(0) == 1 ? bmdata().batchedNll : bmdata().nll);
+   auto &nllPtr = state.range(0) == 2 ? bmdata().codegenNll : bmdata().batchedNll;
 
    RooArgSet parameters;
    nllPtr->getParameters(nullptr, parameters);
@@ -115,28 +111,23 @@ static void benchMinimizeNLL(benchmark::State &state)
    parameters.assign(initialParams);
 }
 
-// BENCHMARK(benchCreateNLL)->Name("createNLL")->Args({0})->Unit(kSecond)->Iterations(1);
 // BENCHMARK(benchCreateNLL)->Name("createNLL_CPU")->Args({1})->Unit(kSecond)->Iterations(1);
 BENCHMARK(benchCreateNLL)->Name("createNLL_CodeGenAD")->Args({2})->Unit(kSecond)->Iterations(1);
-// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL")->Args({1, 0})->Unit(kMillisecond);
 // BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CPU")->Args({1, 1})->Unit(kMillisecond);
 // BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD")->Args({1, 2})->Unit(kMillisecond);
-// BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_SingleKick")->Args({0, 0})->Unit(kMillisecond);
 // BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CPU_SingleKick")->Args({0, 1})->Unit(kMillisecond);
 // BENCHMARK(benchEvaluateNLL)->Name("evaluateNLL_CodeGenAD_SingleKick")->Args({0, 2})->Unit(kMillisecond);
-// BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL")->Args({0})->Unit(kSecond)->Iterations(1);
 // BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_CPU")->Args({1})->Unit(kSecond)->Iterations(1);
 BENCHMARK(benchMinimizeNLL)->Name("minimizeNLL_CodeGenAD")->Args({2})->Unit(kSecond)->Iterations(1);
 
 // The channels 221 to 231 inclusive of the full combination workspace are
 // unfortunately corrupt. They contain RooAddPdfs that are affected by the
 // notorious server-proxy-desyncing that can happen if the RooFit frameworks do
-// the wrong thing. Th new the EvalBackend uses the client-server links to build
-// the computation graph for evaluation, and the old RooFit uses the proxies
-// (the client-server links are only used to the dirty flag propagation in the
-// old RooFit). As the servers and proxies are out of sync in some channels, we
-// have no idea what is actually correct and hence these channels are
-// unsuitable for validation and benchmarking. They are replaced here by
+// the wrong thing. The evaluation backends use the client-server links to
+// build the computation graph for evaluation, while the proxies are what the
+// pdfs were built with. As the servers and proxies are out of sync in some
+// channels, we have no idea what is actually correct and hence these channels
+// are unsuitable for validation and benchmarking. They are replaced here by
 // uniform pdfs.
 void maskBrokenChannels()
 {

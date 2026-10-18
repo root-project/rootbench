@@ -65,7 +65,7 @@ void atlasHiggsBackendComparison(const char *evalBackend = "cpu", bool doHessian
          *data, GlobalObservables(*globObs), Offset(true), Optimize(2), EvalBackend(evalBackend))};
 
    // Only the codegen NLL is a RooEvaluatorWrapper, so this cast is not valid
-   // for the legacy and cpu backends.
+   // for the cpu backend.
    if (isCodegen && doHessian) {
       static_cast<RooFit::Experimental::RooEvaluatorWrapper &>(*nll).generateHessian();
    }

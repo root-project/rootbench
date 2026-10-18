@@ -18,7 +18,7 @@ parser.add_argument(
     nargs="*",
     default=["atlas"],
     metavar="DIR",
-    help="directory holding {legacy,cpu,codegen}.log (default: atlas)",
+    help="directory holding {cpu,codegen}.log (default: atlas)",
 )
 parser.add_argument(
     "--json",
@@ -122,13 +122,11 @@ def parse_output(filename):
 
 
 # Bars appear left to right in this order. A backend whose log is absent is
-# dropped rather than being an error, so a run without the legacy backend simply
-# yields a two-bar plot.
-backend_names = {"RooFit legacy": "legacy", "RooFit": "cpu", "RooFit AD": "codegen"}
-
-# The legacy backend no longer exists in recent ROOT, so out of the box this
-# produces a two-bar plot. To compare ROOT versions instead of backends, relabel:
-# backend_names = {"ROOT 6.32": "legacy", "ROOT 6.40": "cpu", "ROOT 6.40 AD": "codegen"}
+# dropped rather than being an error, so a run without one of the backends
+# simply yields fewer bars. To compare ROOT versions instead of backends,
+# relabel, e.g.:
+# backend_names = {"ROOT 6.40": "cpu", "ROOT 6.40 AD": "codegen"}
+backend_names = {"RooFit": "cpu", "RooFit AD": "codegen"}
 
 # One row per (run, backend, step) for --json: a tidy table stays easy to
 # concatenate across runs and to pivot downstream.

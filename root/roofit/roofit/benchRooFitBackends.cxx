@@ -25,7 +25,7 @@ int printLevel = 0;
 size_t nEvents = 10000;
 const auto minimizerName = "Minuit2";
 
-enum RunConfig_t { runScalar, runCpu, fitScalar, fitCpu, fitCuda, fitCodegen, fitCodegenNoGrad };
+enum RunConfig_t { fitCpu, fitCuda, fitCodegen, fitCodegenNoGrad };
 
 void runFitBenchmark(benchmark::State &state, RooAbsPdf &pdf, RooAbsData &data)
 {
@@ -38,9 +38,7 @@ void runFitBenchmark(benchmark::State &state, RooAbsPdf &pdf, RooAbsData &data)
 
    using namespace RooFit;
    for (auto _ : state) {
-      if (runConfig == fitScalar) {
-         pdf.fitTo(data, EvalBackend::Legacy(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
-      } else if (runConfig == fitCpu) {
+      if (runConfig == fitCpu) {
          pdf.fitTo(data, EvalBackend::Cpu(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
       } else if (runConfig == fitCuda) {
          pdf.fitTo(data, EvalBackend::Cuda(), Minimizer(minimizerName), PrintLevel(printLevel - 1), PrintEvalErrors(-1));
@@ -326,7 +324,6 @@ auto const unit = benchmark::kMillisecond;
 #define CUDA_ONLY(code)
 #endif
 
-BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitLegacy")->Args({fitScalar});
 BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCPU")->Args({fitCpu});
 BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCodegen")->Args({fitCodegen});
 BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCodegenNoGrad")->Args({fitCodegenNoGrad});
@@ -335,17 +332,14 @@ CUDA_ONLY(BENCHMARK(benchFitGauss)->Unit(unit)->Name("Gaus_FitCUDA")->Args({fitC
 // No codegen variants for this model: normalizing the Gaussian over both x
 // and sigma requires a multi-dimensional numeric integral, which the codegen
 // backend doesn't support.
-BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitLegacy")->Args({fitScalar});
 BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitCPU")->Args({fitCpu});
 CUDA_ONLY(BENCHMARK(benchFitGaussXSigma)->Unit(unit)->Name("GausXS_FitCUDA")->Args({fitCuda}));
 
-BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitLegacy")->Args({fitScalar});
 BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCPU")->Args({fitCpu});
 BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCodegen")->Args({fitCodegen});
 BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCodegenNoGrad")->Args({fitCodegenNoGrad});
 CUDA_ONLY(BENCHMARK(benchFit)->Unit(unit)->Name("AddPdf_FitCUDA")->Args({fitCuda}));
 
-BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitLegacy")->Unit(benchmark::kMillisecond)->Args({fitScalar});
 BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
 BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCodegen")->Unit(benchmark::kMillisecond)->Args({fitCodegen});
 BENCHMARK(benchProdPdf)
@@ -358,7 +352,6 @@ CUDA_ONLY(BENCHMARK(benchProdPdf)->Unit(unit)->Name("ProdPdf_FitCUDA")->Unit(ben
 // Watch out with the result from these benchmarks: if there are evaluation
 // errors during the minimization, the time differences will mostly come from
 // how the backends are handling those. This might or might not be wanted.
-BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitLegacy")->Unit(benchmark::kMillisecond)->Args({fitScalar});
 BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitCPU")->Unit(benchmark::kMillisecond)->Args({fitCpu});
 BENCHMARK(benchModel)->Unit(unit)->Name("FitModel_FitCodegen")->Unit(benchmark::kMillisecond)->Args({fitCodegen});
 BENCHMARK(benchModel)

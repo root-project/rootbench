@@ -63,7 +63,6 @@ std::unique_ptr<RooAbsPdf> createModel(RooRealVar &x, std::string const &channel
 }
 
 enum backend {
-   Reference,
    BatchMode,
    CodeSquashNumDiff,
    CodeSquashAD
@@ -126,7 +125,6 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
 
    std::cout << "nparams: " << params.size() << std::endl;
 
-   std::unique_ptr<RooAbsReal> nllRef{model.createNLL(data, EvalBackend::Legacy(), Offset("initial"))};
    std::unique_ptr<RooAbsReal> nllRefBatch{model.createNLL(data, EvalBackend::Cpu(), Offset("initial"))};
    std::unique_ptr<RooAbsReal> nllFunc{model.createNLL(data, EvalBackend::Codegen(), Offset("initial"))};
    std::unique_ptr<RooAbsReal> nllFuncNoGrad{model.createNLL(data, EvalBackend::CodegenNoGrad(), Offset("initial"))};
@@ -134,9 +132,7 @@ static void BM_RooFuncWrapper_ManyParams_Minimization(benchmark::State &state)
    std::unique_ptr<RooMinimizer> m = nullptr;
 
    int code = state.range(0);
-   if (code == backend::Reference) {
-      m = std::make_unique<RooMinimizer>(*nllRef);
-   } else if (code == backend::CodeSquashNumDiff) {
+   if (code == backend::CodeSquashNumDiff) {
       m = std::make_unique<RooMinimizer>(*nllFuncNoGrad);
    } else if (code == backend::BatchMode) {
       m = std::make_unique<RooMinimizer>(*nllRefBatch);
@@ -171,10 +167,6 @@ int main(int argc, char **argv)
 #ifdef LARGE_STUDY
    range.insert(range.end(), rangeHigh.begin(), rangeHigh.end());
 #endif
-
-   // Run the minimization with the reference NLL
-   RooFitADBenchmarksUtils::doBenchmarks("NllReferenceMinimization", Reference,
-                                         BM_RooFuncWrapper_ManyParams_Minimization, range, 1);
 
    // Run the minimization with the reference NLL (BatchMode)
    RooFitADBenchmarksUtils::doBenchmarks("NllBatchModeMinimization", BatchMode,

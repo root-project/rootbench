@@ -81,11 +81,8 @@ static void benchHistFactory001(benchmark::State &state)
 
 auto const unit = benchmark::kMillisecond;
 
-auto Legacy = static_cast<int>(RooFit::EvalBackend::Value::Legacy);
 auto Cpu = static_cast<int>(RooFit::EvalBackend::Value::Cpu);
 
-BENCHMARK(benchHistFactory001)->Unit(unit)->Args({1, Legacy})->Name("hf001__BinnedFitOptimization_ON___BatchMode_OFF");
-BENCHMARK(benchHistFactory001)->Unit(unit)->Args({0, Legacy})->Name("hf001__BinnedFitOptimization_OFF__BatchMode_OFF");
 BENCHMARK(benchHistFactory001)->Unit(unit)->Args({1, Cpu})->Name("hf001__BinnedFitOptimization_ON___BatchMode_ON_");
 BENCHMARK(benchHistFactory001)->Unit(unit)->Args({0, Cpu})->Name("hf001__BinnedFitOptimization_OFF__BatchMode_ON_");
 
