@@ -33,10 +33,8 @@ Notes:
 - The `time` builtin has to stay wrapped around `root` itself: its `user` line is
   the total bar height, and the measured steps are subtracted from it to get the
   "Other" slice.
-- Out of the box this gives two bars, `cpu` and `codegen`. The `legacy` backend
-  no longer exists in recent ROOT; on an older ROOT, add it to the loop in
-  `run_atlasHiggsBackendComparison.sh` to get a third bar. The plot script drops
-  any backend whose log is absent, so no other change is needed.
+- Out of the box this gives two bars, `cpu` and `codegen`. The plot script
+  drops any backend whose log is absent.
 - The plot script takes the log directory as an argument, so several runs can be
   compared: `python3 atlasHiggsBackendComparison_make_plot.py atlas some-other-run`
   writes one PDF per directory, named after it.

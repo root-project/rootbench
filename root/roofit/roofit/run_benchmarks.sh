@@ -20,7 +20,6 @@ run_benchmark() {
 # Run benchmarks
 run_benchmark "./benchRooFitBinned -b codegen --benchmark_out_format=csv --benchmark_out=out_codegen.csv" "out_codegen.csv"
 run_benchmark "./benchRooFitBinned -b codegen_no_grad --benchmark_out_format=csv --benchmark_out=out_codegen_ngrad.csv" "out_codegen_ngrad.csv"
-run_benchmark "./benchRooFitBinned -b legacy --benchmark_out_format=csv --benchmark_out=out_legacy.csv" "out_legacy.csv"
 run_benchmark "./benchRooFitBinned -b cpu --benchmark_out_format=csv --benchmark_out=out_cpu.csv" "out_cpu.csv"
 
 # Run Python script

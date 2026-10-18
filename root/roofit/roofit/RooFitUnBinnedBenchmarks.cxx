@@ -236,31 +236,21 @@ static void BDecayDoubleGauss(benchmark::State &state)
 int nEvents = 100000;
 const auto unit = benchmark::kMillisecond;
 
-auto Legacy = static_cast<int>(RooFit::EvalBackend::Value::Legacy);
 auto Cpu = static_cast<int>(RooFit::EvalBackend::Value::Cpu);
 auto Cuda = static_cast<int>(RooFit::EvalBackend::Value::Cuda);
 
 #define ARGS UseRealTime()->Unit(unit)
 
-BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacy")->Args({nEvents, Legacy, 1})->ARGS;
-BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
-BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
 #ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayWithMixing)->Name("BDecayWithMixing_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
-BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacy")->Args({nEvents, Legacy, 1})->ARGS;
-BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
-BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
 #ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayGaussResolution)->Name("BDecayGaussResolution_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;
 #endif
 
-BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacy")->Args({nEvents, Legacy, 1})->ARGS;
-BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU2")->Args({nEvents, Legacy, 2})->ARGS;
-BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitLegacyNumCPU4")->Args({nEvents, Legacy, 4})->ARGS;
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCPU")->Args({nEvents, Cpu, 1})->ARGS;
 #ifdef DO_BENCH_ROOFIT_CUDA
 BENCHMARK(BDecayDoubleGauss)->Name("BDecayDoubleGauss_FitCUDA")->Args({nEvents, Cuda, 1})->ARGS;

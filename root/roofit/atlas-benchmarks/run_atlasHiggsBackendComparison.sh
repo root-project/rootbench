@@ -8,9 +8,6 @@
 #
 # The `time` builtin has to wrap root itself, because the plot script reads its
 # "user" line as the total bar height.
-#
-# The legacy backend is not run here, as it no longer exists in recent ROOT.
-# Add it to the loop below on an older ROOT to get a third bar.
 
 mkdir -p atlas
 

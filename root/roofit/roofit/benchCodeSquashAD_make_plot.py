@@ -56,20 +56,22 @@ def is_relevant(line):
 lines = list(filter(is_relevant, lines))
 
 
-names = ["NllReferenceMinimization", "NllBatchModeMinimization", "NllCodeSquash_NumDiff", "NllCodeSquash_AD"]
+names = ["NllBatchModeMinimization", "NllCodeSquash_NumDiff", "NllCodeSquash_AD"]
 
 backends = {
-    "NllReferenceMinimization": "legacy",
     "NllBatchModeMinimization": "RooFit",
     "NllCodeSquash_NumDiff": "Hardcoded",
     "NllCodeSquash_AD": "RooFit AD",
 }
 
+# Index of the "Creation of NLL object took" line of each backend in the block
+# of relevant lines per benchmark (see analyze_block). The NLL objects are
+# created in the order cpu, codegen (followed by its three jitting lines),
+# codegen_no_grad.
 nll_line = {
-    "NllReferenceMinimization": 1,
-    "NllBatchModeMinimization": 2,
-    "NllCodeSquash_NumDiff": 3,
-    "NllCodeSquash_AD": 7,
+    "NllBatchModeMinimization": 1,
+    "NllCodeSquash_AD": 2,
+    "NllCodeSquash_NumDiff": 6,
 }
 
 
@@ -77,7 +79,7 @@ def analyze_block(lines):
     # print(lines)
     data = dict()
 
-    name = lines[12].split("/")[0]
+    name = lines[11].split("/")[0]
 
     data["backend"] = backends[name]
 
@@ -86,17 +88,17 @@ def analyze_block(lines):
         return time_string_to_seconds(" ".join(l.split(" ")[-2:]))
 
     data["create_nll"] = line_to_seconds(lines[nll_line[name]])
-    data["seeding"] = line_to_seconds(lines[9])
-    data["migrad"] = line_to_seconds(lines[10])
+    data["seeding"] = line_to_seconds(lines[8])
+    data["migrad"] = line_to_seconds(lines[9])
     data["nparams"] = int(lines[0].split(" ")[-1]) - 1
-    data["fval"] = float(lines[11].split(" ")[-1])
+    data["fval"] = float(lines[10].split(" ")[-1])
 
-    data["jitting"] = sum(line_to_seconds(lines[i]) for i in [4, 5, 6])
+    data["jitting"] = sum(line_to_seconds(lines[i]) for i in [3, 4, 5])
 
     return data
 
 
-m_block = 13
+m_block = 12
 
 
 datas = []
@@ -107,7 +109,7 @@ while i < len(lines):
 
 
 df = pd.DataFrame(datas)
-df = df.query("nparams > 10 and nparams < 2500 and backend != 'legacy'")
+df = df.query("nparams > 10 and nparams < 2500")
 
 dfs = dict()
 
