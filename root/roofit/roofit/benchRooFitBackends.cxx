@@ -14,7 +14,7 @@
 // evaluation backends. Each benchmark builds a model, generates a dataset of
 // nEvents events from it, moves the parameters away from the generation
 // values, and then times Migrad with strategy 0 on a likelihood that was
-// created outside of the timed loop. The benchmarks are named
+// created outside of the timed loop and is offset by its initial value. The benchmarks are named
 // "<Model>_Fit<Backend>", which the script benchRooFitBackends_make_plot.py
 // relies on. The CPU backend is benchmarked single-threaded (CPU) and with
 // the multi-threaded evaluation on all threads of ROOT's implicit
@@ -139,7 +139,12 @@ void runFitBenchmark(benchmark::State &state, RooAbsPdf &pdf, RooAbsData &data)
    RooArgSet paramsInitial;
    params.snapshot(paramsInitial);
 
-   std::unique_ptr<RooAbsReal> nll{pdf.createNLL(data, EvalBackend(evalBackend), NumCPU(nThreads))};
+   // The likelihood is offset by its initial value, like it should be done for
+   // large datasets: without it, the rounding errors of the large absolute NLL
+   // values make Migrad fail to reach the required EDM from a few million
+   // events on.
+   std::unique_ptr<RooAbsReal> nll{
+      pdf.createNLL(data, EvalBackend(evalBackend), NumCPU(nThreads), Offset("initial"))};
 
    // Every fit gets a fresh minimizer: the evaluation error recovery state of
    // the minimizer function (maximum FCN value, number of invalid
