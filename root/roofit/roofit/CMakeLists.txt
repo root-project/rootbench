@@ -3,18 +3,12 @@ RB_ADD_GBENCHMARK(benchRooFitBinned
   LABEL long
   LIBRARIES Core Hist MathCore RIO RooFit RooStats RooFitCore HistFactory)
 
-RB_ADD_GBENCHMARK(benchRooFitUnbinned
-  RooFitUnBinnedBenchmarks.cxx
-  LABEL long
-  LIBRARIES Core Hist MathCore RIO RooFit RooStats RooFitCore HistFactory)
-
 RB_ADD_GBENCHMARK(benchRooFitBackends
   benchRooFitBackends.cxx
   LABEL long
   LIBRARIES Core MathCore RooFitCore RooFit)
 
 if(cuda)
-  target_compile_definitions(benchRooFitUnbinned PRIVATE DO_BENCH_ROOFIT_CUDA)
   target_compile_definitions(benchRooFitBackends PRIVATE DO_BENCH_ROOFIT_CUDA)
 endif()
 
