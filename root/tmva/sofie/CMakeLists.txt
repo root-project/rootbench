@@ -98,13 +98,14 @@ RB_ADD_GBENCHMARK(SOFIEInference
   DEPENDS SofieCompileModels
   LIBRARIES Core MathCore ROOTTMVASofie ${BLAS_LIBRARIES})
 
-# Benchmark of RSofieReader, which parses the model and JITs the generated
-# code at runtime
-RB_ADD_GBENCHMARK(SOFIEInference_Reader
-  SOFIEInference_Reader.cxx
+# Benchmark of the inference code emitted by SOFIE, compiled at runtime with
+# the ROOT JIT. The JITted code resolves the BLAS symbols from the libraries
+# linked here.
+RB_ADD_GBENCHMARK(SOFIEInference_JIT
+  SOFIEInference_JIT.cxx
   LABEL short
   DEPENDS SofieCompileModels
-  LIBRARIES Core Cling MathCore ROOTTMVASofie ${BLAS_LIBRARIES})
+  LIBRARIES Core MathCore ${BLAS_LIBRARIES})
 
 # Benchmark of SOFIE inference inside an RDataFrame event loop
 RB_ADD_GBENCHMARK(RDF_SOFIE_Inference

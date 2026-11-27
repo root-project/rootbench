@@ -9,10 +9,12 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <map>
 #include <random>
+#include <stdexcept>
+#include <string>
 
-#include "TMVA/RSofieReader.hxx"
-
+#include "TInterpreter.h"
 #include "TMath.h"
 
 
@@ -24,10 +26,39 @@ bool testOutput = true;
 // the results across ROOT versions)
 bool writeOutput = false;
 
+using InferFunc = std::vector<float> (*)(float const *);
 
-void BM_SOFIE_Inference(benchmark::State &state, std::string model_file)
+// JIT-compile the inference code that SOFIE emitted for the model at build
+// time, like in the TMVA_SOFIE_RDataFrame_JIT tutorial. The Session reads the
+// weights from <model>.dat in the working directory. Each model is compiled
+// once, as the benchmark function is called several times. The wrapper must
+// be in the same Declare as the pragma: the inline Session::infer() is
+// emitted where it is first used, and a separate Declare compiles it
+// unoptimized.
+InferFunc JitModel(std::string const &modelName)
 {
-   std::string model_path = "input_models/" + model_file;
+   static std::map<std::string, InferFunc> cache;
+   auto found = cache.find(modelName);
+   if (found != cache.end())
+      return found->second;
+
+   std::string ns = "rootbench_jit_" + modelName;
+   std::string code = "#pragma cling optimize(2)\n";
+   code += "#include \"" + modelName + ".hxx\"\n";
+   code += "namespace " + ns + " {\n";
+   code += "TMVA_SOFIE_" + modelName + "::Session session;\n";
+   code += "std::vector<float> infer(float const *x) { return session.infer(x); }\n";
+   code += "}";
+   if (!gInterpreter->Declare(code.c_str()))
+      throw std::runtime_error("Failed to JIT-compile the SOFIE model " + modelName);
+   auto infer = reinterpret_cast<InferFunc>(gInterpreter->Calc(("&" + ns + "::infer").c_str()));
+   cache[modelName] = infer;
+   return infer;
+}
+
+
+void BM_SOFIE_Inference(benchmark::State &state, std::string model_name)
+{
    size_t inputSize = state.range(0);  // input size (without batch size)
    size_t bsize = (state.range(1) > 0) ? state.range(1) : 1;
    size_t nevts = 64;
@@ -46,8 +77,7 @@ void BM_SOFIE_Inference(benchmark::State &state, std::string model_file)
    float *input_ptr = input.data();
 
 
-   // parse the model
-   TMVA::Experimental::RSofieReader r(model_path);
+   InferFunc infer = JitModel(model_name);
 
    double totDuration = 0;
    int ntimes = 0;
@@ -57,8 +87,7 @@ void BM_SOFIE_Inference(benchmark::State &state, std::string model_file)
    for (auto _ : state) {
       auto t1 = std::chrono::high_resolution_clock::now();
       for (int i = 0; i < nevts; i += bsize) {
-         std::vector<float> x(input.begin()+inputSize*i, input.begin()+inputSize*(i+1));
-         auto y = r.Compute(x);
+         auto y = infer(input.data() + inputSize*i);
          if (first) {
             //std::cout << std::string(typeid(s).name()) << " :  " << y[0] << "  " << y[1] << std::endl;
             yOut = y;
@@ -73,7 +102,7 @@ void BM_SOFIE_Inference(benchmark::State &state, std::string model_file)
          // write output for test
          //std::cout << "write output " << std::endl;
          std::ofstream f;
-         std::string filename = std::string(model_file) + ".out";
+         std::string filename = model_name + ".out";
          f.open(filename);
          f << yOut.size();
          for (size_t i = 0; i < yOut.size(); i++) {
@@ -162,22 +191,23 @@ void BM_SOFIE_Inference_3(benchmark::State &state)
 //   * Conv2DTranspose_Relu_Sigmoid: dynamic tensor error when parsing
 //   * resnet18v1: "intermediate tensor already exists" error when parsing
 
-BENCHMARK_CAPTURE(BM_SOFIE_Inference,higgs_model_dense,"higgs_model_dense.onnx")->Args({7, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, ConvTrans2dModel_B1,"ConvTrans2dModel_B1.onnx")->Args({4*4*4,1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference,higgs_model_dense,"higgs_model_dense")->Args({7, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, ConvTModel_G4,"ConvTModel_G4")->Args({15,1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, ConvTrans2dModel_B1,"ConvTrans2dModel_B1")->Args({4*4*4,1})->Unit(benchmark::kMillisecond);
 
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, SimpleNN_Alice,"SimpleNN_Alice.onnx")->Args({16,1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, SimpleNN_Alice,"SimpleNN_Alice")->Args({16,1})->Unit(benchmark::kMillisecond);
 
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_16,"Linear_16.onnx")->Args({100, 16})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_32,"Linear_32.onnx")->Args({100, 32})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_64,"Linear_64.onnx")->Args({100, 64})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_event,"Linear_event.onnx")->Args({100, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Generator_B1,"Generator_B1.onnx")->Args({14, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Generator_B64,"Generator_B64.onnx")->Args({14, 64})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_16,"Linear_16")->Args({100, 16})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_32,"Linear_32")->Args({100, 32})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_64,"Linear_64")->Args({100, 64})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Linear_event,"Linear_event")->Args({100, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Generator_B1,"Generator_B1")->Args({14, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Generator_B64,"Generator_B64")->Args({14, 64})->Unit(benchmark::kMillisecond);
 
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L14_B1,"Conv_d100_L14_B1.onnx")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L14_B32,"Conv_d100_L14_B32.onnx")->Args({100*100, 32})->Unit(benchmark::kMillisecond);
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L1_B1,"Conv_d100_L1_B1.onnx")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L14_B1,"Conv_d100_L14_B1")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L14_B32,"Conv_d100_L14_B32")->Args({100*100, 32})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv_d100_L1_B1,"Conv_d100_L1_B1")->Args({100*100, 1})->Unit(benchmark::kMillisecond);
 
-BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv3d_d32_L4_B1,"Conv3d_d32_L4_B1.onnx")->Args({32*32*32, 1})->Unit(benchmark::kMillisecond);
+BENCHMARK_CAPTURE(BM_SOFIE_Inference, Conv3d_d32_L4_B1,"Conv3d_d32_L4_B1")->Args({32*32*32, 1})->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();
