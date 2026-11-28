@@ -16,6 +16,10 @@
 
 #include "TInterpreter.h"
 #include "TMath.h"
+#include "ROOT/RVersion.hxx"
+#if ROOT_VERSION_CODE < ROOT_VERSION(6, 42, 0)
+#include "TSystem.h"
+#endif
 
 
 using namespace std;
@@ -41,6 +45,13 @@ InferFunc JitModel(std::string const &modelName)
    auto found = cache.find(modelName);
    if (found != cache.end())
       return found->second;
+
+#if ROOT_VERSION_CODE < ROOT_VERSION(6, 42, 0)
+   // The code emitted by ROOT < 6.42 calls helper functions compiled into
+   // libROOTTMVASofie, which the JIT doesn't load by itself.
+   if (gSystem->Load("libROOTTMVASofie") < 0)
+      throw std::runtime_error("Failed to load libROOTTMVASofie");
+#endif
 
    std::string ns = "rootbench_jit_" + modelName;
    std::string code = "#pragma cling optimize(2)\n";
